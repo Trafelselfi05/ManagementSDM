@@ -130,15 +130,15 @@
                     
                     <!-- Profile - Active -->
                     <div class="group relative">
-                        <a href="{{ route('profile.show') }}" class="w-12 h-12 {{ request()->routeIs('profile.*') ? 'bg-primary/10' : 'bg-gray-100 hover:bg-gray-200' }} rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 {{ request()->routeIs('profile.*') ? 'text-primary' : 'text-gray-600' }}" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.1,7 14,7.9 14,9C14,10.1 13.1,11 12,11C10.9,11 10,10.1 10,9C10,7.9 10.9,7 12,7M12,14.5C13.25,14.5 14.45,14.85 15.5,15.46V16.75C15.5,17.44 15.19,18.07 14.68,18.49C14.17,18.91 13.6,19 12,19C10.4,19 9.83,18.91 9.32,18.49C8.81,18.07 8.5,17.44 8.5,16.75V15.46C9.55,14.85 10.75,14.5 12,14.5Z"/>
-                            </svg>
-                        </a>
-                        <div class="absolute left-14 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                            Profile
-                        </div>
-                    </div>
+        <a href="#" class="w-12 h-12 bg-[#6FAEC9] rounded-full flex items-center justify-center transition-colors">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.1,7 14,7.9 14,9C14,10.1 13.1,11 12,11C10.9,11 10,10.1 10,9C10,7.9 10.9,7 12,7M12,14.5C13.25,14.5 14.45,14.85 15.5,15.46V16.75C15.5,17.44 15.19,18.07 14.68,18.49C14.17,18.91 13.6,19 12,19C10.4,19 9.83,18.91 9.32,18.49C8.81,18.07 8.5,17.44 8.5,16.75V15.46C9.55,14.85 10.75,14.5 12,14.5Z"/>
+            </svg>
+        </a>
+        <div class="absolute left-14 top-1/2 transform -translate-y-1/2 bg-[#6FAEC9] text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+            Profile
+        </div>
+    </div>
                 </nav>
             </aside>
 
