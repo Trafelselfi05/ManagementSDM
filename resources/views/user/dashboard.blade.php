@@ -541,6 +541,48 @@
                         <span class="text-sm font-semibold text-white">Complete</span>
                     </div>
                 </div>
+
+                <!-- Employee Card - Ready 1 -->
+<div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden" data-status="ready">
+    <div class="flex items-start gap-3 mb-4">
+        <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-14.svg" alt="John Smith" class="w-14 h-14 rounded-full object-cover">
+        <div>
+            <h3 class="font-semibold text-gray-900">John Smith</h3>
+            <p class="text-sm text-gray-500">Frontend Developer</p>
+        </div>
+    </div>
+    <div class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+        <span class="text-sm font-semibold text-white">Ready</span>
+    </div>
+</div>
+
+<!-- Employee Card - Ready 2 -->
+<div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden" data-status="ready">
+    <div class="flex items-start gap-3 mb-4">
+        <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-15.svg" alt="Sarah Johnson" class="w-14 h-14 rounded-full object-cover">
+        <div>
+            <h3 class="font-semibold text-gray-900">Sarah Johnson</h3>
+            <p class="text-sm text-gray-500">Backend Developer</p>
+        </div>
+    </div>
+    <div class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+        <span class="text-sm font-semibold text-white">Ready</span>
+    </div>
+</div>
+
+<!-- Employee Card - Ready 3 -->
+<div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden" data-status="ready">
+    <div class="flex items-start gap-3 mb-4">
+        <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-16.svg" alt="Michael Brown" class="w-14 h-14 rounded-full object-cover">
+        <div>
+            <h3 class="font-semibold text-gray-900">Michael Brown</h3>
+            <p class="text-sm text-gray-500">Full Stack Developer</p>
+        </div>
+    </div>
+    <div class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+        <span class="text-sm font-semibold text-white">Ready</span>
+    </div>
+</div>
             </div>
         </div>
     </div>
