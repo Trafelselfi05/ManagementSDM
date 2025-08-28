@@ -7,9 +7,9 @@ Route::get('/', function () {
     return view('user.login');
 });
 
-Route::get('admin/profile', function () {
-    return view('admin.profile');
-})->name('profile.show');
+Route::get('admin/user-info', function () {
+    return view('admin.user-info');
+})->name('user-info');
 
 Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
