@@ -72,6 +72,7 @@
         .sidebar-item.active:hover svg {
             color: white !important;
         }
+        
     </style>
 </head>
 <body class="bg-gray-50 font-inter antialiased">
@@ -167,8 +168,8 @@
                     
                     <!-- Tasks -->
                     <div class="group relative">
-                        <a href="#" class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('task') }}" class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
+                            <svg class="w-6 h-6 {{ request()->routeIs('task.*') ? 'text-gray-600' : 'text-gray-400' }}" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                             </svg>
                         </a>
@@ -221,8 +222,63 @@
             </main>
         </div>
     </div>
-
+<script>
     @stack('scripts')
+    document.addEventListener('DOMContentLoaded', function() {
+    const statusButtons = document.querySelectorAll('.status-btn');
+    const employeeCards = document.querySelectorAll('.employee-card');
     
+    // Set initial state - show only complete employees
+    filterEmployees('complete');
+    
+    statusButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const status = this.getAttribute('data-status');
+            
+            // Update button styles
+            statusButtons.forEach(btn => {
+                btn.classList.remove('bg-gray-900', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+            });
+            
+            this.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+            this.classList.add('bg-gray-900', 'text-white');
+            
+            // Filter employees
+            filterEmployees(status);
+        });
+    });
+    
+    function filterEmployees(status) {
+        employeeCards.forEach(card => {
+            if (card.getAttribute('data-status') === status) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+        
+        // If no cards visible for this status, show message
+        const visibleCards = document.querySelectorAll(`.employee-card[data-status="${status}"]:not(.hidden)`);
+        if (visibleCards.length === 0) {
+            // Create a message element if it doesn't exist
+            let messageElement = document.getElementById('noEmployeesMessage');
+            if (!messageElement) {
+                messageElement = document.createElement('div');
+                messageElement.id = 'noEmployeesMessage';
+                messageElement.className = 'col-span-full text-center py-8 text-gray-500';
+                document.getElementById('employeeCards').appendChild(messageElement);
+            }
+            messageElement.textContent = `No employees with status: ${status}`;
+        } else {
+            // Remove message if it exists
+            const messageElement = document.getElementById('noEmployeesMessage');
+            if (messageElement) {
+                messageElement.remove();
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>

@@ -22,3 +22,11 @@ Route::get('admin/project', function () {
 Route::get('admin/create-project', function () {
     return view('admin.create-project');
 })->name('project.create');
+
+Route::get('admin/task', function () {
+    return view('admin.task');
+})->name('task');
+
+Route::get('admin/task-detail', function () {
+    return view('admin.task-detail');
+})->name('task-detail');
