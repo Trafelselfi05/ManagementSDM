@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Status Karyawan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px 0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid white;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .sidebar {
+            width: 80px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .menu-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item.active {
+            background: #6fadc8;
+            color: white;
+        }
+        
+        .menu-item:hover {
+            transform: scale(1.1);
+        }
+        
+        .content {
+            flex-grow: 1;
+        }
+        
+        .status-cards {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .status-card {
+            flex: 1;
+            min-width: 180px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .status-card.standby {
+            background: #111;
+            color: white;
+        }
+        
+        .employee-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+            color: #777;
+        }
+        
+        .empty-state i {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .right-panel {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .widget {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .widget.tasks {
+            background: #7db445;
+            color: white;
+        }
+        
+        .widget.projects {
+            background: #ffb32d;
+            color: white;
+        }
+        
+        .widget-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .widget-header i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .widget-content {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+        
+        .activity-chart {
+            height: 200px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .chart-bars {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 150px;
+            padding: 0 10px;
+        }
+        
+        .bar {
+            width: 20px;
+            background: #6fadc8;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            padding: 0 10px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #777;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 10px 0;
+            }
+            
+            .right-panel {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .status-cards {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">CompanyLogo</div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search project...">
+                </div>
+                <div class="user-info">
+                    <div>
+                        <div>Freyaa</div>
+                        <div>Admin</div>
+                    </div>
+                    <img src="https://i.pravatar.cc/150?img=12" alt="User Avatar">
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="menu-item active"><i class="fas fa-th-large"></i></div>
+                <div class="menu-item"><i class="fas fa-project-diagram"></i></div>
+                <div class="menu-item"><i class="fas fa-tasks"></i></div>
+                <div class="menu-item"><i class="fas fa-chart-line"></i></div>
+                <div class="menu-item"><i class="fas fa-cog"></i></div>
+            </div>
+            
+            <div class="content">
+                <div class="status-cards">
+                    <div class="status-card">
+                        <h3>Ready</h3>
+                        <div class="count">0</div>
+                    </div>
+                    <div class="status-card standby">
+                        <h3>Stand by</h3>
+                        <div class="count">0</div>
+                    </div>
+                    <div class="status-card">
+                        <h3>Not ready</h3>
+                        <div class="count">0</div>
+                    </div>
+                    <div class="status-card">
+                        <h3>Complete</h3>
+                        <div class="count">0</div>
+                    </div>
+                    <div class="status-card">
+                        <h3>Absent</h3>
+                        <div class="count">0</div>
+                    </div>
+                </div>
+                
+                <div class="employee-section">
+                    <h2>Daftar Karyawan</h2>
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <p>No employee yet</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="widget tasks">
+                    <div class="widget-header">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Tasks</h3>
+                    </div>
+                    <div class="widget-content">
+                        you have 0 tasks
+                    </div>
+                </div>
+                
+                <div class="widget projects">
+                    <div class="widget-header">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3>Project</h3>
+                    </div>
+                    <div class="widget-content">
+                        There's no project
+                    </div>
+                </div>
+                
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Activity</h3>
+                    </div>
+                    <div class="activity-chart">
+                        <div class="chart-bars">
+                            <div class="bar" style="height: 40px;"></div>
+                            <div class="bar" style="height: 70px;"></div>
+                            <div class="bar" style="height: 30px;"></div>
+                            <div class="bar" style="height: 90px;"></div>
+                            <div class="bar" style="height: 50px;"></div>
+                            <div class="bar" style="height: 60px;"></div>
+                            <div class="bar" style="height: 20px;"></div>
+                            <div class="bar" style="height: 80px;"></div>
+                            <div class="bar" style="height: 40px;"></div>
+                            <div class="bar" style="height: 70px;"></div>
+                            <div class="bar" style="height: 30px;"></div>
+                            <div class="bar" style="height: 60px;"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>Jan</span>
+                            <span>Feb</span>
+                            <span>Mar</span>
+                            <span>Apr</span>
+                            <span>May</span>
+                            <span>Jun</span>
+                            <span>Jul</span>
+                            <span>Aug</span>
+                            <span>Sep</span>
+                            <span>Oct</span>
+                            <span>Nov</span>
+                            <span>Dec</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script sederhana untuk menambahkan interaktivitas
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            const statusCards = document.querySelectorAll('.status-card');
+            
+            statusCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    statusCards.forEach(c => c.classList.remove('standby'));
+                    
+                    if (!this.classList.contains('standby')) {
+                        this.classList.add('standby');
+                    } else {
+                        this.classList.remove('standby');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

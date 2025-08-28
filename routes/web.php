@@ -2,17 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Route untuk halaman login
+
 Route::get('/', function () {
-    return view('user.loginUser');
+    return view('user.login');
 });
 
-
-// Route untuk profile user
-Route::get('user/profile', function () {
-    return view('user.profile');
+Route::get('admin/profile', function () {
+    return view('admin.profile');
 })->name('profile.show');
 
-Route::get('user/dashboard', function () {
-    return view('user.dashboard');
+Route::get('admin/dashboard', function () {
+    return view('admin.dashboard');
 })->name('dashboard');
+
+Route::get('admin/project', function () {
+    return view('admin.project');
+})->name('project');
+
+Route::get('admin/create-project', function () {
+    return view('admin.create-project');
+})->name('project.create');

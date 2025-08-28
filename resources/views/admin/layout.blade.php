@@ -21,6 +21,7 @@
         };
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Custom scrollbar */
         .custom-scrollbar::-webkit-scrollbar {
@@ -65,12 +66,12 @@
             color: #6fadc8;
         }
         .sidebar-item.active:hover {
-    background-color: #6FAEC9 !important;
-}
+            background-color: #6FAEC9 !important;
+        }
 
-.sidebar-item.active:hover svg {
-    color: white !important;
-}
+        .sidebar-item.active:hover svg {
+            color: white !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-inter antialiased">
@@ -102,14 +103,35 @@
                     </div>
                 </div>
                 
-                <!-- User Info -->
-                <div class="flex items-center gap-3">
+                <!-- User Info - Tampilan default (untuk halaman selain profile) -->
+                <div class="flex items-center gap-4 {{ request()->routeIs('profile.*') ? 'hidden' : '' }}">
                     <div class="text-right hidden sm:block">
                         <h3 class="text-lg font-semibold text-gray-900">{{ auth()->user()->name ?? 'Freyaa' }}</h3>
                         <p class="text-sm font-medium text-gray-500">{{ auth()->user()->role ?? 'Admin' }}</p>
                     </div>
-                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                        <span class="text-white font-semibold text-sm">{{ substr(auth()->user()->name ?? 'Freyaa', 0, 1) }}</span>
+                    
+                    <!-- User Icon -->
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <span class="text-white font-semibold text-sm">{{ substr(auth()->user()->name ?? 'F', 0, 1) }}</span>
+                        </div>
+                        
+                        <!-- Logout Icon -->
+                        <a href="" 
+                           class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-red-100 transition-colors">
+                            <i class="fas fa-sign-out-alt text-gray-600 text-lg hover:text-red-500"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- User Info - Tampilan ketika di halaman profile -->
+                <div class="flex items-center gap-4 {{ !request()->routeIs('profile.*') ? 'hidden' : '' }}">
+                    <div class="flex flex-col items-end">
+                        <h3 class="text-2xl font-semibold text-gray-900">Freyaa</h3>
+                        <p class="text-base font-medium text-gray-500">{{ auth()->user()->role ?? 'Admin' }}</p>
+                    </div>
+                    <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full">
+                        <i class="fas fa-user text-gray-600 text-xl"></i>
                     </div>
                 </div>
             </div>
@@ -133,8 +155,8 @@
                     
                     <!-- Projects -->
                     <div class="group relative">
-                        <a href="#" class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('project') }}" class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
+                            <svg class="w-6 h-6 {{ request()->routeIs('project.*') ? 'text-gray-600' : 'text-gray-400' }}" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
                             </svg>
                         </a>

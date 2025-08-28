@@ -1,4 +1,4 @@
-@extends('user.layout')
+@extends('admin.layout')
 
 @section('title', 'User Profile - Freyaa')
 
