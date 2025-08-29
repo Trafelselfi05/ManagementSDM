@@ -1,104 +1,228 @@
 @extends('admin/layout')
 
-@section('title', 'Create New Project')
+@section('title', 'Create New Project & SDM')
 
 @section('content')
-    <div class="max-w-4xl mx-auto">
-        <div class="flex items-center justify-between mb-8">
-            <h1 class="text-3xl font-bold text-dark">Create New Project</h1>
-            <a href="{{ route('project') }}" class="text-primary hover:text-dark transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </a>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-sm p-6">
-            <form action="#" method="POST">
-                @csrf
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label for="project-name" class="block text-sm font-medium text-gray-700 mb-2">Project Name</label>
-                        <input type="text" id="project-name" name="name"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
-                            placeholder="Enter project name" required>
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- New Project Section -->
+            <div>
+                <!-- New Project Form -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <!-- New Project Header INSIDE the form -->
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-dark">New Project</h2>
                     </div>
 
-                    <div>
-                        <label for="project-client" class="block text-sm font-medium text-gray-700 mb-2">Client</label>
-                        <input type="text" id="project-client" name="client"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
-                            placeholder="Enter client name">
-                    </div>
-                </div>
+                    <form action="#" method="POST">
+                        @csrf
 
-                <div class="mb-6">
-                    <label for="project-description"
-                        class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                    <textarea id="project-description" name="description" rows="4"
-                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
-                        placeholder="Describe the project..."></textarea>
-                </div>
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label for="project-name" class="block text-sm font-medium text-gray-700 mb-2">Project
+                                    Name</label>
+                                <input type="text" id="project-name" name="name"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                    placeholder="Enter project name" required>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="project-start" class="block text-sm font-medium text-gray-700 mb-2">Start
+                                        Date</label>
+                                    <input type="date" id="project-start" name="start_date"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors">
+                                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div>
-                        <label for="project-start" class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
-                        <input type="date" id="project-start" name="start_date"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors">
-                    </div>
+                                <div>
+                                    <label for="project-end" class="block text-sm font-medium text-gray-700 mb-2">End
+                                        Date</label>
+                                    <input type="date" id="project-end" name="end_date"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors">
+                                </div>
+                            </div>
 
-                    <div>
-                        <label for="project-end" class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
-                        <input type="date" id="project-end" name="end_date"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors">
-                    </div>
+                            <div>
+                                <label for="project-status" class="block text-sm font-medium text-gray-700 mb-2">Level
+                                    Project</label>
+                                <select id="project-status" name="status"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors">
+                                    <option value="planning">Low</option>
+                                    <option value="in_progress">Medium</option>
+                                    <option value="on_hold">High</option>
+                                </select>
+                            </div>
 
-                    <div>
-                        <label for="project-status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                        <select id="project-status" name="status"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors">
-                            <option value="planning">Planning</option>
-                            <option value="in_progress">In Progress</option>
-                            <option value="on_hold">On Hold</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Team Members</label>
-                    <div class="flex flex-wrap gap-2">
-                        <div class="flex items-center bg-gray-100 rounded-full px-3 py-1">
-                            <span class="text-sm">John Doe</span>
-                            <button type="button" class="ml-1 text-gray-500 hover:text-gray-700">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </button>
+                            <div>
+                                <label for="project-description"
+                                    class="block text-sm font-medium text-gray-700 mb-2">About</label>
+                                <textarea id="project-description" name="description" rows="3"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                    placeholder="Describe the project..."></textarea>
+                            </div>
                         </div>
-                        <button type="button" class="flex items-center text-primary hover:text-dark">
-                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                            Add Member
-                        </button>
-                    </div>
+                    </form>
                 </div>
+            </div>
 
-                <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
-                    <a href="{{ route('project') }}"
+            <!-- SDM Section -->
+            <div>
+                <!-- SDM Form -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <!-- SDM Header INSIDE the form -->
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-dark">SDM</h2>
+                    </div>
+
+                    <form action="#" method="POST">
+                        @csrf
+
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label for="employee-position" class="block text-sm font-medium text-gray-700 mb-2">Project
+                                    Director</label>
+                                <select id="employee-position" name="position"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                    required>
+                                    <option value="">Select Project Director</option>
+                                    <option value="developer">Niken Nazwa S</option>
+                                    <option value="designer">Winda Putri Agustina</option>
+                                    <option value="manager">Reza Adi Wardana</option>
+                                    <option value="analyst">Nizar Nur Afif</option>
+                                </select>
+                            </div>
+                            <!--  Engineer Web & Analis -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="employee-position"
+                                        class="block text-sm font-medium text-gray-700 mb-2">Engineer Web</label>
+                                    <select id="employee-position" name="position"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                        required>
+                                        <option value="">Select Engineer Web</option>
+                                        <option value="developer">Niken Nazwa S</option>
+                                        <option value="designer">Winda Putri Agustina</option>
+                                        <option value="manager">Reza Adi Wardana</option>
+                                        <option value="analyst">Nizar Nur Afif</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="employee-department"
+                                        class="block text-sm font-medium text-gray-700 mb-2">Analis</label>
+                                    <select id="employee-department" name="department"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                        required>
+                                        <option value="">Select Analis</option>
+                                        <option value="developer">Niken Nazwa S</option>
+                                        <option value="designer">Winda Putri Agustina</option>
+                                        <option value="manager">Reza Adi Wardana</option>
+                                        <option value="analyst">Nizar Nur Afif</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!--  Engineer Android & Content Creator -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="employee-position"
+                                        class="block text-sm font-medium text-gray-700 mb-2">Engineer Android</label>
+                                    <select id="employee-position" name="position"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                        required>
+                                        <option value="">Select Engineer Android</option>
+                                        <option value="developer">Niken Nazwa S</option>
+                                        <option value="designer">Winda Putri Agustina</option>
+                                        <option value="manager">Reza Adi Wardana</option>
+                                        <option value="analyst">Nizar Nur Afif</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="employee-department"
+                                        class="block text-sm font-medium text-gray-700 mb-2">Content Creator</label>
+                                    <select id="employee-department" name="department"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                        required>
+                                        <option value="">Select Content Creator</option>
+                                        <option value="developer">Niken Nazwa S</option>
+                                        <option value="designer">Winda Putri Agustina</option>
+                                        <option value="manager">Reza Adi Wardana</option>
+                                        <option value="analyst">Nizar Nur Afif</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  Engineer IOS & Copywriter -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="employee-position"
+                                    class="block text-sm font-medium text-gray-700 mb-2">Engineer IOS</label>
+                                <select id="employee-position" name="position"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                    required>
+                                    <option value="">Select Engineer IOS</option>
+                                    <option value="developer">Niken Nazwa S</option>
+                                    <option value="designer">Winda Putri Agustina</option>
+                                    <option value="manager">Reza Adi Wardana</option>
+                                    <option value="analyst">Nizar Nur Afif</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="employee-department"
+                                    class="block text-sm font-medium text-gray-700 mb-2">Copywriter</label>
+                                <select id="employee-department" name="department"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                    required>
+                                    <option value="">Select Copywriter</option>
+                                    <option value="developer">Niken Nazwa S</option>
+                                    <option value="designer">Winda Putri Agustina</option>
+                                    <option value="manager">Reza Adi Wardana</option>
+                                    <option value="analyst">Nizar Nur Afif</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--  Engineer IOS & Copywriter -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="employee-position"
+                                    class="block text-sm font-medium text-gray-700 mb-2">UI/UX</label>
+                                <select id="employee-position" name="position"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                    required>
+                                    <option value="">Select UI/UX</option>
+                                    <option value="developer">Niken Nazwa S</option>
+                                    <option value="designer">Winda Putri Agustina</option>
+                                    <option value="manager">Reza Adi Wardana</option>
+                                    <option value="analyst">Nizar Nur Afif</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="employee-department"
+                                    class="block text-sm font-medium text-gray-700 mb-2">Tester</label>
+                                <select id="employee-department" name="department"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
+                                    required>
+                                    <option value="">Select Tester</option>
+                                    <option value="developer">Niken Nazwa S</option>
+                                    <option value="designer">Winda Putri Agustina</option>
+                                    <option value="manager">Reza Adi Wardana</option>
+                                    <option value="analyst">Nizar Nur Afif</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="flex justify-end space-x-4 pt-4 border-t border-gray-200">
+                    <button type="button"
                         class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
                         Cancel
-                    </a>
+                    </button>
                     <button type="submit"
                         class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-colors">
-                        Create Project
+                        Add Employee
                     </button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 @endsection

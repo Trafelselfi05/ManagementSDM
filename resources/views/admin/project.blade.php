@@ -56,13 +56,11 @@
                             <div class="font-medium text-gray-800">Athena Cyntia</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                High
-                            </span>
+                            <span
+                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span
-                                class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                            <span class="px-2.5 py-1 bg-[#0000FF] text-white text-sm font-semibold rounded-[10px]">
                                 Running
                             </span>
                         </td>
@@ -80,13 +78,11 @@
                             <div class="font-medium text-gray-800">Athena Cyntia</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                High
-                            </span>
+                            <span
+                                class="px-2.5 py-1 bg-[#6fadc8] text-white text-sm font-semibold rounded-[10px]">Low</span>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span
-                                class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">
+                            <span class="px-2.5 py-1 bg-[#FFA500] text-white text-sm font-semibold rounded-[10px]">
                                 Maintenance
                             </span>
                         </td>
@@ -104,13 +100,11 @@
                             <div class="font-medium text-gray-800">Athena Cyntia</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                High
-                            </span>
+                            <span
+                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span
-                                class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                            <span class="px-2.5 py-1 bg-[#0000FF] text-white text-sm font-semibold rounded-[10px]">
                                 Running
                             </span>
                         </td>
@@ -128,13 +122,11 @@
                             <div class="font-medium text-gray-800">Athena Cyntia</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                High
-                            </span>
+                            <span
+                                class="px-2.5 py-1 bg-[#ffb32d] text-white text-sm font-semibold rounded-[10px]">Medium</span>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span
-                                class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                            <span class="px-2.5 py-1 bg-[#FFA500] text-white text-sm font-semibold rounded-[10px]">
                                 Maintenance
                             </span>
                         </td>
@@ -152,13 +144,11 @@
                             <div class="font-medium text-gray-800">Athena Cyntia</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                High
-                            </span>
+                            <span
+                                class="px-2.5 py-1 bg-[#6fadc8] text-white text-sm font-semibold rounded-[10px]">Low</span>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span
-                                class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                            <span class="px-2.5 py-1 bg-[#50C878] text-white text-sm font-semibold rounded-[10px]">
                                 To do
                             </span>
                         </td>
@@ -176,13 +166,11 @@
                             <div class="font-medium text-gray-800">Athena Cyntia</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                High
-                            </span>
+                            <span
+                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <span
-                                class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                            <span class="px-2.5 py-1 bg-[#50C878] text-white text-sm font-semibold rounded-[10px]">
                                 To do
                             </span>
                         </td>
