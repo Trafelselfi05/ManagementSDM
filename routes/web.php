@@ -30,3 +30,7 @@ Route::get('admin/task', function () {
 Route::get('admin/task-detail', function () {
     return view('admin.task-detail');
 })->name('task-detail');
+
+Route::get('admin/activity', function () {
+    return view('admin.activity');
+})->name('activity');
