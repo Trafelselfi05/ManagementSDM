@@ -257,6 +257,32 @@
         .user-icon.active:hover span {
             color: white !important;
         }
+
+        /* administration style */
+        /* Hide default date picker styles but keep functionality */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            width: 50px;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        /* Hide dropdown arrow for select */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* Focus styles */
+        select:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
@@ -333,8 +359,9 @@
                     <div class="group relative">
                         <a href="{{ route('dashboard') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 31 31">
+                                <path
+                                    d="M1.83333 14.9583H10.5833C10.9701 14.9583 11.341 14.8047 11.6145 14.5312C11.888 14.2577 12.0417 13.8868 12.0417 13.5V1.83333C12.0417 1.44656 11.888 1.07563 11.6145 0.802136C11.341 0.528645 10.9701 0.375 10.5833 0.375H1.83333C1.44656 0.375 1.07563 0.528645 0.802136 0.802136C0.528645 1.07563 0.375 1.44656 0.375 1.83333V13.5C0.375 13.8868 0.528645 14.2577 0.802136 14.5312C1.07563 14.8047 1.44656 14.9583 1.83333 14.9583ZM0.375 25.1667C0.375 25.5534 0.528645 25.9244 0.802136 26.1979C1.07563 26.4714 1.44656 26.625 1.83333 26.625H10.5833C10.9701 26.625 11.341 26.4714 11.6145 26.1979C11.888 25.9244 12.0417 25.5534 12.0417 25.1667V19.3333C12.0417 18.9466 11.888 18.5756 11.6145 18.3021C11.341 18.0286 10.9701 17.875 10.5833 17.875H1.83333C1.44656 17.875 1.07563 18.0286 0.802136 18.3021C0.528645 18.5756 0.375 18.9466 0.375 19.3333V25.1667ZM14.9583 25.1667C14.9583 25.5534 15.112 25.9244 15.3855 26.1979C15.659 26.4714 16.0299 26.625 16.4167 26.625H25.1667C25.5534 26.625 25.9244 26.4714 26.1979 26.1979C26.4714 25.9244 26.625 25.5534 26.625 25.1667V14.9583C26.625 14.5716 26.4714 14.2006 26.1979 13.9271C25.9244 13.6536 25.5534 13.5 25.1667 13.5H16.4167C16.0299 13.5 15.659 13.6536 15.3855 13.9271C15.112 14.2006 14.9583 14.5716 14.9583 14.9583V25.1667ZM16.4167 10.5833H25.1667C25.5534 10.5833 25.9244 10.4297 26.1979 10.1562C26.4714 9.88271 26.625 9.51177 26.625 9.125V1.83333C26.625 1.44656 26.4714 1.07563 26.1979 0.802136C25.9244 0.528645 25.5534 0.375 25.1667 0.375H16.4167C16.0299 0.375 15.659 0.528645 15.3855 0.802136C15.112 1.07563 14.9583 1.44656 14.9583 1.83333V9.125C14.9583 9.51177 15.112 9.88271 15.3855 10.1562C15.659 10.4297 16.0299 10.5833 16.4167 10.5833Z" />
                             </svg>
                         </a>
                         <div
@@ -348,9 +375,9 @@
                         <a href="{{ route('project') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
                             <svg class="w-6 h-6 {{ request()->routeIs('project.*') ? 'text-gray-600' : 'text-gray-400' }}"
-                                fill="currentColor" viewBox="0 0 24 24">
+                                fill="currentColor" viewBox="0 0 31 31">
                                 <path
-                                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+                                    d="M27.0781 0.828125H1.92188C1.31689 0.828125 0.828125 1.31689 0.828125 1.92188V27.0781C0.828125 27.6831 1.31689 28.1719 1.92188 28.1719H27.0781C27.6831 28.1719 28.1719 27.6831 28.1719 27.0781V1.92188C28.1719 1.31689 27.6831 0.828125 27.0781 0.828125ZM9.57812 22.4297C9.57812 22.5801 9.45508 22.7031 9.30469 22.7031H6.57031C6.41992 22.7031 6.29688 22.5801 6.29688 22.4297V6.57031C6.29688 6.41992 6.41992 6.29688 6.57031 6.29688H9.30469C9.45508 6.29688 9.57812 6.41992 9.57812 6.57031V22.4297ZM16.1406 12.8594C16.1406 13.0098 16.0176 13.1328 15.8672 13.1328H13.1328C12.9824 13.1328 12.8594 13.0098 12.8594 12.8594V6.57031C12.8594 6.41992 12.9824 6.29688 13.1328 6.29688H15.8672C16.0176 6.29688 16.1406 6.41992 16.1406 6.57031V12.8594ZM22.7031 15.3203C22.7031 15.4707 22.5801 15.5938 22.4297 15.5938H19.6953C19.5449 15.5938 19.4219 15.4707 19.4219 15.3203V6.57031C19.4219 6.41992 19.5449 6.29688 19.6953 6.29688H22.4297C22.5801 6.29688 22.7031 6.41992 22.7031 6.57031V15.3203Z" />
                             </svg>
                         </a>
                         <div
@@ -364,9 +391,9 @@
                         <a href="{{ route('task') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
                             <svg class="w-6 h-6 {{ request()->routeIs('task.*') ? 'text-gray-600' : 'text-gray-400' }}"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                                fill="currentColor" viewBox="0 0 31 31">
+                                <path xmlns="http://www.w3.org/2000/svg"
+                                    d="M15.4154 0.916016H3.7487C2.14453 0.916016 0.846615 2.22852 0.846615 3.83268L0.832031 27.166C0.832031 28.7702 2.12995 30.0827 3.73411 30.0827H21.2487C22.8529 30.0827 24.1654 28.7702 24.1654 27.166V9.66602L15.4154 0.916016ZM10.9529 24.2494L5.79036 19.0868L7.84662 17.0306L10.9383 20.1223L17.1216 13.9389L19.1779 15.9952L10.9529 24.2494ZM13.957 11.1243V3.10352L21.9779 11.1243H13.957Z" />
                             </svg>
                         </a>
                         <div
@@ -380,9 +407,9 @@
                         <a href="{{ route('activity') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
                             <svg class="w-6 h-6 {{ request()->routeIs('activity.*') ? 'text-gray-600' : 'text-gray-400' }}"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z" />
+                                fill="currentColor" viewBox="0 0 31 31">
+                                <path xmlns="http://www.w3.org/2000/svg"
+                                    d="M7.15292 0.530625C9.01375 0.28125 11.3937 0.28125 14.4169 0.28125H14.5831C17.6063 0.28125 19.9863 0.28125 21.8456 0.530625C23.756 0.787292 25.2785 1.32542 26.4758 2.52417C27.6746 3.72146 28.2113 5.24542 28.4694 7.15292C28.7188 9.01375 28.7188 11.3937 28.7188 14.4169V14.5831C28.7188 17.6063 28.7188 19.9863 28.4694 21.8456C28.2127 23.756 27.6746 25.2785 26.4758 26.4758C25.2785 27.6746 23.7546 28.2113 21.8471 28.4694C19.9863 28.7188 17.6063 28.7188 14.5831 28.7188H14.4169C11.3937 28.7188 9.01375 28.7188 7.15438 28.4694C5.24396 28.2127 3.72146 27.6746 2.52417 26.4758C1.32542 25.2785 0.78875 23.7546 0.530625 21.8471C0.28125 19.9863 0.28125 17.6063 0.28125 14.5831V14.4169C0.28125 11.3937 0.28125 9.01375 0.530625 7.15438C0.787292 5.24396 1.32542 3.72146 2.52417 2.52417C3.72146 1.32542 5.24542 0.78875 7.15292 0.530625ZM14.1135 6.99396C14.0671 6.76322 13.9474 6.55363 13.7724 6.39631C13.5973 6.23899 13.3761 6.14235 13.1418 6.12073C12.9074 6.09911 12.6723 6.15367 12.4714 6.27631C12.2705 6.39894 12.1146 6.58311 12.0267 6.80146L9.38417 13.4062H7.20833C6.91825 13.4062 6.64005 13.5215 6.43494 13.7266C6.22982 13.9317 6.11458 14.2099 6.11458 14.5C6.11458 14.7901 6.22982 15.0683 6.43494 15.2734C6.64005 15.4785 6.91825 15.5938 7.20833 15.5938H10.125C10.3436 15.5936 10.5571 15.5279 10.738 15.4052C10.919 15.2825 11.059 15.1084 11.14 14.9054L12.6902 11.0306L14.8865 22.006C14.9329 22.2368 15.0526 22.4464 15.2276 22.6037C15.4027 22.761 15.6239 22.8577 15.8582 22.8793C16.0926 22.9009 16.3277 22.8463 16.5286 22.7237C16.7295 22.6011 16.8854 22.4169 16.9733 22.1985L19.6158 15.5938H21.7917C22.0817 15.5938 22.3599 15.4785 22.5651 15.2734C22.7702 15.0683 22.8854 14.7901 22.8854 14.5C22.8854 14.2099 22.7702 13.9317 22.5651 13.7266C22.3599 13.5215 22.0817 13.4062 21.7917 13.4062H18.875C18.6566 13.4063 18.4432 13.4718 18.2623 13.5942C18.0814 13.7166 17.9413 13.8904 17.86 14.0931L16.3083 17.9708L14.1135 6.99396Z" />
                             </svg>
                         </a>
                         <div
@@ -391,28 +418,30 @@
                         </div>
                     </div>
 
-                    <!-- Settings -->
+                    <!-- Administration -->
                     <div class="group relative">
-                        <a href="#"
+                        <a href="{{ route('administration') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 {{ request()->routeIs('administration.*') ? 'text-gray-600' : 'text-gray-400' }}"
+                                fill="currentColor" viewBox="0 0 31 31">
                                 <path
-                                    d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+                                    d="M6.20833 0.916992C4.66124 0.916992 3.17751 1.53157 2.08354 2.62554C0.989581 3.7195 0.375 5.20323 0.375 6.75033V24.2503C0.375 25.7974 0.989581 27.2812 2.08354 28.3751C3.17751 29.4691 4.66124 30.0837 6.20833 30.0837H26.625V0.916992H6.20833ZM12.0417 5.29199H22.25V8.20866H12.0417V5.29199ZM3.29167 24.2503C3.29167 23.4768 3.59896 22.7349 4.14594 22.1879C4.69292 21.641 5.43479 21.3337 6.20833 21.3337H23.7083V27.167H6.20833C5.43479 27.167 4.69292 26.8597 4.14594 26.3127C3.59896 25.7657 3.29167 25.0239 3.29167 24.2503Z" />
                             </svg>
                         </a>
                         <div
                             class="absolute left-14 top-1/2 transform -translate-y-1/2 bg-[#6FAEC9] text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                            Settings
+                            Administration
                         </div>
                     </div>
+
 
                     <!-- Profile -->
                     <div class="group relative">
                         <a href=""
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 31 32">
                                 <path
-                                    d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.1,7 14,7.9 14,9C14,10.1 13.1,11 12,11C10.9,11 10,10.1 10,9C10,7.9 10.9,7 12,7M12,14.5C13.25,14.5 14.45,14.85 15.5,15.46V16.75C15.5,17.44 15.19,18.07 14.68,18.49C14.17,18.91 13.6,19 12,19C10.4,19 9.83,18.91 9.32,18.49C8.81,18.07 8.5,17.44 8.5,16.75V15.46C9.55,14.85 10.75,14.5 12,14.5Z" />
+                                    d="M13.5 0.458008L0.375 6.29134V15.0413C0.375 23.1351 5.975 30.7038 13.5 32.5413C21.025 30.7038 26.625 23.1351 26.625 15.0413V6.29134L13.5 0.458008ZM13.5 6.14551C14.3653 6.14551 15.2112 6.4021 15.9306 6.88283C16.6501 7.36356 17.2108 8.04684 17.542 8.84627C17.8731 9.64569 17.9597 10.5254 17.7909 11.374C17.6221 12.2227 17.2054 13.0022 16.5936 13.6141C15.9817 14.226 15.2022 14.6426 14.3535 14.8114C13.5049 14.9803 12.6252 14.8936 11.8258 14.5625C11.0263 14.2313 10.3431 13.6706 9.86232 12.9511C9.38159 12.2317 9.125 11.3858 9.125 10.5205C9.125 9.36019 9.58594 8.24739 10.4064 7.42692C11.2269 6.60644 12.3397 6.14551 13.5 6.14551ZM13.5 17.6663C16.4167 17.6663 22.25 19.2559 22.25 22.158C21.2922 23.6019 19.992 24.7864 18.4652 25.6058C16.9385 26.4251 15.2327 26.8539 13.5 26.8539C11.7673 26.8539 10.0615 26.4251 8.53477 25.6058C7.00803 24.7864 5.70779 23.6019 4.75 22.158C4.75 19.2559 10.5833 17.6663 13.5 17.6663Z" />
                             </svg>
                         </a>
                         <div
@@ -489,7 +518,7 @@
             }
         });
 
-         // Modal functionality
+        // Modal functionality
         document.addEventListener('DOMContentLoaded', function() {
             // Elements
             const createTaskBtn = document.getElementById('createTaskBtn');
@@ -649,174 +678,286 @@
                 });
             });
         });
-            // Task Detail and Edit Modal functionality
+        // Task Detail and Edit Modal functionality
         document.addEventListener('DOMContentLoaded', function() {
-        const taskRows = document.querySelectorAll('.task-row');
-        const taskModal = document.getElementById('taskDetailModal');
-        const closeModalBtn = document.getElementById('closeTaskModal');
-        const editTaskBtn = document.getElementById('editTaskBtn');
-        const editTaskModal = document.getElementById('editTaskModal');
-        const closeEditModalBtn = document.getElementById('closeEditTaskModal');
-        const submitEditTaskBtn = document.getElementById('submitEditTask');
-        const editTaskNameInput = document.getElementById('edit-task-name');
-        const levelIndicators = document.querySelectorAll('.level-indicator');
-        const levelInputs = document.querySelectorAll('input[name="task-level"]');
-        
-        // Status color mapping
-        const statusColors = {
-            'To do': '#e94949',
-            'Progress': '#ffb32d',
-            'Complete': '#7db445',
-            'Review': '#6fadc8'
-        };
-        
-        // Level color mapping
-        const levelColors = {
-            'High': '#e94949',
-            'Medium': '#ffb32d',
-            'Low': '#6fadc8'
-        };
+            const taskRows = document.querySelectorAll('.task-row');
+            const taskModal = document.getElementById('taskDetailModal');
+            const closeModalBtn = document.getElementById('closeTaskModal');
+            const editTaskBtn = document.getElementById('editTaskBtn');
+            const editTaskModal = document.getElementById('editTaskModal');
+            const closeEditModalBtn = document.getElementById('closeEditTaskModal');
+            const submitEditTaskBtn = document.getElementById('submitEditTask');
+            const editTaskNameInput = document.getElementById('edit-task-name');
+            const levelIndicators = document.querySelectorAll('.level-indicator');
+            const levelInputs = document.querySelectorAll('input[name="task-level"]');
 
-        let currentTaskData = {};
+            // Status color mapping
+            const statusColors = {
+                'To do': '#e94949',
+                'Progress': '#ffb32d',
+                'Complete': '#7db445',
+                'Review': '#6fadc8'
+            };
 
-        // Open modal when a task row is clicked
-        taskRows.forEach(row => {
-            row.addEventListener('click', function() {
-                const taskId = this.getAttribute('data-task-id');
-                const taskName = this.getAttribute('data-task-name');
-                const project = this.getAttribute('data-project');
-                const assignee = this.getAttribute('data-assignee');
-                const level = this.getAttribute('data-level');
-                const status = this.getAttribute('data-status');
-                const created = this.getAttribute('data-created');
-                const timeline = this.getAttribute('data-timeline');
-                
-                // Store current task data
-                currentTaskData = {
-                    taskId, taskName, project, assignee, level, status, created, timeline
-                };
-                
-                // Update modal content with task data
-                document.getElementById('task-details-heading').textContent = taskName;
-                document.getElementById('task-project').textContent = project;
-                document.getElementById('task-assignee').textContent = assignee;
-                document.getElementById('assignee-initial').textContent = assignee.charAt(0);
-                document.getElementById('task-timeline').textContent = timeline;
-                document.getElementById('task-timeline').setAttribute('datetime', timeline.replace(/\s/g, ''));
-                
-                // Update status with appropriate color
-                const statusElement = document.getElementById('task-status');
-                statusElement.innerHTML = `<span class="font-medium text-white text-sm">${status}</span>`;
-                statusElement.style.backgroundColor = statusColors[status] || '#e94949';
-                
-                // Update level with appropriate color
-                const levelElement = document.getElementById('task-level');
-                levelElement.innerHTML = `<span class="font-medium text-white text-sm">${level}</span>`;
-                levelElement.style.backgroundColor = levelColors[level] || '#ffb32d';
-                
-                // Show the modal
-                taskModal.classList.remove('hidden');
-                taskModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            // Level color mapping
+            const levelColors = {
+                'High': '#e94949',
+                'Medium': '#ffb32d',
+                'Low': '#6fadc8'
+            };
+
+            let currentTaskData = {};
+
+            // Open modal when a task row is clicked
+            taskRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const taskId = this.getAttribute('data-task-id');
+                    const taskName = this.getAttribute('data-task-name');
+                    const project = this.getAttribute('data-project');
+                    const assignee = this.getAttribute('data-assignee');
+                    const level = this.getAttribute('data-level');
+                    const status = this.getAttribute('data-status');
+                    const created = this.getAttribute('data-created');
+                    const timeline = this.getAttribute('data-timeline');
+
+                    // Store current task data
+                    currentTaskData = {
+                        taskId,
+                        taskName,
+                        project,
+                        assignee,
+                        level,
+                        status,
+                        created,
+                        timeline
+                    };
+
+                    // Update modal content with task data
+                    document.getElementById('task-details-heading').textContent = taskName;
+                    document.getElementById('task-project').textContent = project;
+                    document.getElementById('task-assignee').textContent = assignee;
+                    document.getElementById('assignee-initial').textContent = assignee.charAt(0);
+                    document.getElementById('task-timeline').textContent = timeline;
+                    document.getElementById('task-timeline').setAttribute('datetime', timeline
+                        .replace(/\s/g, ''));
+
+                    // Update status with appropriate color
+                    const statusElement = document.getElementById('task-status');
+                    statusElement.innerHTML =
+                        `<span class="font-medium text-white text-sm">${status}</span>`;
+                    statusElement.style.backgroundColor = statusColors[status] || '#e94949';
+
+                    // Update level with appropriate color
+                    const levelElement = document.getElementById('task-level');
+                    levelElement.innerHTML =
+                        `<span class="font-medium text-white text-sm">${level}</span>`;
+                    levelElement.style.backgroundColor = levelColors[level] || '#ffb32d';
+
+                    // Show the modal
+                    taskModal.classList.remove('hidden');
+                    taskModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
             });
-        });
-        
-        // Close modal when close button is clicked
-        closeModalBtn.addEventListener('click', function() {
-            taskModal.classList.remove('active');
-            taskModal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        });
-        
-        // Open edit modal when edit button is clicked
-        editTaskBtn.addEventListener('click', function() {
-            // Populate edit form with current task data
-            editTaskNameInput.value = currentTaskData.taskName;
-            
-            // Set the correct level radio button
-            document.querySelectorAll('input[name="task-level"]').forEach(input => {
-                if (input.value === currentTaskData.level) {
-                    input.checked = true;
-                    updateLevelIndicator(input.value);
+
+            // Close modal when close button is clicked
+            closeModalBtn.addEventListener('click', function() {
+                taskModal.classList.remove('active');
+                taskModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Open edit modal when edit button is clicked
+            editTaskBtn.addEventListener('click', function() {
+                // Populate edit form with current task data
+                editTaskNameInput.value = currentTaskData.taskName;
+
+                // Set the correct level radio button
+                document.querySelectorAll('input[name="task-level"]').forEach(input => {
+                    if (input.value === currentTaskData.level) {
+                        input.checked = true;
+                        updateLevelIndicator(input.value);
+                    }
+                });
+
+                // Close detail modal and open edit modal
+                taskModal.classList.remove('active');
+                taskModal.classList.add('hidden');
+                editTaskModal.classList.remove('hidden');
+                editTaskModal.classList.add('active');
+            });
+
+            // Close edit modal when close button is clicked
+            closeEditModalBtn.addEventListener('click', function() {
+                editTaskModal.classList.remove('active');
+                editTaskModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Handle level selection
+            levelInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    updateLevelIndicator(this.value);
+                });
+            });
+
+            // Update level indicator style
+            function updateLevelIndicator(level) {
+                levelIndicators.forEach(indicator => {
+                    indicator.style.backgroundColor = 'transparent';
+                    if (indicator.getAttribute('data-level') === level) {
+                        indicator.style.backgroundColor = levelColors[level] || '#ffb32d';
+                    }
+                });
+            }
+
+            // Submit edit form
+            submitEditTaskBtn.addEventListener('click', function() {
+                const newTaskName = editTaskNameInput.value;
+                const newLevel = document.querySelector('input[name="task-level"]:checked').value;
+
+                // Update the task data (in a real app, this would send to server)
+                currentTaskData.taskName = newTaskName;
+                currentTaskData.level = newLevel;
+
+                // Show success message
+                alert('Task updated successfully!');
+
+                // Close edit modal
+                editTaskModal.classList.remove('active');
+                editTaskModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close modal when clicking outside
+            [taskModal, editTaskModal].forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (taskModal.classList.contains('active')) {
+                        taskModal.classList.remove('active');
+                        taskModal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }
+                    if (editTaskModal.classList.contains('active')) {
+                        editTaskModal.classList.remove('active');
+                        editTaskModal.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }
                 }
             });
-            
-            // Close detail modal and open edit modal
-            taskModal.classList.remove('active');
-            taskModal.classList.add('hidden');
-            editTaskModal.classList.remove('hidden');
-            editTaskModal.classList.add('active');
         });
-        
-        // Close edit modal when close button is clicked
-        closeEditModalBtn.addEventListener('click', function() {
-            editTaskModal.classList.remove('active');
-            editTaskModal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        });
-        
-        // Handle level selection
-        levelInputs.forEach(input => {
-            input.addEventListener('change', function() {
-                updateLevelIndicator(this.value);
+
+        // administration page - toggle user status
+        // Radio button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle radio button visual feedback
+            const radioGroups = ['bring_laptop', 'can_be_contacted'];
+
+            radioGroups.forEach(groupName => {
+                const radios = document.querySelectorAll(`input[name="${groupName}"]`);
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        // Reset all images in this group
+                        const allLabels = document.querySelectorAll(
+                            `input[name="${groupName}"]`);
+                        allLabels.forEach(r => {
+                            const img = r.nextElementSibling;
+                            img.src =
+                                'https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg';
+                        });
+
+                        // Set selected image (you can change this to a selected state image)
+                        if (this.checked) {
+                            const selectedImg = this.nextElementSibling;
+                            // You can replace this with a different image for selected state
+                            selectedImg.src =
+                                'https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg';
+                            selectedImg.style.filter = 'brightness(0.8)'; // Visual feedback
+                        }
+                    });
+                });
+            });
+
+            // Date validation
+            const startDate = document.getElementById('start-date');
+            const endDate = document.getElementById('end-date');
+
+            startDate.addEventListener('change', function() {
+                endDate.min = this.value;
+                if (endDate.value && endDate.value < this.value) {
+                    endDate.value = '';
+                    alert('End date must be after start date');
+                }
+            });
+
+            endDate.addEventListener('change', function() {
+                if (startDate.value && this.value < startDate.value) {
+                    this.value = '';
+                    alert('End date must be after start date');
+                }
             });
         });
-        
-        // Update level indicator style
-        function updateLevelIndicator(level) {
-            levelIndicators.forEach(indicator => {
-                indicator.style.backgroundColor = 'transparent';
-                if (indicator.getAttribute('data-level') === level) {
-                    indicator.style.backgroundColor = levelColors[level] || '#ffb32d';
-                }
+
+        // Form submission
+        function submitForm() {
+            const form = document.querySelector('form');
+            const formData = new FormData(form);
+
+            // Basic validation
+            const category = formData.get('leave_category');
+            const startDate = formData.get('start_date');
+            const endDate = formData.get('end_date');
+            const description = formData.get('description');
+
+            if (!category) {
+                alert('Please select a leave category');
+                return;
+            }
+
+            if (!startDate || !endDate) {
+                alert('Please select both start and end dates');
+                return;
+            }
+
+            if (!description.trim()) {
+                alert('Please enter a description');
+                return;
+            }
+
+            // Log form data (replace with actual submission)
+            console.log('Form Data:', {
+                category: category,
+                startDate: startDate,
+                endDate: endDate,
+                description: description,
+                bringLaptop: formData.get('bring_laptop'),
+                canBeContacted: formData.get('can_be_contacted')
+            });
+
+            alert('Leave request submitted successfully!');
+        }
+
+        // Reset form
+        function resetForm() {
+            const form = document.querySelector('form');
+            form.reset();
+
+            // Reset radio button visual states
+            const allRadioImages = document.querySelectorAll('input[type="radio"] + img');
+            allRadioImages.forEach(img => {
+                img.style.filter = 'none';
             });
         }
-        
-        // Submit edit form
-        submitEditTaskBtn.addEventListener('click', function() {
-            const newTaskName = editTaskNameInput.value;
-            const newLevel = document.querySelector('input[name="task-level"]:checked').value;
-            
-            // Update the task data (in a real app, this would send to server)
-            currentTaskData.taskName = newTaskName;
-            currentTaskData.level = newLevel;
-            
-            // Show success message
-            alert('Task updated successfully!');
-            
-            // Close edit modal
-            editTaskModal.classList.remove('active');
-            editTaskModal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        });
-        
-        // Close modal when clicking outside
-        [taskModal, editTaskModal].forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    modal.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        });
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                if (taskModal.classList.contains('active')) {
-                    taskModal.classList.remove('active');
-                    taskModal.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                }
-                if (editTaskModal.classList.contains('active')) {
-                    editTaskModal.classList.remove('active');
-                    editTaskModal.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                }
-            }
-        });
-    });
     </script>
 </body>
 

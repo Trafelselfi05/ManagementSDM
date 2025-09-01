@@ -34,3 +34,7 @@ Route::get('admin/task-detail', function () {
 Route::get('admin/activity', function () {
     return view('admin.activity');
 })->name('activity');
+
+Route::get('admin/administration', function () {
+    return view('admin.administration');
+})->name('administration');

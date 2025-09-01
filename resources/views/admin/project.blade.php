@@ -7,21 +7,20 @@
         <!-- Filter and Create Project Buttons -->
         <div class="flex justify-between items-center mb-8">
             <!-- Filter Button -->
-            <button
-                class="flex items-center gap-2.5 bg-[#f9f9f9] rounded-[10px] shadow-[0_0_4px_rgba(0,0,0,0.25)] px-4 py-4 hover:bg-gray-100 transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 1H16M2 5H14M4 9H12M6 13H10" stroke="#7D7D7D" stroke-width="2" />
-                </svg>
-                <span class="text-[#7D7D7D] text-lg font-medium">Filter</span>
-            </button>
+             <div class="flex justify-between items-center mb-8">
+        <div class="flex items-center gap-2 bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] px-4 py-2">
+            <img class="w-6 h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />
+            <span class="text-gray-500 text-sm font-medium">Filter</span>
+        </div>
+    </div>
 
             <!-- Create Project Button -->
             <a href="{{ url('admin/create-project') }}"
-                class="flex items-center gap-2.5 bg-black hover:bg-gray-800 rounded-[10px] px-5 py-3.5 transition-colors">
+                class="flex items-center gap-2.5 bg-black hover:bg-gray-800 rounded-[10px] px-3 py-3.5 transition-colors">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
                 </svg>
-                <span class="text-white text-lg font-semibold">Create project</span>
+                <span class="text-white text-sm font-semibold">Create project</span>
             </a>
         </div>
 
@@ -31,14 +30,14 @@
                 <!-- Table Header -->
                 <thead>
                     <tr class="bg-[#f5f5f5]">
-                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-lg font-semibold w-16">#</th>
-                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-lg font-semibold min-w-[250px]">Project Name</th>
-                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-lg font-semibold w-32">Start Date</th>
-                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-lg font-semibold w-32">Deadline</th>
-                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-lg font-semibold min-w-[180px]">Project
+                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-16">#</th>
+                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[250px]">Project Name</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Start Date</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Deadline</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[180px]">Project
                             Director</th>
-                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-lg font-semibold w-24">Level</th>
-                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-lg font-semibold w-28">Status</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-24">Level</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-28">Status</th>
                     </tr>
                 </thead>
 
@@ -160,7 +159,7 @@
                         <td class="py-4 px-4">
                             <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
                         </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
+                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
                         <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
                         <td class="py-4 px-4 text-center">
                             <div class="font-medium text-gray-800">Athena Cyntia</div>

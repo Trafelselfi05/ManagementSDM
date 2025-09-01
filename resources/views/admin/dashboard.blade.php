@@ -9,6 +9,7 @@
             <div class="bg-white rounded-2xl shadow-sm p-6">
                 <!-- Status Filter Tabs -->
                 <div class="flex flex-wrap gap-4 mb-6" id="statusFilter">
+                    
                     <button data-status="ready"
                         class="status-btn px-6 py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-sm shadow-sm hover:bg-gray-200 transition-colors">
                         Ready
