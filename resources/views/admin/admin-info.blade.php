@@ -1,6 +1,6 @@
-@extends('admin.layout')
+@extends('admin/layout')
 
-@section('title', 'User Profile - Freyaa')
+@section('title', 'Activity')
 
 @section('content')
     <!-- Profile Content Section -->

@@ -325,7 +325,7 @@
                     <!-- User Icon -->
                     <div class="flex items-center gap-2">
                         <!-- Tambahkan link pada ikon user -->
-                        <a href="{{ route('user-info') }}"
+                        <a href="{{ route('admin-info') }}"
                             class="user-icon active w-12 h-12 rounded-full flex items-center justify-center transition-colors bg-gray-200">
                             <span class="text-gray-600 font-semibold text-sm transition-colors">F</span>
                         </a>
@@ -339,7 +339,7 @@
                 </div>
 
                 <!-- User Info - Tampilan ketika di halaman user-info (tanpa logout icon) -->
-                <div class="flex items-center gap-4 {{ !request()->routeIs('user-info.*') ? 'hidden' : '' }}">
+                <div class="flex items-center gap-4 {{ !request()->routeIs('admin-info.*') ? 'hidden' : '' }}">
                     <div class="flex flex-col items-end">
                         <h3 class="text-2xl font-semibold text-gray-900">Freyaa</h3>
                         <p class="text-base font-medium text-gray-500">{{ auth()->user()->role ?? 'Admin' }}</p>
@@ -437,9 +437,9 @@
 
                     <!-- Profile -->
                     <div class="group relative">
-                        <a href=""
+                        <a href="{{ route('profile-admin') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 31 32">
+                            <svg class="w-6 h-6 {{ request()->routeIs('profile-admin.*') ? 'text-gray-600' : 'text-gray-400' }}" fill="currentColor" viewBox="0 0 31 32">
                                 <path
                                     d="M13.5 0.458008L0.375 6.29134V15.0413C0.375 23.1351 5.975 30.7038 13.5 32.5413C21.025 30.7038 26.625 23.1351 26.625 15.0413V6.29134L13.5 0.458008ZM13.5 6.14551C14.3653 6.14551 15.2112 6.4021 15.9306 6.88283C16.6501 7.36356 17.2108 8.04684 17.542 8.84627C17.8731 9.64569 17.9597 10.5254 17.7909 11.374C17.6221 12.2227 17.2054 13.0022 16.5936 13.6141C15.9817 14.226 15.2022 14.6426 14.3535 14.8114C13.5049 14.9803 12.6252 14.8936 11.8258 14.5625C11.0263 14.2313 10.3431 13.6706 9.86232 12.9511C9.38159 12.2317 9.125 11.3858 9.125 10.5205C9.125 9.36019 9.58594 8.24739 10.4064 7.42692C11.2269 6.60644 12.3397 6.14551 13.5 6.14551ZM13.5 17.6663C16.4167 17.6663 22.25 19.2559 22.25 22.158C21.2922 23.6019 19.992 24.7864 18.4652 25.6058C16.9385 26.4251 15.2327 26.8539 13.5 26.8539C11.7673 26.8539 10.0615 26.4251 8.53477 25.6058C7.00803 24.7864 5.70779 23.6019 4.75 22.158C4.75 19.2559 10.5833 17.6663 13.5 17.6663Z" />
                             </svg>

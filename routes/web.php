@@ -7,9 +7,9 @@ Route::get('/', function () {
     return view('admin.login');
 });
 
-Route::get('admin/user-info', function () {
-    return view('admin.user-info');
-})->name('user-info');
+Route::get('admin/admin-info', function () {
+    return view('admin.admin-info');
+})->name('admin-info');
 
 Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
@@ -38,3 +38,11 @@ Route::get('admin/activity', function () {
 Route::get('admin/administration', function () {
     return view('admin.administration');
 })->name('administration');
+
+Route::get('admin/profile-admin', function () {
+    return view('admin.profile-admin');
+})->name('profile-admin');
+
+Route::get('admin/user-account', function () {
+    return view('admin.user-account');
+})->name('user-account');
