@@ -39,7 +39,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <button
+                <button id="createTaskBtn"
                     class="flex items-center justify-center gap-2 w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -318,6 +318,124 @@
         </div>
     </div>
 
+    <!-- Modal Create Task -->
+    <div id="createTaskModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="bg-white rounded-lg">
+                <!-- Header -->
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-medium text-gray-900">Create Task</h2>
+                        <button type="button" id="closeCreateTaskModal" class="text-gray-400 hover:text-gray-600"
+                            aria-label="Close dialog">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Form Content -->
+                <form class="px-6 py-4" novalidate>
+                    <!-- Task Input -->
+                    <div class="mb-6">
+                        <label for="create-task-name" class="block text-sm font-medium text-gray-700 mb-2">
+                            Task
+                        </label>
+                        <input type="text" id="create-task-name" name="taskName" placeholder="Task name..."
+                            class="w-full h-12 px-4 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-blue-500"
+                            required aria-describedby="create-task-name-error" />
+                        <div id="create-task-name-error" class="hidden text-red-500 text-xs mt-1" role="alert"></div>
+                    </div>
+
+                    <!-- Project Select -->
+                    <div class="mb-6">
+                        <label for="create-project-select" class="block text-sm font-medium text-gray-700 mb-2">
+                            Project
+                        </label>
+                        <div class="relative">
+                            <select id="create-project-select" name="project"
+                                class="w-full h-12 px-4 bg-gray-100 rounded-lg appearance-none border-0 focus:ring-2 focus:ring-blue-500 pr-10"
+                                required aria-describedby="create-project-error">
+                                <option value="" disabled selected>Select project</option>
+                                <option value="website-redesign">Website Redesign</option>
+                                <option value="mobile-app">Mobile App</option>
+                                <option value="marketing-campaign">Marketing Campaign</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="create-project-error" class="hidden text-red-500 text-xs mt-1" role="alert"></div>
+                    </div>
+
+                    <!-- Task Level -->
+                    <fieldset class="mb-4">
+                        <legend class="block text-sm font-medium text-gray-900 mb-3">Task Level</legend>
+                        <div class="flex space-x-6">
+                            <div class="flex items-center">
+                                <input type="radio" id="create-level-low" name="taskLevel" value="low" class="sr-only"
+                                    required />
+                                <label for="create-level-low" class="flex items-center cursor-pointer">
+                                    <span
+                                        class="relative w-5 h-5 rounded-full border-2 border-amber-400 flex items-center justify-center mr-2">
+                                        <span
+                                            class="w-3 h-3 rounded-full bg-amber-400 opacity-0 transition-opacity"></span>
+                                    </span>
+                                    <span class="text-gray-900">Low</span>
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="create-level-medium" name="taskLevel" value="medium" class="sr-only"
+                                    required />
+                                <label for="create-level-medium" class="flex items-center cursor-pointer">
+                                    <span
+                                        class="relative w-5 h-5 rounded-full border-2 border-amber-400 flex items-center justify-center mr-2">
+                                        <span
+                                            class="w-3 h-3 rounded-full bg-amber-400 opacity-0 transition-opacity"></span>
+                                    </span>
+                                    <span class="text-gray-900">Medium</span>
+                                </label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="create-level-high" name="taskLevel" value="high"
+                                    class="sr-only" />
+                                <label for="create-level-high" class="flex items-center cursor-pointer">
+                                    <span
+                                        class="relative w-5 h-5 rounded-full border-2 border-amber-400 flex items-center justify-center mr-2">
+                                        <span
+                                            class="w-3 h-3 rounded-full bg-amber-400 opacity-0 transition-opacity"></span>
+                                    </span>
+                                    <span class="text-gray-900">High</span>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Time Estimates -->
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                        <div class="flex flex-col sm:flex-row justify-between text-sm text-red-500 font-medium">
+                            <p>Low : &lt; 2 hours</p>
+                            <p>Medium : &lt; 6 hours</p>
+                            <p>High : &gt; 6 hours</p>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        class="w-full h-16 bg-gray-900 text-white text-xl font-normal rounded-xl hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Transfer Task -->
     <div id="transferTaskModal" class="modal-overlay">
         <div class="modal-content">
@@ -462,7 +580,7 @@
         </div>
     </div>
 
-    <!-- Alert Modal (tetap sama seperti sebelumnya) -->
+    <!-- Alert Modal -->
     <div id="alertOverlay" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-6 max-w-md w-11/12 transform transition-all opacity-0 scale-95">
             <div id="alertIcon" class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center">
@@ -473,29 +591,10 @@
             </div>
             <h3 id="alertTitle" class="text-lg font-semibold text-gray-900 text-center mb-2">Success</h3>
             <p id="alertMessage" class="text-gray-600 text-center mb-6">Your action was completed successfully.</p>
-            <div class="text-center">
-                <button id="alertButton"
-                    class="bg-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors">
-                    OK
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- Alert Modal -->
-    <div id="alertOverlay" class="alert-overlay">
-        <div id="alertBox" class="alert-box">
-            <div id="alertIcon" class="alert-icon">
-                <svg id="alertIconSvg" class="w-6 h-6 text-white" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-            </div>
-            <div id="alertTitle" class="alert-title">Success</div>
-            <div id="alertMessage" class="alert-message">Your action was completed successfully.</div>
-            <button id="alertButton" class="alert-button">OK</button>
+            <button id="alertButton"
+                class="w-full py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                OK
+            </button>
         </div>
     </div>
 @endsection

@@ -77,36 +77,67 @@
 
         /* Modal Styles */
         .modal-overlay {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .modal-content {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
             width: 667px;
-            height: 673px;
-            position: relative;
-            margin: 20px;
             max-height: 90vh;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
         }
 
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        /* Custom Radio Buttons */
+        input[type="radio"]:checked+label span span {
+            opacity: 1;
+        }
+
+        /* Scrollbar Styling */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .modal-content {
                 width: 90%;
-                max-width: 500px;
-                height: auto;
-                max-height: 80vh;
+                max-width: 400px;
             }
         }
 
@@ -457,186 +488,334 @@
             }
         });
 
+         // Modal functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const transferTaskModal = document.getElementById('transferTaskModal');
+            // Elements
+            const createTaskBtn = document.getElementById('createTaskBtn');
+            const closeCreateTaskModal = document.getElementById('closeCreateTaskModal');
+            const createTaskModal = document.getElementById('createTaskModal');
+            const transferTaskBtn = document.getElementById('transferTaskBtn');
             const closeModal = document.getElementById('closeModal');
+            const transferTaskModal = document.getElementById('transferTaskModal');
             const alertOverlay = document.getElementById('alertOverlay');
-            const alertBox = alertOverlay.querySelector('div');
-            const alertIcon = document.getElementById('alertIcon');
-            const alertIconSvg = document.getElementById('alertIconSvg');
-            const alertTitle = document.getElementById('alertTitle');
-            const alertMessage = document.getElementById('alertMessage');
             const alertButton = document.getElementById('alertButton');
-            const form = document.querySelector('form');
+            const createTaskForm = createTaskModal.querySelector('form');
+            const transferTaskForm = transferTaskModal.querySelector('form');
 
-            // Function to show alert
-            function showAlert(type, title, message) {
-                // Set icon and color based on type
-                alertIcon.className = `w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center`;
+            // Open Create Task Modal
+            createTaskBtn.addEventListener('click', () => {
+                createTaskModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
 
-                switch (type) {
-                    case 'success':
-                        alertIcon.classList.add('bg-green-500');
-                        alertIconSvg.innerHTML =
-                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
-                        break;
-                    case 'error':
-                        alertIcon.classList.add('bg-red-500');
-                        alertIconSvg.innerHTML =
-                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
-                        break;
-                    case 'warning':
-                        alertIcon.classList.add('bg-yellow-500');
-                        alertIconSvg.innerHTML =
-                            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.268 16.5c-.77.833.192 2.5 1.732 2.5z"></path>';
-                        break;
-                }
+            // Close Create Task Modal
+            closeCreateTaskModal.addEventListener('click', () => {
+                createTaskModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
 
+            // Open Transfer Task Modal
+            transferTaskBtn.addEventListener('click', () => {
+                transferTaskModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            // Close Transfer Task Modal
+            closeModal.addEventListener('click', () => {
+                transferTaskModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close modals when clicking outside
+            [createTaskModal, transferTaskModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Close alert modal
+            alertButton.addEventListener('click', () => {
+                alertOverlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Form validation and submission
+            [createTaskForm, transferTaskForm].forEach(form => {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    if (validateForm(form)) {
+                        // Simulate form submission
+                        showAlert('Success', 'Task has been created successfully.', 'success');
+                        form.reset();
+                        createTaskModal.classList.remove('active');
+                        transferTaskModal.classList.remove('active');
+                    } else {
+                        showAlert('Error', 'Please fill all required fields correctly.', 'error');
+                    }
+                });
+            });
+
+            // Form validation function
+            function validateForm(form) {
+                let isValid = true;
+                const inputs = form.querySelectorAll('[required]');
+
+                inputs.forEach(input => {
+                    const errorElement = document.getElementById(`${input.id}-error`);
+                    if (!input.value) {
+                        if (errorElement) {
+                            errorElement.textContent = 'This field is required';
+                            errorElement.classList.remove('hidden');
+                        }
+                        isValid = false;
+                    } else {
+                        if (errorElement) {
+                            errorElement.classList.add('hidden');
+                        }
+                    }
+                });
+
+                // Check if at least one radio button is selected
+                const radioGroups = form.querySelectorAll('input[type="radio"]');
+                const radioNames = [...new Set(Array.from(radioGroups).map(radio => radio.name))];
+
+                radioNames.forEach(name => {
+                    const radios = form.querySelectorAll(`input[name="${name}"]`);
+                    const checked = Array.from(radios).some(radio => radio.checked);
+                    if (!checked) {
+                        isValid = false;
+                        // You could add error display for radio groups here
+                    }
+                });
+
+                return isValid;
+            }
+
+            // Show alert function
+            function showAlert(title, message, type) {
+                const alertIcon = document.getElementById('alertIcon');
+                const alertIconSvg = document.getElementById('alertIconSvg');
+                const alertTitle = document.getElementById('alertTitle');
+                const alertMessage = document.getElementById('alertMessage');
+
+                // Set alert content
                 alertTitle.textContent = title;
                 alertMessage.textContent = message;
 
+                // Set alert style based on type
+                if (type === 'success') {
+                    alertIcon.classList.add('bg-green-500');
+                    alertIcon.classList.remove('bg-red-500', 'hidden');
+                    alertIconSvg.innerHTML =
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
+                } else if (type === 'error') {
+                    alertIcon.classList.add('bg-red-500');
+                    alertIcon.classList.remove('bg-green-500', 'hidden');
+                    alertIconSvg.innerHTML =
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+                }
+
                 // Show alert
                 alertOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+
+                // Animate in
                 setTimeout(() => {
-                    alertBox.classList.remove('opacity-0', 'scale-95');
-                    alertBox.classList.add('opacity-100', 'scale-100');
+                    alertOverlay.querySelector('.transform').classList.remove('opacity-0', 'scale-95');
+                    alertOverlay.querySelector('.transform').classList.add('opacity-100', 'scale-100');
                 }, 10);
             }
 
-            // Function to close alert
-            function closeAlert() {
-                alertBox.classList.remove('opacity-100', 'scale-100');
-                alertBox.classList.add('opacity-0', 'scale-95');
-                setTimeout(() => {
-                    alertOverlay.classList.add('hidden');
-                }, 200);
-            }
-
-            // Open modal when Transfer Task button is clicked (asumsi ada button dengan id transferTaskBtn)
-            const transferTaskBtn = document.getElementById('transferTaskBtn');
-            if (transferTaskBtn) {
-                transferTaskBtn.addEventListener('click', function() {
-                    transferTaskModal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-
-            // Close modal when close button is clicked
-            closeModal.addEventListener('click', function() {
-                transferTaskModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            });
-
-            // Close modal when clicking outside of modal content
-            transferTaskModal.addEventListener('click', function(e) {
-                if (e.target === transferTaskModal) {
-                    transferTaskModal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    if (transferTaskModal.style.display === 'flex') {
-                        transferTaskModal.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }
-                    if (!alertOverlay.classList.contains('hidden')) {
-                        closeAlert();
-                    }
-                }
-            });
-
-            // Alert button click handler
-            alertButton.addEventListener('click', function() {
-                closeAlert();
-            });
-
-            // Close alert when clicking outside
-            alertOverlay.addEventListener('click', function(e) {
-                if (e.target === alertOverlay) {
-                    closeAlert();
-                }
-            });
-
-            // Form validation and submission with alerts
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                // Get form values
-                const taskName = document.getElementById('task-name').value.trim();
-                const project = document.getElementById('project-select').value;
-                const employee = document.getElementById('employee-select').value;
-                const taskLevel = document.querySelector('input[name="taskLevel"]:checked');
-
-                // Reset error states
-                document.getElementById('task-name-error').classList.add('hidden');
-                document.getElementById('project-error').classList.add('hidden');
-                document.getElementById('employee-error').classList.add('hidden');
-
-                // Validation with specific error alerts
-                let isValid = true;
-
-                if (!taskName) {
-                    document.getElementById('task-name-error').textContent = 'Please enter a task name.';
-                    document.getElementById('task-name-error').classList.remove('hidden');
-                    isValid = false;
-                }
-
-                if (!project) {
-                    document.getElementById('project-error').textContent = 'Please select a project.';
-                    document.getElementById('project-error').classList.remove('hidden');
-                    isValid = false;
-                }
-
-                if (!employee) {
-                    document.getElementById('employee-error').textContent = 'Please select an employee.';
-                    document.getElementById('employee-error').classList.remove('hidden');
-                    isValid = false;
-                }
-
-                if (!taskLevel) {
-                    showAlert('error', 'Validation Error', 'Please select a task level.');
-                    isValid = false;
-                }
-
-                if (!isValid) return;
-
-                // If validation passes, show success alert
-                const selectedProject = project.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
-                const selectedEmployee = employee.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
-                const selectedLevel = taskLevel.value.charAt(0).toUpperCase() + taskLevel.value.slice(1);
-
-                showAlert('success', 'Task Transferred!',
-                    `Task "${taskName}" has been successfully transferred to ${selectedEmployee} for project "${selectedProject}" with ${selectedLevel} priority.`
-                    );
-
-                // Close the main modal
-                transferTaskModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-
-                // Reset form
-                form.reset();
-            });
-
             // Custom radio button behavior
-            const radioButtons = document.querySelectorAll('input[type="radio"]');
-            radioButtons.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    // Update visual state of radio buttons
-                    document.querySelectorAll('input[type="radio"] + label span:first-child span')
-                        .forEach(indicator => {
-                            indicator.style.opacity = '0';
-                        });
-
-                    if (this.checked) {
-                        this.nextElementSibling.querySelector('span:first-child span').style
-                            .opacity = '1';
-                    }
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    // Update the visual state of all radio buttons in the group
+                    const groupName = radio.name;
+                    document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+                        const label = document.querySelector(`label[for="${r.id}"]`);
+                        if (label) {
+                            const indicator = label.querySelector('span span');
+                            if (r.checked) {
+                                indicator.classList.remove('opacity-0');
+                            } else {
+                                indicator.classList.add('opacity-0');
+                            }
+                        }
+                    });
                 });
             });
         });
+            // Task Detail and Edit Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+        const taskRows = document.querySelectorAll('.task-row');
+        const taskModal = document.getElementById('taskDetailModal');
+        const closeModalBtn = document.getElementById('closeTaskModal');
+        const editTaskBtn = document.getElementById('editTaskBtn');
+        const editTaskModal = document.getElementById('editTaskModal');
+        const closeEditModalBtn = document.getElementById('closeEditTaskModal');
+        const submitEditTaskBtn = document.getElementById('submitEditTask');
+        const editTaskNameInput = document.getElementById('edit-task-name');
+        const levelIndicators = document.querySelectorAll('.level-indicator');
+        const levelInputs = document.querySelectorAll('input[name="task-level"]');
+        
+        // Status color mapping
+        const statusColors = {
+            'To do': '#e94949',
+            'Progress': '#ffb32d',
+            'Complete': '#7db445',
+            'Review': '#6fadc8'
+        };
+        
+        // Level color mapping
+        const levelColors = {
+            'High': '#e94949',
+            'Medium': '#ffb32d',
+            'Low': '#6fadc8'
+        };
+
+        let currentTaskData = {};
+
+        // Open modal when a task row is clicked
+        taskRows.forEach(row => {
+            row.addEventListener('click', function() {
+                const taskId = this.getAttribute('data-task-id');
+                const taskName = this.getAttribute('data-task-name');
+                const project = this.getAttribute('data-project');
+                const assignee = this.getAttribute('data-assignee');
+                const level = this.getAttribute('data-level');
+                const status = this.getAttribute('data-status');
+                const created = this.getAttribute('data-created');
+                const timeline = this.getAttribute('data-timeline');
+                
+                // Store current task data
+                currentTaskData = {
+                    taskId, taskName, project, assignee, level, status, created, timeline
+                };
+                
+                // Update modal content with task data
+                document.getElementById('task-details-heading').textContent = taskName;
+                document.getElementById('task-project').textContent = project;
+                document.getElementById('task-assignee').textContent = assignee;
+                document.getElementById('assignee-initial').textContent = assignee.charAt(0);
+                document.getElementById('task-timeline').textContent = timeline;
+                document.getElementById('task-timeline').setAttribute('datetime', timeline.replace(/\s/g, ''));
+                
+                // Update status with appropriate color
+                const statusElement = document.getElementById('task-status');
+                statusElement.innerHTML = `<span class="font-medium text-white text-sm">${status}</span>`;
+                statusElement.style.backgroundColor = statusColors[status] || '#e94949';
+                
+                // Update level with appropriate color
+                const levelElement = document.getElementById('task-level');
+                levelElement.innerHTML = `<span class="font-medium text-white text-sm">${level}</span>`;
+                levelElement.style.backgroundColor = levelColors[level] || '#ffb32d';
+                
+                // Show the modal
+                taskModal.classList.remove('hidden');
+                taskModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Close modal when close button is clicked
+        closeModalBtn.addEventListener('click', function() {
+            taskModal.classList.remove('active');
+            taskModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Open edit modal when edit button is clicked
+        editTaskBtn.addEventListener('click', function() {
+            // Populate edit form with current task data
+            editTaskNameInput.value = currentTaskData.taskName;
+            
+            // Set the correct level radio button
+            document.querySelectorAll('input[name="task-level"]').forEach(input => {
+                if (input.value === currentTaskData.level) {
+                    input.checked = true;
+                    updateLevelIndicator(input.value);
+                }
+            });
+            
+            // Close detail modal and open edit modal
+            taskModal.classList.remove('active');
+            taskModal.classList.add('hidden');
+            editTaskModal.classList.remove('hidden');
+            editTaskModal.classList.add('active');
+        });
+        
+        // Close edit modal when close button is clicked
+        closeEditModalBtn.addEventListener('click', function() {
+            editTaskModal.classList.remove('active');
+            editTaskModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Handle level selection
+        levelInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                updateLevelIndicator(this.value);
+            });
+        });
+        
+        // Update level indicator style
+        function updateLevelIndicator(level) {
+            levelIndicators.forEach(indicator => {
+                indicator.style.backgroundColor = 'transparent';
+                if (indicator.getAttribute('data-level') === level) {
+                    indicator.style.backgroundColor = levelColors[level] || '#ffb32d';
+                }
+            });
+        }
+        
+        // Submit edit form
+        submitEditTaskBtn.addEventListener('click', function() {
+            const newTaskName = editTaskNameInput.value;
+            const newLevel = document.querySelector('input[name="task-level"]:checked').value;
+            
+            // Update the task data (in a real app, this would send to server)
+            currentTaskData.taskName = newTaskName;
+            currentTaskData.level = newLevel;
+            
+            // Show success message
+            alert('Task updated successfully!');
+            
+            // Close edit modal
+            editTaskModal.classList.remove('active');
+            editTaskModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close modal when clicking outside
+        [taskModal, editTaskModal].forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (taskModal.classList.contains('active')) {
+                    taskModal.classList.remove('active');
+                    taskModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+                if (editTaskModal.classList.contains('active')) {
+                    editTaskModal.classList.remove('active');
+                    editTaskModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+    });
     </script>
 </body>
 
