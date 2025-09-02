@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('admin.login');
+    return view('Auth.login');
 });
 
 Route::get('admin/admin-info', function () {
@@ -46,3 +46,15 @@ Route::get('admin/profile-admin', function () {
 Route::get('admin/user-account', function () {
     return view('admin.user-account');
 })->name('user-account');
+
+Route::get('user/dashboard-user', function () {
+    return view('user.dashboard-user');
+})->name('dashboard-user');
+
+Route::get('user/user-info', function () {
+    return view('user.user-info');
+})->name('user-info');
+
+Route::get('user/administration-user', function () {
+    return view('user.administration-user');
+})->name('administration-user');
