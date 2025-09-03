@@ -283,6 +283,8 @@
             outline: none;
             box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
         }
+
+        
     </style>
 </head>
 
@@ -465,7 +467,7 @@
             const employeeCards = document.querySelectorAll('.employee-card');
 
             // Set initial state - show only complete employees
-            filterEmployees('complete');
+            filterEmployees('ready');
 
             statusButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -959,6 +961,96 @@
                 img.style.filter = 'none';
             });
         }
+
+        let selectedOptions = {};
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.classList.toggle('hidden');
+            
+            // Close other dropdowns
+            document.getElementById('dropdownMenu2').classList.add('hidden');
+        }
+
+        function toggleDropdown2() {
+            const dropdown = document.getElementById('dropdownMenu2');
+            dropdown.classList.toggle('hidden');
+            
+            // Close other dropdowns
+            document.getElementById('dropdownMenu').classList.add('hidden');
+        }
+
+        function selectOption(value, text) {
+            // Update the display text
+            document.getElementById('selectedText').textContent = text;
+            document.getElementById('selectedText').classList.remove('text-[#7d7d7d]');
+            document.getElementById('selectedText').classList.add('text-black');
+            
+            // Set the hidden input value
+            document.getElementById('selectedValue').value = value;
+            
+            // Store selection
+            selectedOptions['dropdown1'] = value;
+            
+            // Close the dropdown
+            document.getElementById('dropdownMenu').classList.add('hidden');
+            
+            // Update dropdown options styling
+            updateDropdownStyling('dropdownMenu', value);
+        }
+
+        function selectOption2(value, text) {
+            // Update the display text
+            document.getElementById('selectedText2').textContent = text;
+            document.getElementById('selectedText2').classList.remove('text-[#7d7d7d]');
+            document.getElementById('selectedText2').classList.add('text-black');
+            
+            // Store selection
+            selectedOptions['dropdown2'] = value;
+            
+            // Close the dropdown
+            document.getElementById('dropdownMenu2').classList.add('hidden');
+            
+            // Update dropdown options styling
+            updateDropdownStyling('dropdownMenu2', value);
+        }
+
+        function updateDropdownStyling(dropdownId, selectedValue) {
+            const dropdown = document.getElementById(dropdownId);
+            const options = dropdown.querySelectorAll('div[onclick^="selectOption"]');
+            
+            options.forEach(option => {
+                const optionValue = option.getAttribute('onclick').match(/'([^']+)'/)[1];
+                
+                if (optionValue === selectedValue) {
+                    // Selected option styling
+                    option.classList.remove('bg-white', 'hover:bg-[#e0e0e0]');
+                    option.classList.add('bg-[#e0e0e0]', 'hover:bg-[#d0d0d0]');
+                } else {
+                    // Normal option styling
+                    option.classList.remove('bg-[#e0e0e0]', 'hover:bg-[#d0d0d0]');
+                    option.classList.add('bg-white', 'hover:bg-[#e0e0e0]');
+                }
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown1 = document.getElementById('dropdownMenu');
+            const button1 = event.target.closest('button[onclick="toggleDropdown()"]');
+            
+            if (!button1 && !dropdown1.contains(event.target)) {
+                dropdown1.classList.add('hidden');
+            }
+        });
+
+        // Initialize dropdown styling on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial selected option for demo (second dropdown)
+            setTimeout(() => {
+                selectOption2('website_management', 'Website Management Company');
+            }, 100);
+        });
     </script>
 </body>
 

@@ -4,39 +4,98 @@
 
 @section('content')
     <!-- Main Content Section -->
-    <div
-        class="flex flex-col w-[1404px] items-center gap-2.5 px-20 py-[55px] mx-auto bg-white rounded-[15px] shadow-[0px_0px_4px_#00000040]">
-        <div class="flex flex-col items-start gap-[45px] relative self-stretch w-full flex-[0_0_auto]">
+    <div class="flex flex-col max-w-5xl items-center gap-2.5 px-12 py-10 mx-auto bg-white rounded-2xl shadow-lg">
+        <div class="flex flex-col items-start gap-10 relative self-stretch w-full flex-[0_0_auto]">
             <div
                 class="w-fit font-semibold text-[#111111] text-xl whitespace-nowrap relative mt-[-1.00px] [font-family:'Inter',Helvetica] tracking-[0] leading-[normal]">
                 Leave Submission
             </div>
-            <div class="flex flex-col items-center gap-20 relative self-stretch w-full flex-[0_0_auto]">
-                <form class="flex flex-col items-start gap-[30px] relative self-stretch w-full flex-[0_0_auto]">
+            <div class="flex flex-col items-center gap-16 relative self-stretch w-full flex-[0_0_auto]">
+                <form class="flex flex-col items-start gap-6 relative self-stretch w-full flex-[0_0_auto]">
 
                     <!-- Leave Category Dropdown -->
                     <div class="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto]">
-                        <label for="leave-category"
+                        <label
                             class="self-stretch font-medium text-[#7d7d7d] text-sm relative mt-[-1.00px] [font-family:'Inter',Helvetica] tracking-[0] leading-[normal]">
                             Leave Category
                         </label>
+
+                        <!-- Dropdown Container -->
                         <div class="relative self-stretch w-full">
-                            <select id="leave-category" name="leave_category"
-                                class="flex h-[50px] items-center gap-2.5 px-4 py-[13px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] appearance-none font-normal text-[#7d7d7d] text-sm [font-family:'Inter',Helvetica] tracking-[0] leading-[normal] cursor-pointer">
-                                <option value="">Select Leave Category</option>
-                                <option value="annual">Annual Leave</option>
-                                <option value="sick">Sick Leave</option>
-                                <option value="emergency">Emergency Leave</option>
-                                <option value="maternity">Maternity Leave</option>
-                                <option value="personal">Personal Leave</option>
-                            </select>
-                            <img class="absolute right-4 top-1/2 transform -translate-y-1/2 w-[18px] h-2.5 pointer-events-none"
-                                src="https://c.animaapp.com/mf0waiheGBQdaR/img/vector-6.svg" />
+                            <!-- Dropdown Button -->
+                            <button onclick="toggleDropdown()" type="button"
+                                class="flex h-[50px] items-center gap-2.5 px-4 py-[13px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-opacity-20 focus:border-transparent">
+                                <div class="flex w-full items-center justify-between">
+                                    <p id="selectedText"
+                                        class="[font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                        -- Pilih Jenis Cuti --
+                                    </p>
+                                    <img class="w-[18px] h-2.5"
+                                        src="https://c.animaapp.com/mf0waiheGBQdaR/img/vector-6.svg" />
+                                </div>
+                            </button>
+
+                            <!-- Dropdown Menu -->
+                            <div id="dropdownMenu"
+                                class="hidden absolute top-[60px] left-0 flex-col w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] z-10">
+                                <div onclick="selectOption('tahunan', 'Cuti Tahunan')"
+                                    class="flex w-full h-[50px] items-center gap-2.5 px-4 py-[13px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
+                                    <div
+                                        class="[font-family:'Inter',Helvetica] font-normal text-black text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                        Cuti Tahunan
+                                    </div>
+                                </div>
+                                <div onclick="selectOption('sakit', 'Cuti Sakit')"
+                                    class="flex w-full h-[50px] items-center gap-2.5 px-4 py-[13px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
+                                    <div
+                                        class="[font-family:'Inter',Helvetica] font-normal text-black text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                        Cuti Sakit
+                                    </div>
+                                </div>
+                                <div onclick="selectOption('melahirkan', 'Cuti Melahirkan')"
+                                    class="flex w-full h-[50px] items-center gap-2.5 px-4 py-[13px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
+                                    <div
+                                        class="[font-family:'Inter',Helvetica] font-normal text-black text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                        Cuti Melahirkan
+                                    </div>
+                                </div>
+                                <div onclick="selectOption('darurat', 'Cuti Darurat')"
+                                    class="flex w-full h-[50px] items-center gap-2.5 px-4 py-[13px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
+                                    <div
+                                        class="[font-family:'Inter',Helvetica] font-normal text-black text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                        Cuti Darurat
+                                    </div>
+                                </div>
+                                <div onclick="selectOption('pribadi', 'Cuti Pribadi')"
+                                    class="flex w-full h-[50px] items-center gap-2.5 px-4 py-[13px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
+                                    <div
+                                        class="[font-family:'Inter',Helvetica] font-normal text-black text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                        Cuti Pribadi
+                                    </div>
+                                </div>
+                                <div onclick="selectOption('haji_umrah', 'Cuti Haji/Umrah')"
+                                    class="flex w-full h-[50px] items-center gap-2.5 px-4 py-[13px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
+                                    <div
+                                        class="[font-family:'Inter',Helvetica] font-normal text-black text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                        Cuti Haji/Umrah
+                                    </div>
+                                </div>
+                                <div onclick="selectOption('pernikahan', 'Cuti Pernikahan')"
+                                    class="flex w-full h-[50px] items-center gap-2.5 px-4 py-[13px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
+                                    <div
+                                        class="[font-family:'Inter',Helvetica] font-normal text-black text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                        Cuti Pernikahan
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden input for form submission -->
+                            <input type="hidden" id="leave_category" name="leave_category" value="" />
                         </div>
                     </div>
 
                     <!-- Date Range -->
-                    <div class="flex items-end gap-[30px] relative self-stretch w-full flex-[0_0_auto]">
+                    <div class="flex items-end gap-6 relative self-stretch w-full flex-[0_0_auto]">
                         <!-- Start Date -->
                         <div class="flex flex-col items-start gap-4 relative flex-1 grow">
                             <label for="start-date"
@@ -44,8 +103,9 @@
                                 Start Date
                             </label>
                             <div class="relative self-stretch w-full">
-                                <input type="date" id="start-date" name="start_date"
-                                    class="flex h-[50px] items-center gap-2.5 px-4 py-[13px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] font-normal text-[#7d7d7d] text-sm [font-family:'Inter',Helvetica] tracking-[0] leading-[normal] cursor-pointer" />
+                                <input type="date" id="start-date" name="start_date" min="2024-01-01" max="2025-12-31"
+                                    class="flex h-[50px] items-center gap-2.5 px-4 py-[13px] pr-12 relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] font-normal text-[#111111] text-sm [font-family:'Inter',Helvetica] tracking-[0] leading-[normal] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-opacity-20 focus:border-transparent [color-scheme:light]"
+                                    placeholder="dd/mm/yyyy" />
                                 <img class="absolute right-4 top-1/2 transform -translate-y-1/2 w-[20.7px] h-[23px] pointer-events-none"
                                     src="https://c.animaapp.com/mf0waiheGBQdaR/img/group-125.png" />
                             </div>
@@ -58,8 +118,9 @@
                                 End Date
                             </label>
                             <div class="relative self-stretch w-full">
-                                <input type="date" id="end-date" name="end_date"
-                                    class="flex h-[50px] items-center gap-2.5 px-4 py-[13px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] font-normal text-[#7d7d7d] text-sm [font-family:'Inter',Helvetica] tracking-[0] leading-[normal] cursor-pointer" />
+                                <input type="date" id="end-date" name="end_date" min="2024-01-01" max="2025-12-31"
+                                    class="flex h-[50px] items-center gap-2.5 px-4 py-[13px] pr-12 relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] font-normal text-[#111111] text-sm [font-family:'Inter',Helvetica] tracking-[0] leading-[normal] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-opacity-20 focus:border-transparent [color-scheme:light]"
+                                    placeholder="dd/mm/yyyy" />
                                 <img class="absolute right-4 top-1/2 transform -translate-y-1/2 w-[20.7px] h-[23px] pointer-events-none"
                                     src="https://c.animaapp.com/mf0waiheGBQdaR/img/group-125-1.png" />
                             </div>
@@ -73,11 +134,11 @@
                             Description
                         </label>
                         <textarea id="description" name="description" placeholder="Enter your leave description..." rows="5"
-                            class="flex h-[134px] items-start gap-2.5 px-4 py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] resize-none font-normal text-[#7d7d7d] text-sm [font-family:'Inter',Helvetica] tracking-[0] leading-[normal] placeholder-[#7d7d7d]"></textarea>
+                            class="flex h-[134px] items-start gap-2.5 px-4 py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] resize-none font-normal text-[#111111] text-sm [font-family:'Inter',Helvetica] tracking-[0] leading-[normal] placeholder-[#7d7d7d] focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-opacity-20 focus:border-transparent"></textarea>
                     </div>
 
                     <!-- Radio Button Options -->
-                    <div class="flex items-center gap-[30px] relative self-stretch w-full flex-[0_0_auto]">
+                    <div class="flex items-center gap-6 relative self-stretch w-full flex-[0_0_auto]">
                         <!-- Laptop Question -->
                         <div class="flex flex-col items-start gap-4 relative flex-1 grow">
                             <p

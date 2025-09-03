@@ -47,6 +47,10 @@ Route::get('admin/user-account', function () {
     return view('admin.user-account');
 })->name('user-account');
 
+Route::get('admin/user-detail', function () {
+    return view('admin.user-detail');
+})->name('user-detail');
+
 Route::get('user/dashboard-user', function () {
     return view('user.dashboard-user');
 })->name('dashboard-user');
@@ -74,3 +78,4 @@ Route::get('user/project-user', function () {
 Route::get('user/create-project-user', function () {
     return view('user.create-project-user');
 })->name('create-project-user');
+

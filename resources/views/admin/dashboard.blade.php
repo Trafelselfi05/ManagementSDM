@@ -32,7 +32,98 @@
                 </div>
 
                 <!-- Employee Cards Grid -->
+                                <!-- Employee Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="employeeCards">
+                    <!-- Employee Card - Ready 1 -->
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
+                        data-status="ready">
+                        <div class="flex items-start gap-3 mb-4">
+                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
+                                class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
+                                <p class="text-sm text-gray-500">UX Designer</p>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Design landing & prototype page farm app
+                        </p>
+                        <!-- Container flex untuk kedua badge -->
+                        <div class="flex gap-2 items-center">
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">Complete</span>
+                            </div>
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">High</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employee Card - Ready 2 -->
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
+                        data-status="ready">
+                        <div class="flex items-start gap-3 mb-4">
+                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
+                                class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
+                                <p class="text-sm text-gray-500">UX Designer</p>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Design landing & prototype page farm app
+                        </p>
+                        <!-- Container flex untuk kedua badge -->
+                        <div class="flex gap-2 items-center">
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">Complete</span>
+                            </div>
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">High</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employee Card - Ready 3 -->
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
+                        data-status="ready">
+                        <div class="flex items-start gap-3 mb-4">
+                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
+                                class="w-14 h-14 rounded-full object-cover">
+                            <div>
+                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
+                                <p class="text-sm text-gray-500">UX Designer</p>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Design landing & prototype page farm app
+                        </p>
+                        <!-- Container flex untuk kedua badge -->
+                        <div class="flex gap-2 items-center">
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">Complete</span>
+                            </div>
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">High</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Employee Card 1 - Absent -->
                     <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
                         data-status="absent">
@@ -94,93 +185,6 @@
                             <div>
                                 <h3 class="font-semibold text-gray-900">Corey Culhane</h3>
                                 <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Ready 1 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
-                                <p class="text-sm text-gray-500">UX Designer</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-3">
-                            Design landing & prototype page farm app
-                        </p>
-                        <!-- Container flex untuk kedua badge -->
-                        <div class="flex gap-2 items-center">
-                            <div
-                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                                <span class="text-sm font-semibold text-white">Complete</span>
-                            </div>
-                            <div
-                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
-                                <span class="text-sm font-semibold text-white">High</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Ready 2 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
-                                <p class="text-sm text-gray-500">UX Designer</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-3">
-                            Design landing & prototype page farm app
-                        </p>
-                        <!-- Container flex untuk kedua badge -->
-                        <div class="flex gap-2 items-center">
-                            <div
-                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                                <span class="text-sm font-semibold text-white">Complete</span>
-                            </div>
-                            <div
-                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
-                                <span class="text-sm font-semibold text-white">High</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Ready 3 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
-                                <p class="text-sm text-gray-500">UX Designer</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-3">
-                            Design landing & prototype page farm app
-                        </p>
-                        <!-- Container flex untuk kedua badge -->
-                        <div class="flex gap-2 items-center">
-                            <div
-                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                                <span class="text-sm font-semibold text-white">Complete</span>
-                            </div>
-                            <div
-                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
-                                <span class="text-sm font-semibold text-white">High</span>
                             </div>
                         </div>
                     </div>
