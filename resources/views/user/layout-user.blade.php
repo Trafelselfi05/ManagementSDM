@@ -372,7 +372,7 @@
 
                     <!-- Projects -->
                     <div class="group relative">
-                        <a href="{{ route('project') }}"
+                        <a href="{{ route('project-user') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
                             <svg class="w-6 h-6 text-gray-400"
                                 fill="currentColor" viewBox="0 0 31 31">
@@ -388,7 +388,7 @@
 
                     <!-- Tasks -->
                     <div class="group relative">
-                        <a href="{{ route('task') }}"
+                        <a href="{{ route('task-user') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
                             <svg class="w-6 h-6 text-gray-400"
                                 fill="currentColor" viewBox="0 0 31 31">

@@ -518,6 +518,7 @@
             }
         });
 
+        
         // Modal functionality
         document.addEventListener('DOMContentLoaded', function() {
             // Elements

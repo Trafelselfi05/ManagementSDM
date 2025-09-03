@@ -3,15 +3,14 @@
 @section('title', 'Employee Dashboard')
 
 @section('content')
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 rounded-[20px] xl:grid-cols-3 gap-6 ">
         <!-- Main Dashboard Content -->
         <div class="xl:col-span-2">
             <div class="bg-white rounded-2xl shadow-sm p-6">
                 <!-- Status Filter Tabs -->
                 <div class="flex flex-wrap gap-4 mb-6" id="statusFilter">
-                    
                     <button data-status="ready"
-                        class="status-btn px-6 py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-sm shadow-sm hover:bg-gray-200 transition-colors">
+                        class="status-btn px-6 py-3 rounded-lg bg-gray-900 text-white font-medium text-sm shadow-sm">
                         Ready
                     </button>
                     <button data-status="standby"
@@ -19,7 +18,7 @@
                         Stand by
                     </button>
                     <button data-status="notready"
-                        class="status-btn px-6 py-3 rounded-lg bg-gray-900 text-white font-medium text-sm shadow-sm">
+                        class="status-btn px-6 py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-sm shadow-sm hover:bg-gray-200 transition-colors">
                         Not ready
                     </button>
                     <button data-status="complete"
@@ -72,84 +71,6 @@
                         </p>
                     </div>
 
-                    <!-- Employee Card 3 - Absent -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="absent">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/4fb8a15d9469797cc67672c211572bd6-1.png"
-                                alt="Carlo Felloso" class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Carlo Felloso</h3>
-                                <p class="text-sm text-gray-500">8 day off</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Other</span>
-                        </div>
-                        <p class="text-sm text-gray-600">
-                            i got incident last night, now im in hospital for recovery
-                        </p>
-                    </div>
-
-                    <!-- Employee Card 4 - Absent -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="absent">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/4fb8a15d9469797cc67672c211572bd6-2.png"
-                                alt="Carla Victoria" class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Carla Victoria</h3>
-                                <p class="text-sm text-gray-500">1 day off</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">University Activities</span>
-                        </div>
-                        <p class="text-sm text-gray-600">
-                            i can go office yesterday cus i should go to university, i had activities with my collegan and
-                            my lecture
-                        </p>
-                    </div>
-
-                    <!-- Employee Card 5 - Absent -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="absent">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/ellipse-63-1.svg" alt="Rachel"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Rachel</h3>
-                                <p class="text-sm text-gray-500">1 day off</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Family Activities</span>
-                        </div>
-                        <p class="text-sm text-gray-600">
-                            Hii, sorry for tomorrow im so busy cus i should help my church to decoration before christmas. i
-                            just need 1 day off to do that.
-                        </p>
-                    </div>
-
-                    <!-- Employee Card 6 - Absent -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="absent">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/ellipse-63.svg" alt="Allena Tifa"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Allena Tifa</h3>
-                                <p class="text-sm text-gray-500">2 day off</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Sick</span>
-                        </div>
-                        <p class="text-sm text-gray-600">
-                            Sorry i cant come in meet cus i feel catch a cold, i should take a rest around 2 days. Thanks.
-                        </p>
-                    </div>
-
                     <!-- Standby Status Cards -->
                     <!-- Employee Card - Standby 1 -->
                     <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
@@ -161,10 +82,6 @@
                                 <h3 class="font-semibold text-gray-900">Adison Herwitz</h3>
                                 <p class="text-sm text-gray-500">UI Designer</p>
                             </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
                         </div>
                     </div>
 
@@ -179,184 +96,97 @@
                                 <p class="text-sm text-gray-500">UI Designer</p>
                             </div>
                         </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
-                        </div>
                     </div>
 
-                    <!-- Employee Card - Standby 3 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
+                    <!-- Employee Card - Ready 1 -->
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
                         <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-6.svg" alt="Maria Dias"
+                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-14 h-14 rounded-full object-cover">
                             <div>
-                                <h3 class="font-semibold text-gray-900">Maria Dias</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
+                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
+                                <p class="text-sm text-gray-500">UX Designer</p>
                             </div>
                         </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
+                        <div class="mb-2">
+                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Design landing & prototype page farm app
+                        </p>
+                        <!-- Container flex untuk kedua badge -->
+                        <div class="flex gap-2 items-center">
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">Complete</span>
+                            </div>
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">High</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Employee Card - Standby 4 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
+                    <!-- Employee Card - Ready 2 -->
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
                         <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-8.svg" alt="Tatiana Dias"
+                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-14 h-14 rounded-full object-cover">
                             <div>
-                                <h3 class="font-semibold text-gray-900">Tatiana Dias</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
+                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
+                                <p class="text-sm text-gray-500">UX Designer</p>
                             </div>
                         </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
+                        <div class="mb-2">
+                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Design landing & prototype page farm app
+                        </p>
+                        <!-- Container flex untuk kedua badge -->
+                        <div class="flex gap-2 items-center">
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">Complete</span>
+                            </div>
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">High</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Employee Card - Standby 5 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
+                    <!-- Employee Card - Ready 3 -->
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
                         <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-5.svg" alt="Marilyn Saris"
+                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-14 h-14 rounded-full object-cover">
                             <div>
-                                <h3 class="font-semibold text-gray-900">Marilyn Saris</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
+                                <h3 class="font-semibold text-gray-900">Athena Cyntia</h3>
+                                <p class="text-sm text-gray-500">UX Designer</p>
                             </div>
                         </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
+                        <div class="mb-2">
+                            <span class="text-sm font-semibold text-gray-900">Working on Farm App :</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Design landing & prototype page farm app
+                        </p>
+                        <!-- Container flex untuk kedua badge -->
+                        <div class="flex gap-2 items-center">
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">Complete</span>
+                            </div>
+                            <div
+                                class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#e94949] rounded-[10px]">
+                                <span class="text-sm font-semibold text-white">High</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Employee Card - Standby 6 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-18.svg" alt="Maria Carder"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Maria Carder</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Standby 7 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-9.svg" alt="Miracle Lubin"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Miracle Lubin</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Standby 8 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-12.svg" alt="Kianna Gouse"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Kianna Gouse</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Standby 9 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-11.svg" alt="Chance George"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Chance George</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Standby 10 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-17.svg" alt="Jaxson Torff"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Jaxson Torff</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Standby 11 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-13.svg" alt="Adison Herwitz"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Adison Herwitz</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Standby 12 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="standby">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-20.svg" alt="Phillip Franci"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Phillip Franci</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#ffb32d] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Standby</span>
-                        </div>
-                    </div>
-
-                    <!-- Not Ready Status Cards -->
-                    <!-- Employee Card - Not Ready 1 -->
+                    <!-- NotReady Status Cards -->
+                    <!-- Employee Card - notReady 1 -->
                     <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
                         data-status="notready">
                         <div class="flex items-start gap-3 mb-4">
@@ -395,113 +225,9 @@
                         </div>
                     </div>
 
-                    <!-- Employee Card - Not Ready 4 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="notready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpkkriuDDnSU/img/image-58-6.svg" alt="Tatiana Dias"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Tatiana Dias</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Not Ready 5 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="notready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpkkriuDDnSU/img/image-58-4.svg" alt="Marilyn Saris"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Marilyn Saris</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Not Ready 6 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="notready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpkkriuDDnSU/img/image-58-7.svg" alt="Maria Carder"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Maria Carder</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Not Ready 7 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="notready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpkkriuDDnSU/img/image-58-10.svg" alt="Miracle Lubin"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Miracle Lubin</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Not Ready 8 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="notready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpkkriuDDnSU/img/image-58-2.svg" alt="Kianna Gouse"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Kianna Gouse</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Not Ready 9 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="notready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpkkriuDDnSU/img/image-58-9.svg" alt="Chance George"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Chance George</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Not Ready 10 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="notready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpkkriuDDnSU/img/image-58-8.svg" alt="Phillip Franci"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Phillip Franci</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Not Ready 11 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="notready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpkkriuDDnSU/img/image-58-3.svg" alt="Maria Aminoff"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Maria Aminoff</h3>
-                                <p class="text-sm text-gray-500">UI Designer</p>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Complete Status Cards -->
                     <!-- Employee Card - Complete 1 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
                         data-status="complete">
                         <div class="flex items-start gap-3 mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
@@ -524,7 +250,7 @@
                     </div>
 
                     <!-- Employee Card - Complete 2 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
                         data-status="complete">
                         <div class="flex items-start gap-3 mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-56.png" alt="Max Verstappen"
@@ -547,7 +273,7 @@
                     </div>
 
                     <!-- Employee Card - Complete 3 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
                         data-status="complete">
                         <div class="flex items-start gap-3 mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-59.png" alt="Kylo Finn"
@@ -566,126 +292,6 @@
                         <div
                             class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
                             <span class="text-sm font-semibold text-white">Complete</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Complete 4 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
-                        data-status="complete">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-58.png" alt="Fathia"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Fathia</h3>
-                                <p class="text-sm text-gray-500">UX Designer</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Working on Web Codelab :</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-3">
-                            Design landing page
-                        </p>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Complete</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Complete 5 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
-                        data-status="complete">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-54.png" alt="Erika"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Erika</h3>
-                                <p class="text-sm text-gray-500">Copywriter</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Working on Project Market :</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-3">
-                            Make a new promotion for a new product in market web
-                        </p>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Complete</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Complete 6 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
-                        data-status="complete">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-63.png" alt="Jasmine"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Jasmine</h3>
-                                <p class="text-sm text-gray-500">Photograph</p>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="text-sm font-semibold text-gray-900">Working on Web Codelab :</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-3">
-                            Displaying and merging data code
-                        </p>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Complete</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Ready 1 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="ready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-14.svg" alt="John Smith"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">John Smith</h3>
-                                <p class="text-sm text-gray-500">Frontend Developer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Ready</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Ready 2 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="ready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-15.svg" alt="Sarah Johnson"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Sarah Johnson</h3>
-                                <p class="text-sm text-gray-500">Backend Developer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Ready</span>
-                        </div>
-                    </div>
-
-                    <!-- Employee Card - Ready 3 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 hidden"
-                        data-status="ready">
-                        <div class="flex items-start gap-3 mb-4">
-                            <img src="https://c.animaapp.com/metpzcidpe2q9o/img/image-58-16.svg" alt="Michael Brown"
-                                class="w-14 h-14 rounded-full object-cover">
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Michael Brown</h3>
-                                <p class="text-sm text-gray-500">Full Stack Developer</p>
-                            </div>
-                        </div>
-                        <div
-                            class="flex w-[91px] h-[29px] items-center justify-center gap-2.5 px-[7px] py-[5px] bg-[#7db445] rounded-[10px]">
-                            <span class="text-sm font-semibold text-white">Ready</span>
                         </div>
                     </div>
                 </div>
@@ -741,19 +347,6 @@
                     <div class="flex items-center justify-between">
                         <span class="inline-block px-3 py-1 bg-[#e94949] text-white text-xs font-medium rounded-md">On
                             create</span>
-
-                        <div class="flex -space-x-2">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/ellipse-65.svg" alt="Team member"
-                                class="w-7 h-7 rounded-full border-2 border-white">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/ellipse-66.svg" alt="Team member"
-                                class="w-7 h-7 rounded-full border-2 border-white">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/ellipse-67.svg" alt="Team member"
-                                class="w-7 h-7 rounded-full border-2 border-white">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/ellipse-68.svg" alt="Team member"
-                                class="w-7 h-7 rounded-full border-2 border-white">
-                            <img src="https://c.animaapp.com/metjaxbj7h5wfa/img/ellipse-69.svg" alt="Team member"
-                                class="w-7 h-7 rounded-full border-2 border-white">
-                        </div>
                     </div>
                 </div>
             </div>

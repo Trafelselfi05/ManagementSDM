@@ -58,3 +58,19 @@ Route::get('user/user-info', function () {
 Route::get('user/administration-user', function () {
     return view('user.administration-user');
 })->name('administration-user');
+
+Route::get('user/task-user', function () {
+    return view('user.task-user');
+})->name('task-user');
+
+Route::get('user/task-detail-user', function () {
+    return view('task-detail-user');
+})->name('task-detail-user');
+
+Route::get('user/project-user', function () {
+    return view('user.project-user');
+})->name('project-user');
+
+Route::get('user/create-project-user', function () {
+    return view('user.create-project-user');
+})->name('create-project-user');
