@@ -1,4 +1,4 @@
-@extends('admin/layout-user')
+@extends('user/layout-user')
 
 @section('title', 'Tasks')
 

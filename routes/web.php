@@ -68,7 +68,7 @@ Route::get('user/task-user', function () {
 })->name('task-user');
 
 Route::get('user/task-detail-user', function () {
-    return view('task-detail-user');
+    return view('user.task-detail-user');
 })->name('task-detail-user');
 
 Route::get('user/project-user', function () {
