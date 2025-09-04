@@ -32,11 +32,10 @@
                 </div>
 
                 <!-- Employee Cards Grid -->
-                                <!-- Employee Cards Grid -->
+                <!-- Employee Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="employeeCards">
                     <!-- Employee Card - Ready 1 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
-                        data-status="ready">
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
                         <div class="flex items-start gap-3 mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-14 h-14 rounded-full object-cover">
@@ -65,8 +64,7 @@
                     </div>
 
                     <!-- Employee Card - Ready 2 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
-                        data-status="ready">
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
                         <div class="flex items-start gap-3 mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-14 h-14 rounded-full object-cover">
@@ -95,8 +93,7 @@
                     </div>
 
                     <!-- Employee Card - Ready 3 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100"
-                        data-status="ready">
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-4 border border-gray-100" data-status="ready">
                         <div class="flex items-start gap-3 mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-14 h-14 rounded-full object-cover">
@@ -308,8 +305,9 @@
             <!-- Tasks Card -->
             <div class="bg-[#7db445] rounded-2xl shadow-sm p-6">
                 <div class="flex items-center gap-2 mb-6">
-                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 30 30">
+                        <path xmlns="http://www.w3.org/2000/svg"
+                            d="M15.4154 0.916016H3.7487C2.14453 0.916016 0.846615 2.22852 0.846615 3.83268L0.832031 27.166C0.832031 28.7702 2.12995 30.0827 3.73411 30.0827H21.2487C22.8529 30.0827 24.1654 28.7702 24.1654 27.166V9.66602L15.4154 0.916016ZM10.9529 24.2494L5.79036 19.0868L7.84662 17.0306L10.9383 20.1223L17.1216 13.9389L19.1779 15.9952L10.9529 24.2494ZM13.957 11.1243V3.10352L21.9779 11.1243H13.957Z" />
                     </svg>
                     <h2 class="text-xl font-semibold text-white">Tasks</h2>
                 </div>
@@ -336,9 +334,9 @@
             <!-- Project Card -->
             <div class="bg-[#ffb32d] rounded-2xl shadow-sm p-6">
                 <div class="flex items-center gap-2 mb-6">
-                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 30 30">
                         <path
-                            d="M19,3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9,17H7v-7h2v7zm4,0h-2V7h2v10zm4,0h-2v-4h2v4z" />
+                            d="M27.0781 0.828125H1.92188C1.31689 0.828125 0.828125 1.31689 0.828125 1.92188V27.0781C0.828125 27.6831 1.31689 28.1719 1.92188 28.1719H27.0781C27.6831 28.1719 28.1719 27.6831 28.1719 27.0781V1.92188C28.1719 1.31689 27.6831 0.828125 27.0781 0.828125ZM9.57812 22.4297C9.57812 22.5801 9.45508 22.7031 9.30469 22.7031H6.57031C6.41992 22.7031 6.29688 22.5801 6.29688 22.4297V6.57031C6.29688 6.41992 6.41992 6.29688 6.57031 6.29688H9.30469C9.45508 6.29688 9.57812 6.41992 9.57812 6.57031V22.4297ZM16.1406 12.8594C16.1406 13.0098 16.0176 13.1328 15.8672 13.1328H13.1328C12.9824 13.1328 12.8594 13.0098 12.8594 12.8594V6.57031C12.8594 6.41992 12.9824 6.29688 13.1328 6.29688H15.8672C16.0176 6.29688 16.1406 6.41992 16.1406 6.57031V12.8594ZM22.7031 15.3203C22.7031 15.4707 22.5801 15.5938 22.4297 15.5938H19.6953C19.5449 15.5938 19.4219 15.4707 19.4219 15.3203V6.57031C19.4219 6.41992 19.5449 6.29688 19.6953 6.29688H22.4297C22.5801 6.29688 22.7031 6.41992 22.7031 6.57031V15.3203Z" />
                     </svg>
                     <h2 class="text-xl font-semibold text-white">Project</h2>
                 </div>

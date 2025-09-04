@@ -328,15 +328,24 @@
                     <div class="flex items-center gap-2">
                         <!-- Tambahkan link pada ikon user -->
                         <a href="{{ route('admin-info') }}"
-                            class="user-icon active w-12 h-12 rounded-full flex items-center justify-center transition-colors bg-gray-200">
-                            <span class="text-gray-600 font-semibold text-sm transition-colors">F</span>
+                            class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
+                            <svg class="w-6 h-6 {{ request()->routeIs('admin-info.*') ? 'text-gray-600' : 'text-gray-400' }}"
+                                fill="currentColor" viewBox="0 0 31 31">
+                                <path
+                                    d="M13.9993 0.666504C15.7675 0.666504 17.4632 1.36888 18.7134 2.61913C19.9636 3.86937 20.666 5.56506 20.666 7.33317C20.666 9.10128 19.9636 10.797 18.7134 12.0472C17.4632 13.2975 15.7675 13.9998 13.9993 13.9998C12.2312 13.9998 10.5355 13.2975 9.2853 12.0472C8.03506 10.797 7.33268 9.10128 7.33268 7.33317C7.33268 5.56506 8.03506 3.86937 9.2853 2.61913C10.5355 1.36888 12.2312 0.666504 13.9993 0.666504ZM13.9993 17.3332C21.366 17.3332 27.3327 20.3165 27.3327 23.9998V27.3332H0.666016V23.9998C0.666016 20.3165 6.63268 17.3332 13.9993 17.3332Z" />
+                            </svg>
                         </a>
 
                         <!-- Logout Icon - Hanya tampil di halaman selain user-info -->
                         <a href=""
-                            class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-red-100 transition-colors">
-                            <i class="fas fa-sign-out-alt text-gray-600 text-lg hover:text-red-500"></i>
+                            class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
+                            <svg class="w-6 h-6 text-gray-600"
+                                fill="currentColor" viewBox="0 0 31 31">
+                                <path
+                                    d="M3.33333 30C2.41667 30 1.63222 29.6739 0.98 29.0217C0.327778 28.3694 0.00111111 27.5844 0 26.6667V3.33333C0 2.41667 0.326667 1.63222 0.98 0.98C1.63333 0.327778 2.41778 0.00111111 3.33333 0H15V3.33333H3.33333V26.6667H15V30H3.33333ZM21.6667 23.3333L19.375 20.9167L23.625 16.6667H10V13.3333H23.625L19.375 9.08333L21.6667 6.66667L30 15L21.6667 23.3333Z" />
+                            </svg>
                         </a>
+
                     </div>
                 </div>
 
