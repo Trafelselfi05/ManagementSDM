@@ -1,6 +1,6 @@
 @extends('user/layout-user')
 
-@section('title', 'Activity')
+@section('title', 'User Information')
 
 @section('content')
     <!-- Profile Content Section -->

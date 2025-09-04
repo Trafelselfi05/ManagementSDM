@@ -1,6 +1,6 @@
 @extends('user/layout-user')
 
-@section('title', 'Projects')
+@section('title', 'Projects User')
 
 @section('content')
     <section class="w-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-8">

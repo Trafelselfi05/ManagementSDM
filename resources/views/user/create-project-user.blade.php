@@ -1,6 +1,6 @@
 @extends('user/layout-user')
 
-@section('title', 'Create New Project & SDM')
+@section('title', 'Create New Project & SDM User')
 
 @section('content')
     <div class="max-w-6xl mx-auto">

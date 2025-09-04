@@ -1,5 +1,7 @@
 @extends('admin/layout')
 
+@section('title', 'Task Detail')
+
 @section('content')
     <div class="w-full max-w-[1800px] mx-auto">
         <!-- Main Content Container -->

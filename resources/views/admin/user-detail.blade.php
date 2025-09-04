@@ -1,6 +1,7 @@
 @extends('admin/layout')
 
-@section('title', 'Profile Admin')
+@section('title', 'Detail User')
+
 @section('content')
 <div class="flex justify-center items-center min-h-screen py-8">
     <div class="bg-white rounded-[20px] shadow-[0px_0px_4px_#00000040] p-8 w-full max-w-4xl mx-4">

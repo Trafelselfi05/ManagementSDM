@@ -1,6 +1,6 @@
 @extends('admin/layout')
 
-@section('title', 'Activity')
+@section('title', 'Tabel User Account')
 
 @section('content')
 <div class="w-full max-w-[95vw] h-auto min-h-[85vh] mx-auto my-6 rounded-xl shadow-md bg-white p-6">

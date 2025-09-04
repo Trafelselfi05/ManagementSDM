@@ -1,6 +1,6 @@
 @extends('user/layout-user')
 
-@section('title', 'Employee Dashboard')
+@section('title', 'Dashboard User')
 
 @section('content')
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">

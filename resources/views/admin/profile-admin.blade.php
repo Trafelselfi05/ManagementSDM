@@ -1,6 +1,6 @@
 @extends('admin/layout')
 
-@section('title', 'Activity')
+@section('title', 'Admin Profile')
 
 @section('content')
 <div class="flex justify-center items-start py-[35px] min-h-screen bg-[#f9f9f9]">

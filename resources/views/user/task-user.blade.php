@@ -1,6 +1,6 @@
 @extends('admin/layout-user')
 
-@section('title', 'Tasks')
+@section('title', 'Tasks User')
 
 @section('content')
     <div class="flex flex-col">

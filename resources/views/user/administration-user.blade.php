@@ -1,6 +1,6 @@
 @extends('user/layout-user')
 
-@section('title', 'Administration')
+@section('title', 'Administration User')
 
 @section('content')
     <!-- Main Content Section -->

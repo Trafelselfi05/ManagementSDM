@@ -1,5 +1,7 @@
 @extends('user/layout-user')
 
+@section('title', 'Task Detail User')
+
 @section('content')
     <div class="w-full max-w-[1800px] mx-auto">
         <!-- Main Content Container -->
