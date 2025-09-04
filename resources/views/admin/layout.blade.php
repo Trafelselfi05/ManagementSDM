@@ -283,8 +283,6 @@
             outline: none;
             box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
         }
-
-        
     </style>
 </head>
 
@@ -339,8 +337,7 @@
                         <!-- Logout Icon - Hanya tampil di halaman selain user-info -->
                         <a href=""
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-gray-600"
-                                fill="currentColor" viewBox="0 0 31 31">
+                            <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 31 31">
                                 <path
                                     d="M3.33333 30C2.41667 30 1.63222 29.6739 0.98 29.0217C0.327778 28.3694 0.00111111 27.5844 0 26.6667V3.33333C0 2.41667 0.326667 1.63222 0.98 0.98C1.63333 0.327778 2.41778 0.00111111 3.33333 0H15V3.33333H3.33333V26.6667H15V30H3.33333ZM21.6667 23.3333L19.375 20.9167L23.625 16.6667H10V13.3333H23.625L19.375 9.08333L21.6667 6.66667L30 15L21.6667 23.3333Z" />
                             </svg>
@@ -450,7 +447,8 @@
                     <div class="group relative">
                         <a href="{{ route('profile-admin') }}"
                             class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 {{ request()->routeIs('profile-admin.*') ? 'text-gray-600' : 'text-gray-400' }}" fill="currentColor" viewBox="0 0 31 32">
+                            <svg class="w-6 h-6 {{ request()->routeIs('profile-admin.*') ? 'text-gray-600' : 'text-gray-400' }}"
+                                fill="currentColor" viewBox="0 0 31 32">
                                 <path
                                     d="M13.5 0.458008L0.375 6.29134V15.0413C0.375 23.1351 5.975 30.7038 13.5 32.5413C21.025 30.7038 26.625 23.1351 26.625 15.0413V6.29134L13.5 0.458008ZM13.5 6.14551C14.3653 6.14551 15.2112 6.4021 15.9306 6.88283C16.6501 7.36356 17.2108 8.04684 17.542 8.84627C17.8731 9.64569 17.9597 10.5254 17.7909 11.374C17.6221 12.2227 17.2054 13.0022 16.5936 13.6141C15.9817 14.226 15.2022 14.6426 14.3535 14.8114C13.5049 14.9803 12.6252 14.8936 11.8258 14.5625C11.0263 14.2313 10.3431 13.6706 9.86232 12.9511C9.38159 12.2317 9.125 11.3858 9.125 10.5205C9.125 9.36019 9.58594 8.24739 10.4064 7.42692C11.2269 6.60644 12.3397 6.14551 13.5 6.14551ZM13.5 17.6663C16.4167 17.6663 22.25 19.2559 22.25 22.158C21.2922 23.6019 19.992 24.7864 18.4652 25.6058C16.9385 26.4251 15.2327 26.8539 13.5 26.8539C11.7673 26.8539 10.0615 26.4251 8.53477 25.6058C7.00803 24.7864 5.70779 23.6019 4.75 22.158C4.75 19.2559 10.5833 17.6663 13.5 17.6663Z" />
                             </svg>
@@ -529,7 +527,7 @@
             }
         });
 
-        
+
         // Modal functionality
         document.addEventListener('DOMContentLoaded', function() {
             // Elements
@@ -976,7 +974,7 @@
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdownMenu');
             dropdown.classList.toggle('hidden');
-            
+
             // Close other dropdowns
             document.getElementById('dropdownMenu2').classList.add('hidden');
         }
@@ -984,7 +982,7 @@
         function toggleDropdown2() {
             const dropdown = document.getElementById('dropdownMenu2');
             dropdown.classList.toggle('hidden');
-            
+
             // Close other dropdowns
             document.getElementById('dropdownMenu').classList.add('hidden');
         }
@@ -994,16 +992,16 @@
             document.getElementById('selectedText').textContent = text;
             document.getElementById('selectedText').classList.remove('text-[#7d7d7d]');
             document.getElementById('selectedText').classList.add('text-black');
-            
+
             // Set the hidden input value
             document.getElementById('selectedValue').value = value;
-            
+
             // Store selection
             selectedOptions['dropdown1'] = value;
-            
+
             // Close the dropdown
             document.getElementById('dropdownMenu').classList.add('hidden');
-            
+
             // Update dropdown options styling
             updateDropdownStyling('dropdownMenu', value);
         }
@@ -1013,13 +1011,13 @@
             document.getElementById('selectedText2').textContent = text;
             document.getElementById('selectedText2').classList.remove('text-[#7d7d7d]');
             document.getElementById('selectedText2').classList.add('text-black');
-            
+
             // Store selection
             selectedOptions['dropdown2'] = value;
-            
+
             // Close the dropdown
             document.getElementById('dropdownMenu2').classList.add('hidden');
-            
+
             // Update dropdown options styling
             updateDropdownStyling('dropdownMenu2', value);
         }
@@ -1027,10 +1025,10 @@
         function updateDropdownStyling(dropdownId, selectedValue) {
             const dropdown = document.getElementById(dropdownId);
             const options = dropdown.querySelectorAll('div[onclick^="selectOption"]');
-            
+
             options.forEach(option => {
                 const optionValue = option.getAttribute('onclick').match(/'([^']+)'/)[1];
-                
+
                 if (optionValue === selectedValue) {
                     // Selected option styling
                     option.classList.remove('bg-white', 'hover:bg-[#e0e0e0]');
@@ -1047,7 +1045,7 @@
         document.addEventListener('click', function(event) {
             const dropdown1 = document.getElementById('dropdownMenu');
             const button1 = event.target.closest('button[onclick="toggleDropdown()"]');
-            
+
             if (!button1 && !dropdown1.contains(event.target)) {
                 dropdown1.classList.add('hidden');
             }
@@ -1060,8 +1058,6 @@
                 selectOption2('website_management', 'Website Management Company');
             }, 100);
         });
-
-        
     </script>
 </body>
 
