@@ -290,7 +290,7 @@
 
 <body class="bg-gray-50 font-inter antialiased">
     <!-- Main Container -->
-    <div class="min-h-screen w-full max-w-[1920px] mx-auto bg-gray-50">
+    <div class="min-h-screen w-full mx-auto bg-gray-50">
 
         <!-- Header -->
         <header class="bg-white border-b border-gray-200 h-20 flex items-center px-6 lg:px-10">
@@ -1051,6 +1051,8 @@
                 selectOption2('website_management', 'Website Management Company');
             }, 100);
         });
+
+        
     </script>
 </body>
 

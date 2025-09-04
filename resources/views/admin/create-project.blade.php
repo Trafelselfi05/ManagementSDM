@@ -46,7 +46,7 @@
                                     Project</label>
                                 <select id="project-status" name="status"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors">
-                                    <option value="planning">Low</option>
+                                    <option value="planning" class="rounded-xl">Low</option>
                                     <option value="in_progress">Medium</option>
                                     <option value="on_hold">High</option>
                                 </select>
@@ -83,7 +83,7 @@
                                 <select id="employee-position" name="position"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-primary focus:border-primary transition-colors"
                                     required>
-                                    <option value="">Select Project Director</option>
+                                    <option value="" class="hidden absolute top-[60px] left-0 flex-col w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] z-10">Select Project Director</option>
                                     <option value="developer">Niken Nazwa S</option>
                                     <option value="designer">Winda Putri Agustina</option>
                                     <option value="manager">Reza Adi Wardana</option>

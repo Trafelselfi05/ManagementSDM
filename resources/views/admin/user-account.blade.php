@@ -48,74 +48,74 @@
     <!-- Table Rows -->
     <div class="divide-y divide-gray-200">
       <!-- Row 1 -->
-      <div class="flex items-center py-4 px-4 text-gray-900 text-base">
+      <a href="{{ route('user-detail') }}" class="flex items-center py-4 px-4 text-gray-900 text-base hover:bg-gray-50 transition-colors">
         <div class="w-16 text-center">1</div>
         <div class="w-72">Ahmad Wahid</div>
         <div class="w-64">Analis</div>
         <div class="w-80">Ahmad@email.com</div>
         <div class="w-40">User</div>
         <div class="w-48 flex justify-center">
-          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors">
+          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors" onclick="event.preventDefault(); event.stopPropagation(); if(confirm('Apakah Anda yakin ingin menghapus user ini?')) { console.log('Deleting user 1'); }">
             Delete
           </button>
         </div>
-      </div>
+      </a>
       
       <!-- Row 2 -->
-      <div class="flex items-center py-4 px-4 text-gray-900 text-base">
+      <a href="{{ route('user-detail') }}" class="flex items-center py-4 px-4 text-gray-900 text-base hover:bg-gray-50 transition-colors">
         <div class="w-16 text-center">2</div>
         <div class="w-72">Nur Wahid Alfiansyah</div>
         <div class="w-64">Analis</div>
         <div class="w-80">Ahmad@email.com</div>
         <div class="w-40">User</div>
         <div class="w-48 flex justify-center">
-          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors">
+          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors" onclick="event.preventDefault(); event.stopPropagation(); if(confirm('Apakah Anda yakin ingin menghapus user ini?')) { console.log('Deleting user 2'); }">
             Delete
           </button>
         </div>
-      </div>
+      </a>
       
       <!-- Row 3 -->
-      <div class="flex items-center py-4 px-4 text-gray-900 text-base">
+      <a href="{{ route('user-detail') }}" class="flex items-center py-4 px-4 text-gray-900 text-base hover:bg-gray-50 transition-colors">
         <div class="w-16 text-center">3</div>
         <div class="w-72">Rahmat Irawan</div>
         <div class="w-64">Backend Developer</div>
         <div class="w-80">Ahmad@email.com</div>
         <div class="w-40">User</div>
         <div class="w-48 flex justify-center">
-          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors">
+          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors" onclick="event.preventDefault(); event.stopPropagation(); if(confirm('Apakah Anda yakin ingin menghapus user ini?')) { console.log('Deleting user 3'); }">
             Delete
           </button>
         </div>
-      </div>
+      </a>
       
       <!-- Row 4 -->
-      <div class="flex items-center py-4 px-4 text-gray-900 text-base">
+      <a href="{{ route('user-detail') }}" class="flex items-center py-4 px-4 text-gray-900 text-base hover:bg-gray-50 transition-colors">
         <div class="w-16 text-center">4</div>
         <div class="w-72">Jesse Pinkman</div>
         <div class="w-64">Front End Developer</div>
         <div class="w-80">Ahmad@email.com</div>
         <div class="w-40">Admin</div>
         <div class="w-48 flex justify-center">
-          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors">
+          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors" onclick="event.preventDefault(); event.stopPropagation(); if(confirm('Apakah Anda yakin ingin menghapus user ini?')) { console.log('Deleting user 4'); }">
             Delete
           </button>
         </div>
-      </div>
+      </a>
       
       <!-- Row 5 -->
-      <div class="flex items-center py-4 px-4 text-gray-900 text-base">
+      <a href="{{ route('user-detail') }}" class="flex items-center py-4 px-4 text-gray-900 text-base hover:bg-gray-50 transition-colors">
         <div class="w-16 text-center">5</div>
         <div class="w-72">Kobe Bryant</div>
         <div class="w-64">UI/UX Designer</div>
         <div class="w-80">Ahmad@email.com</div>
         <div class="w-40">User</div>
         <div class="w-48 flex justify-center">
-          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors">
+          <button class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors" onclick="event.preventDefault(); event.stopPropagation(); if(confirm('Apakah Anda yakin ingin menghapus user ini?')) { console.log('Deleting user 5'); }">
             Delete
           </button>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>

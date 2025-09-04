@@ -7,12 +7,10 @@
         <!-- Filter and Create Project Buttons -->
         <div class="flex justify-between items-center mb-8">
             <!-- Filter Button -->
-             <div class="flex justify-between items-center mb-8">
-        <div class="flex items-center gap-2 bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] px-4 py-2">
-            <img class="w-6 h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />
-            <span class="text-gray-500 text-sm font-medium">Filter</span>
-        </div>
-    </div>
+            <div class="flex items-center gap-2 bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] px-4 py-2">
+                <img class="w-6 h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />
+                <span class="text-gray-500 text-sm font-medium">Filter</span>
+            </div>
 
             <!-- Create Project Button -->
             <a href="{{ url('admin/create-project') }}"
@@ -67,7 +65,7 @@
 
                     <!-- Project Row 2 -->
                     <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">2</td>
+                        <td class="py-4 px-4 text-gray-800 font-medium text-center">1</td>
                         <td class="py-4 px-4">
                             <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
                         </td>
