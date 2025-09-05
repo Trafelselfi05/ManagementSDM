@@ -15,7 +15,7 @@
     </div>
 
             <!-- Create Project Button -->
-            <a href="{{ url('user/create-project-user') }}"
+            <a href="{{ route("create-project-user") }}"
                 class="flex items-center gap-2.5 bg-black hover:bg-gray-800 rounded-[10px] px-3 py-3.5 transition-colors">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
