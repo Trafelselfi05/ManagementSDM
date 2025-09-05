@@ -312,7 +312,8 @@
                         <div class="flex items-center">
                             <input type="text" placeholder="Search project"
                                 class="text-xs md:text-base text-gray-500 font-medium bg-transparent border-none outline-none flex-1 placeholder-gray-400">
-                            <svg class=" w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class=" w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
@@ -320,7 +321,8 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-2 md:gap-4 {{ request()->routeIs('user-info.*') ? 'hidden' : '' }} flex-shrink-0">
+                <div
+                    class="flex items-center gap-2 md:gap-4 {{ request()->routeIs('user-info.*') ? 'hidden' : '' }} flex-shrink-0">
                     <div class="text-right hidden sm:block">
                         <h3 class="text-lg font-semibold text-gray-900">{{ auth()->user()->name ?? 'Freyaa' }}</h3>
                         <p class="text-sm font-medium text-gray-500">{{ auth()->user()->role ?? 'Admin' }}</p>
@@ -331,8 +333,8 @@
                         <!-- Profile -->
                         <div class="group relative md:hidden">
                             <a href="{{ route('profile-admin') }}"
-                                class="sidebar-item w-8 h-8 rounded-full {{ request()->routeIs('profile-admin') ? 'bg-[#6FAEC9] text-white' : 'text-gray-600' }} flex items-center justify-center transition-colors">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 31 32">
+                                class="sidebar-item w-8 h-8  md:w-12 md:h-12 rounded-full {{ request()->routeIs('profile-admin') ? 'bg-[#6FAEC9] text-white' : 'text-gray-600' }} flex items-center justify-center transition-colors">
+                                <svg class="w-4 h-4  md:w-6 md:h-6" fill="currentColor" viewBox="0 0 31 32">
                                     <path
                                         d="M13.5 0.458008L0.375 6.29134V15.0413C0.375 23.1351 5.975 30.7038 13.5 32.5413C21.025 30.7038 26.625 23.1351 26.625 15.0413V6.29134L13.5 0.458008ZM13.5 6.14551C14.3653 6.14551 15.2112 6.4021 15.9306 6.88283C16.6501 7.36356 17.2108 8.04684 17.542 8.84627C17.8731 9.64569 17.9597 10.5254 17.7909 11.374C17.6221 12.2227 17.2054 13.0022 16.5936 13.6141C15.9817 14.226 15.2022 14.6426 14.3535 14.8114C13.5049 14.9803 12.6252 14.8936 11.8258 14.5625C11.0263 14.2313 10.3431 13.6706 9.86232 12.9511C9.38159 12.2317 9.125 11.3858 9.125 10.5205C9.125 9.36019 9.58594 8.24739 10.4064 7.42692C11.2269 6.60644 12.3397 6.14551 13.5 6.14551ZM13.5 17.6663C16.4167 17.6663 22.25 19.2559 22.25 22.158C21.2922 23.6019 19.992 24.7864 18.4652 25.6058C16.9385 26.4251 15.2327 26.8539 13.5 26.8539C11.7673 26.8539 10.0615 26.4251 8.53477 25.6058C7.00803 24.7864 5.70779 23.6019 4.75 22.158C4.75 19.2559 10.5833 17.6663 13.5 17.6663Z" />
                                 </svg>
@@ -341,36 +343,21 @@
 
                         <!-- Tambahkan link pada ikon user -->
                         <a href="{{ route('admin-info') }}"
-                            class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-4 h-4 {{ request()->routeIs('admin-info.*') ? 'text-gray-600' : 'text-gray-400' }}"
+                            class="sidebar-item active w-8 h-8  md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors">
+                            <svg class="w-4 h-4 md:w-6 md:h-6 {{ request()->routeIs('admin-info.*') ? 'text-gray-600' : 'text-gray-400' }}"
                                 fill="currentColor" viewBox="0 0 31 31">
                                 <path
                                     d="M13.9993 0.666504C15.7675 0.666504 17.4632 1.36888 18.7134 2.61913C19.9636 3.86937 20.666 5.56506 20.666 7.33317C20.666 9.10128 19.9636 10.797 18.7134 12.0472C17.4632 13.2975 15.7675 13.9998 13.9993 13.9998C12.2312 13.9998 10.5355 13.2975 9.2853 12.0472C8.03506 10.797 7.33268 9.10128 7.33268 7.33317C7.33268 5.56506 8.03506 3.86937 9.2853 2.61913C10.5355 1.36888 12.2312 0.666504 13.9993 0.666504ZM13.9993 17.3332C21.366 17.3332 27.3327 20.3165 27.3327 23.9998V27.3332H0.666016V23.9998C0.666016 20.3165 6.63268 17.3332 13.9993 17.3332Z" />
                             </svg>
                         </a>
 
-                        <!-- Logout Icon - Hanya tampil di halaman selain user-info -->
                         <a href=""
-                            class="sidebar-item active w-12 h-12 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 31 31">
+                            class="sidebar-item active w-8 h-8  md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors">
+                            <svg class="w-4 h-4 md:w-6 md:h-6 text-gray-600" fill="currentColor" viewBox="0 0 31 31">
                                 <path
                                     d="M3.33333 30C2.41667 30 1.63222 29.6739 0.98 29.0217C0.327778 28.3694 0.00111111 27.5844 0 26.6667V3.33333C0 2.41667 0.326667 1.63222 0.98 0.98C1.63333 0.327778 2.41778 0.00111111 3.33333 0H15V3.33333H3.33333V26.6667H15V30H3.33333ZM21.6667 23.3333L19.375 20.9167L23.625 16.6667H10V13.3333H23.625L19.375 9.08333L21.6667 6.66667L30 15L21.6667 23.3333Z" />
                             </svg>
                         </a>
-
-
-
-                    </div>
-                </div>
-
-                <!-- User Info - Tampilan ketika di halaman user-info (tanpa logout icon) -->
-                <div class="flex items-center gap-4 {{ !request()->routeIs('admin-info.*') ? 'hidden' : '' }}">
-                    <div class="flex flex-col items-end">
-                        <h3 class="text-2xl font-semibold text-gray-900">Freyaa</h3>
-                        <p class="text-base font-medium text-gray-500">{{ auth()->user()->role ?? 'Admin' }}</p>
-                    </div>
-                    <div class="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full">
-                        <i class="fas fa-user text-gray-600 text-xl"></i>
                     </div>
                 </div>
             </div>
