@@ -1,81 +1,47 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
+// Root Route
 Route::get('/', function () {
     return view('Auth.login');
 });
 
-Route::get('admin/admin-info', function () {
-    return view('admin.admin-info');
-})->name('admin-info');
+// Admin Routes grouped by Controller
+Route::controller(AdminController::class)->prefix('admin')->group(function () {
+    Route::get('admin-info', 'adminInfo')->name('admin-info');
+    Route::get('dashboard', 'dashboard')->name('dashboard');
+    Route::get('project', 'project')->name('project');
+    Route::get('create-project', 'createProject')->name('project.create');
+    Route::get('task', 'task')->name('task');
+    Route::get('task-detail', 'taskDetail')->name('task-detail');
+    Route::get('activity', 'activity')->name('activity');
+    Route::get('administration', 'administration')->name('administration');
+    Route::get('profile-admin', 'profileAdmin')->name('profile-admin');
+    Route::get('user-account', 'userAccount')->name('user-account');
+    Route::get('user-detail', 'userDetail')->name('user-detail');
+});
 
-Route::get('admin/dashboard', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
-
-Route::get('admin/project', function () {
-    return view('admin.project');
-})->name('project');
-
-Route::get('admin/create-project', function () {
-    return view('admin.create-project');
-})->name('project.create');
-
-Route::get('admin/task', function () {
-    return view('admin.task');
-})->name('task');
-
-Route::get('admin/task-detail', function () {
-    return view('admin.task-detail');
-})->name('task-detail');
-
-Route::get('admin/activity', function () {
-    return view('admin.activity');
-})->name('activity');
-
-Route::get('admin/administration', function () {
-    return view('admin.administration');
-})->name('administration');
-
-Route::get('admin/profile-admin', function () {
-    return view('admin.profile-admin');
-})->name('profile-admin');
-
-Route::get('admin/user-account', function () {
-    return view('admin.user-account');
-})->name('user-account');
-
-Route::get('admin/user-detail', function () {
-    return view('admin.user-detail');
-})->name('user-detail');
-
-Route::get('user/dashboard-user', function () {
-    return view('user.dashboard-user');
-})->name('dashboard-user');
-
-Route::get('user/user-info', function () {
-    return view('user.user-info');
-})->name('user-info');
-
-Route::get('user/administration-user', function () {
-    return view('user.administration-user');
-})->name('administration-user');
-
-Route::get('user/task-user', function () {
-    return view('user.task-user');
-})->name('task-user');
-
-Route::get('user/task-detail-user', function () {
-    return view('task-detail-user');
-})->name('task-detail-user');
-
-Route::get('user/project-user', function () {
-    return view('user.project-user');
-})->name('project-user');
-
-Route::get('user/create-project-user', function () {
-    return view('user.create-project-user');
-})->name('create-project-user');
-
+// User Routes grouped by Controller
+Route::controller(UserController::class)->prefix('user')->group(function () {
+    Route::get('dashboard', 'dashboardUser')->name('dashboard-user');
+    Route::get('info', 'userInfo')->name('user-info');
+    Route::get('administration', 'administrationUser')->name('administration-user');
+    Route::get('task', 'taskUser')->name('task-user');
+    Route::get('task-detail', 'taskDetailUser')->name('task-detail-user');
+    Route::get('project', 'projectUser')->name('project-user');
+    Route::get('create-project', 'createProjectUser')->name('create-project-user');
+});
