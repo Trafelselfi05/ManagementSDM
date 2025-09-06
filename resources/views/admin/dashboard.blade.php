@@ -6,7 +6,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 rounded-[20px]">
         <!-- Main Dashboard Content -->
         <div class="lg:col-span-2 order-2 lg:order-1">
-            <div class="bg-white rounded-2xl shadow-sm p-4 lg:p-6">
+            <div class="bg-white rounded-2xl shadow-sm py-4 lg:p-6">
                 <!-- Status Filter Tabs -->
                 <div class="flex flex-wrap gap-2 lg:gap-4 mb-4 lg:mb-6" id="statusFilter">
                     <button data-status="ready"
@@ -34,13 +34,25 @@
                 <!-- Employee Cards Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6" id="employeeCards">
                     <!-- Employee Card - Ready 1 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-3 lg:p-4 border border-gray-100" data-status="ready">
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-3 lg:p-4 border border-gray-100"
+                        data-status="ready">
                         <div class="flex items-start gap-3 mb-3 lg:mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-10 h-10 lg:w-14 lg:h-14 rounded-full object-cover flex-shrink-0">
                             <div class="min-w-0 flex-1">
                                 <h3 class="font-semibold text-gray-900 text-sm lg:text-base truncate">Athena Cyntia</h3>
                                 <p class="text-xs lg:text-sm text-gray-500">UX Designer</p>
+                            </div>
+
+                            <div class="flex md:hidden gap-2 items-center flex-wrap">
+                                <div
+                                    class="flex w-[75px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#7db445] rounded-[10px]">
+                                    <span class="text-xs lg:text-sm font-semibold text-white">Complete</span>
+                                </div>
+                                <div
+                                    class="flex w-[60px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#e94949] rounded-[10px]">
+                                    <span class="text-xs lg:text-sm font-semibold text-white">High</span>
+                                </div>
                             </div>
                         </div>
                         <div class="mb-2">
@@ -50,7 +62,7 @@
                             Design landing & prototype page farm app
                         </p>
                         <!-- Container flex untuk kedua badge -->
-                        <div class="flex gap-2 items-center flex-wrap">
+                        <div class="md:flex hidden gap-2 items-center flex-wrap">
                             <div
                                 class="flex w-[75px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#7db445] rounded-[10px]">
                                 <span class="text-xs lg:text-sm font-semibold text-white">Complete</span>
@@ -63,13 +75,26 @@
                     </div>
 
                     <!-- Employee Card - Ready 2 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-3 lg:p-4 border border-gray-100" data-status="ready">
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-2 lg:p-4 border border-gray-100"
+                        data-status="ready">
                         <div class="flex items-start gap-3 mb-3 lg:mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-10 h-10 lg:w-14 lg:h-14 rounded-full object-cover flex-shrink-0">
                             <div class="min-w-0 flex-1">
                                 <h3 class="font-semibold text-gray-900 text-sm lg:text-base truncate">Athena Cyntia</h3>
                                 <p class="text-xs lg:text-sm text-gray-500">UX Designer</p>
+                            </div>
+
+                            <!-- Container flex untuk kedua badge -->
+                            <div class="flex md:hidden gap-2 items-center flex-wrap">
+                                <div
+                                    class="flex w-[75px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#7db445] rounded-[10px]">
+                                    <span class="text-xs lg:text-sm font-semibold text-white">Complete</span>
+                                </div>
+                                <div
+                                    class="flex w-[60px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#e94949] rounded-[10px]">
+                                    <span class="text-xs lg:text-sm font-semibold text-white">High</span>
+                                </div>
                             </div>
                         </div>
                         <div class="mb-2">
@@ -79,7 +104,7 @@
                             Design landing & prototype page farm app
                         </p>
                         <!-- Container flex untuk kedua badge -->
-                        <div class="flex gap-2 items-center flex-wrap">
+                        <div class="hidden md:flex gap-2 items-center flex-wrap">
                             <div
                                 class="flex w-[75px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#7db445] rounded-[10px]">
                                 <span class="text-xs lg:text-sm font-semibold text-white">Complete</span>
@@ -92,13 +117,25 @@
                     </div>
 
                     <!-- Employee Card - Ready 3 -->
-                    <div class="employee-card bg-white rounded-xl shadow-sm p-3 lg:p-4 border border-gray-100" data-status="ready">
+                    <div class="employee-card bg-white rounded-xl shadow-sm p-3 lg:p-4 border border-gray-100"
+                        data-status="ready">
                         <div class="flex items-start gap-3 mb-3 lg:mb-4">
                             <img src="https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png" alt="Athena Cyntia"
                                 class="w-10 h-10 lg:w-14 lg:h-14 rounded-full object-cover flex-shrink-0">
                             <div class="min-w-0 flex-1">
                                 <h3 class="font-semibold text-gray-900 text-sm lg:text-base truncate">Athena Cyntia</h3>
                                 <p class="text-xs lg:text-sm text-gray-500">UX Designer</p>
+                            </div>
+
+                            <div class="flex md:hidden gap-2 items-center flex-wrap">
+                                <div
+                                    class="flex w-[75px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#7db445] rounded-[10px]">
+                                    <span class="text-xs lg:text-sm font-semibold text-white">Complete</span>
+                                </div>
+                                <div
+                                    class="flex w-[60px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#e94949] rounded-[10px]">
+                                    <span class="text-xs lg:text-sm font-semibold text-white">High</span>
+                                </div>
                             </div>
                         </div>
                         <div class="mb-2">
@@ -108,7 +145,7 @@
                             Design landing & prototype page farm app
                         </p>
                         <!-- Container flex untuk kedua badge -->
-                        <div class="flex gap-2 items-center flex-wrap">
+                        <div class="md:flex hidden gap-2 items-center flex-wrap">
                             <div
                                 class="flex w-[75px] lg:w-[91px] h-[25px] lg:h-[29px] items-center justify-center gap-2.5 px-[6px] lg:px-[7px] py-[4px] lg:py-[5px] bg-[#7db445] rounded-[10px]">
                                 <span class="text-xs lg:text-sm font-semibold text-white">Complete</span>
@@ -315,16 +352,20 @@
                     <div class="space-y-2 lg:space-y-4">
                         <!-- Task 1 -->
                         <div class="bg-white rounded-xl p-2 lg:p-4">
-                            <h3 class="font-semibold text-gray-900 text-xs lg:text-sm mb-1 lg:mb-2">Create filter to find data resource</h3>
-                            <p class="text-xs text-gray-500 mb-2 lg:mb-4 line-clamp-2">create button and if click data will show</p>
+                            <h3 class="font-semibold text-gray-900 text-xs lg:text-sm mb-1 lg:mb-2">Create filter to find
+                                data resource</h3>
+                            <p class="text-xs text-gray-500 mb-2 lg:mb-4 line-clamp-2">create button and if click data will
+                                show</p>
                             <span
                                 class="inline-block px-2 lg:px-3 py-1 bg-[#6fadc8] text-white text-xs font-medium rounded-md">Low</span>
                         </div>
 
                         <!-- Task 2 -->
                         <div class="bg-white rounded-xl p-2 lg:p-4">
-                            <h3 class="font-semibold text-gray-900 text-xs lg:text-sm mb-1 lg:mb-2">Displaying and merging data</h3>
-                            <p class="text-xs text-gray-500 mb-2 lg:mb-4 line-clamp-2">merging data in web codelab, to make easy accses and more</p>
+                            <h3 class="font-semibold text-gray-900 text-xs lg:text-sm mb-1 lg:mb-2">Displaying and merging
+                                data</h3>
+                            <p class="text-xs text-gray-500 mb-2 lg:mb-4 line-clamp-2">merging data in web codelab, to make
+                                easy accses and more</p>
                             <span
                                 class="inline-block px-2 lg:px-3 py-1 bg-[#ffb32d] text-white text-xs font-medium rounded-md">Medium</span>
                         </div>
@@ -343,11 +384,13 @@
 
                     <div class="bg-white rounded-xl p-2 lg:p-4">
                         <h3 class="font-semibold text-gray-900 text-xs lg:text-sm mb-1 lg:mb-2">CODESHOP</h3>
-                        <p class="text-xs text-gray-500 mb-2 lg:mb-4 line-clamp-3">Create a web, to buy mod game GTA V. Payment must use
+                        <p class="text-xs text-gray-500 mb-2 lg:mb-4 line-clamp-3">Create a web, to buy mod game GTA V.
+                            Payment must use
                             Dana/Paypal/Steam</p>
 
                         <div class="flex items-center justify-between">
-                            <span class="inline-block px-2 lg:px-3 py-1 bg-[#e94949] text-white text-xs font-medium rounded-md">On
+                            <span
+                                class="inline-block px-2 lg:px-3 py-1 bg-[#e94949] text-white text-xs font-medium rounded-md">On
                                 create</span>
                         </div>
                     </div>

@@ -50,12 +50,12 @@
               class="flex h-[45px] items-center gap-2.5 px-4 py-[13px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] tracking-[0] leading-[normal] border-0 outline-none appearance-none cursor-pointer"
               style="background-image: url('https://c.animaapp.com/mf0zod5k1fupaQ/img/vector-6.svg'); background-repeat: no-repeat; background-position: right 16px center; background-size: 18px 10px;"
             >
-              <option value="">Enter division</option>
-              <option value="IT">IT Department</option>
-              <option value="HR">Human Resources</option>
-              <option value="Finance">Finance</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Operations">Operations</option>
+              <option value="" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Enter division</option>
+              <option value="IT" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">IT Department</option>
+              <option value="HR" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Human Resources</option>
+              <option value="Finance" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Finance</option>
+              <option value="Marketing" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Marketing</option>
+              <option value="Operations" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Operations</option>
             </select>
           </div>
         </div>
@@ -83,6 +83,21 @@
               placeholder="Confirm Password"
               class="flex h-[45px] items-center gap-2.5 pl-4 pr-[34px] py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] tracking-[0] leading-[normal] border-0 outline-none"
             />
+          </div>
+          <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
+            <div
+              class="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#7d7d7d] text-base tracking-[0] leading-[normal]"
+            >
+              Role
+            </div>
+            <select
+              class="flex h-[45px] items-center gap-2.5 px-4 py-[13px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] tracking-[0] leading-[normal] border-0 outline-none appearance-none cursor-pointer"
+              style="background-image: url('https://c.animaapp.com/mf0zod5k1fupaQ/img/vector-6.svg'); background-repeat: no-repeat; background-position: right 16px center; background-size: 18px 10px;"
+            >
+              <option value="">Select role</option>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
         </div>
       </div>
