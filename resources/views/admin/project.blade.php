@@ -36,6 +36,7 @@
                             Director</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-24">Level</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-28">Status</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Action</th>
                     </tr>
                 </thead>
 
@@ -61,11 +62,27 @@
                                 Running
                             </span>
                         </td>
+                        <td class="py-4 px-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="{{ route('edit-project') }}" 
+                                   class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </a>
+                                <button onclick="confirmDelete(1)" 
+                                        class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
                     </tr>
 
                     <!-- Project Row 2 -->
                     <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">1</td>
+                        <td class="py-4 px-4 text-gray-800 font-medium text-center">2</td>
                         <td class="py-4 px-4">
                             <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
                         </td>
@@ -82,6 +99,22 @@
                             <span class="px-2.5 py-1 bg-[#FFA500] text-white text-sm font-semibold rounded-[10px]">
                                 Maintenance
                             </span>
+                        </td>
+                        <td class="py-4 px-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="{{ route('edit-project') }}" 
+                                   class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </a>
+                                <button onclick="confirmDelete(2)" 
+                                        class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </td>
                     </tr>
 
@@ -105,6 +138,22 @@
                                 Running
                             </span>
                         </td>
+                        <td class="py-4 px-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="{{ route('edit-project') }}" 
+                                   class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </a>
+                                <button onclick="confirmDelete(3)" 
+                                        class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
                     </tr>
 
                     <!-- Project Row 4 -->
@@ -126,6 +175,22 @@
                             <span class="px-2.5 py-1 bg-[#FFA500] text-white text-sm font-semibold rounded-[10px]">
                                 Maintenance
                             </span>
+                        </td>
+                        <td class="py-4 px-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="{{ route('edit-project') }}" 
+                                   class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </a>
+                                <button onclick="confirmDelete(4)" 
+                                        class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </td>
                     </tr>
 
@@ -149,6 +214,22 @@
                                 To do
                             </span>
                         </td>
+                        <td class="py-4 px-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="{{ route('edit-project') }}" 
+                                   class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </a>
+                                <button onclick="confirmDelete(5)" 
+                                        class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
                     </tr>
 
                     <!-- Project Row 6 -->
@@ -170,6 +251,22 @@
                             <span class="px-2.5 py-1 bg-[#50C878] text-white text-sm font-semibold rounded-[10px]">
                                 To do
                             </span>
+                        </td>
+                        <td class="py-4 px-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="{{ url('admin/edit-project/6') }}" 
+                                   class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </a>
+                                <button onclick="confirmDelete(6)" 
+                                        class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -200,4 +297,32 @@
             </div>
         </div>
     </section>
+
+    <script>
+        function confirmDelete(id) {
+            if (confirm('Are you sure you want to delete this project?')) {
+                // Create a form and submit it for deletion
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `{{ url('admin/delete-project') }}/${id}`;
+                
+                // Add CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                form.appendChild(csrfToken);
+                
+                // Add method override for DELETE
+                const methodField = document.createElement('input');
+                methodField.type = 'hidden';
+                methodField.name = '_method';
+                methodField.value = 'DELETE';
+                form.appendChild(methodField);
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 @endsection

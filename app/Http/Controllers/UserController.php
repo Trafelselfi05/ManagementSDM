@@ -6,31 +6,29 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function dashboardUser() {
-        return view('user.dashboard-user');
+    public function dashboardDirector() {
+        return view('director.dashboard-director');
     }
-
-    public function userInfo() {
-        return view('user.user-info');
+    public function directorInfo() {
+        return view('director.director-info');
     }
-
-    public function administrationUser() {
-        return view('user.administration-user');
+    public function administrationDirector() {
+        return view('director.administration-director');
     }
-
-    public function taskUser() {
-        return view('user.task-user');
+    public function projectDirector() {
+        return view('director.project-director');
     }
-
-    public function taskDetailUser() {
-        return view('user.task-detail-user');
+    public function taskDirector() {
+        return view('director.task-director');
     }
-
-    public function projectUser() {
-        return view('user.project-user');
+    public function taskDetailDirector() {
+        return view('director.task-detail-director');
     }
-
-    public function createProjectUser() {
-        return view('user.create-project-user');
+    public function createProjectDirector() {
+        return view('director.create-project-director');
     }
+    public function profileDirector() {
+        return view('director.profile-director');
+    }
+    
 }

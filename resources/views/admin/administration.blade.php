@@ -1,21 +1,19 @@
-@extends('admin/layout')
-
-@section('title', 'Administration')
-
+@extends('admin.layout')
+@section('title', 'Leave Submission')
 @section('content')
     <!-- Main Content Section -->
-    <div class="flex flex-col max-w-4xl items-center gap-2.5 px-10 py-8 mx-auto bg-white rounded-2xl shadow-lg">
-        <div class="flex flex-col items-start gap-8 relative self-stretch w-full flex-[0_0_auto]">
-            <div class="w-fit font-semibold text-[#111111] text-lg whitespace-nowrap relative mt-[-1.00px] [font-family:'Inter',Helvetica] tracking-[0] leading-[normal]">
+    <div class="flex flex-col max-w-4xl w-full items-center gap-2.5 px-10 py-8 mx-auto bg-white rounded-2xl shadow-lg">
+        <div class="flex flex-col items-start gap-8 relative self-stretch w-full">
+            <div class="w-fit font-semibold text-[#111111] text-lg whitespace-nowrap">
                 Leave Submission
             </div>
-            <div class="flex flex-col items-center gap-12 relative self-stretch w-full flex-[0_0_auto]">
-                <form id="leaveForm" method="POST" action="" class="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
+            <div class="flex flex-col items-center gap-12 relative self-stretch w-full">
+                <form id="leaveForm" method="POST" action="" class="flex flex-col items-start gap-5 relative self-stretch w-full">
                     @csrf
 
                     <!-- Leave Category Dropdown -->
-                    <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-                        <label class="self-stretch font-medium text-[#7d7d7d] text-sm relative mt-[-1.00px] [font-family:'Inter',Helvetica] tracking-[0] leading-[normal]">
+                    <div class="flex flex-col items-start gap-3 relative self-stretch w-full">
+                        <label class="self-stretch font-medium text-[#7d7d7d] text-sm">
                             Leave Category
                         </label>
 
@@ -23,7 +21,7 @@
                             <button id="categoryBtn" type="button" onclick="toggleDropdown()" aria-haspopup="true" aria-expanded="false"
                                 class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-opacity-20 focus:border-transparent">
                                 <div class="flex w-full items-center justify-between">
-                                    <p id="selectedText" class="[font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                    <p id="selectedText" class="font-normal text-[#7d7d7d] text-sm tracking-[0] leading-[normal] whitespace-nowrap">
                                         -- Pilih Jenis Cuti --
                                     </p>
                                     <img class="w-[16px] h-2" src="https://c.animaapp.com/mf0waiheGBQdaR/img/vector-6.svg" />
@@ -32,25 +30,25 @@
 
                             <div id="dropdownMenu" class="hidden absolute top-[52px] left-0 flex-col w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] z-50">
                                 <div onclick="selectOption('tahunan', 'Cuti Tahunan')" class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="[font-family:'Inter',Helvetica] font-normal text-black text-sm">Cuti Tahunan</div>
+                                    <div class="font-normal text-black text-sm">Cuti Tahunan</div>
                                 </div>
                                 <div onclick="selectOption('sakit', 'Cuti Sakit')" class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="[font-family:'Inter',Helvetica] font-normal text-black text-sm">Cuti Sakit</div>
+                                    <div class="font-normal text-black text-sm">Cuti Sakit</div>
                                 </div>
                                 <div onclick="selectOption('melahirkan', 'Cuti Melahirkan')" class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="[font-family:'Inter',Helvetica] font-normal text-black text-sm">Cuti Melahirkan</div>
+                                    <div class="font-normal text-black text-sm">Cuti Melahirkan</div>
                                 </div>
                                 <div onclick="selectOption('darurat', 'Cuti Darurat')" class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="[font-family:'Inter',Helvetica] font-normal text-black text-sm">Cuti Darurat</div>
+                                    <div class="font-normal text-black text-sm">Cuti Darurat</div>
                                 </div>
                                 <div onclick="selectOption('pribadi', 'Cuti Pribadi')" class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="[font-family:'Inter',Helvetica] font-normal text-black text-sm">Cuti Pribadi</div>
+                                    <div class="font-normal text-black text-sm">Cuti Pribadi</div>
                                 </div>
                                 <div onclick="selectOption('haji_umrah', 'Cuti Haji/Umrah')" class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="[font-family:'Inter',Helvetica] font-normal text-black text-sm">Cuti Haji/Umrah</div>
+                                    <div class="font-normal text-black text-sm">Cuti Haji/Umrah</div>
                                 </div>
                                 <div onclick="selectOption('pernikahan', 'Cuti Pernikahan')" class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="[font-family:'Inter',Helvetica] font-normal text-black text-sm">Cuti Pernikahan</div>
+                                    <div class="font-normal text-black text-sm">Cuti Pernikahan</div>
                                 </div>
                             </div>
 
@@ -59,9 +57,9 @@
                     </div>
 
                     <!-- Date Range -->
-                    <div class="flex items-end gap-5 relative self-stretch w-full flex-[0_0_auto]">
+                    <div class="flex flex-col md:flex-row items-end gap-5 relative self-stretch w-full">
                         <!-- Start Date -->
-                        <div class="flex flex-col items-start gap-3 relative flex-1 grow">
+                        <div class="flex flex-col items-start gap-3 relative flex-1 w-full">
                             <label for="start-date" class="self-stretch font-medium text-[#7d7d7d] text-sm">Start Date</label>
                             <div class="relative self-stretch w-full">
                                 <input readonly id="start-date" name="start_date" type="text" placeholder="YYYY-MM-DD"
@@ -71,7 +69,7 @@
                         </div>
 
                         <!-- End Date -->
-                        <div class="flex flex-col items-start gap-3 relative flex-1 grow">
+                        <div class="flex flex-col items-start gap-3 relative flex-1 w-full">
                             <label for="end-date" class="self-stretch font-medium text-[#7d7d7d] text-sm">End Date</label>
                             <div class="relative self-stretch w-full">
                                 <input readonly id="end-date" name="end_date" type="text" placeholder="YYYY-MM-DD"
@@ -81,44 +79,77 @@
                         </div>
                     </div>
 
+                    <!-- Upload Picture Section -->
+                    <div class="flex flex-col items-start gap-3 relative self-stretch w-full">
+                        <label class="self-stretch font-medium text-[#7d7d7d] text-sm">
+                            Upload Supporting Document (if needed)
+                        </label>
+                        <div class="flex flex-col gap-3 w-full">
+                            <button type="button" onclick="uploadPicture()" class="flex h-[45px] items-center justify-center gap-2.5 px-4 py-[11px] self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] hover:bg-[#e0e0e0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-opacity-20">
+                                <img class="w-4 h-4" src="https://cdn-icons-png.flaticon.com/512/126/126477.png" alt="Upload icon" />
+                                <div class="font-medium text-[#111111] text-sm">Upload Picture</div>
+                            </button>
+                            
+                            <!-- Preview Container -->
+                            <div id="imagePreviewContainer" class="hidden mt-2 w-full">
+                                <p class="text-sm text-[#7d7d7d] mb-2">Preview:</p>
+                                <div class="relative border border-dashed border-gray-300 rounded-[15px] p-2 flex justify-center items-center">
+                                    <img id="imagePreview" class="max-h-40 max-w-full rounded-[10px]" src="" alt="Preview" />
+                                    <button type="button" onclick="removeImage()" class="absolute top-0 right-0 m-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center text-xs">
+                                        ×
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="file" id="fileInput" name="supporting_document" accept="image/*" class="hidden" />
+                    </div>
+
                     <!-- Description -->
-                    <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
+                    <div class="flex flex-col items-start gap-3 relative self-stretch w-full">
                         <label for="description" class="self-stretch font-medium text-[#7d7d7d] text-sm">Description</label>
                         <textarea id="description" name="description" placeholder="Enter your leave description..." rows="4"
                             class="flex h-[120px] items-start px-4 py-[11px] self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] resize-none text-sm placeholder-[#7d7d7d] focus:outline-none"></textarea>
                     </div>
 
                     <!-- Radio Button Options -->
-                    <div class="flex items-center gap-5 relative self-stretch w-full flex-[0_0_auto]">
+                    <div class="flex flex-col md:flex-row items-center gap-5 relative self-stretch w-full">
                         <!-- Laptop Question -->
-                        <div class="flex flex-col items-start gap-3 relative flex-1 grow">
+                        <div class="flex flex-col items-start gap-3 relative flex-1 w-full">
                             <p class="font-medium text-[#7d7d7d] text-sm">Do you bring laptop? (if there is a super urgent matter)</p>
                             <div class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026]">
-                                <label class="inline-flex items-center gap-2.5 cursor-pointer">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer mr-4">
                                     <input type="radio" name="bring_laptop" value="yes" class="hidden">
-                                    <img class="w-4 h-4" src="https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg" />
+                                    <div class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
+                                        <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
+                                    </div>
                                     <div class="font-medium text-[#111111] text-sm">Yes</div>
                                 </label>
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer">
-                                    <input type="radio" name="bring_laptop" value="no" class="hidden">
-                                    <img class="w-4 h-4" src="https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg" />
+                                    <input type="radio" name="bring_laptop" value="no" class="hidden" checked>
+                                    <div class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
+                                        <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
+                                    </div>
                                     <div class="font-medium text-[#111111] text-sm">No</div>
                                 </label>
                             </div>
                         </div>
 
                         <!-- Contact Question -->
-                        <div class="flex flex-col items-start gap-3 relative flex-1 grow">
+                        <div class="flex flex-col items-start gap-3 relative flex-1 w-full">
                             <p class="font-medium text-[#7d7d7d] text-sm">Do you still be Contacted? (if there is super urgent matter)</p>
                             <div class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026]">
-                                <label class="inline-flex items-center gap-2.5 cursor-pointer">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer mr-4">
                                     <input type="radio" name="can_be_contacted" value="yes" class="hidden">
-                                    <img class="w-4 h-4" src="https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg" />
+                                    <div class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
+                                        <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
+                                    </div>
                                     <div class="font-medium text-[#111111] text-sm">Yes</div>
                                 </label>
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer">
-                                    <input type="radio" name="can_be_contacted" value="no" class="hidden">
-                                    <img class="w-4 h-4" src="https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg" />
+                                    <input type="radio" name="can_be_contacted" value="no" class="hidden" checked>
+                                    <div class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
+                                        <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
+                                    </div>
                                     <div class="font-medium text-[#111111] text-sm">No</div>
                                 </label>
                             </div>
@@ -126,17 +157,17 @@
                     </div>
 
                     <!-- Action Buttons -->
-                    <div class="inline-flex items-center gap-4 relative flex-[0_0_auto]">
-                        <button type="button" onclick="resetForm()" class="flex w-[180px] h-[45px] items-center justify-center rounded-[10px] border border-[#111111] hover:bg-[#f9f9f9]">
+                    <div class="inline-flex flex-col sm:flex-row items-center gap-4 relative w-full justify-center mt-4">
+                        <button type="button" onclick="resetForm()" class="flex w-full sm:w-[180px] h-[45px] items-center justify-center rounded-[10px] border border-[#111111] hover:bg-[#f9f9f9] transition-colors">
                             <div class="font-semibold text-[#111111] text-sm">Cancel</div>
                         </button>
-                        <button type="button" onclick="submitForm()" class="flex w-[180px] h-[45px] items-center justify-center bg-[#111111] rounded-[10px] text-white">
+                        <button type="button" onclick="submitForm()" class="flex w-full sm:w-[180px] h-[45px] items-center justify-center bg-[#111111] rounded-[10px] text-white hover:bg-[#333333] transition-colors">
                             <div class="font-semibold text-sm">Submit</div>
                         </button>
                     </div>
                 </form>
 
-                <!-- Calendar Popup (keberadaannya dipindahkan ke body pada runtime agar tidak ter-clip) -->
+                <!-- Calendar Popup -->
                 <div id="calendarPopup" class="hidden z-[9999] w-[320px] bg-white rounded-2xl shadow-lg p-4">
                   <div class="flex items-center gap-3 mb-3">
                     <div id="month-short" class="text-lg font-semibold w-20 text-center">Apr</div>
@@ -157,12 +188,10 @@
 
                   <div id="dates-grid" class="grid grid-cols-7 gap-2"></div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Script (di-bundle inline agar mudah dicoba) -->
     <script>
       // ---------- Utility ----------
       function pad(n){ return n < 10 ? '0' + n : '' + n; }
@@ -189,6 +218,59 @@
         if (!categoryBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
           dropdownMenu.classList.add('hidden');
           categoryBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // ---------- Image Upload & Preview ----------
+      const fileInput = document.getElementById('fileInput');
+      const imagePreview = document.getElementById('imagePreview');
+      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      
+      function uploadPicture() {
+        fileInput.click();
+      }
+      
+      fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            imagePreviewContainer.classList.remove('hidden');
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+      
+      function removeImage() {
+        fileInput.value = '';
+        imagePreviewContainer.classList.add('hidden');
+        imagePreview.src = '';
+      }
+
+      // ---------- Radio Button Styling ----------
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          // Update all radio indicators
+          document.querySelectorAll('.radio-indicator').forEach(indicator => {
+            indicator.querySelector('.radio-dot').classList.add('hidden');
+            indicator.classList.remove('border-[#111111]', 'border-2');
+          });
+          
+          // Style the selected one
+          if (this.checked) {
+            const indicator = this.parentElement.querySelector('.radio-indicator');
+            indicator.querySelector('.radio-dot').classList.remove('hidden');
+            indicator.classList.add('border-[#111111]', 'border-2');
+          }
+        });
+      });
+
+      // Initialize radio buttons
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        if (radio.checked) {
+          const indicator = radio.parentElement.querySelector('.radio-indicator');
+          indicator.querySelector('.radio-dot').classList.remove('hidden');
+          indicator.classList.add('border-[#111111]', 'border-2');
         }
       });
 
@@ -394,6 +476,21 @@
         document.getElementById('end-date').value = '';
         document.getElementById('leave_category').value = '';
         document.getElementById('selectedText').textContent = '-- Pilih Jenis Cuti --';
+        removeImage();
+        
+        // Reset radio buttons
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+          const indicator = radio.parentElement.querySelector('.radio-indicator');
+          indicator.querySelector('.radio-dot').classList.add('hidden');
+          indicator.classList.remove('border-[#111111]', 'border-2');
+          
+          if (radio.value === 'no') {
+            radio.checked = true;
+            const indicator = radio.parentElement.querySelector('.radio-indicator');
+            indicator.querySelector('.radio-dot').classList.remove('hidden');
+            indicator.classList.add('border-[#111111]', 'border-2');
+          }
+        });
       }
 
       function submitForm(){
@@ -402,11 +499,4 @@
         document.getElementById('leaveForm').submit();
       }
     </script>
-
-    <style>
-      /* tweak */
-      #calendarPopup { min-width: 280px; }
-      /* date selected helper (if needed) */
-      #dates-grid button.selected { background-color: #111827; color: white; }
-    </style>
 @endsection

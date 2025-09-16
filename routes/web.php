@@ -33,15 +33,19 @@ Route::controller(AdminController::class)->prefix('admin')->group(function () {
     Route::get('profile-admin', 'profileAdmin')->name('profile-admin');
     Route::get('user-account', 'userAccount')->name('user-account');
     Route::get('user-detail', 'userDetail')->name('user-detail');
+    Route::get('submission-table', 'submissionTable')->name('submission-table');
+    Route::get('edit-project', 'editProject')->name('edit-project');
 });
 
 // User Routes grouped by Controller
-Route::controller(UserController::class)->prefix('user')->group(function () {
-    Route::get('dashboard', 'dashboardUser')->name('dashboard-user');
-    Route::get('info', 'userInfo')->name('user-info');
-    Route::get('administration', 'administrationUser')->name('administration-user');
-    Route::get('task', 'taskUser')->name('task-user');
-    Route::get('task-detail', 'taskDetailUser')->name('task-detail-user');
-    Route::get('project', 'projectUser')->name('project-user');
-    Route::get('create-project', 'createProjectUser')->name('create-project-user');
+Route::controller(UserController::class)->prefix('director')->group(function () {
+    Route::get('dashboard', 'dashboardDirector')->name('dashboard-director');
+    Route::get('director-info', 'directorInfo')->name('director-info');
+    Route::get('administration', 'administrationDirector')->name('administration-director');
+    Route::get('project', 'projectDirector')->name('project-director');
+    Route::get('task', 'taskDirector')->name('task-director');
+    Route::get('task-detail', 'taskDetailDirector')->name('task-detail-director');
+    Route::get('create-project', 'createProjectDirector')->name('creat-project-director');
+    Route::get('profile-director', 'profileDirector')->name('profile-director');
+
 });

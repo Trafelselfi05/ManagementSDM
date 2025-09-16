@@ -48,5 +48,12 @@ class AdminController extends Controller
 
     public function userDetail() {
         return view('admin.user-detail');
+    
+    }
+    public function submissionTable() {
+        return view('admin.submission-table');
+    }
+    public function editProject() {
+        return view('admin.edit-project');
     }
 }

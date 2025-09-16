@@ -11,7 +11,7 @@
                 <div class="bg-white rounded-xl shadow-sm p-6">
                     <!-- New Project Header INSIDE the form -->
                     <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">New Project</h2>
+                        <h2 class="text-2xl font-bold text-gray-900">Edit Project</h2>
                     </div>
 
                     <form action="#" method="POST">

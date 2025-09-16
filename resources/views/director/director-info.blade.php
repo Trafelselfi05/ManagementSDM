@@ -1,6 +1,6 @@
-@extends('user/layout-user')
+@extends('admin/layout')
 
-@section('title', 'User Information')
+@section('title', 'Admin Info')
 
 @section('content')
     <!-- Profile Content Section -->
@@ -22,7 +22,7 @@
                     <div class="text-center sm:text-left">
                         <div class="mb-6">
                             <h1 class="text-3xl font-bold text-gray-900 mb-2">Freyaa</h1>
-                            <p class="text-lg font-medium text-gray-500">Graphic Designer</p>
+                            <p class="text-lg font-medium text-gray-500">Admin</p>
                         </div>
                         <button
                             class="bg-primary text-white px-6 py-3 rounded-xl font-semibold text-base hover:bg-primary/90 transition-colors shadow-md">
