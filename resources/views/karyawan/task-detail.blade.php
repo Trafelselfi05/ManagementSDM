@@ -1,5 +1,4 @@
-@extends('admin/layout')
-
+@extends('karyawan/layout')
 @section('title', 'Task Detail')
 
 @section('content')
@@ -16,7 +15,7 @@
 
 
                 <!-- Task Board View Button -->
-                <a href="{{ route('admin.task') }}"
+                <a href="{{ route('karyawan.task') }}"
                     class="w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-gray-800 transition-colors flex items-center justify-center">
                     Task Board View
                 </a>

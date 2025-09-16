@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DirectorController extends Controller
+{
+   public function adminInfo()
+    {
+        return view('director.admin-info');
+    }
+
+    public function dashboard()
+    {
+        return view('director.dashboard');
+    }
+
+    public function project()
+    {
+        return view('director.project');
+    }
+
+    public function createProject()
+    {
+        return view('director.create-project');
+    }
+    public function editProject()
+    {
+        return view('director.edit-project');
+    }
+
+    public function task()
+    {
+        return view('director.task');
+    }
+
+    public function taskDetail()
+    {
+        return view('director.task-detail');
+    }
+
+    public function activity()
+    {
+        return view('director.activity');
+    }
+
+    public function administration()
+    {
+        return view('director.administration');
+    }
+
+    public function profileAdmin()
+    {
+        return view('director.profile-admin');
+    }
+
+    public function userAccount()
+    {
+        return view('director.user-account');
+    }
+
+    public function userDetail()
+    {
+        return view('director.user-detail');
+    }
+    public function submissionTable()
+    {
+        return view('director.submission-table');
+    }
+}

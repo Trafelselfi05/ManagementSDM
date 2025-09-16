@@ -1,5 +1,4 @@
-@extends('admin/layout')
-
+@extends('karyawan/layout')
 @section('title', 'Tasks')
 
 @section('content')
@@ -48,16 +47,7 @@
                     Create task
                 </button>
 
-                <button id="transferTaskBtn"
-                    class="flex items-center justify-center gap-2 w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
-                    </svg>
-                    Transfer task
-                </button>
-
-                <a href="{{ route('admin.task-detail') }}"
+                <a href="{{ route('karyawan.task-detail') }}"
                     class="w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-gray-800 transition-colors flex items-center justify-center">
                     View All Task
                 </a>

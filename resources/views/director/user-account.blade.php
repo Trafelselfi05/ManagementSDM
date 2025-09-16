@@ -1,4 +1,4 @@
-@extends('admin/layout')
+@extends('director/layout')
 
 @section('title', 'Tabel User Account')
 
@@ -26,7 +26,7 @@
             </div>
 
             <!-- Add New Button -->
-            <a href="{{ route('admin.profile-admin') }}"
+            <a href="{{ route('director.profile-admin') }}"
                 class="flex w-full md:w-48 h-9 items-center justify-center gap-2 p-2 bg-gray-900 rounded-md cursor-pointer hover:bg-gray-800 transition-colors">
                 <img class="w-4 h-4" src="https://c.animaapp.com/mf11cpkvhucm6Y/img/group-126.png" />
                 <div class="text-white text-sm font-semibold">
@@ -54,7 +54,7 @@
             <!-- Table Rows -->
             <div class="divide-y divide-gray-200">
                 <!-- Row 1 -->
-                <a href="{{ route('admin.user-detail') }}"
+                <a href="{{ route('director.user-detail') }}"
                     class="flex items-center py-4 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max">
                     <div class="w-16 text-center flex-shrink-0">1</div>
                     <div class="w-20 flex justify-center flex-shrink-0">
@@ -79,7 +79,7 @@
                 </a>
 
                 <!-- Row 2 -->
-                <a href="{{ route('admin.user-detail') }}"
+                <a href="{{ route('director.user-detail') }}"
                     class="flex items-center py-4 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max">
                     <div class="w-16 text-center flex-shrink-0">2</div>
                     <div class="w-20 flex justify-center flex-shrink-0">
@@ -104,7 +104,7 @@
                 </a>
 
                 <!-- Row 3 -->
-                <a href="{{ route('admin.user-detail') }}"
+                <a href="{{ route('director.user-detail') }}"
                     class="flex items-center py-4 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max">
                     <div class="w-16 text-center flex-shrink-0">3</div>
                     <div class="w-20 flex justify-center flex-shrink-0">
@@ -129,7 +129,7 @@
                 </a>
 
                 <!-- Row 4 -->
-                <a href="{{ route('admin.user-detail') }}"
+                <a href="{{ route('director.user-detail') }}"
                     class="flex items-center py-4 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max">
                     <div class="w-16 text-center flex-shrink-0">4</div>
                     <div class="w-20 flex justify-center flex-shrink-0">
@@ -154,7 +154,7 @@
                 </a>
 
                 <!-- Row 5 -->
-                <a href="{{ route('admin.user-detail') }}"
+                <a href="{{ route('director.user-detail') }}"
                     class="flex items-center py-4 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max">
                     <div class="w-16 text-center flex-shrink-0">5</div>
                     <div class="w-20 flex justify-center flex-shrink-0">

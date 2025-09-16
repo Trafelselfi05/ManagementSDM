@@ -1,4 +1,4 @@
-@extends('admin/layout')
+@extends('director/layout')
 
 @section('title', 'Dashboard')
 

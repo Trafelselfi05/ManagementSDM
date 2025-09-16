@@ -1,4 +1,4 @@
-@extends('admin/layout')
+@extends('director/layout')
 
 @section('title', 'Tasks')
 
@@ -57,7 +57,7 @@
                     Transfer task
                 </button>
 
-                <a href="{{ route('admin.task-detail') }}"
+                <a href="{{ route('director.task-detail') }}"
                     class="w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-gray-800 transition-colors flex items-center justify-center">
                     View All Task
                 </a>

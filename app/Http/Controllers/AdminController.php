@@ -6,54 +6,66 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function adminInfo() {
+    public function adminInfo()
+    {
         return view('admin.admin-info');
     }
 
-    public function dashboard() {
+    public function dashboard()
+    {
         return view('admin.dashboard');
     }
 
-    public function project() {
+    public function project()
+    {
         return view('admin.project');
     }
 
-    public function createProject() {
+    public function createProject()
+    {
         return view('admin.create-project');
     }
+    public function editProject()
+    {
+        return view('admin.edit-project');
+    }
 
-    public function task() {
+    public function task()
+    {
         return view('admin.task');
     }
 
-    public function taskDetail() {
+    public function taskDetail()
+    {
         return view('admin.task-detail');
     }
 
-    public function activity() {
+    public function activity()
+    {
         return view('admin.activity');
     }
 
-    public function administration() {
+    public function administration()
+    {
         return view('admin.administration');
     }
 
-    public function profileAdmin() {
+    public function profileAdmin()
+    {
         return view('admin.profile-admin');
     }
 
-    public function userAccount() {
+    public function userAccount()
+    {
         return view('admin.user-account');
     }
 
-    public function userDetail() {
+    public function userDetail()
+    {
         return view('admin.user-detail');
-    
     }
-    public function submissionTable() {
+    public function submissionTable()
+    {
         return view('admin.submission-table');
-    }
-    public function editProject() {
-        return view('admin.edit-project');
     }
 }

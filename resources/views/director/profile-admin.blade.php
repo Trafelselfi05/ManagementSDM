@@ -1,4 +1,4 @@
-@extends('admin/layout')
+@extends('director/layout')
 
 @section('title', 'Admin Profile')
 
@@ -102,7 +102,7 @@
         </div>
       </div>
       <div class="flex flex-col w-[320px] items-start gap-5 relative flex-[0_0_auto]">
-        <a href="{{ route('admin.user-account') }}"
+        <a href="{{ route('director.user-account') }}"
           class="flex h-[45px] items-center justify-center gap-2.5 px-4 py-2.5 relative self-stretch w-full bg-[#111111] rounded-[15px] shadow-[0px_0px_4px_#00000026] cursor-pointer border-0 outline-none hover:bg-[#333333] transition-colors"
         >
           <div
