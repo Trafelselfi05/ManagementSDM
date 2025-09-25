@@ -23,7 +23,8 @@
             </div>
 
             <!-- Login Form -->
-            <form>
+            <form method="POST" action="{{ route('auth-login') }}">
+                @csrf
                 <!-- Email Field -->
                 <div class="mb-4">
                     <div class="relative">
@@ -35,7 +36,7 @@
                         </div>
                         <input type="email"
                             class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-blue-50"
-                            placeholder="Email">
+                            placeholder="Email" name="email">
                     </div>
                 </div>
 
@@ -50,7 +51,7 @@
                         </div>
                         <input type="password" id="password"
                             class="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-blue-50"
-                            placeholder="Password">
+                            placeholder="Password" name="password">
                         <button type="button" onclick="togglePassword()"
                             class="absolute inset-y-0 right-0 pr-3 flex items-center">
                             <svg id="eye-open" class="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer"
@@ -79,7 +80,7 @@
                 </div>
 
                 <!-- Sign In Button -->
-                <button type="button"
+                <button type="submit"
                     class="w-full bg-black text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 transition-all duration-200 transform hover:scale-[1.01]">
                     SIGN IN
                 </button>

@@ -2,46 +2,76 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+  use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+  protected $table = "users";
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+  protected $fillable = [
+    "name",
+    "division",
+    "email",
+    "password",
+    "nik",
+    "telegram_link",
+    "employment_status",
+    "address",
+    "phone",
+    "birth_date",
+    "join_date",
+    "last_education",
+    "role",
+    "image",
+    "dashboard_status",
+    "status_description",
+  ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+  protected $hidden = ["password"];
+  protected $rememberTokenName = null;
+
+  // Relasi
+  public function projects()
+  {
+    return $this->belongsToMany(Project::class, "project_user");
+  }
+
+  public function tasks()
+  {
+    return $this->hasMany(Task::class, "assigned_to");
+  }
+
+  public function leaves()
+  {
+    return $this->hasMany(Leave::class);
+  }
+
+  public function activities()
+  {
+    return $this->hasOne(Activity::class);
+  }
+
+  public function workHours()
+  {
+    return $this->hasMany(WorkHour::class);
+  }
+
+  // === Helpers role ===
+  public function isDirector()
+  {
+    return $this->role === "director";
+  }
+
+  public function isKaryawan()
+  {
+    return $this->role === "karyawan";
+  }
+
+  public function isAdmin()
+  {
+    return $this->email === "admin@gmail.com";
+  }
 }

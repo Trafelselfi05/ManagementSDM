@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\KaryawanController;
 
@@ -16,9 +17,15 @@ use App\Http\Controllers\KaryawanController;
 |
 */
 
-// Root Route
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/login', 'showLoginForm')->name('login');
+    Route::post('/login', 'login')->name('auth-login');
+    Route::get('/logout', 'logout')->name('logout');
+});
+
+// A single route for the homepage can be defined separately
 Route::get('/', function () {
-    return view('Auth.login');
+    return redirect()->route('login');
 });
 
 // Admin Routes

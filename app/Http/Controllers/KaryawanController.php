@@ -6,6 +6,46 @@ use Illuminate\Http\Request;
 
 class KaryawanController extends Controller
 {
+      public function __construct()
+  {
+    $this->middleware(function ($request, $next) {
+      $user = auth()->user();
+
+      // Check if user is authenticated
+      if (!$user) {
+        auth()->logout();
+        return redirect()
+          ->route("login")
+          ->with("error", "Sesi telah berakhir, silakan login kembali");
+      }
+
+      // Check if user record still exists in database
+      try {
+        if (!$user->exists) {
+          auth()->logout();
+          return redirect()
+            ->route("login")
+            ->with("error", "Akun tidak ditemukan");
+        }
+      } catch (\Exception $e) {
+        auth()->logout();
+        return redirect()
+          ->route("login")
+          ->with("error", "Terjadi kesalahan, silakan login kembali");
+      }
+
+      // --- Redirection based on user role ---
+      if ($user->isAdmin()) {
+        return redirect()->route("admin.dashboard");
+      }
+
+      if ($user->isDirector()) {
+        return redirect()->route("director.dashboard");
+      }
+
+      return $next($request);
+    });
+  }
    public function adminInfo()
     {
         return view('karyawan.admin-info');

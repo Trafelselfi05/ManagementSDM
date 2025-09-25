@@ -355,7 +355,7 @@
                             </svg>
                         </a>
 
-                        <a href=""
+                        <a href="{{ route('logout') }}"
                             class="sidebar-item active w-8 h-8  md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors">
                             <svg class="w-4 h-4 md:w-6 md:h-6 text-gray-600" fill="currentColor" viewBox="0 0 31 31">
                                 <path
