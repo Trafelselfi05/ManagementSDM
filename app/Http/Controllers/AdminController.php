@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -62,7 +63,9 @@ class AdminController extends Controller
 
   public function createProject()
   {
-    return view("admin.create-project");
+        $employees = User::where("email", "!=", "admin@gmail.com")->get();
+
+    return view("admin.create-project" , compact("employees"));
   }
   public function editProject()
   {
@@ -96,7 +99,10 @@ class AdminController extends Controller
 
   public function userAccount()
   {
-    return view("admin.user-account");
+    // Ambil semua user kecuali admin@gmail.com
+    $users = User::where("email", "!=", "admin@gmail.com")->get();
+
+    return view("admin.user-account", compact("users"));
   }
 
   public function userDetail()
