@@ -338,7 +338,7 @@
         <!-- Right Sidebar -->
         <div class="space-y-4 lg:space-y-6 order-1 lg:order-2">
             <!-- Mobile: Tasks and Project side by side -->
-            <div class="grid grid-cols-2 lg:grid-cols-1 gap-4 lg:gap-6">
+            <div class="grid grid-cols-2 gap-4 lg:gap-6">
                 <!-- Tasks Card -->
                 <div class="bg-[#7db445] rounded-2xl shadow-sm p-3 lg:p-6">
                     <div class="flex items-center gap-2 mb-3 lg:mb-6">
