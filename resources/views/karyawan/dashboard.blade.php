@@ -10,23 +10,15 @@
                 <div class="flex flex-wrap gap-2 lg:gap-4 mb-4 lg:mb-6" id="statusFilter">
                     <button data-status="ready"
                         class="status-btn px-3 lg:px-6 py-2 lg:py-3 rounded-lg bg-gray-900 text-white font-medium text-xs lg:text-sm shadow-sm">
-                        Ready
+                        Project
                     </button>
                     <button data-status="standby"
                         class="status-btn px-3 lg:px-6 py-2 lg:py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-xs lg:text-sm shadow-sm hover:bg-gray-200 transition-colors">
-                        Stand by
+                        Maintenance
                     </button>
                     <button data-status="notready"
                         class="status-btn px-3 lg:px-6 py-2 lg:py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-xs lg:text-sm shadow-sm hover:bg-gray-200 transition-colors">
-                        Not ready
-                    </button>
-                    <button data-status="complete"
-                        class="status-btn px-3 lg:px-6 py-2 lg:py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-xs lg:text-sm shadow-sm hover:bg-gray-200 transition-colors">
                         Complete
-                    </button>
-                    <button data-status="absent"
-                        class="status-btn px-3 lg:px-6 py-2 lg:py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-xs lg:text-sm shadow-sm hover:bg-gray-200 transition-colors">
-                        Absent
                     </button>
                 </div>
 

@@ -11,7 +11,7 @@
                 <div class="bg-white rounded-xl shadow-sm p-6">
                     <!-- New Project Header INSIDE the form -->
                     <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">Edit Project</h2>
+                        <h2 class="text-2xl font-bold text-gray-900">New Project</h2>
                     </div>
 
                     <form action="#" method="POST">
@@ -64,577 +64,269 @@
                 </div>
             </div>
 
-            <!-- SDM Section -->
-            <div>
-                <!-- SDM Form -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <!-- SDM Header INSIDE the form -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">SDM</h2>
+<!-- SDM Section -->
+<div>
+    <!-- SDM Form -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <!-- SDM Header -->
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-900">SDM</h2>
+        </div>
+
+        <form action="#" method="POST">
+            @csrf
+            
+            <!-- Project Director Dropdown -->
+            <div class="mb-6">
+                <label for="project-director" class="block text-sm font-medium text-gray-700 mb-2">
+                    Project Director
+                </label>
+                <div class="relative">
+                    <select id="project-director" name="project_director" 
+                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white">
+                        <option value="">Select Project Director</option>
+                        <option value="m_reza_adi_w">M. Reza Adi W</option>
+                        <option value="ts">Ts</option>
+                        <option value="kv">Kv</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
                     </div>
-
-                    <form action="#" method="POST">
-                        @csrf
-
-                        <div class="space-y-4 mb-6">
-                            <!-- Division Selector Dropdown -->
-                            <div class="relative">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Select Team Members</label>
-                                <div class="relative">
-                                    <button type="button" id="dropdownButton"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-left bg-white flex items-center justify-between hover:border-gray-300 hover:shadow-sm">
-                                        <span id="dropdownText" class="text-gray-500 select-none">Select Division</span>
-                                        <svg id="dropdownIcon" class="w-5 h-5 text-gray-400 transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                    
-                                    <!-- Dropdown Menu -->
-                                    <div id="dropdownMenu" class="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg opacity-0 invisible transform scale-95 transition-all duration-200 max-h-96 overflow-hidden">
-                                        <!-- Division Options -->
-                                        <div class="p-2 max-h-60 overflow-y-auto">
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="project-director">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">Project Director</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="engineer-web">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">Engineer Web</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="analyst">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">Analyst</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="engineer-android">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">Engineer Android</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="content-creator">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">Content Creator</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="engineer-ios">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">Engineer iOS</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="copywriter">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">Copywriter</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="ui-ux">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">UI/UX Designer</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="division-option px-4 py-3 hover:bg-blue-50 cursor-pointer rounded-lg transition-all duration-200 border-b border-gray-100 last:border-b-0" data-division="tester">
-                                                <div class="flex items-center justify-between">
-                                                    <span class="font-medium text-gray-900">Tester</span>
-                                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center">
-                                                        <div class="w-2 h-2 bg-blue-500 rounded-full opacity-0 division-check transition-opacity duration-200"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- People Selection -->
-                                        <div id="peopleSelection" class="border-t border-gray-200 p-3 opacity-0 invisible transform translate-y-2 transition-all duration-200">
-                                            <div class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                                                <svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                </svg>
-                                                Select Team Members:
-                                            </div>
-                                            <div id="peopleList" class="space-y-2 max-h-48 overflow-y-auto mb-4">
-                                                <!-- People checkboxes will be inserted here -->
-                                            </div>
-                                            <div class="flex gap-2">
-                                                <button type="button" id="confirmSelection" class="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center">
-                                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                    Confirm
-                                                </button>
-                                                <button type="button" id="cancelSelection" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors duration-200">
-                                                    Cancel
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Selected Members Display -->
-                            <div id="selectedMembersDisplay" class="opacity-0 invisible transform translate-y-2 transition-all duration-300">
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Selected Team Members</label>
-                                <div id="selectedMembersList" class="space-y-3 max-h-60 overflow-y-auto">
-                                    <!-- Selected members will be displayed here -->
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="flex justify-end space-x-4 pt-6">
-                    <button type="button" onclick="resetSelection()"
-                        class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-400 transition-all duration-200">
-                        Reset
-                    </button>
-                    <button type="submit"
-                        class="px-6 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-all duration-200 shadow-sm hover:shadow">
-                        Create Project
-                    </button>
                 </div>
             </div>
+
+            <!-- Team Members Selection -->
+            <div class="mb-6">
+                <label for="division-select" class="block text-sm font-medium text-gray-700 mb-2">
+                    Select Division
+                </label>
+                <div class="relative mb-4">
+                    <select id="division-select" name="division" 
+                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white"
+                        onchange="showMembersDropdown(this.value)">
+                        <option value="">Choose Division</option>
+                        <option value="desain">Division Desain</option>
+                        <option value="engineer">Division Engineer</option>
+                        <option value="analyst">Division Analyst</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Members Checkboxes (Initially Hidden) -->
+                <div id="members-container" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">
+                        Select Team Members
+                    </label>
+                    <div id="members-list" class="space-y-3 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                        <!-- Checkboxes will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Selected Members Display -->
+                <div id="selected-display" class="hidden mt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Selected Members
+                    </label>
+                    <div id="selected-chips" class="flex flex-wrap gap-2 p-3 border border-gray-200 rounded-lg bg-white min-h-[50px]">
+                        <!-- Selected member chips will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const membersData = {
+                    desain: [
+                        { value: 'desain_sarah', text: 'Sarah Williams' },
+                        { value: 'desain_michael', text: 'Michael Chen' },
+                        { value: 'desain_emma', text: 'Emma Rodriguez' },
+                        { value: 'desain_david', text: 'David Thompson' }
+                    ],
+                    engineer: [
+                        { value: 'engineer_alex', text: 'Alex Johnson' },
+                        { value: 'engineer_priya', text: 'Priya Patel' },
+                        { value: 'engineer_james', text: 'James Anderson' },
+                        { value: 'engineer_lisa', text: 'Lisa Zhang' }
+                    ],
+                    analyst: [
+                        { value: 'analyst_robert', text: 'Robert Davis' },
+                        { value: 'analyst_maria', text: 'Maria Garcia' },
+                        { value: 'analyst_kevin', text: 'Kevin Brown' },
+                        { value: 'analyst_jessica', text: 'Jessica Wilson' }
+                    ]
+                };
+
+                let selectedMembers = [];
+                let usedDivisions = [];
+
+                function showMembersDropdown(division) {
+                    const container = document.getElementById('members-container');
+                    const membersList = document.getElementById('members-list');
+                    const divisionSelect = document.getElementById('division-select');
+                    
+                    if (division === '') {
+                        container.classList.add('hidden');
+                        return;
+                    }
+                    
+                    // Clear previous checkboxes
+                    membersList.innerHTML = '';
+                    
+                    // Add checkboxes based on selected division
+                    const members = membersData[division];
+                    members.forEach(member => {
+                        const checkboxContainer = document.createElement('label');
+                        checkboxContainer.className = 'flex items-center cursor-pointer';
+                        
+                        checkboxContainer.innerHTML = `
+                            <input type="checkbox" name="team_members[]" value="${member.value}" 
+                                   class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4"
+                                   onchange="updateSelectedMembers()">
+                            <span class="ml-3 text-sm text-gray-700">${member.text}</span>
+                        `;
+                        
+                        membersList.appendChild(checkboxContainer);
+                    });
+                    
+                    // Show the members container
+                    container.classList.remove('hidden');
+                    
+                    // Remove selected division from dropdown and mark as used
+                    if (!usedDivisions.includes(division)) {
+                        usedDivisions.push(division);
+                        const optionToRemove = divisionSelect.querySelector(`option[value="${division}"]`);
+                        if (optionToRemove) {
+                            optionToRemove.remove();
+                        }
+                        
+                        // Reset dropdown to default
+                        divisionSelect.value = '';
+                    }
+                }
+
+                function updateSelectedMembers() {
+                    const checkboxes = document.querySelectorAll('input[name="team_members[]"]:checked');
+                    const selectedDisplay = document.getElementById('selected-display');
+                    const selectedChips = document.getElementById('selected-chips');
+                    
+                    // Clear previous chips
+                    selectedChips.innerHTML = '';
+                    selectedMembers = [];
+                    
+                    if (checkboxes.length === 0) {
+                        selectedDisplay.classList.add('hidden');
+                        return;
+                    }
+                    
+                    // Show selected display
+                    selectedDisplay.classList.remove('hidden');
+                    
+                    // Create chips for selected members
+                    checkboxes.forEach(checkbox => {
+                        const memberName = checkbox.nextElementSibling.textContent;
+                        const memberValue = checkbox.value;
+                        selectedMembers.push(memberValue);
+                        
+                        // Extract division from member value
+                        let divisionName = '';
+                        if (memberValue.startsWith('desain_')) {
+                            divisionName = 'Desain';
+                        } else if (memberValue.startsWith('engineer_')) {
+                            divisionName = 'Engineer';
+                        } else if (memberValue.startsWith('analyst_')) {
+                            divisionName = 'Analyst';
+                        }
+                        
+                        const chip = document.createElement('div');
+                        chip.className = 'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
+                        chip.innerHTML = `
+                            <span class="font-medium">[${divisionName}]</span>
+                            <span class="ml-1">${memberName}</span>
+                            <button type="button" class="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none" 
+                                onclick="removeSelectedMember('${memberValue}')">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        `;
+                        selectedChips.appendChild(chip);
+                    });
+                }
+
+                function removeSelectedMember(memberValue) {
+                    const checkbox = document.querySelector(`input[value="${memberValue}"]`);
+                    if (checkbox) {
+                        checkbox.checked = false;
+                    }
+                    updateSelectedMembers();
+                }
+
+                // Reset function for the reset button
+                function resetAllSelections() {
+                    // Reset division dropdown
+                    const divisionSelect = document.getElementById('division-select');
+                    divisionSelect.value = '';
+                    
+                    // Re-add all division options
+                    if (usedDivisions.length > 0) {
+                        usedDivisions.forEach(division => {
+                            const option = document.createElement('option');
+                            option.value = division;
+                            
+                            switch(division) {
+                                case 'desain':
+                                    option.textContent = 'Division Desain';
+                                    break;
+                                case 'engineer':
+                                    option.textContent = 'Division Engineer';
+                                    break;
+                                case 'analyst':
+                                    option.textContent = 'Division Analyst';
+                                    break;
+                            }
+                            
+                            divisionSelect.appendChild(option);
+                        });
+                    }
+                    
+                    // Clear used divisions array
+                    usedDivisions = [];
+                    
+                    // Hide containers
+                    document.getElementById('members-container').classList.add('hidden');
+                    document.getElementById('selected-display').classList.add('hidden');
+                    
+                    // Clear selected members
+                    selectedMembers = [];
+                    
+                    // Reset project director
+                    document.getElementById('project-director').value = '';
+                }
+            </script>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-end space-x-4 pt-6">
+                <button type="reset"
+                    class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200">
+                    Reset
+                </button>
+                <button type="submit"
+                    class="px-6 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 shadow-sm transition-colors duration-200">
+                    Create Project
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
         </div>
     </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Team selection variables
-    let selectedMembers = {};
-    let currentDivision = null;
-    let selectedDivisions = new Set();
-
-    // Sample data structure for people in each division
-    const divisionsData = {
-        'project-director': [
-            { id: 'pd1', name: 'Niken Nazwa S' },
-            { id: 'pd2', name: 'Winda Putri Agustina' }
-        ],
-        'engineer-web': [
-            { id: 'ew1', name: 'Reza Adi Wardana' },
-            { id: 'ew2', name: 'Nizar Nur Afif' },
-            { id: 'ew3', name: 'Ahmad Fauzi' }
-        ],
-        'analyst': [
-            { id: 'an1', name: 'Sari Indah' },
-            { id: 'an2', name: 'Budi Santoso' }
-        ],
-        'engineer-android': [
-            { id: 'ea1', name: 'Dimas Pratama' },
-            { id: 'ea2', name: 'Lisa Aulia' }
-        ],
-        'content-creator': [
-            { id: 'cc1', name: 'Maya Sari' },
-            { id: 'cc2', name: 'Rizki Akbar' }
-        ],
-        'engineer-ios': [
-            { id: 'ei1', name: 'Andi Setiawan' },
-            { id: 'ei2', name: 'Fitri Wulandari' }
-        ],
-        'copywriter': [
-            { id: 'cw1', name: 'Dewi Lestari' },
-            { id: 'cw2', name: 'Hendra Kusuma' }
-        ],
-        'ui-ux': [
-            { id: 'ux1', name: 'Putri Amelia' },
-            { id: 'ux2', name: 'Yoga Pratama' }
-        ],
-        'tester': [
-            { id: 't1', name: 'Sinta Maharani' },
-            { id: 't2', name: 'Bayu Wijaya' }
-        ]
-    };
-
-    // Get DOM elements
-    const dropdownButton = document.getElementById('dropdownButton');
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    const dropdownIcon = document.getElementById('dropdownIcon');
-    const dropdownText = document.getElementById('dropdownText');
-    const peopleSelection = document.getElementById('peopleSelection');
-    const peopleList = document.getElementById('peopleList');
-    const selectedMembersDisplay = document.getElementById('selectedMembersDisplay');
-    const selectedMembersList = document.getElementById('selectedMembersList');
-    const confirmSelection = document.getElementById('confirmSelection');
-    const cancelSelection = document.getElementById('cancelSelection');
-
-    // Toggle dropdown with smooth animation
-    function toggleDropdown(show = null) {
-        const isOpen = show !== null ? show : dropdownMenu.classList.contains('opacity-0');
-        
-        if (isOpen) {
-            // Show dropdown
-            dropdownMenu.classList.remove('opacity-0', 'invisible', 'scale-95');
-            dropdownMenu.classList.add('opacity-100', 'visible', 'scale-100');
-            dropdownIcon.style.transform = 'rotate(180deg)';
-            dropdownButton.classList.add('ring-2', 'ring-blue-500', 'border-transparent');
-        } else {
-            // Hide dropdown
-            dropdownMenu.classList.remove('opacity-100', 'visible', 'scale-100');
-            dropdownMenu.classList.add('opacity-0', 'invisible', 'scale-95');
-            dropdownIcon.style.transform = 'rotate(0deg)';
-            dropdownButton.classList.remove('ring-2', 'ring-blue-500', 'border-transparent');
-            hidePeopleSelection();
-        }
-    }
-
-    // Show people selection with animation
-    function showPeopleSelection() {
-        setTimeout(() => {
-            peopleSelection.classList.remove('opacity-0', 'invisible', 'translate-y-2');
-            peopleSelection.classList.add('opacity-100', 'visible', 'translate-y-0');
-        }, 150);
-    }
-
-    // Hide people selection with animation
-    function hidePeopleSelection() {
-        peopleSelection.classList.remove('opacity-100', 'visible', 'translate-y-0');
-        peopleSelection.classList.add('opacity-0', 'invisible', 'translate-y-2');
-    }
-
-    // Toggle dropdown
-    dropdownButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const isCurrentlyOpen = dropdownMenu.classList.contains('opacity-100');
-        
-        if (!isCurrentlyOpen) {
-            // Reset to division selection when opening
-            hidePeopleSelection();
-            updateDropdownText('Select Division', 'text-gray-500');
-        }
-        
-        toggleDropdown(!isCurrentlyOpen);
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            toggleDropdown(false);
-        }
-    });
-
-    // Prevent dropdown from closing when clicking inside
-    dropdownMenu.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-
-    // Handle division selection
-    document.querySelectorAll('.division-option').forEach(option => {
-        option.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const division = this.dataset.division;
-            currentDivision = division;
-            const divisionName = this.querySelector('span').textContent;
-            
-            // Clear previous people list
-            peopleList.innerHTML = '';
-            
-            // Add people for this division
-            if (divisionsData[division]) {
-                divisionsData[division].forEach(person => {
-                    const checkboxDiv = document.createElement('div');
-                    checkboxDiv.className = 'flex items-center space-x-3 p-3 hover:bg-blue-50 rounded-lg transition-all duration-200 cursor-pointer';
-                    
-                    const isSelected = selectedMembers[division] && 
-                                     selectedMembers[division].some(member => member.id === person.id);
-                    
-                    checkboxDiv.innerHTML = `
-                        <div class="relative">
-                            <input type="checkbox" id="person-${person.id}" 
-                                   class="w-4 h-4 text-blue-500 border-2 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
-                                   data-division="${division}" data-name="${person.name}" ${isSelected ? 'checked' : ''}>
-                            <div class="absolute inset-0 pointer-events-none">
-                                <svg class="w-4 h-4 text-white opacity-0 checkbox-check transition-opacity duration-200" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <label for="person-${person.id}" class="text-sm text-gray-700 cursor-pointer flex-1 select-none font-medium">${person.name}</label>
-                    `;
-                    
-                    peopleList.appendChild(checkboxDiv);
-                    
-                    // Add click handler to the entire div
-                    checkboxDiv.addEventListener('click', function(e) {
-                        if (e.target.tagName !== 'INPUT') {
-                            const checkbox = this.querySelector('input[type="checkbox"]');
-                            checkbox.checked = !checkbox.checked;
-                        }
-                    });
-                });
-            }
-            
-            // Update dropdown text and show people selection
-            updateDropdownText(`Select from ${divisionName}`, 'text-gray-900');
-            showPeopleSelection();
-        });
-    });
-
-    // Handle confirm selection
-    confirmSelection.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        if (!currentDivision) return;
-        
-        const checkboxes = peopleList.querySelectorAll('input[type="checkbox"]:checked');
-        
-        if (checkboxes.length === 0) {
-            showNotification('Please select at least one team member.', 'warning');
-            return;
-        }
-        
-        // Add selected members
-        if (!selectedMembers[currentDivision]) {
-            selectedMembers[currentDivision] = [];
-        }
-        
-        // Clear existing members for this division
-        selectedMembers[currentDivision] = [];
-        
-        checkboxes.forEach(checkbox => {
-            const personId = checkbox.id;
-            const name = checkbox.dataset.name;
-            selectedMembers[currentDivision].push({ id: personId, name: name });
-        });
-        
-        if (selectedMembers[currentDivision].length > 0) {
-            selectedDivisions.add(currentDivision);
-        }
-        
-        // Update displays
-        updateSelectedDisplay();
-        updateDivisionOptions();
-        
-        // Close dropdown
-        toggleDropdown(false);
-        updateDropdownText('Select Division', 'text-gray-500');
-        currentDivision = null;
-        
-        showNotification(`Successfully added ${checkboxes.length} team members!`, 'success');
-    });
-
-    // Handle cancel selection
-    cancelSelection.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        hidePeopleSelection();
-        updateDropdownText('Select Division', 'text-gray-500');
-        currentDivision = null;
-    });
-
-    function updateDropdownText(text, className) {
-        dropdownText.textContent = text;
-        dropdownText.className = className + ' select-none';
-    }
-
-    function updateSelectedDisplay() {
-        const hasMembers = Object.keys(selectedMembers).length > 0 && 
-                          Object.values(selectedMembers).some(members => members.length > 0);
-        
-        if (!hasMembers) {
-            selectedMembersDisplay.classList.remove('opacity-100', 'visible', 'translate-y-0');
-            selectedMembersDisplay.classList.add('opacity-0', 'invisible', 'translate-y-2');
-            return;
-        }
-        
-        selectedMembersDisplay.classList.remove('opacity-0', 'invisible', 'translate-y-2');
-        selectedMembersDisplay.classList.add('opacity-100', 'visible', 'translate-y-0');
-        selectedMembersList.innerHTML = '';
-        
-        Object.entries(selectedMembers).forEach(([division, members]) => {
-            if (members.length === 0) return;
-            
-            const divisionDiv = document.createElement('div');
-            divisionDiv.className = 'border border-gray-200 rounded-xl p-4 bg-gradient-to-r from-blue-50 to-indigo-50 hover:shadow-sm transition-all duration-200';
-            
-            const divisionTitle = getDivisionTitle(division);
-            divisionDiv.innerHTML = `
-                <div class="flex items-center justify-between mb-3">
-                    <div class="flex items-center">
-                        <div class="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
-                        <div class="font-semibold text-gray-900">${divisionTitle}</div>
-                        <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">${members.length}</span>
-                    </div>
-                    <button type="button" class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-all duration-200" onclick="removeDivision('${division}')">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    ${members.map(member => `
-                        <div class="flex items-center justify-between bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-100 hover:shadow transition-all duration-200">
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-                                <span class="text-sm text-gray-700 font-medium">${member.name}</span>
-                            </div>
-                            <button type="button" class="text-red-400 hover:text-red-600 hover:bg-red-50 p-1 rounded transition-all duration-200" onclick="removeMember('${division}', '${member.id}')">
-                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                </svg>
-                            </button>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            
-            selectedMembersList.appendChild(divisionDiv);
-        });
-    }
-
-    function updateDivisionOptions() {
-        document.querySelectorAll('.division-option').forEach(option => {
-            const division = option.dataset.division;
-            const hasMembers = selectedDivisions.has(division) && 
-                             selectedMembers[division] && 
-                             selectedMembers[division].length > 0;
-            
-            const checkElement = option.querySelector('.division-check');
-            if (hasMembers) {
-                option.classList.add('bg-blue-50', 'border-blue-200');
-                checkElement.classList.remove('opacity-0');
-                checkElement.classList.add('opacity-100');
-            } else {
-                option.classList.remove('bg-blue-50', 'border-blue-200');
-                checkElement.classList.remove('opacity-100');
-                checkElement.classList.add('opacity-0');
-            }
-        });
-    }
-
-    function getDivisionTitle(division) {
-        const titles = {
-            'project-director': 'Project Director',
-            'engineer-web': 'Engineer Web',
-            'analyst': 'Analyst',
-            'engineer-android': 'Engineer Android',
-            'content-creator': 'Content Creator',
-            'engineer-ios': 'Engineer iOS',
-            'copywriter': 'Copywriter',
-            'ui-ux': 'UI/UX Designer',
-            'tester': 'Tester'
-        };
-        return titles[division] || division;
-    }
-
-    function showNotification(message, type = 'info') {
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 ${
-            type === 'success' ? 'bg-green-500 text-white' :
-            type === 'warning' ? 'bg-yellow-500 text-white' :
-            type === 'error' ? 'bg-red-500 text-white' :
-            'bg-blue-500 text-white'
-        }`;
-        
-        notification.innerHTML = `
-            <div class="flex items-center">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    ${type === 'success' ? 
-                        '<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>' :
-                        '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>'
-                    }
-                </svg>
-                <span>${message}</span>
-            </div>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        // Animate in
-        setTimeout(() => {
-            notification.classList.remove('translate-x-full');
-        }, 100);
-        
-        // Auto remove after 3 seconds
-        setTimeout(() => {
-            notification.classList.add('translate-x-full');
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
-        }, 3000);
-    }
-
-    // Global functions for removing members
-    window.removeMember = function(division, memberId) {
-        if (selectedMembers[division]) {
-            selectedMembers[division] = selectedMembers[division].filter(member => member.id !== memberId);
-            if (selectedMembers[division].length === 0) {
-                delete selectedMembers[division];
-                selectedDivisions.delete(division);
-            }
-        }
-        updateSelectedDisplay();
-        updateDivisionOptions();
-        showNotification('Team member removed successfully!', 'success');
-    };
-
-    window.removeDivision = function(division) {
-        const divisionName = getDivisionTitle(division);
-        if (confirm(`Are you sure you want to remove all members from ${divisionName}?`)) {
-            delete selectedMembers[division];
-            selectedDivisions.delete(division);
-            updateSelectedDisplay();
-            updateDivisionOptions();
-            showNotification(`All members from ${divisionName} removed!`, 'success');
-        }
-    };
-
-    window.resetSelection = function() {
-        if (Object.keys(selectedMembers).length === 0) {
-            showNotification('No selections to reset.', 'info');
-            return;
-        }
-        
-        if (confirm('Are you sure you want to reset all selections?')) {
-            selectedMembers = {};
-            selectedDivisions.clear();
-            currentDivision = null;
-            updateSelectedDisplay();
-            updateDivisionOptions();
-            updateDropdownText('Select Division', 'text-gray-500');
-            toggleDropdown(false);
-            showNotification('All selections have been reset!', 'success');
-        }
-    };
-
-    // Enhanced keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            toggleDropdown(false);
-        }
-    });
-
-    // Initialize display
-    updateSelectedDisplay();
-    updateDivisionOptions();
-});
 </script>
 
 @endsection

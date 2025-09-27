@@ -25,10 +25,6 @@
                         class="status-btn px-3 lg:px-6 py-2 lg:py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-xs lg:text-sm shadow-sm hover:bg-gray-200 transition-colors">
                         Complete
                     </button>
-                    <button data-status="absent"
-                        class="status-btn px-3 lg:px-6 py-2 lg:py-3 rounded-lg bg-gray-100 text-gray-700 font-medium text-xs lg:text-sm shadow-sm hover:bg-gray-200 transition-colors">
-                        Absent
-                    </button>
                 </div>
 
                 <!-- Employee Cards Grid -->
