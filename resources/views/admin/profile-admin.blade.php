@@ -1,119 +1,145 @@
 @extends('admin/layout')
 
-@section('title', 'Admin Profile')
+@section('title', 'Add User')
 
 @section('content')
 <div class="flex justify-center items-start py-[35px] min-h-screen bg-[#f9f9f9]">
-<div
-  class="inline-flex flex-col items-center gap-2.5 px-16 py-[40px] bg-white rounded-[15px] shadow-[0px_0px_4px_#00000040]"
->
-  <div class="flex flex-col w-[850px] items-start gap-[35px] relative flex-[0_0_auto]">
-    <div
-      class="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-[#111111] text-xl tracking-[0] leading-[normal]"
-    >
-      Create New Account
+    <div class="max-w-4xl w-full bg-white p-10 shadow-[0px_0px_4px_#00000040] rounded-[15px]">
+
+        @if(session('success'))
+            <div class="p-3 bg-green-100 text-green-700 rounded-lg mb-4">{{ session('success') }}</div>
+        @endif
+
+        <h2 class="text-xl font-bold mb-8">Create New Account</h2>
+
+        <form action="{{ route('admin.profile-admin.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <div class="grid grid-cols-2 gap-8">
+
+                @php
+                    $inputClass = "flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full 
+                                  bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] 
+                                  text-base font-medium text-[#111111] border-0 outline-none";
+                    $labelClass = "block text-sm font-medium text-gray-700 mb-2";
+                    $selectClass = $inputClass . ' appearance-none cursor-pointer 
+                        bg-no-repeat bg-right-4 bg-center bg-[length:18px_10px]';
+                @endphp
+
+                <!-- Name -->
+                <div>
+                    <label class="{{ $labelClass }}">Name</label>
+                    <input type="text" name="name" class="{{ $inputClass }}" required>
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="{{ $labelClass }}">Email</label>
+                    <input type="email" name="email" class="{{ $inputClass }}" required>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="{{ $labelClass }}">Password</label>
+                    <input type="password" name="password" class="{{ $inputClass }}" required>
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                    <label class="{{ $labelClass }}">Confirm Password</label>
+                    <input type="password" name="password_confirmation" class="{{ $inputClass }}" required>
+                </div>
+
+                <!-- Division -->
+                <div>
+                    <label class="{{ $labelClass }}">Division</label>
+                    <input type="text" name="division" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Phone -->
+                <div>
+                    <label class="{{ $labelClass }}">Phone</label>
+                    <input type="text" name="phone" class="{{ $inputClass }}">
+                </div>
+
+                <!-- NIK -->
+                <div>
+                    <label class="{{ $labelClass }}">NIK</label>
+                    <input type="text" name="nik" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Telegram Link -->
+                <div>
+                    <label class="{{ $labelClass }}">Telegram Link</label>
+                    <input type="text" name="telegram_link" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Employment Status -->
+                <div>
+                    <label class="{{ $labelClass }}">Employment Status</label>
+                    <input type="text" name="employment_status" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Birth Date -->
+                <div>
+                    <label class="{{ $labelClass }}">Birth Date</label>
+                    <input type="date" name="birth_date" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Join Date -->
+                <div>
+                    <label class="{{ $labelClass }}">Join Date</label>
+                    <input type="date" name="join_date" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Last Education -->
+                <div>
+                    <label class="{{ $labelClass }}">Last Education</label>
+                    <input type="text" name="last_education" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Role -->
+                <div>
+                    <label class="{{ $labelClass }}">Role</label>
+                    <select name="role" class="{{ $selectClass }}"
+                        style="background-image: url('https://c.animaapp.com/mf0zod5k1fupaQ/img/vector-6.svg');">
+                        <option value="">-- Select Role --</option>
+                        <option value="director">Director</option>
+                        <option value="karyawan">Karyawan</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <!-- Address -->
+                <div class="col-span-2">
+                    <label class="{{ $labelClass }}">Address</label>
+                    <textarea name="address" class="w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] border-0 outline-none px-4 py-3"></textarea>
+                </div>
+
+                <!-- Dashboard Status -->
+                <div>
+                    <label class="{{ $labelClass }}">Dashboard Status</label>
+                    <input type="text" name="dashboard_status" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Status Description -->
+                <div>
+                    <label class="{{ $labelClass }}">Status Description</label>
+                    <input type="text" name="status_description" class="{{ $inputClass }}">
+                </div>
+
+                <!-- Profile Image -->
+                <div class="col-span-2">
+                    <label class="{{ $labelClass }}">Profile Image</label>
+                    <input type="file" name="image" class="{{ $inputClass }}">
+                </div>
+            </div>
+
+            <button type="submit"
+                class="mt-8 w-full bg-[#111111] text-white py-3 rounded-[15px] shadow-[0px_0px_4px_#00000026] font-bold text-lg">
+                Save
+            </button>
+        </form>
     </div>
-    <div class="flex flex-col items-center gap-[50px] relative self-stretch w-full flex-[0_0_auto]">
-      <div class="flex items-start gap-8 relative self-stretch w-full flex-[0_0_auto]">
-        <div class="flex flex-col w-[400px] items-start gap-[25px] relative">
-          <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-            <div
-              class="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#7d7d7d] text-base tracking-[0] leading-[normal]"
-            >
-              Username
-            </div>
-            <input
-              type="text"
-              placeholder="Santiago"
-              class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-semibold text-[#111111] tracking-[0] leading-[normal] border-0 outline-none"
-            />
-          </div>
-          <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-            <div
-              class="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#7d7d7d] text-base tracking-[0] leading-[normal]"
-            >
-              Email
-            </div>
-            <input
-              type="email"
-              placeholder="Santiago@email.com"
-              class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-semibold text-[#111111] tracking-[0] leading-[normal] border-0 outline-none"
-            />
-          </div>
-          <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-            <div
-              class="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#7d7d7d] text-base tracking-[0] leading-[normal]"
-            >
-              Division
-            </div>
-            <select
-              class="flex h-[45px] items-center gap-2.5 px-4 py-[13px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] tracking-[0] leading-[normal] border-0 outline-none appearance-none cursor-pointer"
-              style="background-image: url('https://c.animaapp.com/mf0zod5k1fupaQ/img/vector-6.svg'); background-repeat: no-repeat; background-position: right 16px center; background-size: 18px 10px;"
-            >
-              <option value="" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Enter division</option>
-              <option value="IT" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">IT Department</option>
-              <option value="HR" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Human Resources</option>
-              <option value="Finance" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Finance</option>
-              <option value="Marketing" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Marketing</option>
-              <option value="Operations" class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:text-gray-900 focus:outline-hidden">Operations</option>
-            </select>
-          </div>
-        </div>
-        <div class="flex flex-col w-[400px] items-start gap-[25px] relative">
-          <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-            <div
-              class="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#7d7d7d] text-base tracking-[0] leading-[normal]"
-            >
-              Password
-            </div>
-            <input
-              type="password"
-              placeholder="Enter password"
-              class="flex h-[45px] items-center gap-2.5 pl-4 pr-[34px] py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] tracking-[0] leading-[normal] border-0 outline-none"
-            />
-          </div>
-          <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-            <div
-              class="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#7d7d7d] text-base tracking-[0] leading-[normal]"
-            >
-              Confirm Password
-            </div>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              class="flex h-[45px] items-center gap-2.5 pl-4 pr-[34px] py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] tracking-[0] leading-[normal] border-0 outline-none"
-            />
-          </div>
-          <div class="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-            <div
-              class="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#7d7d7d] text-base tracking-[0] leading-[normal]"
-            >
-              Role
-            </div>
-            <select
-              class="flex h-[45px] items-center gap-2.5 px-4 py-[13px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base [font-family:'Inter',Helvetica] font-normal text-[#7d7d7d] tracking-[0] leading-[normal] border-0 outline-none appearance-none cursor-pointer"
-              style="background-image: url('https://c.animaapp.com/mf0zod5k1fupaQ/img/vector-6.svg'); background-repeat: no-repeat; background-position: right 16px center; background-size: 18px 10px;"
-            >
-              <option value="">Select role</option>
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col w-[320px] items-start gap-5 relative flex-[0_0_auto]">
-        <a href="{{ route('admin.user-account') }}"
-          class="flex h-[45px] items-center justify-center gap-2.5 px-4 py-2.5 relative self-stretch w-full bg-[#111111] rounded-[15px] shadow-[0px_0px_4px_#00000026] cursor-pointer border-0 outline-none hover:bg-[#333333] transition-colors"
-        >
-          <div
-            class="relative w-fit mt-[-0.50px] [font-family:'Inter',Helvetica] font-bold text-white text-lg tracking-[0] leading-[normal]"
-          >
-            Create Account
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
 </div>
 @endsection
