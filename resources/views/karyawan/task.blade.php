@@ -369,8 +369,8 @@
                         <legend class="block text-sm font-medium text-gray-900 mb-3">Task Level</legend>
                         <div class="flex space-x-6">
                             <div class="flex items-center">
-                                <input type="radio" id="create-level-low" name="taskLevel" value="low" class="sr-only"
-                                    required />
+                                <input type="radio" id="create-level-low" name="taskLevel" value="low"
+                                    class="sr-only" required />
                                 <label for="create-level-low" class="flex items-center cursor-pointer">
                                     <span
                                         class="relative w-5 h-5 rounded-full border-2 border-amber-400 flex items-center justify-center mr-2">
@@ -381,8 +381,8 @@
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <input type="radio" id="create-level-medium" name="taskLevel" value="medium" class="sr-only"
-                                    required />
+                                <input type="radio" id="create-level-medium" name="taskLevel" value="medium"
+                                    class="sr-only" required />
                                 <label for="create-level-medium" class="flex items-center cursor-pointer">
                                     <span
                                         class="relative w-5 h-5 rounded-full border-2 border-amber-400 flex items-center justify-center mr-2">

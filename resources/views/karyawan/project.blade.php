@@ -199,21 +199,21 @@
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = `{{ url('admin/delete-project') }}/${id}`;
-                
+
                 // Add CSRF token
                 const csrfToken = document.createElement('input');
                 csrfToken.type = 'hidden';
                 csrfToken.name = '_token';
                 csrfToken.value = '{{ csrf_token() }}';
                 form.appendChild(csrfToken);
-                
+
                 // Add method override for DELETE
                 const methodField = document.createElement('input');
                 methodField.type = 'hidden';
                 methodField.name = '_method';
                 methodField.value = 'DELETE';
                 form.appendChild(methodField);
-                
+
                 document.body.appendChild(form);
                 form.submit();
             }

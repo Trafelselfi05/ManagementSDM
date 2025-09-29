@@ -38,8 +38,7 @@
         <!-- Table Container -->
         <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
             <!-- Table Header -->
-            <div
-                class="grid grid-cols-9 items-center bg-gray-100 py-3 px-4 text-gray-600 font-semibold text-sm min-w-max">
+            <div class="grid grid-cols-9 items-center bg-gray-100 py-3 px-4 text-gray-600 font-semibold text-sm min-w-max">
                 <div class="text-center">Image</div>
                 <div class="text-center">NIK</div>
                 <div class="text-center">Username</div>

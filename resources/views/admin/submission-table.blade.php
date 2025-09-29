@@ -29,11 +29,14 @@
                 <thead>
                     <tr class="bg-[#f5f5f5]">
                         <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-16">#</th>
-                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[250px]">Employee Name</th>
-                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[250px]">Leave Category</th>
+                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[250px]">Employee Name
+                        </th>
+                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[250px]">Leave Category
+                        </th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Start Date</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">End Date</th>
-                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[180px]">Description</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[180px]">Description
+                        </th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-24">Standby Status</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-28">Form Cuti</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Action</th>
@@ -60,25 +63,31 @@
                             <div class="text-sm text-gray-600">No</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <img src="/path/to/form-cuti-2.jpg" alt="Form Cuti" class="w-12 h-12 object-cover rounded border mx-auto cursor-pointer" onclick="viewFormCuti('/path/to/form-cuti-2.jpg')">
+                            <img src="/path/to/form-cuti-2.jpg" alt="Form Cuti"
+                                class="w-12 h-12 object-cover rounded border mx-auto cursor-pointer"
+                                onclick="viewFormCuti('/path/to/form-cuti-2.jpg')">
                         </td>
                         <td class="py-4 px-4">
                             <div class="flex items-center justify-center gap-2">
                                 <!-- Accept Button -->
-                                <button type="button" onclick="acceptProject(2)" 
+                                <button type="button" onclick="acceptProject(2)"
                                     class="inline-flex items-center justify-center w-8 h-8 text-green-600 bg-green-100 rounded-full hover:bg-green-200 hover:text-green-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                                     title="Accept Leave">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
                                     </svg>
                                 </button>
-                                
+
                                 <!-- Reject Button -->
-                                <button type="button" onclick="rejectProject(2)" 
+                                <button type="button" onclick="rejectProject(2)"
                                     class="inline-flex items-center justify-center w-8 h-8 text-red-600 bg-red-100 rounded-full hover:bg-red-200 hover:text-red-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                                     title="Reject Leave">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
                                     </svg>
                                 </button>
                             </div>
@@ -99,15 +108,18 @@
                         <td class="py-4 px-4 text-center">
                             <div class="text-sm text-gray-600">Cuti melahirkan</div>
                         </td>
-                         <td class="py-4 px-4 text-center">
+                        <td class="py-4 px-4 text-center">
                             <div class="text-sm text-gray-600">Yes</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <img src="/path/to/form-cuti-3.jpg" alt="Form Cuti" class="w-12 h-12 object-cover rounded border mx-auto cursor-pointer" onclick="viewFormCuti('/path/to/form-cuti-3.jpg')">
+                            <img src="/path/to/form-cuti-3.jpg" alt="Form Cuti"
+                                class="w-12 h-12 object-cover rounded border mx-auto cursor-pointer"
+                                onclick="viewFormCuti('/path/to/form-cuti-3.jpg')">
                         </td>
                         <td class="py-4 px-4">
                             <div class="flex items-center justify-center">
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                     Approved
                                 </span>
                             </div>
@@ -132,11 +144,14 @@
                             <div class="text-sm text-gray-600">Yes</div>
                         </td>
                         <td class="py-4 px-4 text-center">
-                            <img src="/path/to/form-cuti-4.jpg" alt="Form Cuti" class="w-12 h-12 object-cover rounded border mx-auto cursor-pointer" onclick="viewFormCuti('/path/to/form-cuti-4.jpg')">
+                            <img src="/path/to/form-cuti-4.jpg" alt="Form Cuti"
+                                class="w-12 h-12 object-cover rounded border mx-auto cursor-pointer"
+                                onclick="viewFormCuti('/path/to/form-cuti-4.jpg')">
                         </td>
                         <td class="py-4 px-4">
                             <div class="flex items-center justify-center">
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                     Rejected
                                 </span>
                             </div>
@@ -178,7 +193,8 @@
                 <h3 class="text-lg font-semibold">Form Cuti</h3>
                 <button onclick="closeFormCutiModal()" class="text-gray-400 hover:text-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
                     </svg>
                 </button>
             </div>
@@ -194,7 +210,7 @@
                 // Here you would typically send an AJAX request to your backend
                 // For now, we'll show a simple notification
                 showNotification('Leave submission accepted successfully!', 'success');
-                
+
                 // You can add your AJAX call here
                 // Example:
                 // fetch(`/admin/leave-submissions/${projectId}/accept`, {
@@ -216,7 +232,7 @@
             if (confirm('Are you sure you want to reject this leave submission?')) {
                 // Here you would typically send an AJAX request to your backend
                 showNotification('Leave submission rejected successfully!', 'error');
-                
+
                 // You can add your AJAX call here similar to acceptProject function
             }
         }
@@ -246,7 +262,7 @@
                 type === 'warning' ? 'bg-yellow-500 text-white' :
                 'bg-blue-500 text-white'
             }`;
-            
+
             notification.innerHTML = `
                 <div class="flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -258,14 +274,14 @@
                     <span>${message}</span>
                 </div>
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             // Animate in
             setTimeout(() => {
                 notification.classList.remove('translate-x-full');
             }, 100);
-            
+
             // Auto remove after 3 seconds
             setTimeout(() => {
                 notification.classList.add('translate-x-full');
