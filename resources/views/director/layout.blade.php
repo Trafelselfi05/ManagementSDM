@@ -415,8 +415,8 @@
 
                     <!-- Administration -->
                     <div class="group relative">
-                        <a href="{{ route('director.administration') }}"
-                            class="sidebar-item w-12 h-12 rounded-full {{ request()->routeIs('director.administration') ? 'bg-[#6FAEC9] text-white' : 'text-gray-600' }} flex items-center justify-center transition-colors">
+                        <a href="{{ route('director.administration-list') }}"
+                            class="sidebar-item w-12 h-12 rounded-full {{ request()->routeIs('director.administration-list') ? 'bg-[#6FAEC9] text-white' : 'text-gray-600' }} flex items-center justify-center transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 31 31">
                                 <path
                                     d="M6.20833 0.916992C4.66124 0.916992 3.17751 1.53157 2.08354 2.62554C0.989581 3.7195 0.375 5.20323 0.375 6.75033V24.2503C0.375 25.7974 0.989581 27.2812 2.08354 28.3751C3.17751 29.4691 4.66124 30.0837 6.20833 30.0837H26.625V0.916992H6.20833ZM12.0417 5.29199H22.25V8.20866H12.0417V5.29199ZM3.29167 24.2503C3.29167 23.4768 3.59896 22.7349 4.14594 22.1879C4.69292 21.641 5.43479 21.3337 6.20833 21.3337H23.7083V27.167H6.20833C5.43479 27.167 4.69292 26.8597 4.14594 26.3127C3.59896 25.7657 3.29167 25.0239 3.29167 24.2503Z" />

@@ -89,6 +89,14 @@ class KaryawanController extends Controller
     {
         return view('karyawan.administration');
     }
+    public function administrationList()
+    {
+        return view('karyawan.administration-list');
+    }
+    public function administrationStatus()
+    {
+        return view('karyawan.administration-status');
+    }
 
     public function profileAdmin()
     {

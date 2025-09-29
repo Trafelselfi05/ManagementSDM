@@ -89,6 +89,14 @@ class DirectorController extends Controller
   {
     return view("director.administration");
   }
+  public function administrationStatus()
+  {
+    return view("director.administration-status");
+  }
+  public function administrationList()
+  {
+    return view("director.administration-list");
+  }
 
   public function profileAdmin()
   {
