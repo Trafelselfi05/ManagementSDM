@@ -63,9 +63,9 @@ class AdminController extends Controller
 
   public function createProject()
   {
-        $employees = User::where("email", "!=", "admin@gmail.com")->get();
+    $employees = User::where("email", "!=", "admin@gmail.com")->get();
 
-    return view("admin.create-project" , compact("employees"));
+    return view("admin.create-project", compact("employees"));
   }
   public function editProject()
   {
@@ -97,6 +97,60 @@ class AdminController extends Controller
     return view("admin.profile-admin");
   }
 
+  public function profileAdminStore(Request $request)
+  {
+    try {
+      $request->validate([
+        "name" => "required|string|max:255",
+        "email" => "required|email|unique:users,email",
+        "password" => "required|string|min:6",
+        "division" => "nullable|string",
+        "nik" => "nullable|string",
+        "phone" => "nullable|string",
+        "telegram_link" => "nullable|string",
+        "employment_status" => "nullable|string",
+        "birth_date" => "nullable|date",
+        "join_date" => "nullable|date",
+        "last_education" => "nullable|string",
+        "role" => "nullable|string",
+        "address" => "nullable|string",
+        "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
+      ]);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+      return back()->withErrors($e->errors())->withInput();
+    }
+
+    // Upload image
+    $imagePath = null;
+    if ($request->hasFile("image")) {
+      $imagePath = $request->file("image")->store("users", "public");
+      $imagePath = "storage/" . $imagePath;
+    }
+
+    // Buat user
+    User::create([
+      "name" => $request->name,
+      "email" => $request->email,
+      "password" => bcrypt($request->password),
+      "division" => $request->division,
+      "nik" => $request->nik,
+      "phone" => $request->phone,
+      "telegram_link" => $request->telegram_link,
+      "employment_status" => $request->employment_status,
+      "birth_date" => $request->birth_date,
+      "join_date" => $request->join_date,
+      "last_education" => $request->last_education,
+      "role" => $request->role,
+      "address" => $request->address,
+      "image" => $imagePath,
+      "dashboard_status" => "ready",
+    ]);
+
+    return redirect()
+      ->route("admin.user-account")
+      ->with("success", "User berhasil dibuat!");
+  }
+
   public function userAccount()
   {
     // Ambil semua user kecuali admin@gmail.com
@@ -105,10 +159,12 @@ class AdminController extends Controller
     return view("admin.user-account", compact("users"));
   }
 
-  public function userDetail()
-  {
-    return view("admin.user-detail");
-  }
+public function userDetail($id)
+{
+    $user = User::findOrFail($id);
+    return view("admin.user-detail", compact('user'));
+}
+
   public function submissionTable()
   {
     return view("admin.submission-table");

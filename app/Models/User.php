@@ -27,7 +27,6 @@ class User extends Authenticatable
     "role",
     "image",
     "dashboard_status",
-    "status_description",
   ];
 
   protected $hidden = ["password"];

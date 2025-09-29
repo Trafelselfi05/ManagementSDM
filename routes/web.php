@@ -49,7 +49,7 @@ Route::controller(AdminController::class)
     );
 
     Route::get("user-account", "userAccount")->name("user-account");
-    Route::get("user-detail", "userDetail")->name("user-detail");
+    Route::get("user-detail/{id}", "userDetail")->name("user-detail");
     Route::get("submission-table", "submissionTable")->name("submission-table");
     Route::get("edit-project", "editProject")->name("edit-project");
   });
@@ -66,9 +66,13 @@ Route::controller(DirectorController::class)
     Route::get("task", "task")->name("task");
     Route::get("task-detail", "taskDetail")->name("task-detail");
     Route::get("activity", "activity")->name("activity");
-    Route::get("administration-status", "administrationStatus")->name("administration-status");
+    Route::get("administration-status", "administrationStatus")->name(
+      "administration-status"
+    );
     Route::get("administration", "administration")->name("administration");
-    Route::get("administration-list", "administrationList")->name("administration-list");
+    Route::get("administration-list", "administrationList")->name(
+      "administration-list"
+    );
     Route::get("profile-admin", "profileAdmin")->name("profile-admin");
     Route::get("user-account", "userAccount")->name("user-account");
     Route::get("user-detail", "userDetail")->name("user-detail");
@@ -89,8 +93,12 @@ Route::controller(KaryawanController::class)
     Route::get("task-detail", "taskDetail")->name("task-detail");
     Route::get("activity", "activity")->name("activity");
     Route::get("administration", "administration")->name("administration");
-    Route::get("administration-list", "administrationList")->name("administration-list");
-    Route::get("administration-status", "administrationStatus")->name("administration-status");
+    Route::get("administration-list", "administrationList")->name(
+      "administration-list"
+    );
+    Route::get("administration-status", "administrationStatus")->name(
+      "administration-status"
+    );
     Route::get("profile-admin", "profileAdmin")->name("profile-admin");
     Route::get("user-account", "userAccount")->name("user-account");
     Route::get("user-detail", "userDetail")->name("user-detail");

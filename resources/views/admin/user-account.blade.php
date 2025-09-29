@@ -53,7 +53,7 @@
             <!-- Table Rows -->
             <div class="divide-y divide-gray-200">
                 @foreach ($users as $index => $user)
-                    <a href="{{ route('admin.user-detail') }}"
+                    <a href="{{ route('admin.user-detail' , $user->id) }}"
                         class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max">
 
                         <!-- Image -->
