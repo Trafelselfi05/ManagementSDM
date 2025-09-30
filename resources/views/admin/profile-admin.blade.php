@@ -20,10 +20,7 @@
                                   bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] 
                                   text-base font-medium text-[#111111] border-0 outline-none";
                     $labelClass = 'block text-sm font-medium text-gray-700 mb-2';
-                    $selectClass =
-                        $inputClass .
-                        ' appearance-none cursor-pointer 
-                                  bg-no-repeat bg-right-4 bg-center bg-[length:18px_10px]';
+                    $selectClass = $inputClass . ' appearance-none cursor-pointer bg-no-repeat bg-right-4 bg-center bg-[length:18px_10px]';
                 @endphp
 
                 <div class="grid grid-cols-2 gap-8">
@@ -163,8 +160,6 @@
             </div>
         @endif
     </div>
-
-
 
     <!-- Single-Date Calendar Popup (shared) -->
     <div id="calendarPopup" class="hidden z-[9999] w-[320px] bg-white rounded-2xl shadow-lg p-4">

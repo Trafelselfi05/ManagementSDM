@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+use Illuminate\Support\Facades\Hash;
+
 class AdminController extends Controller
 {
   public function __construct()
@@ -131,7 +133,7 @@ class AdminController extends Controller
     User::create([
       "name" => $request->name,
       "email" => $request->email,
-      "password" => bcrypt($request->password),
+      "password" => Hash::make($request->password),
       "division" => $request->division,
       "nik" => $request->nik,
       "phone" => $request->phone,
@@ -159,11 +161,66 @@ class AdminController extends Controller
     return view("admin.user-account", compact("users"));
   }
 
-public function userDetail($id)
-{
+  public function userDetail($id)
+  {
     $user = User::findOrFail($id);
-    return view("admin.user-detail", compact('user'));
-}
+    return view("admin.user-detail", compact("user"));
+  }
+
+  public function updateUserDetail(Request $request, $id)
+  {
+    $user = User::findOrFail($id);
+
+    // \Log::info("Request Data:", $request->all());
+    // dd($request->all());
+
+    $request->validate([
+      "name" => "required|string|max:255",
+      "division" => "nullable|string",
+      "email" => "required|email",
+      "nik" => "nullable|string",
+      "employment_status" => "nullable|string",
+      "phone" => "nullable|string",
+      "join_date" => "nullable|date",
+      "birth_date" => "nullable|date",
+      "telegram_link" => "nullable|string",
+      "address" => "nullable|string",
+      "last_education" => "nullable|string",
+      "password" => "nullable|min:6",
+      "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
+    ]);
+
+    // Update basic data
+    $user->name = $request->name;
+    $user->division = $request->division;
+    $user->email = $request->email;
+    $user->nik = $request->nik;
+    $user->employment_status = $request->employment_status;
+    $user->phone = $request->phone;
+    $user->join_date = $request->join_date;
+    $user->birth_date = $request->birth_date;
+    $user->telegram_link = $request->telegram_link;
+    $user->address = $request->address;
+    $user->last_education = $request->last_education;
+
+    // Update password jika diisi
+    if ($request->password) {
+      $user->password = bcrypt($request->password);
+    }
+
+    // Upload gambar jika ada
+    if ($request->hasFile("image")) {
+      $file = $request->file("image");
+      $path = $file->store("uploads/users", "public");
+      $user->image = "/storage/" . $path;
+    }
+
+    $user->save();
+
+    return redirect()
+      ->route("admin.user-account", $id)
+      ->with("success", "Data berhasil diperbarui!");
+  }
 
   public function submissionTable()
   {

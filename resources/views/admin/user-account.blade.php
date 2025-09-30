@@ -58,7 +58,7 @@
 
                         <!-- Image -->
                         <div class="flex justify-center">
-                            <img src="{{ $user->image ?? '/default-avatar.png' }}" alt="User Image"
+                            <img src="{{ asset($user->image) ?? '/default-avatar.png' }}" alt="User Image"
                                 class="w-12 h-12 object-cover rounded border" />
                         </div>
 
