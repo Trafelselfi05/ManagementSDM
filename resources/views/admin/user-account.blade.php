@@ -11,18 +11,21 @@
                 <div
                     class="flex w-full md:w-64 items-center gap-2 px-3 py-2 bg-white rounded-md shadow-sm border border-gray-200">
                     <img class="w-4 h-4 opacity-60" src="https://c.animaapp.com/mf11cpkvhucm6Y/img/vector.svg" />
-                    <input type="text" placeholder="Search SDM"
+                    <input type="text" id="searchInput" placeholder="Search SDM"
                         class="flex-1 bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400" />
                 </div>
 
                 <!-- Filter Box -->
-                <div
-                    class="flex w-full md:w-48 items-center justify-between px-3 py-2 bg-white rounded-md shadow-sm border border-gray-200 cursor-pointer">
-                    <div class="text-gray-500 text-sm font-normal">
-                        Filter by divisi
-                    </div>
-                    <img class="w-3 h-2 opacity-60" src="https://c.animaapp.com/mf11cpkvhucm6Y/img/vector-10.svg" />
-                </div>
+                <select id="filterDivision"
+                    class="flex w-full md:w-48 px-3 py-2 bg-white rounded-md shadow-sm border border-gray-200 text-gray-600 text-sm">
+                    <option value="">All Divisions</option>
+                    <option value="UI / UX Designer">UI / UX Designer</option>
+                    <option value="Engineer Mobile">Engineer Mobile</option>
+                    <option value="Back End Developer">Back End Developer</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Copywriter">Copywriter</option>
+                </select>
+
             </div>
 
             <!-- Add New Button -->
@@ -54,7 +57,7 @@
             <div class="divide-y divide-gray-200">
                 @foreach ($users as $index => $user)
                     <a href="{{ route('admin.user-detail', $user->id) }}"
-                        class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max">
+                        class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max user-row">
 
                         <!-- Image -->
                         <div class="flex justify-center">
@@ -113,4 +116,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("searchInput");
+            const filterDivision = document.getElementById("filterDivision");
+            const rows = document.querySelectorAll(".user-row");
+
+            function filterUsers() {
+                const searchText = searchInput.value.toLowerCase();
+                const selectedDivision = filterDivision.value.toLowerCase();
+
+                rows.forEach(row => {
+                    const rowText = row.innerText.toLowerCase();
+                    const division = row.querySelector("div:nth-child(4)").innerText
+                .toLowerCase(); // Kolom Divisi
+
+                    const matchesSearch = rowText.includes(searchText);
+                    const matchesDivision = selectedDivision === "" || division === selectedDivision;
+
+                    row.style.display = (matchesSearch && matchesDivision) ? "" : "none";
+                });
+            }
+
+            searchInput.addEventListener("keyup", filterUsers);
+            filterDivision.addEventListener("change", filterUsers);
+        });
+    </script>
+
 @endsection
