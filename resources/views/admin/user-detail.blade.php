@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
-                        <input type="text"
+                        <input type="file"
                             class="w-40 h-10 bg-[#6fadc8] text-white font-semibold text-base rounded-[10px] text-center cursor-pointer border-none outline-none placeholder-white"
                             value="" id="profile-name" name="image" onclick="uploadPicture()" placeholder="Upload Picture">
 

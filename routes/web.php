@@ -47,10 +47,13 @@ Route::controller(AdminController::class)
     Route::post("profile-admin", "profileAdminStore")->name(
       "profile-admin.store"
     );
-
+    Route::delete("/user-account/{id}", 
+      "deleteUser")->name("user-account.delete");
     Route::get("user-account", "userAccount")->name("user-account");
     Route::get("user-detail/{id}", "userDetail")->name("user-detail");
-    Route::post("user-detail/{id}", "updateUserDetail")->name("user-detail.update");
+    Route::post("user-detail/{id}", "updateUserDetail")->name(
+      "user-detail.update"
+    );
 
     Route::get("submission-table", "submissionTable")->name("submission-table");
     Route::get("edit-project", "editProject")->name("edit-project");

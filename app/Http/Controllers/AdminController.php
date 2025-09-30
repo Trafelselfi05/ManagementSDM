@@ -222,6 +222,25 @@ class AdminController extends Controller
       ->with("success", "Data berhasil diperbarui!");
   }
 
+  public function deleteUser($id)
+{
+    $user = User::find($id);
+
+    if (!$user) {
+        return redirect()->route('user-account')->with('error', 'User tidak ditemukan!');
+    }
+
+    // Jika ingin sekalian hapus gambar dari storage:
+    if ($user->image && file_exists(public_path($user->image))) {
+        unlink(public_path($user->image));
+    }
+
+    $user->delete();
+
+    return redirect()->route('admin.user-account')->with('success', 'User berhasil dihapus!');
+}
+
+
   public function submissionTable()
   {
     return view("admin.submission-table");
