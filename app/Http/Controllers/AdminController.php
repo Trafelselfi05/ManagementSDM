@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Leave;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -91,7 +92,49 @@ class AdminController extends Controller
 
   public function administration()
   {
-    return view("admin.administration");
+    $users = User::where("email", "!=", "admin@gmail.com")->get();
+
+    return view("admin.administration", compact("users"));
+  }
+
+  public function storeLeave(Request $request)
+  {
+    // Validasi
+    $validated = $request->validate([
+      "user_id" => "required|exists:users,id",
+      "leave_category" => "required|string",
+      "start_date" => "required|date",
+      "end_date" => "required|date|after_or_equal:start_date",
+      "description" => "nullable|string",
+      "bring_laptop" => "required|boolean",
+      "can_be_contacted" => "required|boolean",
+      "supporting_document" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
+    ]);
+
+    // Handle upload file jika ada
+    $proofPath = null;
+    if ($request->hasFile("supporting_document")) {
+      $proofPath = $request
+        ->file("supporting_document")
+        ->store("proofs", "public");
+    }
+
+    // Simpan ke database
+    $leave = Leave::create([
+      "user_id" => $validated["user_id"],
+      "type" => $validated["leave_category"], // enum di DB
+      "start_date" => $validated["start_date"],
+      "end_date" => $validated["end_date"],
+      "description" => $validated["description"] ?? null,
+      "bring_laptop" => (int) $validated["bring_laptop"], // pastikan int
+      "contactable" => (int) $validated["can_be_contacted"],
+      "proof_photo" => "/storage/" . $proofPath,
+      "verified" => 0, // default
+    ]);
+
+    return redirect()
+      ->route("admin.submission-table")
+      ->with("success", "Leave request submitted successfully.");
   }
 
   public function profileAdmin()
@@ -246,6 +289,8 @@ class AdminController extends Controller
 
   public function submissionTable()
   {
-    return view("admin.submission-table");
+    $leaves = Leave::with("user")->get();
+
+    return view("admin.submission-table", compact("leaves"));
   }
 }

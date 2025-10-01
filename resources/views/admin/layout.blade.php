@@ -1043,25 +1043,6 @@
             document.getElementById('dropdownMenu').classList.add('hidden');
         }
 
-        function selectOption(value, text) {
-            // Update the display text
-            document.getElementById('selectedText').textContent = text;
-            document.getElementById('selectedText').classList.remove('text-[#7d7d7d]');
-            document.getElementById('selectedText').classList.add('text-black');
-
-            // Set the hidden input value
-            document.getElementById('selectedValue').value = value;
-
-            // Store selection
-            selectedOptions['dropdown1'] = value;
-
-            // Close the dropdown
-            document.getElementById('dropdownMenu').classList.add('hidden');
-
-            // Update dropdown options styling
-            updateDropdownStyling('dropdownMenu', value);
-        }
-
         function selectOption2(value, text) {
             // Update the display text
             document.getElementById('selectedText2').textContent = text;

@@ -54,7 +54,116 @@
                 <!-- Table Body -->
                 <tbody class="divide-y divide-gray-100">
                     <!-- Pending Submission Row 1 -->
-                    <tr class="hover:bg-blue-50 transition-colors group">
+                    @foreach ($leaves as $index => $leave)
+                        <tr class="hover:bg-blue-50 transition-colors group">
+                            <td class="py-4 px-4">
+                                <span class="text-gray-800 font-medium text-center block">{{ $index + 1 }}</span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-3">
+                                    <div>
+                                        <div class="font-semibold text-gray-900">{{ $leave->user->name }}</div>
+                                        <div class="text-xs text-gray-500">{{ $leave->user->division }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4">
+                                <div
+                                    class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg">
+                                    <div class="w-2 h-2 bg-amber-500 rounded-full"></div>
+                                    <span class="font-medium text-amber-700 text-sm">{{ $leave->type }}</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-sm text-gray-700 font-medium">
+                                    {{ \Carbon\Carbon::parse($leave->start_date)->format('M d, Y') }}
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-sm text-gray-700 font-medium">
+                                    {{ \Carbon\Carbon::parse($leave->end_date)->format('M d, Y') }}
+                                </div>
+                            </td>
+
+                            <td class="py-4 px-4">
+                                <div class="text-sm text-gray-600 text-center line-clamp-2">{{ $leave->description }}</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $leave->contactable ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                                    {{ $leave->contactable ? 'Yes' : 'No' }}
+                                </span>
+                            </td>
+
+                            <td class="py-4 px-4">
+                                <div class="flex justify-center">
+                                    <img src="{{ asset($leave->proof_photo) }}" alt="Form Cuti"
+                                        class="w-12 h-12 object-cover rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-all shadow-sm hover:shadow-md"
+                                        onclick="viewFormCuti('{{ asset($leave->proof_photo) }}')">
+                                </div>
+                            </td>
+                            {{-- Contoh kondisi, ganti dengan kondisi kamu --}}
+                            @if (!$leave->verified)
+                                {{-- Tombol Aksi (Accept & Reject) --}}
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <!-- Accept Button -->
+                                        <button type="button" onclick="acceptProject(1)"
+                                            class="inline-flex items-center justify-center w-9 h-9 text-green-600 bg-green-100 rounded-lg hover:bg-green-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-sm"
+                                            title="Accept Leave">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+
+                                        <!-- Reject Button -->
+                                        <button type="button" onclick="rejectProject(1)"
+                                            class="inline-flex items-center justify-center w-9 h-9 text-red-600 bg-red-100 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm"
+                                            title="Reject Leave">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            @elseif($leave->verified == 1)
+                                {{-- Badge Rejected --}}
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center justify-center">
+                                        <div
+                                            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-red-600 shadow-md">
+                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="text-xs font-semibold text-white">Rejected</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            @else
+                                {{-- Badge Approved --}}
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center justify-center">
+                                        <div
+                                            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-green-500 to-green-600 shadow-md">
+                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="text-xs font-semibold text-white">Approved</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            @endif
+                        </tr>
+                    @endforeach
+                    {{-- <tr class="hover:bg-blue-50 transition-colors group">
                         <td class="py-4 px-4">
                             <span class="text-gray-800 font-medium text-center block">1</span>
                         </td>
@@ -234,7 +343,7 @@
                                 </div>
                             </div>
                         </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
         </div>

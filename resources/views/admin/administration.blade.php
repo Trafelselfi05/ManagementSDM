@@ -8,23 +8,51 @@
                 Leave Submission
             </div>
             <div class="flex flex-col items-center gap-12 relative self-stretch w-full">
-                <form id="leaveForm" method="POST" action=""
-                    class="flex flex-col items-start gap-5 relative self-stretch w-full">
+                <form id="leaveForm" method="POST" action="{{ route('admin.administration.store') }}"
+                    enctype="multipart/form-data" class="flex flex-col items-start gap-5 relative self-stretch w-full">
                     @csrf
 
-                    <!-- Leave Category Dropdown -->
+                    <!-- ====== User dropdown ====== -->
                     <div class="flex flex-col items-start gap-3 relative self-stretch w-full">
-                        <label class="self-stretch font-medium text-[#7d7d7d] text-sm">
-                            Leave Category
-                        </label>
+                        <label class="self-stretch font-medium text-[#7d7d7d] text-sm">Nama User</label>
 
                         <div class="relative self-stretch w-full">
-                            <button id="categoryBtn" type="button" onclick="toggleDropdown()" aria-haspopup="true"
-                                aria-expanded="false"
-                                class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-opacity-20 focus:border-transparent">
+                            <button id="userBtn" type="button" aria-haspopup="true" aria-expanded="false"
+                                class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow cursor-pointer focus:outline-none">
                                 <div class="flex w-full items-center justify-between">
-                                    <p id="selectedText"
-                                        class="font-normal text-[#7d7d7d] text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                    <p id="userSelectedText" class="font-normal text-[#7d7d7d] text-sm whitespace-nowrap">
+                                        -- Pilih User --
+                                    </p>
+                                    <img class="w-[16px] h-2"
+                                        src="https://c.animaapp.com/mf0waiheGBQdaR/img/vector-6.svg" />
+                                </div>
+                            </button>
+
+                            <div id="dropdownUser"
+                                class="hidden absolute top-[52px] left-0 flex-col w-full bg-white rounded-[12px] shadow-[0_4px_12px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
+                                @foreach ($users as $u)
+                                    <div class="user-option flex w-full h-[45px] items-center gap-2.5 px-4 cursor-pointer hover:bg-[#f3f4f6]"
+                                        data-id="{{ $u->id }}" data-name="{{ $u->name }}">
+                                        <div class="font-normal text-black text-sm">{{ $u->name }} &nbsp;|&nbsp;
+                                            {{ $u->role }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <input type="hidden" id="user_id" name="user_id" value="{{ old('user_id', '') }}" />
+                        </div>
+                    </div>
+
+                    <!-- ====== Category dropdown ====== -->
+                    <div class="flex flex-col items-start gap-3 relative self-stretch w-full">
+                        <label class="self-stretch font-medium text-[#7d7d7d] text-sm">Leave Category</label>
+
+                        <div class="relative self-stretch w-full">
+                            <button id="categoryBtn" type="button" aria-haspopup="true" aria-expanded="false"
+                                class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow cursor-pointer focus:outline-none">
+                                <div class="flex w-full items-center justify-between">
+                                    <p id="categorySelectedText"
+                                        class="font-normal text-[#7d7d7d] text-sm whitespace-nowrap">
                                         -- Pilih Jenis Cuti --
                                     </p>
                                     <img class="w-[16px] h-2"
@@ -33,38 +61,25 @@
                             </button>
 
                             <div id="dropdownMenu"
-                                class="hidden absolute top-[52px] left-0 flex-col w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] z-50">
-                                <div onclick="selectOption('tahunan', 'Cuti Tahunan')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Tahunan</div>
-                                </div>
-                                <div onclick="selectOption('sakit', 'Cuti Sakit')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Sakit</div>
-                                </div>
-                                <div onclick="selectOption('melahirkan', 'Cuti Melahirkan')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Melahirkan</div>
-                                </div>
-                                <div onclick="selectOption('darurat', 'Cuti Darurat')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Darurat</div>
-                                </div>
-                                <div onclick="selectOption('pribadi', 'Cuti Pribadi')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Pribadi</div>
-                                </div>
-                                <div onclick="selectOption('haji_umrah', 'Cuti Haji/Umrah')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Haji/Umrah</div>
-                                </div>
-                                <div onclick="selectOption('pernikahan', 'Cuti Pernikahan')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Pernikahan</div>
-                                </div>
+                                class="hidden absolute top-[52px] left-0 flex-col w-full bg-white rounded-[12px] shadow-[0_4px_12px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Tahunan">Cuti Tahunan</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Sakit">Cuti Sakit</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Melahirkan">Cuti Melahirkan</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Darurat">Cuti Darurat</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Pribadi">Cuti Pribadi</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Haji/Umrah">Cuti Haji/Umrah</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Pernikahan">Cuti Pernikahan</div>
                             </div>
 
-                            <input type="hidden" id="leave_category" name="leave_category" value="" />
+                            <input type="hidden" id="leave_category" name="leave_category"
+                                value="{{ old('leave_category', '') }}" />
                         </div>
                     </div>
 
@@ -121,7 +136,8 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="file" id="fileInput" name="supporting_document" accept="image/*" class="hidden" />
+                        <input type="file" id="fileInput" name="supporting_document" accept="image/*"
+                            class="hidden" />
                     </div>
 
                     <!-- Description -->
@@ -136,20 +152,23 @@
                     <div class="flex flex-col md:flex-row items-center gap-5 relative self-stretch w-full">
                         <!-- Laptop Question -->
                         <div class="flex flex-col items-start gap-3 relative flex-1 w-full">
-                            <p class="font-medium text-[#7d7d7d] text-sm">Do you bring laptop? (if there is a super urgent
-                                matter)</p>
+                            <p class="font-medium text-[#7d7d7d] text-sm">
+                                Do you bring laptop? (if there is a super urgent matter)
+                            </p>
                             <div
                                 class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026]">
+
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer mr-4">
-                                    <input type="radio" name="bring_laptop" value="yes" class="hidden">
+                                    <input type="radio" name="bring_laptop" value="1" class="hidden">
                                     <div
                                         class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
                                         <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
                                     </div>
                                     <div class="font-medium text-[#111111] text-sm">Yes</div>
                                 </label>
+
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer">
-                                    <input type="radio" name="bring_laptop" value="no" class="hidden" checked>
+                                    <input type="radio" name="bring_laptop" value="0" class="hidden" checked>
                                     <div
                                         class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
                                         <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
@@ -161,20 +180,23 @@
 
                         <!-- Contact Question -->
                         <div class="flex flex-col items-start gap-3 relative flex-1 w-full">
-                            <p class="font-medium text-[#7d7d7d] text-sm">Do you still be Contacted? (if there is super
-                                urgent matter)</p>
+                            <p class="font-medium text-[#7d7d7d] text-sm">
+                                Do you still be Contacted? (if there is super urgent matter)
+                            </p>
                             <div
                                 class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026]">
+
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer mr-4">
-                                    <input type="radio" name="can_be_contacted" value="yes" class="hidden">
+                                    <input type="radio" name="can_be_contacted" value="1" class="hidden">
                                     <div
                                         class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
                                         <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
                                     </div>
                                     <div class="font-medium text-[#111111] text-sm">Yes</div>
                                 </label>
+
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer">
-                                    <input type="radio" name="can_be_contacted" value="no" class="hidden" checked>
+                                    <input type="radio" name="can_be_contacted" value="0" class="hidden" checked>
                                     <div
                                         class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
                                         <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
@@ -191,7 +213,7 @@
                             class="flex w-full sm:w-[180px] h-[45px] items-center justify-center rounded-[10px] border border-[#111111] hover:bg-[#f9f9f9] transition-colors">
                             <div class="font-semibold text-[#111111] text-sm">Cancel</div>
                         </button>
-                        <button type="button" onclick="submitForm()"
+                        <button type="submit" onclick=""
                             class="flex w-full sm:w-[180px] h-[45px] items-center justify-center bg-[#111111] rounded-[10px] text-white hover:bg-[#333333] transition-colors">
                             <div class="font-semibold text-sm">Submit</div>
                         </button>
@@ -252,27 +274,100 @@
             return new Date(d.getFullYear(), d.getMonth(), d.getDate());
         }
 
-        // ---------- Dropdown (category) ----------
-        const dropdownMenu = document.getElementById('dropdownMenu');
+        // Elements user
+        const userBtn = document.getElementById('userBtn');
+        const dropdownUser = document.getElementById('dropdownUser');
+        const userSelectedText = document.getElementById('userSelectedText');
+        const userInput = document.getElementById('user_id');
+
+        // Elements category
         const categoryBtn = document.getElementById('categoryBtn');
-        const selectedText = document.getElementById('selectedText');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const categorySelectedText = document.getElementById('categorySelectedText');
         const leaveCategoryInput = document.getElementById('leave_category');
 
-        function toggleDropdown() {
-            dropdownMenu.classList.toggle('hidden');
-            categoryBtn.setAttribute('aria-expanded', !dropdownMenu.classList.contains('hidden'));
-        }
-
-        function selectOption(v, label) {
-            leaveCategoryInput.value = v;
-            selectedText.textContent = label;
-            dropdownMenu.classList.add('hidden');
-            categoryBtn.setAttribute('aria-expanded', 'false');
-        }
-        document.addEventListener('click', (e) => {
-            if (!categoryBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        // Toggle user dropdown (use stopPropagation so document click won't close immediately)
+        userBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownUser.classList.toggle('hidden');
+            userBtn.setAttribute('aria-expanded', String(!dropdownUser.classList.contains('hidden')));
+            // close category if open
+            if (!dropdownMenu.classList.contains('hidden')) {
                 dropdownMenu.classList.add('hidden');
                 categoryBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Click on a user option (delegation)
+        dropdownUser.querySelectorAll('.user-option').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const id = el.getAttribute('data-id');
+                const name = el.getAttribute('data-name');
+                userInput.value = id;
+                userSelectedText.textContent = name;
+                dropdownUser.classList.add('hidden');
+                userBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Prevent clicks inside dropdown from bubbling to document
+        dropdownUser.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Toggle category dropdown
+        categoryBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('hidden');
+            categoryBtn.setAttribute('aria-expanded', String(!dropdownMenu.classList.contains('hidden')));
+            // close user dropdown if open
+            if (!dropdownUser.classList.contains('hidden')) {
+                dropdownUser.classList.add('hidden');
+                userBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Category options
+        dropdownMenu.querySelectorAll('.option-item').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const val = el.getAttribute('data-value');
+                leaveCategoryInput.value = val;
+                categorySelectedText.textContent = val;
+                dropdownMenu.classList.add('hidden');
+                categoryBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Prevent clicks inside category dropdown from bubbling
+        dropdownMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Close if click outside
+        document.addEventListener('click', function() {
+            if (!dropdownUser.classList.contains('hidden')) {
+                dropdownUser.classList.add('hidden');
+                userBtn.setAttribute('aria-expanded', 'false');
+            }
+            if (!dropdownMenu.classList.contains('hidden')) {
+                dropdownMenu.classList.add('hidden');
+                categoryBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close with Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (!dropdownUser.classList.contains('hidden')) {
+                    dropdownUser.classList.add('hidden');
+                    userBtn.setAttribute('aria-expanded', 'false');
+                }
+                if (!dropdownMenu.classList.contains('hidden')) {
+                    dropdownMenu.classList.add('hidden');
+                    categoryBtn.setAttribute('aria-expanded', 'false');
+                }
             }
         });
 

@@ -40,15 +40,20 @@ Route::controller(AdminController::class)
     Route::get("task", "task")->name("task");
     Route::get("task-detail", "taskDetail")->name("task-detail");
     Route::get("activity", "activity")->name("activity");
+
     Route::get("administration", "administration")->name("administration");
+    Route::post("administration", "storeLeave")->name(
+      "administration.store"
+    );
 
     // web.php
     Route::get("profile-admin", "profileAdmin")->name("profile-admin"); // sudah ada, jangan diubah
     Route::post("profile-admin", "profileAdminStore")->name(
       "profile-admin.store"
     );
-    Route::delete("/user-account/{id}", 
-      "deleteUser")->name("user-account.delete");
+    Route::delete("/user-account/{id}", "deleteUser")->name(
+      "user-account.delete"
+    );
     Route::get("user-account", "userAccount")->name("user-account");
     Route::get("user-detail/{id}", "userDetail")->name("user-detail");
     Route::post("user-detail/{id}", "updateUserDetail")->name(
