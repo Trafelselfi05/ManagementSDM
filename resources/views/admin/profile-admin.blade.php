@@ -20,7 +20,7 @@
                                   bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] 
                                   text-base font-medium text-[#111111] border-0 outline-none";
                     $labelClass = 'block text-sm font-medium text-gray-700 mb-2';
-                    $selectClass = $inputClass . ' appearance-none cursor-pointer bg-no-repeat bg-right-4 bg-center bg-[length:18px_10px]';
+                    $selectClass = $inputClass . ' appearance-none cursor-pointer bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]';
                 @endphp
 
                 <div class="grid grid-cols-2 gap-8">
@@ -45,15 +45,17 @@
                     <!-- Division (dropdown) -->
                     <div>
                         <label class="{{ $labelClass }}">Division</label>
-                        <select name="division" class="{{ $selectClass }}"
-                            style="background-image: url('https://c.animaapp.com/mf0zod5k1fupaQ/img/vector-6.svg');">
-                            <option value="">-- Select Division --</option>
-                            <option value="UI / UX Designer">UI / UX Designer</option>
-                            <option value="Enginer Mobile">Enginer Mobile</option>
-                            <option value="Back End Developer">Back End Developer</option>
-                            <option value="Data Science">Data Science</option>
-                            <option value="Copywriter">Copywriter</option>
-                        </select>
+                        <div class="relative">
+                            <select name="division" class="{{ $selectClass }}"
+                                style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
+                                <option value="">-- Select Division --</option>
+                                <option value="UI / UX Designer">UI / UX Designer</option>
+                                <option value="Enginer Mobile">Enginer Mobile</option>
+                                <option value="Back End Developer">Back End Developer</option>
+                                <option value="Data Science">Data Science</option>
+                                <option value="Copywriter">Copywriter</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Phone -->
@@ -77,14 +79,16 @@
                     <!-- Employment Status (dropdown) -->
                     <div>
                         <label class="{{ $labelClass }}">Employment Status</label>
-                        <select name="employment_status" class="{{ $selectClass }}"
-                            style="background-image: url('https://c.animaapp.com/mf0zod5k1fupaQ/img/vector-6.svg');">
-                            <option value="">-- Select Employment Status --</option>
-                            <option value="active">active</option>
-                            <option value="inactive">inactive</option>
-                            <option value="contract">contract</option>
-                            <option value="probation">probation</option>
-                        </select>
+                        <div class="relative">
+                            <select name="employment_status" class="{{ $selectClass }}"
+                                style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
+                                <option value="">-- Select Employment Status --</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="contract">Contract</option>
+                                <option value="probation">Probation</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Birth Date (single date + clickable icon) -->
@@ -120,31 +124,34 @@
                     <!-- Role -->
                     <div>
                         <label class="{{ $labelClass }}">Role</label>
-                        <select name="role" class="{{ $selectClass }}"
-                            style="background-image: url('https://c.animaapp.com/mf0zod5k1fupaQ/img/vector-6.svg');">
-                            <option value="">-- Select Role --</option>
-                            <option value="director">Director</option>
-                            <option value="karyawan">Karyawan</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                        <div class="relative">
+                            <select name="role" class="{{ $selectClass }}"
+                                style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
+                                <option value="">-- Select Role --</option>
+                                <option value="director">Director</option>
+                                <option value="karyawan">Karyawan</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Address -->
                     <div class="col-span-2">
                         <label class="{{ $labelClass }}">Address</label>
-                        <textarea name="address"
-                            class="w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] border-0 outline-none px-4 py-3"></textarea>
+                        <textarea name="address" rows="4"
+                            class="w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] border-0 outline-none px-4 py-3 text-base font-medium text-[#111111] resize-none"></textarea>
                     </div>
 
                     <!-- Profile Image -->
                     <div class="col-span-2">
                         <label class="{{ $labelClass }}">Profile Image</label>
-                        <input type="file" name="image" class="{{ $inputClass }}">
+                        <input type="file" name="image" accept="image/*"
+                            class="w-full h-[45px] bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base font-medium text-[#111111] border-0 outline-none px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#111111] file:text-white hover:file:bg-[#333333] file:cursor-pointer cursor-pointer">
                     </div>
                 </div>
 
                 <button type="submit"
-                    class="mt-8 w-full bg-[#111111] text-white py-3 rounded-[15px] shadow-[0px_0px_4px_#00000026] font-bold text-lg">
+                    class="mt-8 w-full bg-[#111111] text-white py-3 rounded-[15px] shadow-[0px_0px_4px_#00000026] font-bold text-lg hover:bg-[#333333] transition-colors duration-200">
                     Save
                 </button>
             </form>
@@ -194,6 +201,49 @@
 
         <div id="dates-grid" class="grid grid-cols-7 gap-2"></div>
     </div>
+
+    <style>
+        /* Custom dropdown styling */
+        select {
+            transition: all 0.2s ease;
+        }
+
+        select:hover {
+            background-color: #f3f3f3;
+        }
+
+        select:focus {
+            background-color: #ffffff;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Remove default arrow in IE */
+        select::-ms-expand {
+            display: none;
+        }
+
+        /* Option styling */
+        select option {
+            padding: 10px;
+            background-color: #ffffff;
+            color: #111111;
+        }
+
+        select option:hover {
+            background-color: #f9f9f9;
+        }
+
+        select option:checked {
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        /* Disabled state */
+        select:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
 
     {{-- Calendar JS (single date, input + icon clickable) --}}
     <script>
