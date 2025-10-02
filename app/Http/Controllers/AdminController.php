@@ -137,6 +137,48 @@ class AdminController extends Controller
       ->with("success", "Leave request submitted successfully.");
   }
 
+  public function storeApprove(Request $request, $id)
+  {
+    // \Log::info("Request Data:", $request->all());
+    // dd($request->all());
+
+    // Menerima $id dari route parameter
+    // 1. Cari data cuti, gagal jika tidak ditemukan (findOrFail)
+    $leave = Leave::findOrFail($id);
+
+    // 2. Perbarui kolom 'verified' menjadi 2 (Approve)
+    $leave->update([
+      "verified" => 2,
+      "verified_description" => $request->approveNotes,
+    ]);
+
+    // Opsional: Redirect ke halaman tabel cuti
+    return redirect()
+      ->route("admin.submission-table")
+      ->with("success", "Permintaan cuti berhasil **disetujui** (Approved).");
+  }
+
+  public function storeReject(Request $request, $id)
+  {
+    // \Log::info("Request Data:", $request->all());
+    // dd($request->all());
+
+    // Menerima $id dari route parameter
+    // 1. Cari data cuti, gagal jika tidak ditemukan (findOrFail)
+    $leave = Leave::findOrFail($id);
+
+    // 2. Perbarui kolom 'verified' menjadi 2 (Approve)
+    $leave->update([
+      "verified" => 1,
+      "verified_description" => $request->approveNotes,
+    ]);
+
+    // Opsional: Redirect ke halaman tabel cuti
+    return redirect()
+      ->route("admin.submission-table")
+      ->with("success", "Permintaan cuti berhasil **disetujui** (Approved).");
+  }
+
   public function profileAdmin()
   {
     return view("admin.profile-admin");

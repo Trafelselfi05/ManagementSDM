@@ -21,6 +21,7 @@ class Leave extends Model
         'contactable',
         'proof_photo',
         'verified',
+        'verified_description',
     ];
 
     // Relasi

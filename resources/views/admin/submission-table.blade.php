@@ -108,7 +108,7 @@
                                 <td class="py-4 px-4">
                                     <div class="flex items-center justify-center gap-2">
                                         <!-- Accept Button -->
-                                        <button type="button" onclick="acceptProject(1)"
+                                        <button type="button" onclick="acceptProject({{ $leave->id }})"
                                             class="inline-flex items-center justify-center w-9 h-9 text-green-600 bg-green-100 rounded-lg hover:bg-green-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-sm"
                                             title="Accept Leave">
                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -119,7 +119,7 @@
                                         </button>
 
                                         <!-- Reject Button -->
-                                        <button type="button" onclick="rejectProject(1)"
+                                        <button type="button" onclick="rejectProject({{ $leave->id }})"
                                             class="inline-flex items-center justify-center w-9 h-9 text-red-600 bg-red-100 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm"
                                             title="Reject Leave">
                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -162,6 +162,105 @@
                                 </td>
                             @endif
                         </tr>
+
+
+                        <!-- Modal for Approve with Notes -->
+                        <div id="approveModal id{{ $leave->id }}"
+                            class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden backdrop-blur-sm">
+                            <div class="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl m-4">
+                                <div
+                                    class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-gray-900">Approve Leave Request</h3>
+                                    </div>
+                                    <button onclick="closeApproveModal({{ $leave->user_id }})"
+                                        class="text-gray-400 hover:text-gray-600 hover:bg-white rounded-lg p-2 transition-colors">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <form method="POST"
+                                    action="{{ route('admin.administration.approve', ['id' => $leave->id]) }}">
+                                    @csrf
+
+                                    <div class="mb-4 px-6 pt-6">
+                                        <p class="text-sm text-gray-600 mb-4">Add a note for the employee (optional):</p>
+                                        <textarea id="approveNotes" rows="4" name="approveNotes"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none text-sm"
+                                            placeholder="e.g., Permohonan cuti Anda telah disetujui. Pastikan semua pekerjaan telah diselesaikan atau didelegasikan sebelum tanggal cuti. Nikmati liburan Anda!"></textarea>
+                                    </div>
+                                    <div class="flex gap-3 px-6 pb-6">
+                                        <button type="button" onclick="closeApproveModal({{ $leave->id }})"
+                                            class="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium">
+                                            Cancel
+                                        </button>
+                                        <button type="submit"
+                                            class="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all shadow-md font-medium">
+                                            Approve Request
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Modal for Reject with Reason -->
+                        <div id="rejectModal id{{ $leave->id }}"
+                            class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden backdrop-blur-sm">
+                            <div class="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl m-4">
+                                <div
+                                    class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-red-50 to-rose-50">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-gray-900">Reject Leave Request</h3>
+                                    </div>
+                                    <button onclick="closeRejectModal({{ $leave->id }})"
+                                        class="text-gray-400 hover:text-gray-600 hover:bg-white rounded-lg p-2 transition-colors">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <form method="POST"
+                                    action="{{ route('admin.administration.reject', ['id' => $leave->id]) }}">
+                                    @csrf
+
+                                    <div class="mb-4 px-6 pt-6">
+                                        <p class="text-sm text-gray-600 mb-4">Add a note for the employee (optional):</p>
+                                        <textarea id="approveNotes" rows="4" name="approveNotes"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none text-sm"
+                                            placeholder="e.g., Maaf, permohonan cuti tidak dapat disetujui karena bertepatan dengan deadline project penting. Silakan ajukan kembali dengan tanggal yang berbeda."></textarea>
+                                    </div>
+                                    <div class="flex gap-3 px-6 pb-6">
+                                        <button type="button" onclick="closeApproveModal({{ $leave->id }})"
+                                            class="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium">
+                                            Cancel
+                                        </button>
+                                        <button type="submit"
+                                            class="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all shadow-md font-medium">
+                                            Approve Request
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     @endforeach
                     {{-- <tr class="hover:bg-blue-50 transition-colors group">
                         <td class="py-4 px-4">
@@ -395,7 +494,7 @@
         </div>
     </div>
 
-    <!-- Modal for Approve with Notes -->
+    {{-- <!-- Modal for Approve with Notes -->
     <div id="approveModal"
         class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden backdrop-blur-sm">
         <div class="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl m-4">
@@ -419,10 +518,12 @@
                     </svg>
                 </button>
             </div>
-            <div class="p-6">
+            <form class="p-6" id="approveForm" method="POST" action="">
+                @csrf
+
                 <div class="mb-4">
                     <p class="text-sm text-gray-600 mb-4">Add a note for the employee (optional):</p>
-                    <textarea id="approveNotes" rows="4"
+                    <textarea id="approveNotes" rows="4" name="approveNotes"
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none text-sm"
                         placeholder="e.g., Permohonan cuti Anda telah disetujui. Pastikan semua pekerjaan telah diselesaikan atau didelegasikan sebelum tanggal cuti. Nikmati liburan Anda!"></textarea>
                 </div>
@@ -431,16 +532,16 @@
                         class="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium">
                         Cancel
                     </button>
-                    <button onclick="confirmApprove()"
+                    <button type="submit"
                         class="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all shadow-md font-medium">
                         Approve Request
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
-    </div>
+    </div> --}}
 
-    <!-- Modal for Reject with Reason -->
+    {{-- <!-- Modal for Reject with Reason -->
     <div id="rejectModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden backdrop-blur-sm">
         <div class="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl m-4">
             <div
@@ -501,32 +602,33 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <script>
         let currentProjectId = null;
 
         function acceptProject(projectId) {
             currentProjectId = projectId;
-            document.getElementById('approveModal').classList.remove('hidden');
+            document.getElementById('approveModal id' + projectId).classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            document.getElementById('approveForm').action = currentProjectId
         }
 
         function rejectProject(projectId) {
             currentProjectId = projectId;
-            document.getElementById('rejectModal').classList.remove('hidden');
+            document.getElementById('rejectModal id' + projectId).classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeApproveModal() {
-            document.getElementById('approveModal').classList.add('hidden');
+        function closeApproveModal(id) {
+            document.getElementById('approveModal id' + id).classList.add('hidden');
             document.getElementById('approveNotes').value = '';
             document.body.style.overflow = 'auto';
             currentProjectId = null;
         }
 
-        function closeRejectModal() {
-            document.getElementById('rejectModal').classList.add('hidden');
+        function closeRejectModal(projectId) {
+            document.getElementById('rejectModal id' + projectId).classList.add('hidden');
             document.getElementById('rejectReason').value = '';
             document.getElementById('rejectDetails').value = '';
             document.body.style.overflow = 'auto';

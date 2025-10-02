@@ -42,9 +42,17 @@ Route::controller(AdminController::class)
     Route::get("activity", "activity")->name("activity");
 
     Route::get("administration", "administration")->name("administration");
-    Route::post("administration", "storeLeave")->name(
-      "administration.store"
+    Route::post("administration", "storeLeave")->name("administration.store");
+
+    // ... inside the group()
+    Route::post("administration/approve/{id}", "storeApprove")->name(
+      "administration.approve"
     );
+
+    Route::post("administration/reject/{id}", "storeReject")->name(
+      "administration.reject"
+    );
+    // ...
 
     // web.php
     Route::get("profile-admin", "profileAdmin")->name("profile-admin"); // sudah ada, jangan diubah
