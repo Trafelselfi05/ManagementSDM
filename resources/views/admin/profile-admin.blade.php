@@ -20,7 +20,9 @@
                                   bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] 
                                   text-base font-medium text-[#111111] border-0 outline-none";
                     $labelClass = 'block text-sm font-medium text-gray-700 mb-2';
-                    $selectClass = $inputClass . ' appearance-none cursor-pointer bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]';
+                    $selectClass =
+                        $inputClass .
+                        ' appearance-none cursor-pointer bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]';
                 @endphp
 
                 <div class="grid grid-cols-2 gap-8">
@@ -49,11 +51,14 @@
                             <select name="division" class="{{ $selectClass }}"
                                 style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
                                 <option value="">-- Select Division --</option>
-                                <option value="UI / UX Designer">UI / UX Designer</option>
-                                <option value="Enginer Mobile">Enginer Mobile</option>
-                                <option value="Back End Developer">Back End Developer</option>
-                                <option value="Data Science">Data Science</option>
+                                <option value="Engineer Web">Engineer Web</option>
+                                <option value="Analis">Analis</option>
+                                <option value="Engineer Mobile">Engineer Mobile</option>
+                                <option value="Content Creator">Content Creator</option>
+                                <option value="Engineer IOS">Engineer IOS</option>
                                 <option value="Copywriter">Copywriter</option>
+                                <option value="UI / UX Designer">UI / UX Designer</option>
+                                <option value="Tester">Tester</option>
                             </select>
                         </div>
                     </div>

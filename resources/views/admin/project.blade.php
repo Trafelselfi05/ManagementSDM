@@ -42,7 +42,55 @@
 
                 <!-- Table Body -->
                 <tbody class="divide-y divide-gray-200">
-                    <!-- Project Row 1 -->
+
+                    @forelse ($projects as $index => $project)
+                        <!-- Project Row 1 -->
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 text-gray-800 font-medium text-center">{{$index + 1}}</td>
+                            <td class="py-4 px-4">
+                                <div class="font-semibold text-gray-800">{{$project->name}}</div>
+                            </td>
+                            <td class="py-4 px-4 text-center text-gray-600">{{ \Carbon\Carbon::parse($project->start_date)->format('M d, Y') }}</td>
+                            <td class="py-4 px-4 text-center text-gray-600">{{ \Carbon\Carbon::parse($project->deadline)->format('M d, Y') }}</td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="font-medium text-gray-800">{{$project->director->name}}</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span
+                                    class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">{{$project->level}}</span>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span class="px-2.5 py-1 bg-[#0000FF] text-white text-sm font-semibold rounded-[10px]">
+                                    {{$project->status}}
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    <a href="{{ route('admin.edit-project') }}"
+                                        class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                    <button onclick="confirmDelete(1)"
+                                        class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <p>Tidak Ada Project</p>
+                    @endforelse
+                    {{-- <!-- Project Row 1 -->
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="py-4 px-4 text-gray-800 font-medium text-center">1</td>
                         <td class="py-4 px-4">
@@ -84,227 +132,7 @@
                                 </button>
                             </div>
                         </td>
-                    </tr>
-
-                    <!-- Project Row 2 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">2</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#6fadc8] text-white text-sm font-semibold rounded-[10px]">Low</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#FFA500] text-white text-sm font-semibold rounded-[10px]">
-                                Maintenance
-                            </span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="flex items-center justify-center gap-2">
-                                <a href="{{ route('admin.edit-project') }}"
-                                    class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <button onclick="confirmDelete(2)"
-                                    class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 3 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">3</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#0000FF] text-white text-sm font-semibold rounded-[10px]">
-                                Running
-                            </span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="flex items-center justify-center gap-2">
-                                <a href="{{ route('admin.edit-project') }}"
-                                    class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <button onclick="confirmDelete(3)"
-                                    class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 4 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">4</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#ffb32d] text-white text-sm font-semibold rounded-[10px]">Medium</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#FFA500] text-white text-sm font-semibold rounded-[10px]">
-                                Maintenance
-                            </span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="flex items-center justify-center gap-2">
-                                <a href="{{ route('admin.edit-project') }}"
-                                    class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <button onclick="confirmDelete(4)"
-                                    class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 5 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">5</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#6fadc8] text-white text-sm font-semibold rounded-[10px]">Low</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#50C878] text-white text-sm font-semibold rounded-[10px]">
-                                To do
-                            </span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="flex items-center justify-center gap-2">
-                                <a href="{{ route('admin.edit-project') }}"
-                                    class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <button onclick="confirmDelete(5)"
-                                    class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 6 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">6</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#50C878] text-white text-sm font-semibold rounded-[10px]">
-                                To do
-                            </span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="flex items-center justify-center gap-2">
-                                <a href=""
-                                    class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <button onclick="confirmDelete(6)"
-                                    class="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-md transition-colors">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
         </div>

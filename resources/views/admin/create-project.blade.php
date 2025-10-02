@@ -4,18 +4,18 @@
 
 @section('content')
     <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- New Project Section -->
-            <div>
-                <!-- New Project Form -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <!-- New Project Header INSIDE the form -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">New Project</h2>
-                    </div>
-
-                    <form action="#" method="POST">
-                        @csrf
+        <!-- Single form to submit project + SDM -->
+        <form action="#" method="POST" id="create-project-form">
+            @csrf
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- New Project Section -->
+                <div>
+                    <!-- New Project Form -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <!-- New Project Header -->
+                        <div class="mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">New Project</h2>
+                        </div>
 
                         <div class="space-y-4 mb-6">
                             <div>
@@ -59,9 +59,9 @@
                                 <select id="project-status" name="status"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
-                                    <option value="planning">Low</option>
-                                    <option value="in_progress">Medium</option>
-                                    <option value="on_hold">High</option>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
                                 </select>
                             </div>
 
@@ -73,20 +73,17 @@
                                     placeholder="Describe the project..."></textarea>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <!-- SDM Section -->
-            <div>
-                <!-- SDM Form -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <!-- SDM Header -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">SDM</h2>
                     </div>
+                </div>
 
-                    <form action="#" method="POST">
-                        @csrf
+                <!-- SDM Section -->
+                <div>
+                    <!-- SDM Form -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <!-- SDM Header -->
+                        <div class="mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">SDM</h2>
+                        </div>
 
                         <!-- Project Director Dropdown -->
                         <div class="mb-6">
@@ -98,9 +95,9 @@
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
                                     <option value="">Select Project Director</option>
-                                    <option value="m_reza_adi_w">M. Reza Adi W</option>
-                                    <option value="ts">Ts</option>
-                                    <option value="kv">Kv</option>
+                                    @foreach($directors as $director)
+                                        <option value="{{ $director->id }}">{{ $director->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -111,19 +108,13 @@
                                 Select Division
                             </label>
                             <div class="relative mb-4">
-                                <select id="division-select" name="division"
+                                <select id="division-select" name="division_select"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
-                                    style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');"
                                     onchange="showMembersDropdown(this.value)">
                                     <option value="">Choose Division</option>
-                                    <option value="engineer_web">Engineer Web</option>
-                                    <option value="analis">Analis</option>
-                                    <option value="engineer_android">Engineer Android</option>
-                                    <option value="content_creator">Content Creator</option>
-                                    <option value="engineer_ios">Engineer IOS</option>
-                                    <option value="copywriter">Copywriter</option>
-                                    <option value="uiux">UI/UX</option>
-                                    <option value="tester">Tester</option>
+                                    @foreach($karyawans as $division => $members)
+                                        <option value="{{ $division ?? 'Unknown' }}">{{ $division ?? 'Unknown' }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -160,10 +151,10 @@
                                 Create Project
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Calendar Popup -->
@@ -252,345 +243,204 @@
     </style>
 
     <script>
-        const membersData = {
-            engineer_web: [{
-                    value: 'engineer_web_john',
-                    text: 'John Doe'
-                },
-                {
-                    value: 'engineer_web_sarah',
-                    text: 'Sarah Williams'
-                },
-                {
-                    value: 'engineer_web_michael',
-                    text: 'Michael Chen'
-                },
-                {
-                    value: 'engineer_web_emma',
-                    text: 'Emma Rodriguez'
-                }
-            ],
-            analis: [{
-                    value: 'analis_robert',
-                    text: 'Robert Davis'
-                },
-                {
-                    value: 'analis_maria',
-                    text: 'Maria Garcia'
-                },
-                {
-                    value: 'analis_kevin',
-                    text: 'Kevin Brown'
-                },
-                {
-                    value: 'analis_jessica',
-                    text: 'Jessica Wilson'
-                }
-            ],
-            engineer_android: [{
-                    value: 'engineer_android_alex',
-                    text: 'Alex Johnson'
-                },
-                {
-                    value: 'engineer_android_priya',
-                    text: 'Priya Patel'
-                },
-                {
-                    value: 'engineer_android_james',
-                    text: 'James Anderson'
-                },
-                {
-                    value: 'engineer_android_lisa',
-                    text: 'Lisa Zhang'
-                }
-            ],
-            content_creator: [{
-                    value: 'content_creator_olivia',
-                    text: 'Olivia Brown'
-                },
-                {
-                    value: 'content_creator_ethan',
-                    text: 'Ethan Taylor'
-                },
-                {
-                    value: 'content_creator_sophia',
-                    text: 'Sophia Martinez'
-                },
-                {
-                    value: 'content_creator_noah',
-                    text: 'Noah Anderson'
-                }
-            ],
-            engineer_ios: [{
-                    value: 'engineer_ios_liam',
-                    text: 'Liam Wilson'
-                },
-                {
-                    value: 'engineer_ios_ava',
-                    text: 'Ava Thompson'
-                },
-                {
-                    value: 'engineer_ios_mason',
-                    text: 'Mason Garcia'
-                },
-                {
-                    value: 'engineer_ios_isabella',
-                    text: 'Isabella Rodriguez'
-                }
-            ],
-            copywriter: [{
-                    value: 'copywriter_william',
-                    text: 'William Lee'
-                },
-                {
-                    value: 'copywriter_mia',
-                    text: 'Mia Harris'
-                },
-                {
-                    value: 'copywriter_benjamin',
-                    text: 'Benjamin Clark'
-                },
-                {
-                    value: 'copywriter_charlotte',
-                    text: 'Charlotte Lewis'
-                }
-            ],
-            uiux: [{
-                    value: 'uiux_lucas',
-                    text: 'Lucas Walker'
-                },
-                {
-                    value: 'uiux_amelia',
-                    text: 'Amelia Hall'
-                },
-                {
-                    value: 'uiux_henry',
-                    text: 'Henry Allen'
-                },
-                {
-                    value: 'uiux_evelyn',
-                    text: 'Evelyn Young'
-                }
-            ],
-            tester: [{
-                    value: 'tester_alexander',
-                    text: 'Alexander King'
-                },
-                {
-                    value: 'tester_harper',
-                    text: 'Harper Wright'
-                },
-                {
-                    value: 'tester_daniel',
-                    text: 'Daniel Scott'
-                },
-                {
-                    value: 'tester_ella',
-                    text: 'Ella Green'
-                }
-            ]
-        };
+        // membersData: object where keys are division names, values are arrays of {id, name, division}
+        const membersData = @json(
+            $karyawans->map(function($group) {
+                return $group->map(function($u) {
+                    return ['id' => $u->id, 'name' => $u->name, 'division' => $u->division];
+                })->values();
+            })
+        );
 
-        let selectedMembers = {};
-        let usedDivisions = [];
+        // State
+        let selectedMembers = {}; // { memberId: { id, name, division } }
+        let usedDivisions = []; // to track removed division options for reset
 
         function showMembersDropdown(division) {
             const container = document.getElementById('members-container');
             const membersList = document.getElementById('members-list');
             const divisionSelect = document.getElementById('division-select');
 
-            if (division === '') {
+            if (!division || division === '') {
                 container.classList.add('hidden');
+                membersList.innerHTML = '';
                 return;
             }
 
-            // Clear previous checkboxes
+            // Find members for division (safe fallback to empty array)
+            const members = membersData[division] || [];
+
+            // Clear previous
             membersList.innerHTML = '';
 
-            // Tampilkan container
+            if (members.length === 0) {
+                membersList.innerHTML = '<div class="text-sm text-gray-500">No members in this division.</div>';
+            } else {
+                // Build checkboxes
+                members.forEach(member => {
+                    const id = member.id;
+                    const name = member.name;
+                    const div = member.division || division;
+
+                    // Check if this member already selected (preserve selection)
+                    const isChecked = !!selectedMembers[id];
+
+                    const label = document.createElement('label');
+                    label.className = 'flex items-center cursor-pointer';
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.name = 'team_members[]';
+                    input.value = id;
+                    input.dataset.name = name;
+                    input.dataset.division = div;
+                    input.className = 'rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4';
+                    if (isChecked) input.checked = true;
+                    input.addEventListener('change', updateSelectedMembers);
+
+                    const span = document.createElement('span');
+                    span.className = 'ml-3 text-sm text-gray-700';
+                    span.textContent = name;
+
+                    label.appendChild(input);
+                    label.appendChild(span);
+
+                    membersList.appendChild(label);
+                });
+            }
+
+            // Show container
             container.classList.remove('hidden');
 
-            // Tambahkan checkboxes berdasarkan divisi yang dipilih
-            const members = membersData[division];
-            members.forEach(member => {
-                const checkboxContainer = document.createElement('label');
-                checkboxContainer.className = 'flex items-center cursor-pointer';
-
-                // Cek apakah member ini sudah ada di selectedMembers
-                const isChecked = selectedMembers[member.value] !== undefined;
-
-                checkboxContainer.innerHTML = `
-                    <input type="checkbox" name="team_members[]" value="${member.value}" 
-                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4"
-                           onchange="updateSelectedMembers()" ${isChecked ? 'checked' : ''}>
-                    <span class="ml-3 text-sm text-gray-700">${member.text}</span>
-                `;
-
-                membersList.appendChild(checkboxContainer);
-            });
-
-            // Hapus opsi divisi dari dropdown
-            const optionToRemove = divisionSelect.querySelector(`option[value="${division}"]`);
+            // Remove chosen division from select (so user can't re-add same division)
+            const optionToRemove = divisionSelect.querySelector(`option[value="${escapeSelector(division)}"]`);
             if (optionToRemove) {
+                // store removed option text/value so we can restore later if reset
+                usedDivisions.push({ value: optionToRemove.value, text: optionToRemove.textContent });
                 optionToRemove.remove();
             }
 
-            // Tandai divisi sebagai sudah digunakan
-            if (!usedDivisions.includes(division)) {
-                usedDivisions.push(division);
-            }
-
-            // Reset dropdown ke default
+            // Reset select to default
             divisionSelect.value = '';
         }
 
         function updateSelectedMembers() {
-            const checkboxes = document.querySelectorAll('input[name="team_members[]"]:checked');
             const selectedDisplay = document.getElementById('selected-display');
             const selectedChips = document.getElementById('selected-chips');
 
-            // Update selectedMembers object dengan checkbox yang saat ini tercentang
-            checkboxes.forEach(checkbox => {
-                const memberName = checkbox.nextElementSibling.textContent;
-                const memberValue = checkbox.value;
-                
-                // Extract division dari member value
-                let divisionName = '';
-                if (memberValue.startsWith('engineer_web_')) {
-                    divisionName = 'Engineer Web';
-                } else if (memberValue.startsWith('analis_')) {
-                    divisionName = 'Analis';
-                } else if (memberValue.startsWith('engineer_android_')) {
-                    divisionName = 'Engineer Android';
-                } else if (memberValue.startsWith('content_creator_')) {
-                    divisionName = 'Content Creator';
-                } else if (memberValue.startsWith('engineer_ios_')) {
-                    divisionName = 'Engineer IOS';
-                } else if (memberValue.startsWith('copywriter_')) {
-                    divisionName = 'Copywriter';
-                } else if (memberValue.startsWith('uiux_')) {
-                    divisionName = 'UI/UX';
-                } else if (memberValue.startsWith('tester_')) {
-                    divisionName = 'Tester';
-                }
+            // gather all checked checkboxes
+            const checkboxes = document.querySelectorAll('input[name="team_members[]"]');
 
-                // Simpan ke selectedMembers object
-                selectedMembers[memberValue] = {
-                    name: memberName,
-                    division: divisionName
-                };
-            });
+            // update selectedMembers from checkboxes currently checked
+            checkboxes.forEach(cb => {
+                const id = cb.value;
+                const name = cb.dataset.name || (cb.nextElementSibling ? cb.nextElementSibling.textContent : '');
+                const division = cb.dataset.division || '';
 
-            // Cek jika ada yang tidak tercentang, hapus dari selectedMembers
-            const allCheckboxes = document.querySelectorAll('input[name="team_members[]"]');
-            allCheckboxes.forEach(checkbox => {
-                if (!checkbox.checked && selectedMembers[checkbox.value]) {
-                    delete selectedMembers[checkbox.value];
+                if (cb.checked) {
+                    selectedMembers[id] = { id, name, division };
+                } else {
+                    // only remove if that member is present and not checked
+                    if (selectedMembers[id]) {
+                        delete selectedMembers[id];
+                    }
                 }
             });
 
             // Clear previous chips
             selectedChips.innerHTML = '';
 
-            // Jika tidak ada member yang dipilih, sembunyikan display
+            // if no selected members -> hide display
             if (Object.keys(selectedMembers).length === 0) {
                 selectedDisplay.classList.add('hidden');
                 return;
             }
 
-            // Show selected display
             selectedDisplay.classList.remove('hidden');
 
-            // Create chips untuk semua selected members (dari object, bukan hanya yang tercentang saat ini)
-            Object.entries(selectedMembers).forEach(([memberValue, memberData]) => {
+            // Render chips
+            Object.values(selectedMembers).forEach(member => {
                 const chip = document.createElement('div');
-                chip.className =
-                    'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
-                chip.innerHTML = `
-                    <span class="font-medium">[${memberData.division}]</span>
-                    <span class="ml-1">${memberData.name}</span>
-                    <button type="button" class="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none" 
-                        onclick="removeSelectedMember('${memberValue}')">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                `;
+                chip.className = 'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
+
+                const boldDiv = document.createElement('span');
+                boldDiv.className = 'font-medium';
+                boldDiv.textContent = `[${member.division}]`;
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'ml-1';
+                nameSpan.textContent = member.name;
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'ml-2 text-blue-600 hover:text-blue-800 focus:outline-none';
+                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                 </svg>`;
+                btn.addEventListener('click', () => removeSelectedMember(member.id));
+
+                chip.appendChild(boldDiv);
+                chip.appendChild(nameSpan);
+                chip.appendChild(btn);
+
                 selectedChips.appendChild(chip);
             });
         }
 
-        function removeSelectedMember(memberValue) {
-            // Hapus dari selectedMembers object
-            delete selectedMembers[memberValue];
-            
-            // Jika checkbox untuk member ini ada di DOM, uncheck
-            const checkbox = document.querySelector(`input[value="${memberValue}"]`);
-            if (checkbox) {
-                checkbox.checked = false;
-            }
-            
-            // Update tampilan
+        function removeSelectedMember(memberId) {
+            // remove from state
+            delete selectedMembers[memberId];
+
+            // uncheck checkbox if present
+            const checkbox = document.querySelector(`input[name="team_members[]"][value="${memberId}"]`);
+            if (checkbox) checkbox.checked = false;
+
+            // update UI
             updateSelectedMembers();
         }
 
-        // Reset function for the reset button
         function resetAllSelections() {
             const divisionSelect = document.getElementById('division-select');
             const membersList = document.getElementById('members-list');
 
-            // Simpan opsi divisi yang hilang
-            const divisionsToRestore = [...usedDivisions];
+            // restore removed division options
+            if (usedDivisions && usedDivisions.length > 0) {
+                usedDivisions.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.text;
+                    divisionSelect.appendChild(option);
+                });
+            }
 
-            // Reset division dropdown
-            divisionSelect.value = '';
-
-            // Re-add all division options
-            const divisionLabels = {
-                'engineer_web': 'Engineer Web',
-                'analis': 'Analis',
-                'engineer_android': 'Engineer Android',
-                'content_creator': 'Content Creator',
-                'engineer_ios': 'Engineer IOS',
-                'copywriter': 'Copywriter',
-                'uiux': 'UI/UX',
-                'tester': 'Tester'
-            };
-
-            divisionsToRestore.forEach(division => {
-                const option = document.createElement('option');
-                option.value = division;
-                option.textContent = divisionLabels[division];
-                divisionSelect.appendChild(option);
-            });
-
-            // Clear used divisions array
+            // clear trackers
             usedDivisions = [];
+            selectedMembers = {};
 
-            // Clear members list
+            // clear UI
             membersList.innerHTML = '';
-
-            // Hide containers
             document.getElementById('members-container').classList.add('hidden');
             document.getElementById('selected-display').classList.add('hidden');
 
-            // Clear selected members object
-            selectedMembers = {};
+            // reset project director and other inputs if needed (HTML reset already handles most)
+            const director = document.getElementById('project-director');
+            if (director) director.value = '';
 
-            // Reset project director
-            document.getElementById('project-director').value = '';
-
-            // Reset date inputs
-            document.getElementById('project-start').value = '';
-            document.getElementById('project-end').value = '';
+            // Clear date inputs
+            const start = document.getElementById('project-start');
+            const end = document.getElementById('project-end');
+            if (start) start.value = '';
+            if (end) end.value = '';
         }
 
-        // Calendar JS
-        document.addEventListener('DOMContentLoaded', () => {
-            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                'Dec'
-            ];
+        // Helper to escape selector when division name has special chars
+        function escapeSelector(s) {
+            return CSS.escape ? CSS.escape(s) : s.replace(/([ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~])/g, '\\$1');
+        }
 
+        // Calendar JS (same as your implementation, kept and slightly simplified)
+        document.addEventListener('DOMContentLoaded', () => {
+            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const calendarPopup = document.getElementById('calendarPopup');
             const monthShortEl = document.getElementById('month-short');
             const yearSelect = document.getElementById('year-select');
@@ -616,14 +466,8 @@
                 nd.setHours(0, 0, 0, 0);
                 return nd;
             }
-
-            function pad(n) {
-                return n < 10 ? '0' + n : String(n);
-            }
-
-            function formatISO(d) {
-                return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
-            }
+            function pad(n) { return n < 10 ? '0' + n : String(n); }
+            function formatISO(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
 
             function initYear() {
                 yearSelect.innerHTML = '';
@@ -663,8 +507,7 @@
                 for (let d = 1; d <= daysInMonth; d++) {
                     const cell = document.createElement('button');
                     cell.type = 'button';
-                    cell.className =
-                        'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition';
+                    cell.className = 'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition';
                     cell.textContent = d;
 
                     const cellDate = new Date(year, month, d);
@@ -715,14 +558,12 @@
 
                 if (top + popupH > window.scrollY + window.innerHeight - 12) {
                     const altTop = rect.top + window.scrollY - popupH - 8;
-                    top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY +
-                        window.innerHeight - popupH - 12);
+                    top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY + window.innerHeight - popupH - 12);
                 }
 
                 calendarPopup.style.position = 'absolute';
                 calendarPopup.style.left = left + 'px';
                 calendarPopup.style.top = top + 'px';
-
                 calendarPopup.style.visibility = 'visible';
                 calendarPopup.classList.remove('hidden');
 
@@ -734,27 +575,19 @@
                 activeInput = null;
             }
 
-            // Event: input & icon -> open calendar
+            // Event binding for date inputs
             [startInput, endInput].forEach(inp => {
+                if (!inp) return;
                 inp.addEventListener('click', () => showCalendarFor(inp));
                 inp.addEventListener('focus', () => showCalendarFor(inp));
             });
-            startIcon.addEventListener('click', () => showCalendarFor(startInput));
-            endIcon.addEventListener('click', () => showCalendarFor(endInput));
+            if (startIcon) startIcon.addEventListener('click', () => showCalendarFor(startInput));
+            if (endIcon) endIcon.addEventListener('click', () => showCalendarFor(endInput));
 
             // Calendar navigation
-            prevBtn.addEventListener('click', () => {
-                viewDate.setMonth(viewDate.getMonth() - 1);
-                renderCalendar();
-            });
-            nextBtn.addEventListener('click', () => {
-                viewDate.setMonth(viewDate.getMonth() + 1);
-                renderCalendar();
-            });
-            yearSelect.addEventListener('change', (e) => {
-                viewDate.setFullYear(Number(e.target.value));
-                renderCalendar();
-            });
+            prevBtn.addEventListener('click', () => { viewDate.setMonth(viewDate.getMonth() - 1); renderCalendar(); });
+            nextBtn.addEventListener('click', () => { viewDate.setMonth(viewDate.getMonth() + 1); renderCalendar(); });
+            yearSelect.addEventListener('change', (e) => { viewDate.setFullYear(Number(e.target.value)); renderCalendar(); });
 
             // Click outside to close
             document.addEventListener('click', (e) => {
@@ -774,7 +607,15 @@
             // Init
             initYear();
             renderCalendar();
+
+            // When the form is reset by browser default (pressing reset), also call our custom reset
+            const form = document.getElementById('create-project-form');
+            if (form) {
+                form.addEventListener('reset', (e) => {
+                    // small timeout to allow HTML reset to complete
+                    setTimeout(() => resetAllSelections(), 10);
+                });
+            }
         });
     </script>
-
 @endsection

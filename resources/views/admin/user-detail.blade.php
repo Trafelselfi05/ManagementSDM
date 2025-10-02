@@ -23,19 +23,23 @@
                             <select name="division"
                                 class="appearance-none font-medium text-lg text-[#7d7d7d] bg-transparent border-none outline-none w-full pr-8 cursor-pointer"
                                 name="division">
-                                <option value="{{ $user->division}}">{{ $user->division}}</option>
-                                <option value="UI / UX Designer">UI / UX Designer</option>
+                                <option value="{{ $user->division }}">{{ $user->division }}</option>
+                                <option value="Engineer Web">Engineer Web</option>
+                                <option value="Analis">Analis</option>
                                 <option value="Engineer Mobile">Engineer Mobile</option>
-                                <option value="Back End Developer">Back End Developer</option>
-                                <option value="Data Science">Data Science</option>
+                                <option value="Content Creator">Content Creator</option>
+                                <option value="Engineer IOS">Engineer IOS</option>
                                 <option value="Copywriter">Copywriter</option>
+                                <option value="UI / UX Designer">UI / UX Designer</option>
+                                <option value="Tester">Tester</option>
                             </select>
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
                         <input type="file"
                             class="w-40 h-10 bg-[#6fadc8] text-white font-semibold text-base rounded-[10px] text-center cursor-pointer border-none outline-none placeholder-white"
-                            value="" id="profile-name" name="image" onclick="uploadPicture()" placeholder="Upload Picture">
+                            value="" id="profile-name" name="image" onclick="uploadPicture()"
+                            placeholder="Upload Picture">
 
                         </button>
                         <button class="w-40 h-10 bg-neutral-100 text-[#7d7d7d] font-semibold text-base rounded-[10px]"
@@ -70,7 +74,7 @@
                             <div class="font-medium text-base text-[#7d7d7d]">Status SDM</div>
                             <select
                                 class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none appearance-none"
-                                id="status-sdm" name="employment_status"> 
+                                id="status-sdm" name="employment_status">
                                 <option value="{{ $user->employment_status }}">{{ $user->employment_status }}</option>
                                 <option value="active">active</option>
                                 <option value="inactive">inactive</option>

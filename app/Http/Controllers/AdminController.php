@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Leave;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -61,15 +62,24 @@ class AdminController extends Controller
 
   public function project()
   {
-    return view("admin.project");
+    $projects = Project::with("director")->get();
+    return view("admin.project", compact("projects"));
   }
 
   public function createProject()
   {
-    $employees = User::where("email", "!=", "admin@gmail.com")->get();
+    $directors = User::where("email", "!=", "admin@gmail.com")
+      ->where("role", "director")
+      ->get();
 
-    return view("admin.create-project", compact("employees"));
+    $karyawans = User::where("email", "!=", "admin@gmail.com")
+      ->where("role", "karyawan")
+      ->get()
+      ->groupBy("division"); // 🔥 Grouping divisi
+
+    return view("admin.create-project", compact("directors", "karyawans"));
   }
+
   public function editProject()
   {
     return view("admin.edit-project");
