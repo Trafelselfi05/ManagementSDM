@@ -4,18 +4,19 @@
 
 @section('content')
     <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- New Project Section -->
-            <div>
-                <!-- New Project Form -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <!-- New Project Header INSIDE the form -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">Edit Project</h2>
-                    </div>
+        <!-- Single form to submit project + SDM -->
+        <form action="{{ route('admin.edit-project.update' , $project->id) }}" method="POST">
+            @csrf
 
-                    <form action="#" method="POST">
-                        @csrf
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- New Project Section -->
+                <div>
+                    <!-- New Project Form -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <!-- New Project Header -->
+                        <div class="mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">Edit Project</h2>
+                        </div>
 
                         <div class="space-y-4 mb-6">
                             <div>
@@ -23,7 +24,8 @@
                                     Name</label>
                                 <input type="text" id="project-name" name="name"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                    placeholder="Enter project name" required>
+                                    placeholder="Enter project name" required
+                                    value="{{ old('name', $project->name ?? '') }}">
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -32,7 +34,8 @@
                                     <div class="relative">
                                         <input readonly id="project-start" name="start_date" type="text"
                                             placeholder="YYYY-MM-DD"
-                                            class="date-input w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer" />
+                                            class="date-input w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer"
+                                            value="{{ old('start_date', $project->start_date ?? '') }}" />
                                         <img id="project-start-icon"
                                             class="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[20px] cursor-pointer select-none"
                                             src="https://c.animaapp.com/mf0waiheGBQdaR/img/group-125.png" />
@@ -43,9 +46,10 @@
                                     <label for="project-end" class="block text-sm font-medium text-gray-700 mb-2">End
                                         Date</label>
                                     <div class="relative">
-                                        <input readonly id="project-end" name="end_date" type="text"
+                                        <input readonly id="project-end" name="deadline" type="text"
                                             placeholder="YYYY-MM-DD"
-                                            class="date-input w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer" />
+                                            class="date-input w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer"
+                                            value="{{ old('deadline', $project->deadline ?? '') }}" />
                                         <img id="project-end-icon"
                                             class="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[20px] cursor-pointer select-none"
                                             src="https://c.animaapp.com/mf0waiheGBQdaR/img/group-125.png" />
@@ -56,12 +60,15 @@
                             <div>
                                 <label for="project-status" class="block text-sm font-medium text-gray-700 mb-2">Level
                                     Project</label>
-                                <select id="project-status" name="status"
+                                <select id="project-status" name="level"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
-                                    <option value="planning">Low</option>
-                                    <option value="in_progress">Medium</option>
-                                    <option value="on_hold">High</option>
+                                    <option value="low" {{ old('level', $project->level) == 'low' ? 'selected' : '' }}>
+                                        Low</option>
+                                    <option value="medium"
+                                        {{ old('level', $project->level) == 'medium' ? 'selected' : '' }}>Medium</option>
+                                    <option value="high" {{ old('level', $project->level) == 'high' ? 'selected' : '' }}>
+                                        High</option>
                                 </select>
                             </div>
 
@@ -70,23 +77,20 @@
                                     class="block text-sm font-medium text-gray-700 mb-2">About</label>
                                 <textarea id="project-description" name="description" rows="3"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
-                                    placeholder="Describe the project..."></textarea>
+                                    placeholder="Describe the project...">{{ old('description', $project->description ?? '') }}</textarea>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <!-- SDM Section -->
-            <div>
-                <!-- SDM Form -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <!-- SDM Header -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">SDM</h2>
                     </div>
+                </div>
 
-                    <form action="#" method="POST">
-                        @csrf
+                <!-- SDM Section -->
+                <div>
+                    <!-- SDM Form -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <!-- SDM Header -->
+                        <div class="mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">SDM</h2>
+                        </div>
 
                         <!-- Project Director Dropdown -->
                         <div class="mb-6">
@@ -98,9 +102,12 @@
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
                                     <option value="">Select Project Director</option>
-                                    <option value="m_reza_adi_w">M. Reza Adi W</option>
-                                    <option value="ts">Ts</option>
-                                    <option value="kv">Kv</option>
+                                    @foreach ($directors as $director)
+                                        <option value="{{ $director->id }}"
+                                            {{ (int) old('project_director', $project->director_id) === $director->id ? 'selected' : '' }}>
+                                            {{ $director->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -111,19 +118,13 @@
                                 Select Division
                             </label>
                             <div class="relative mb-4">
-                                <select id="division-select" name="division"
+                                <select id="division-select"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
-                                    style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');"
                                     onchange="showMembersDropdown(this.value)">
                                     <option value="">Choose Division</option>
-                                    <option value="engineer_web">Engineer Web</option>
-                                    <option value="analis">Analis</option>
-                                    <option value="engineer_android">Engineer Android</option>
-                                    <option value="content_creator">Content Creator</option>
-                                    <option value="engineer_ios">Engineer IOS</option>
-                                    <option value="copywriter">Copywriter</option>
-                                    <option value="uiux">UI/UX</option>
-                                    <option value="tester">Tester</option>
+                                    @foreach ($karyawans as $division => $members)
+                                        <option value="{{ $division ?? 'Unknown' }}">{{ $division ?? 'Unknown' }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -147,23 +148,27 @@
                                     <!-- Selected member chips will appear here -->
                                 </div>
                             </div>
+
+                            <!-- Hidden input for legacy format (comma separated) -->
+                            <input type="hidden" name="karyawan_id" id="karyawan-id"
+                                value="{{ implode(',', $selectedMembers) }}">
                         </div>
 
                         <!-- Action Buttons -->
                         <div class="flex justify-end space-x-4 pt-6">
-                            <button type="reset" onclick="resetAllSelections()"
+                            <a href="{{ url()->previous() }}" type="button"
                                 class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200">
-                                Reset
-                            </button>
+                                Cancel
+                            </a>
                             <button type="submit"
                                 class="px-6 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 shadow-sm transition-colors duration-200">
-                                Create Project
+                                Update Project
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Calendar Popup -->
@@ -252,345 +257,249 @@
     </style>
 
     <script>
-        const membersData = {
-            engineer_web: [{
-                    value: 'engineer_web_john',
-                    text: 'John Doe'
-                },
-                {
-                    value: 'engineer_web_sarah',
-                    text: 'Sarah Williams'
-                },
-                {
-                    value: 'engineer_web_michael',
-                    text: 'Michael Chen'
-                },
-                {
-                    value: 'engineer_web_emma',
-                    text: 'Emma Rodriguez'
-                }
-            ],
-            analis: [{
-                    value: 'analis_robert',
-                    text: 'Robert Davis'
-                },
-                {
-                    value: 'analis_maria',
-                    text: 'Maria Garcia'
-                },
-                {
-                    value: 'analis_kevin',
-                    text: 'Kevin Brown'
-                },
-                {
-                    value: 'analis_jessica',
-                    text: 'Jessica Wilson'
-                }
-            ],
-            engineer_android: [{
-                    value: 'engineer_android_alex',
-                    text: 'Alex Johnson'
-                },
-                {
-                    value: 'engineer_android_priya',
-                    text: 'Priya Patel'
-                },
-                {
-                    value: 'engineer_android_james',
-                    text: 'James Anderson'
-                },
-                {
-                    value: 'engineer_android_lisa',
-                    text: 'Lisa Zhang'
-                }
-            ],
-            content_creator: [{
-                    value: 'content_creator_olivia',
-                    text: 'Olivia Brown'
-                },
-                {
-                    value: 'content_creator_ethan',
-                    text: 'Ethan Taylor'
-                },
-                {
-                    value: 'content_creator_sophia',
-                    text: 'Sophia Martinez'
-                },
-                {
-                    value: 'content_creator_noah',
-                    text: 'Noah Anderson'
-                }
-            ],
-            engineer_ios: [{
-                    value: 'engineer_ios_liam',
-                    text: 'Liam Wilson'
-                },
-                {
-                    value: 'engineer_ios_ava',
-                    text: 'Ava Thompson'
-                },
-                {
-                    value: 'engineer_ios_mason',
-                    text: 'Mason Garcia'
-                },
-                {
-                    value: 'engineer_ios_isabella',
-                    text: 'Isabella Rodriguez'
-                }
-            ],
-            copywriter: [{
-                    value: 'copywriter_william',
-                    text: 'William Lee'
-                },
-                {
-                    value: 'copywriter_mia',
-                    text: 'Mia Harris'
-                },
-                {
-                    value: 'copywriter_benjamin',
-                    text: 'Benjamin Clark'
-                },
-                {
-                    value: 'copywriter_charlotte',
-                    text: 'Charlotte Lewis'
-                }
-            ],
-            uiux: [{
-                    value: 'uiux_lucas',
-                    text: 'Lucas Walker'
-                },
-                {
-                    value: 'uiux_amelia',
-                    text: 'Amelia Hall'
-                },
-                {
-                    value: 'uiux_henry',
-                    text: 'Henry Allen'
-                },
-                {
-                    value: 'uiux_evelyn',
-                    text: 'Evelyn Young'
-                }
-            ],
-            tester: [{
-                    value: 'tester_alexander',
-                    text: 'Alexander King'
-                },
-                {
-                    value: 'tester_harper',
-                    text: 'Harper Wright'
-                },
-                {
-                    value: 'tester_daniel',
-                    text: 'Daniel Scott'
-                },
-                {
-                    value: 'tester_ella',
-                    text: 'Ella Green'
-                }
-            ]
-        };
+        const membersData = {!! $karyawans->map(function ($group) {
+                return $group->map(function ($u) {
+                        return ['id' => $u->id, 'name' => $u->name, 'division' => $u->division];
+                    })->values();
+            })->toJson() !!};
 
-        let selectedMembers = {};
-        let usedDivisions = [];
+        // selected member ids from server
+        const initialSelected = @json($selectedMembers ?? []);
+
+        // State
+        let selectedMembers = {}; // { memberId: { id, name, division } }
+        let usedDivisions = []; // to track removed division options for reset
 
         function showMembersDropdown(division) {
             const container = document.getElementById('members-container');
             const membersList = document.getElementById('members-list');
             const divisionSelect = document.getElementById('division-select');
 
-            if (division === '') {
+            if (!division || division === '') {
                 container.classList.add('hidden');
+                membersList.innerHTML = '';
                 return;
             }
 
-            // Clear previous checkboxes
+            // Find members for division (safe fallback to empty array)
+            const members = membersData[division] || [];
+
+            // Clear previous
             membersList.innerHTML = '';
 
-            // Tampilkan container
+            if (members.length === 0) {
+                membersList.innerHTML = '<div class="text-sm text-gray-500">No members in this division.</div>';
+            } else {
+                // Build checkboxes
+                members.forEach(member => {
+                    const id = member.id;
+                    const name = member.name;
+                    const div = member.division || division;
+
+                    // Check if this member already selected (preserve selection)
+                    const isChecked = !!selectedMembers[id] || initialSelected.includes(id);
+
+                    const label = document.createElement('label');
+                    label.className = 'flex items-center cursor-pointer';
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.name = 'team_members[]';
+                    input.value = id;
+                    input.dataset.name = name;
+                    input.dataset.division = div;
+                    input.className = 'rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4';
+                    if (isChecked) input.checked = true;
+                    input.addEventListener('change', updateSelectedMembers);
+
+                    const span = document.createElement('span');
+                    span.className = 'ml-3 text-sm text-gray-700';
+                    span.textContent = name;
+
+                    label.appendChild(input);
+                    label.appendChild(span);
+
+                    membersList.appendChild(label);
+                });
+            }
+
+            // Show container
             container.classList.remove('hidden');
 
-            // Tambahkan checkboxes berdasarkan divisi yang dipilih
-            const members = membersData[division];
-            members.forEach(member => {
-                const checkboxContainer = document.createElement('label');
-                checkboxContainer.className = 'flex items-center cursor-pointer';
+            // Remove chosen division from select (so user can't re-add same division)
+            // const optionToRemove = divisionSelect.querySelector(`option[value="${escapeSelector(division)}"]`);
+            // if (optionToRemove) {
+            //     // store removed option text/value so we can restore later if reset
+            //     usedDivisions.push({
+            //         value: optionToRemove.value,
+            //         text: optionToRemove.textContent
+            //     });
+            //     optionToRemove.remove();
+            // }
 
-                // Cek apakah member ini sudah ada di selectedMembers
-                const isChecked = selectedMembers[member.value] !== undefined;
-
-                checkboxContainer.innerHTML = `
-                    <input type="checkbox" name="team_members[]" value="${member.value}" 
-                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4"
-                           onchange="updateSelectedMembers()" ${isChecked ? 'checked' : ''}>
-                    <span class="ml-3 text-sm text-gray-700">${member.text}</span>
-                `;
-
-                membersList.appendChild(checkboxContainer);
-            });
-
-            // Hapus opsi divisi dari dropdown
-            const optionToRemove = divisionSelect.querySelector(`option[value="${division}"]`);
-            if (optionToRemove) {
-                optionToRemove.remove();
-            }
-
-            // Tandai divisi sebagai sudah digunakan
-            if (!usedDivisions.includes(division)) {
-                usedDivisions.push(division);
-            }
-
-            // Reset dropdown ke default
+            // Reset select to default
             divisionSelect.value = '';
+
+            // After rendering, make sure initialSelected checkboxes are checked & added to state
+            // (updateSelectedMembers will handle building chips)
+            // (But we set checked above via isChecked)
+            updateSelectedMembers();
         }
 
         function updateSelectedMembers() {
-            const checkboxes = document.querySelectorAll('input[name="team_members[]"]:checked');
             const selectedDisplay = document.getElementById('selected-display');
             const selectedChips = document.getElementById('selected-chips');
+            const karyawanInput = document.getElementById('karyawan-id');
 
-            // Update selectedMembers object dengan checkbox yang saat ini tercentang
-            checkboxes.forEach(checkbox => {
-                const memberName = checkbox.nextElementSibling.textContent;
-                const memberValue = checkbox.value;
-                
-                // Extract division dari member value
-                let divisionName = '';
-                if (memberValue.startsWith('engineer_web_')) {
-                    divisionName = 'Engineer Web';
-                } else if (memberValue.startsWith('analis_')) {
-                    divisionName = 'Analis';
-                } else if (memberValue.startsWith('engineer_android_')) {
-                    divisionName = 'Engineer Android';
-                } else if (memberValue.startsWith('content_creator_')) {
-                    divisionName = 'Content Creator';
-                } else if (memberValue.startsWith('engineer_ios_')) {
-                    divisionName = 'Engineer IOS';
-                } else if (memberValue.startsWith('copywriter_')) {
-                    divisionName = 'Copywriter';
-                } else if (memberValue.startsWith('uiux_')) {
-                    divisionName = 'UI/UX';
-                } else if (memberValue.startsWith('tester_')) {
-                    divisionName = 'Tester';
+            // gather all checkboxes
+            const checkboxes = document.querySelectorAll('input[name="team_members[]"]');
+
+            // update selectedMembers from checkboxes currently checked
+            // NOTE: preserve selections accross divisions (multiple division blocks may exist)
+            checkboxes.forEach(cb => {
+                const id = String(cb.value);
+                const name = cb.dataset.name || (cb.nextElementSibling ? cb.nextElementSibling.textContent : '');
+                const division = cb.dataset.division || '';
+
+                if (cb.checked) {
+                    selectedMembers[id] = {
+                        id,
+                        name,
+                        division
+                    };
+                } else {
+                    if (selectedMembers[id]) {
+                        delete selectedMembers[id];
+                    }
                 }
-
-                // Simpan ke selectedMembers object
-                selectedMembers[memberValue] = {
-                    name: memberName,
-                    division: divisionName
-                };
             });
 
-            // Cek jika ada yang tidak tercentang, hapus dari selectedMembers
-            const allCheckboxes = document.querySelectorAll('input[name="team_members[]"]');
-            allCheckboxes.forEach(checkbox => {
-                if (!checkbox.checked && selectedMembers[checkbox.value]) {
-                    delete selectedMembers[checkbox.value];
+            // Also ensure initialSelected (if any) are included if their checkbox exists checked
+            // (This is already handled above, but keep for safety.)
+            initialSelected.forEach(id => {
+                id = String(id);
+                if (!selectedMembers[id]) {
+                    // try find checkbox and add if it's checked
+                    const cb = document.querySelector(`input[name="team_members[]"][value="${id}"]`);
+                    if (cb && cb.checked) {
+                        selectedMembers[id] = {
+                            id,
+                            name: cb.dataset.name || '',
+                            division: cb.dataset.division || ''
+                        };
+                    }
                 }
             });
 
             // Clear previous chips
             selectedChips.innerHTML = '';
 
-            // Jika tidak ada member yang dipilih, sembunyikan display
+            // if no selected members -> hide display
             if (Object.keys(selectedMembers).length === 0) {
                 selectedDisplay.classList.add('hidden');
+                karyawanInput.value = '';
                 return;
             }
 
-            // Show selected display
             selectedDisplay.classList.remove('hidden');
 
-            // Create chips untuk semua selected members (dari object, bukan hanya yang tercentang saat ini)
-            Object.entries(selectedMembers).forEach(([memberValue, memberData]) => {
+            // Render chips
+            Object.values(selectedMembers).forEach(member => {
                 const chip = document.createElement('div');
                 chip.className =
-                    'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
-                chip.innerHTML = `
-                    <span class="font-medium">[${memberData.division}]</span>
-                    <span class="ml-1">${memberData.name}</span>
-                    <button type="button" class="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none" 
-                        onclick="removeSelectedMember('${memberValue}')">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                `;
+                'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
+
+                const boldDiv = document.createElement('span');
+                boldDiv.className = 'font-medium';
+                boldDiv.textContent = `[${member.division}]`;
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'ml-1';
+                nameSpan.textContent = member.name;
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'ml-2 text-blue-600 hover:text-blue-800 focus:outline-none';
+                btn.innerHTML = ``;
+                btn.addEventListener('click', () => removeSelectedMember(member.id));
+
+                chip.appendChild(boldDiv);
+                chip.appendChild(nameSpan);
+                chip.appendChild(btn);
+
                 selectedChips.appendChild(chip);
             });
+
+            // update hidden input (comma separated)
+            const memberIds = Object.keys(selectedMembers);
+            karyawanInput.value = memberIds.join(',');
+
+            // Debug
+            // console.log('selectedMembers', selectedMembers, 'karyawan_id', karyawanInput.value);
         }
 
-        function removeSelectedMember(memberValue) {
-            // Hapus dari selectedMembers object
-            delete selectedMembers[memberValue];
-            
-            // Jika checkbox untuk member ini ada di DOM, uncheck
-            const checkbox = document.querySelector(`input[value="${memberValue}"]`);
-            if (checkbox) {
-                checkbox.checked = false;
-            }
-            
-            // Update tampilan
+        function removeSelectedMember(memberId) {
+            // remove from state
+            memberId = String(memberId);
+            delete selectedMembers[memberId];
+
+            // uncheck checkbox if present
+            const checkbox = document.querySelector(`input[name="team_members[]"][value="${memberId}"]`);
+            if (checkbox) checkbox.checked = false;
+
+            // update UI
             updateSelectedMembers();
         }
 
-        // Reset function for the reset button
         function resetAllSelections() {
             const divisionSelect = document.getElementById('division-select');
             const membersList = document.getElementById('members-list');
 
-            // Simpan opsi divisi yang hilang
-            const divisionsToRestore = [...usedDivisions];
+            // restore removed division options
+            if (usedDivisions && usedDivisions.length > 0) {
+                usedDivisions.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.text;
+                    divisionSelect.appendChild(option);
+                });
+            }
 
-            // Reset division dropdown
-            divisionSelect.value = '';
-
-            // Re-add all division options
-            const divisionLabels = {
-                'engineer_web': 'Engineer Web',
-                'analis': 'Analis',
-                'engineer_android': 'Engineer Android',
-                'content_creator': 'Content Creator',
-                'engineer_ios': 'Engineer IOS',
-                'copywriter': 'Copywriter',
-                'uiux': 'UI/UX',
-                'tester': 'Tester'
-            };
-
-            divisionsToRestore.forEach(division => {
-                const option = document.createElement('option');
-                option.value = division;
-                option.textContent = divisionLabels[division];
-                divisionSelect.appendChild(option);
-            });
-
-            // Clear used divisions array
+            // clear trackers
             usedDivisions = [];
+            selectedMembers = {};
 
-            // Clear members list
+            // clear UI
             membersList.innerHTML = '';
-
-            // Hide containers
             document.getElementById('members-container').classList.add('hidden');
             document.getElementById('selected-display').classList.add('hidden');
 
-            // Clear selected members object
-            selectedMembers = {};
+            // reset project director and other inputs if needed (HTML reset already handles most)
+            const director = document.getElementById('project-director');
+            if (director) director.value = '';
 
-            // Reset project director
-            document.getElementById('project-director').value = '';
+            // Clear date inputs
+            const start = document.getElementById('project-start');
+            const end = document.getElementById('project-end');
+            if (start) start.value = '';
+            if (end) end.value = '';
 
-            // Reset date inputs
-            document.getElementById('project-start').value = '';
-            document.getElementById('project-end').value = '';
+            // clear hidden karyawan_id
+            const karyawanInput = document.getElementById('karyawan-id');
+            if (karyawanInput) karyawanInput.value = '';
         }
 
-        // Calendar JS
+        // Helper to escape selector when division name has special chars
+        function escapeSelector(s) {
+            return CSS.escape ? CSS.escape(s) : s.replace(/([ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~])/g, '\\$1');
+        }
+
+        // Calendar JS + init selected members rendering
         document.addEventListener('DOMContentLoaded', () => {
+            // Calendar init (kept same as in create)
             const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
                 'Dec'
             ];
-
             const calendarPopup = document.getElementById('calendarPopup');
             const monthShortEl = document.getElementById('month-short');
             const yearSelect = document.getElementById('year-select');
@@ -722,7 +631,6 @@
                 calendarPopup.style.position = 'absolute';
                 calendarPopup.style.left = left + 'px';
                 calendarPopup.style.top = top + 'px';
-
                 calendarPopup.style.visibility = 'visible';
                 calendarPopup.classList.remove('hidden');
 
@@ -734,13 +642,14 @@
                 activeInput = null;
             }
 
-            // Event: input & icon -> open calendar
+            // Event binding for date inputs
             [startInput, endInput].forEach(inp => {
+                if (!inp) return;
                 inp.addEventListener('click', () => showCalendarFor(inp));
                 inp.addEventListener('focus', () => showCalendarFor(inp));
             });
-            startIcon.addEventListener('click', () => showCalendarFor(startInput));
-            endIcon.addEventListener('click', () => showCalendarFor(endInput));
+            if (startIcon) startIcon.addEventListener('click', () => showCalendarFor(startInput));
+            if (endIcon) endIcon.addEventListener('click', () => showCalendarFor(endInput));
 
             // Calendar navigation
             prevBtn.addEventListener('click', () => {
@@ -774,7 +683,45 @@
             // Init
             initYear();
             renderCalendar();
+
+            // --- Initialization: open divisions that contain initialSelected members ---
+            // initialSelected contains array of member ids
+            (function openDivisionsForInitialSelection() {
+                if (!initialSelected || initialSelected.length === 0) {
+                    // nothing to preselect
+                    return;
+                }
+
+                // Find which divisions contain selected member ids
+                const divisionsToOpen = new Set();
+
+                Object.keys(membersData).forEach(division => {
+                    const members = membersData[division] || [];
+                    members.forEach(m => {
+                        if (initialSelected.includes(m.id)) {
+                            divisionsToOpen.add(division);
+                        }
+                    });
+                });
+
+                // For each division, call showMembersDropdown => this will render checkboxes and auto-check those present in initialSelected
+                divisionsToOpen.forEach(div => {
+                    // small timeout to allow sequential DOM updates (not strictly necessary, but safe)
+                    showMembersDropdown(div);
+                });
+
+                // After rendering all, ensure updateSelectedMembers runs to reflect state & hidden input
+                setTimeout(() => updateSelectedMembers(), 50);
+            })();
+
+            // When the form is reset by browser default (pressing reset), also call our custom reset
+            const form = document.getElementById('create-project-form');
+            if (form) {
+                form.addEventListener('reset', (e) => {
+                    // small timeout to allow HTML reset to complete
+                    setTimeout(() => resetAllSelections(), 10);
+                });
+            }
         });
     </script>
-
 @endsection

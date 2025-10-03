@@ -5,7 +5,7 @@
 @section('content')
     <div class="max-w-6xl mx-auto">
         <!-- Single form to submit project + SDM -->
-        <form action="#" method="POST" id="create-project-form">
+        <form action="{{ route('admin.project.store') }}" method="POST">
             @csrf
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- New Project Section -->
@@ -23,7 +23,7 @@
                                     Name</label>
                                 <input type="text" id="project-name" name="name"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                    placeholder="Enter project name" required>
+                                    placeholder="Enter project name" required name="name">
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -43,7 +43,7 @@
                                     <label for="project-end" class="block text-sm font-medium text-gray-700 mb-2">End
                                         Date</label>
                                     <div class="relative">
-                                        <input readonly id="project-end" name="end_date" type="text"
+                                        <input readonly id="project-end" name="deadline" type="text"
                                             placeholder="YYYY-MM-DD"
                                             class="date-input w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer" />
                                         <img id="project-end-icon"
@@ -56,7 +56,7 @@
                             <div>
                                 <label for="project-status" class="block text-sm font-medium text-gray-700 mb-2">Level
                                     Project</label>
-                                <select id="project-status" name="status"
+                                <select id="project-status" name="level"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
                                     <option value="low">Low</option>
@@ -95,7 +95,7 @@
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
                                     <option value="">Select Project Director</option>
-                                    @foreach($directors as $director)
+                                    @foreach ($directors as $director)
                                         <option value="{{ $director->id }}">{{ $director->name }}</option>
                                     @endforeach
                                 </select>
@@ -108,11 +108,11 @@
                                 Select Division
                             </label>
                             <div class="relative mb-4">
-                                <select id="division-select" name="division_select"
+                                <select id="division-select"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     onchange="showMembersDropdown(this.value)">
                                     <option value="">Choose Division</option>
-                                    @foreach($karyawans as $division => $members)
+                                    @foreach ($karyawans as $division => $members)
                                         <option value="{{ $division ?? 'Unknown' }}">{{ $division ?? 'Unknown' }}</option>
                                     @endforeach
                                 </select>
@@ -138,6 +138,8 @@
                                     <!-- Selected member chips will appear here -->
                                 </div>
                             </div>
+
+                            <input type="text" name="karyawan_id" id="karyawan-id" class="hidden">
                         </div>
 
                         <!-- Action Buttons -->
@@ -245,12 +247,11 @@
     <script>
         // membersData: object where keys are division names, values are arrays of {id, name, division}
         const membersData = @json(
-            $karyawans->map(function($group) {
-                return $group->map(function($u) {
-                    return ['id' => $u->id, 'name' => $u->name, 'division' => $u->division];
-                })->values();
-            })
-        );
+            $karyawans->map(function ($group) {
+                return $group->map(function ($u) {
+                        return ['id' => $u->id, 'name' => $u->name, 'division' => $u->division];
+                    })->values();
+            }));
 
         // State
         let selectedMembers = {}; // { memberId: { id, name, division } }
@@ -316,7 +317,10 @@
             const optionToRemove = divisionSelect.querySelector(`option[value="${escapeSelector(division)}"]`);
             if (optionToRemove) {
                 // store removed option text/value so we can restore later if reset
-                usedDivisions.push({ value: optionToRemove.value, text: optionToRemove.textContent });
+                usedDivisions.push({
+                    value: optionToRemove.value,
+                    text: optionToRemove.textContent
+                });
                 optionToRemove.remove();
             }
 
@@ -327,6 +331,7 @@
         function updateSelectedMembers() {
             const selectedDisplay = document.getElementById('selected-display');
             const selectedChips = document.getElementById('selected-chips');
+            const karaywanId = document.getElementById('karyawan-id');
 
             // gather all checked checkboxes
             const checkboxes = document.querySelectorAll('input[name="team_members[]"]');
@@ -338,7 +343,11 @@
                 const division = cb.dataset.division || '';
 
                 if (cb.checked) {
-                    selectedMembers[id] = { id, name, division };
+                    selectedMembers[id] = {
+                        id,
+                        name,
+                        division
+                    };
                 } else {
                     // only remove if that member is present and not checked
                     if (selectedMembers[id]) {
@@ -361,7 +370,8 @@
             // Render chips
             Object.values(selectedMembers).forEach(member => {
                 const chip = document.createElement('div');
-                chip.className = 'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
+                chip.className =
+                    'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
 
                 const boldDiv = document.createElement('span');
                 boldDiv.className = 'font-medium';
@@ -385,6 +395,14 @@
 
                 selectedChips.appendChild(chip);
             });
+
+            const memberIds = Object.keys(selectedMembers);
+
+            karaywanId.value = memberIds;
+
+            console.log(karaywanId);
+
+
         }
 
         function removeSelectedMember(memberId) {
@@ -440,7 +458,9 @@
 
         // Calendar JS (same as your implementation, kept and slightly simplified)
         document.addEventListener('DOMContentLoaded', () => {
-            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                'Dec'
+            ];
             const calendarPopup = document.getElementById('calendarPopup');
             const monthShortEl = document.getElementById('month-short');
             const yearSelect = document.getElementById('year-select');
@@ -466,8 +486,14 @@
                 nd.setHours(0, 0, 0, 0);
                 return nd;
             }
-            function pad(n) { return n < 10 ? '0' + n : String(n); }
-            function formatISO(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+
+            function pad(n) {
+                return n < 10 ? '0' + n : String(n);
+            }
+
+            function formatISO(d) {
+                return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+            }
 
             function initYear() {
                 yearSelect.innerHTML = '';
@@ -507,7 +533,8 @@
                 for (let d = 1; d <= daysInMonth; d++) {
                     const cell = document.createElement('button');
                     cell.type = 'button';
-                    cell.className = 'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition';
+                    cell.className =
+                        'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition';
                     cell.textContent = d;
 
                     const cellDate = new Date(year, month, d);
@@ -558,7 +585,8 @@
 
                 if (top + popupH > window.scrollY + window.innerHeight - 12) {
                     const altTop = rect.top + window.scrollY - popupH - 8;
-                    top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY + window.innerHeight - popupH - 12);
+                    top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY +
+                        window.innerHeight - popupH - 12);
                 }
 
                 calendarPopup.style.position = 'absolute';
@@ -585,9 +613,18 @@
             if (endIcon) endIcon.addEventListener('click', () => showCalendarFor(endInput));
 
             // Calendar navigation
-            prevBtn.addEventListener('click', () => { viewDate.setMonth(viewDate.getMonth() - 1); renderCalendar(); });
-            nextBtn.addEventListener('click', () => { viewDate.setMonth(viewDate.getMonth() + 1); renderCalendar(); });
-            yearSelect.addEventListener('change', (e) => { viewDate.setFullYear(Number(e.target.value)); renderCalendar(); });
+            prevBtn.addEventListener('click', () => {
+                viewDate.setMonth(viewDate.getMonth() - 1);
+                renderCalendar();
+            });
+            nextBtn.addEventListener('click', () => {
+                viewDate.setMonth(viewDate.getMonth() + 1);
+                renderCalendar();
+            });
+            yearSelect.addEventListener('change', (e) => {
+                viewDate.setFullYear(Number(e.target.value));
+                renderCalendar();
+            });
 
             // Click outside to close
             document.addEventListener('click', (e) => {

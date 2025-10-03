@@ -66,7 +66,7 @@
                             </td>
                             <td class="py-4 px-4 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    <a href="{{ route('admin.edit-project') }}"
+                                    <a href="{{ route('admin.edit-project' , $project->id) }}"
                                         class="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-md transition-colors">
                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">

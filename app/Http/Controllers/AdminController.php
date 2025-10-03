@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Leave;
 use App\Models\Project;
+use App\Models\ProjectUser;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -80,9 +81,112 @@ class AdminController extends Controller
     return view("admin.create-project", compact("directors", "karyawans"));
   }
 
-  public function editProject()
+  public function storeProject(Request $request)
   {
-    return view("admin.edit-project");
+    // \Log::info("Request Data:", $request->all());
+    // dd($request->all());
+    // 1️⃣ Validasi
+    $request->validate([
+      "name" => "required|string|max:255",
+      "start_date" => "required|date",
+      "deadline" => "required|date",
+      "level" => "required|string",
+      "description" => "nullable|string",
+      "project_director" => "required|exists:users,id",
+      "karyawan_id" => "required|string", // format: "7,8,10"
+    ]);
+
+    // 1️⃣ Simpan ke tabel projects
+    $project = Project::create([
+      "name" => $request->name,
+      "start_date" => $request->start_date,
+      "deadline" => $request->deadline,
+      "director_id" => $request->project_director,
+      "level" => $request->level,
+      "status" => "ongoing", // Bisa diganti default status lain
+      "description" => $request->description,
+    ]);
+
+    // 2️⃣ Masukkan anggota ke tabel project_user
+    $karyawanIds = explode(",", $request->karyawan_id); // Convert string -> array [7,8,10]
+
+    foreach ($karyawanIds as $userId) {
+      ProjectUser::create([
+        "project_id" => $project->id,
+        "user_id" => $userId,
+        "assigned_at" => now(),
+      ]);
+    }
+
+    // 4️⃣ Redirect atau response
+    return redirect()
+      ->route("admin.project")
+      ->with("success", "Leave request submitted successfully.");
+  }
+
+  public function editProject($id)
+  {
+    // Ambil project (dengan director + anggota tim)
+    $project = Project::with(["director", "members"])->findOrFail($id);
+
+    // Ambil semua director (misalnya user dengan role project manager)
+    $directors = User::where("role", "director")->get();
+
+    // Ambil semua karyawan dan **group by division** (biar sama kayak create page)
+    $karyawans = User::where("role", "karyawan")->get()->groupBy("division");
+
+    // Ambil ID anggota project saat ini
+    $selectedMembers = $project->members->pluck("id")->toArray();
+
+    return view(
+      "admin.edit-project",
+      compact("project", "directors", "karyawans", "selectedMembers")
+    );
+  }
+
+  public function updateProject(Request $request, $id)
+  {
+    // 1️⃣ Validasi Input
+    $request->validate([
+      "name" => "required|string|max:255",
+      "start_date" => "required|date",
+      "deadline" => "required|date",
+      "level" => "required|string",
+      "description" => "nullable|string",
+      "project_director" => "required|exists:users,id",
+      "karyawan_id" => "required|string", // format: "7,8,10"
+    ]);
+
+    // 2️⃣ Cari Project
+    $project = Project::findOrFail($id);
+
+    // 3️⃣ Update Data Project
+    $project->update([
+      "name" => $request->name,
+      "start_date" => $request->start_date,
+      "deadline" => $request->deadline,
+      "director_id" => $request->project_director,
+      "level" => $request->level,
+      "description" => $request->description,
+    ]);
+
+    // 4️⃣ Hapus Semua User Lama di ProjectUser
+    ProjectUser::where("project_id", $project->id)->delete();
+
+    // 5️⃣ Masukkan User Baru
+    $karyawanIds = explode(",", $request->karyawan_id);
+    foreach ($karyawanIds as $userId) {
+      ProjectUser::create([
+        "project_id" => $project->id,
+        "user_id" => $userId,
+        "assigned_at" => now(),
+      ]);
+    }
+
+    // 6️⃣ Redirect
+    return redirect()
+      ->route("admin.project")
+      ->with("success", "Project updated successfully.");
   }
 
   public function task()

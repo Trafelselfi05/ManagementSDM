@@ -35,8 +35,15 @@ Route::controller(AdminController::class)
   ->group(function () {
     Route::get("admin-info", "adminInfo")->name("admin-info");
     Route::get("dashboard", "dashboard")->name("dashboard");
+
     Route::get("project", "project")->name("project");
     Route::get("create-project", "createProject")->name("project.create");
+    Route::post("create-project", "storeProject")->name("project.store");
+    Route::get("edit-project/{id}", "editProject")->name("edit-project");
+    Route::post("edit-project/{id}", "updateProject")->name(
+      "edit-project.update"
+    );
+
     Route::get("task", "task")->name("task");
     Route::get("task-detail", "taskDetail")->name("task-detail");
     Route::get("activity", "activity")->name("activity");
@@ -69,7 +76,6 @@ Route::controller(AdminController::class)
     );
 
     Route::get("submission-table", "submissionTable")->name("submission-table");
-    Route::get("edit-project", "editProject")->name("edit-project");
   });
 
 // Director Routes
