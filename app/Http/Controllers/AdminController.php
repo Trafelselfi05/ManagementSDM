@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Leave;
 use App\Models\Project;
 use App\Models\ProjectUser;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -191,7 +192,76 @@ class AdminController extends Controller
 
   public function task()
   {
-    return view("admin.task");
+    $projects = Project::all();
+    $tasks = Task::with(["project", "assignedUser"])->get();
+
+    $tasksByStatus = [
+      "todo" => $tasks->where("status", "todo"),
+      "in_progress" => $tasks->where("status", "in_progress"),
+      "review" => $tasks->where("status", "review"),
+      "completed" => $tasks->where("status", "completed"),
+    ];
+
+    $projectUsers = ProjectUser::with("user")->get();
+
+    return view(
+      "admin.task",
+      compact("projects", "tasksByStatus", "projectUsers" , "tasks")
+    );
+  }
+
+  public function storeTask(Request $request)
+  {
+    // \Log::info("Request Data:", $request->all());
+    // dd($request->all());
+
+    $request->validate([
+      "taskName" => "required|string|max:200",
+      "project" => "required|exists:projects,id",
+      "taskLevel" => "required|in:low,medium,high",
+    ]);
+
+    // Tentukan estimasi jam otomatis jika ingin:
+    $estimated = match ($request->taskLevel) {
+      "low" => 2,
+      "medium" => 6,
+      "high" => 8,
+      default => 0,
+    };
+
+    Task::create([
+      "project_id" => $request->project,
+      "name" => $request->taskName,
+      "level" => $request->taskLevel,
+      "estimated_hours" => $estimated,
+      "status" => "todo",
+      "created_by_user_id" => auth()->id(), // atau admin_id jika pakai admin guard
+    ]);
+
+    return back()->with("success", "Task created successfully!");
+  }
+
+  public function transferTask(Request $request)
+  {
+    // \Log::info("Request Data:", $request->all());
+    // dd($request->all());
+    $request->validate([
+      "project_id" => "required|exists:projects,id",
+      "task_id" => "required|exists:tasks,id",
+      "assigned_to" => "required|exists:users,id",
+      "taskLevel" => "required|in:low,medium,high",
+    ]);
+
+    $task = Task::findOrFail($request->task_id);
+
+    $task->update([
+      "project_id" => $request->project_id,
+      "assigned_to" => $request->assigned_to,
+      "level" => $request->taskLevel,
+      "updated_at" => now(),
+    ]);
+
+    return back()->with("success", "Task successfully updated!");
   }
 
   public function taskDetail()

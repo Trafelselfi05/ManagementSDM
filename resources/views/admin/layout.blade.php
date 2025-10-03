@@ -639,56 +639,42 @@
             });
 
             // Form validation and submission
-            [createTaskForm, transferTaskForm].forEach(form => {
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    if (validateForm(form)) {
-                        // Simulate form submission
-                        showAlert('Success', 'Task has been created successfully.', 'success');
-                        form.reset();
-                        createTaskModal.classList.remove('active');
-                        transferTaskModal.classList.remove('active');
-                    } else {
-                        showAlert('Error', 'Please fill all required fields correctly.', 'error');
-                    }
-                });
-            });
 
             // Form validation function
-            function validateForm(form) {
-                let isValid = true;
-                const inputs = form.querySelectorAll('[required]');
+            // function validateForm(form) {
+            //     let isValid = true;
+            //     const inputs = form.querySelectorAll('[required]');
 
-                inputs.forEach(input => {
-                    const errorElement = document.getElementById(`${input.id}-error`);
-                    if (!input.value) {
-                        if (errorElement) {
-                            errorElement.textContent = 'This field is required';
-                            errorElement.classList.remove('hidden');
-                        }
-                        isValid = false;
-                    } else {
-                        if (errorElement) {
-                            errorElement.classList.add('hidden');
-                        }
-                    }
-                });
+            //     inputs.forEach(input => {
+            //         const errorElement = document.getElementById(`${input.id}-error`);
+            //         if (!input.value) {
+            //             if (errorElement) {
+            //                 errorElement.textContent = 'This field is required';
+            //                 errorElement.classList.remove('hidden');
+            //             }
+            //             isValid = false;
+            //         } else {
+            //             if (errorElement) {
+            //                 errorElement.classList.add('hidden');
+            //             }
+            //         }
+            //     });
 
-                // Check if at least one radio button is selected
-                const radioGroups = form.querySelectorAll('input[type="radio"]');
-                const radioNames = [...new Set(Array.from(radioGroups).map(radio => radio.name))];
+            //     // Check if at least one radio button is selected
+            //     const radioGroups = form.querySelectorAll('input[type="radio"]');
+            //     const radioNames = [...new Set(Array.from(radioGroups).map(radio => radio.name))];
 
-                radioNames.forEach(name => {
-                    const radios = form.querySelectorAll(`input[name="${name}"]`);
-                    const checked = Array.from(radios).some(radio => radio.checked);
-                    if (!checked) {
-                        isValid = false;
-                        // You could add error display for radio groups here
-                    }
-                });
+            //     radioNames.forEach(name => {
+            //         const radios = form.querySelectorAll(`input[name="${name}"]`);
+            //         const checked = Array.from(radios).some(radio => radio.checked);
+            //         if (!checked) {
+            //             isValid = false;
+            //             // You could add error display for radio groups here
+            //         }
+            //     });
 
-                return isValid;
-            }
+            //     return isValid;
+            // }
 
             // Show alert function
             function showAlert(title, message, type) {

@@ -45,7 +45,11 @@ Route::controller(AdminController::class)
     );
 
     Route::get("task", "task")->name("task");
+    Route::post("task", "storeTask")->name("task.store");
+    Route::post("task/transfer", "transferTask")->name("task.transfer");
     Route::get("task-detail", "taskDetail")->name("task-detail");
+
+
     Route::get("activity", "activity")->name("activity");
 
     Route::get("administration", "administration")->name("administration");
