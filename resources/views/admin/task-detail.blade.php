@@ -13,8 +13,6 @@
                     <img class="w-6 h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />
                     <span class="text-gray-500 text-sm font-medium">Filter</span>
                 </div>
-
-
                 <!-- Task Board View Button -->
                 <a href="{{ route('admin.task') }}"
                     class="w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-gray-800 transition-colors flex items-center justify-center">
