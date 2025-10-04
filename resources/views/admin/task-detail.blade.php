@@ -36,147 +36,101 @@
 
                 <!-- Table Rows -->
                 <div class="divide-y divide-gray-200 bg-white">
-                    <!-- Row 1 -->
-                    <div class="flex items-center h-14 px-6 cursor-pointer task-row" data-task-id="1"
-                        data-task-name="Wordpress Plugin Update" data-project="Website Management"
-                        data-assignee="Athena Cyntia" data-level="High" data-status="To do" data-created="Nov 4"
-                        data-timeline="25 November 2024 - 30 November 2024">
-                        <div class="flex-none w-16 text-center font-semibold text-[#111111] text-base">1</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">Wordpress Plugin
-                            Update</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">Website Management
-                        </div>
-                        <div class="flex-none w-36 text-center font-semibold text-[#111111] text-base ml-4">Athena Cyntia
-                        </div>
-                        <div class="flex-none w-24 flex justify-center ml-4">
-                            <span
-                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
-                        </div>
-                        <div class="flex-none w-28 flex justify-center ml-4">
-                            <span class="px-2 py-1 bg-neutral-100 text-[#7d7d7d] text-sm font-medium rounded-[10px]">To
-                                do</span>
-                        </div>
-                        <div class="flex-none w-24 text-center font-semibold text-[#111111] text-base ml-4">Nov 4</div>
-                    </div>
+                    @php
+                        use Carbon\Carbon;
+                        // ensure Carbon locale for translatedFormat (month names in Indonesian)
+                        Carbon::setLocale('id');
+                    @endphp
 
-                    <!-- Row 2 -->
-                    <div class="flex items-center h-14 px-6 cursor-pointer task-row" data-task-id="2"
-                        data-task-name="Running Login View" data-project="Online Marketplace App"
-                        data-assignee="Ashlynn Culhane" data-level="Low" data-status="Progress" data-created="Nov 10"
-                        data-timeline="26 November 2024 - 1 December 2024">
-                        <div class="flex-none w-16 text-center font-semibold text-[#111111] text-base">2</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">Running Login View
-                        </div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">Online Marketplace
-                            App</div>
-                        <div class="flex-none w-36 text-center font-semibold text-[#111111] text-base ml-4">Ashlynn Culhane
-                        </div>
-                        <div class="flex-none w-24 flex justify-center ml-4">
-                            <span
-                                class="px-2.5 py-1 bg-[#6fadc8] text-white text-sm font-semibold rounded-[10px]">Low</span>
-                        </div>
-                        <div class="flex-none w-28 flex justify-center ml-4">
-                            <span
-                                class="px-2 py-1 bg-[#ffb32d] text-white text-sm font-medium rounded-[10px]">Progress</span>
-                        </div>
-                        <div class="flex-none w-24 text-center font-semibold text-[#111111] text-base ml-4">Nov 10</div>
-                    </div>
+                    @foreach ($tasks as $task)
+                        @php
+                            // compute timeline: start = created_at, end = created_at + estimated_hours
+                            $start = $task->created_at ? Carbon::parse($task->created_at) : null;
+                            $end = $start ? $start->copy()->addHours((int) $task->estimated_hours) : null;
 
-                    <!-- Row 3 -->
-                    <div class="flex items-center h-14 px-6 cursor-pointer task-row" data-task-id="3"
-                        data-task-name="Create Website Design" data-project="CafeLink Menu Website" data-assignee="Erika"
-                        data-level="Medium" data-status="Complete" data-created="Nov 25"
-                        data-timeline="27 November 2024 - 2 December 2024">
-                        <div class="flex-none w-16 text-center font-semibold text-[#111111] text-base">3</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">Create Website
-                            Design</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">CafeLink Menu
-                            Website</div>
-                        <div class="flex-none w-36 text-center font-semibold text-[#111111] text-base ml-4">Erika</div>
-                        <div class="flex-none w-24 flex justify-center ml-4">
-                            <span
-                                class="px-2.5 py-1 bg-[#ffb32d] text-white text-sm font-semibold rounded-[10px]">Medium</span>
-                        </div>
-                        <div class="flex-none w-28 flex justify-center ml-4">
-                            <span
-                                class="px-2 py-1 bg-[#7db445] text-white text-sm font-medium rounded-[10px]">Complete</span>
-                        </div>
-                        <div class="flex-none w-24 text-center font-semibold text-[#111111] text-base ml-4">Nov 25</div>
-                    </div>
+                            // timeline display format: "04 Oktober 2025 - 14:00 s/d 04 Oktober 2025 - 20:00"
+                            $timelineStr = $start && $end
+                                ? $start->translatedFormat('d F Y - H:i') . ' s/d ' . $end->translatedFormat('d F Y - H:i')
+                                : '-';
 
-                    <!-- Row 4 -->
-                    <div class="flex items-center h-14 px-6 cursor-pointer task-row" data-task-id="4"
-                        data-task-name="Marketplace Display Menu" data-project="SiteCraft Websites" data-assignee="Seon Woo"
-                        data-level="High" data-status="Review" data-created="Dec 6"
-                        data-timeline="28 November 2024 - 3 December 2024">
-                        <div class="flex-none w-16 text-center font-semibold text-[#111111] text-base">4</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">Marketplace Display
-                            Menu</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">SiteCraft Websites
-                        </div>
-                        <div class="flex-none w-36 text-center font-semibold text-[#111111] text-base ml-4">Seon Woo</div>
-                        <div class="flex-none w-24 flex justify-center ml-4">
-                            <span
-                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
-                        </div>
-                        <div class="flex-none w-28 flex justify-center ml-4">
-                            <span
-                                class="px-2 py-1 bg-neutral-100 text-[#7d7d7d] text-sm font-medium rounded-[10px]">Review</span>
-                        </div>
-                        <div class="flex-none w-24 text-center font-semibold text-[#111111] text-base ml-4">Dec 6</div>
-                    </div>
+                            // created short format for table created column (e.g. "04 Okt")
+                            $createdShort = $start ? $start->translatedFormat('d M') : '-';
 
-                    <!-- Row 5 -->
-                    <div class="flex items-center h-14 px-6 cursor-pointer task-row" data-task-id="5"
-                        data-task-name="Dashboard Revision" data-project="VirtuSphere Digital Innovation"
-                        data-assignee="Fathia" data-level="Low" data-status="Complete" data-created="Dec 12"
-                        data-timeline="29 November 2024 - 4 December 2024">
-                        <div class="flex-none w-16 text-center font-semibold text-[#111111] text-base">5</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">Dashboard Revision
-                        </div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">VirtuSphere
-                            Digital
-                            Innovation</div>
-                        <div class="flex-none w-36 text-center font-semibold text-[#111111] text-base ml-4">Fathia</div>
-                        <div class="flex-none w-24 flex justify-center ml-4">
-                            <span
-                                class="px-2.5 py-1 bg-[#6fadc8] text-white text-sm font-semibold rounded-[10px]">Low</span>
-                        </div>
-                        <div class="flex-none w-28 flex justify-center ml-4">
-                            <span
-                                class="px-2 py-1 bg-[#7db445] text-white text-sm font-medium rounded-[10px]">Complete</span>
-                        </div>
-                        <div class="flex-none w-24 text-center font-semibold text-[#111111] text-base ml-4">Dec 12</div>
-                    </div>
+                            // assignee
+                            $assigneeName = $task->assignedUser ? $task->assignedUser->name : '-';
+                            $assigneeInitial = $assigneeName !== '-' ? strtoupper(substr($assigneeName, 0, 1)) : '-';
 
-                    <!-- Row 6 -->
-                    <div class="flex items-center h-14 px-6 cursor-pointer task-row" data-task-id="6"
-                        data-task-name="Website Menu View" data-project="CafeLink Menu Website" data-assignee="Erika"
-                        data-level="High" data-status="Review" data-created="Dec 18"
-                        data-timeline="30 November 2024 - 5 December 2024">
-                        <div class="flex-none w-16 text-center font-semibold text-[#111111] text-base">6</div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">Website Menu View
+                            // level label (Human) and color
+                            $levelLabel = $task->level ? ucfirst($task->level) : '-';
+                            $levelColor = $task->level === 'high' ? 'bg-[#e94949]' : ($task->level === 'medium' ? 'bg-[#ffb32d]' : 'bg-[#6fadc8]');
+
+                            // status label color mapping
+                            $status = $task->status ?? 'todo';
+                            switch ($status) {
+                                case 'in_progress': $statusBg = 'bg-amber-400'; break;
+                                case 'review': $statusBg = 'bg-blue-400'; break;
+                                case 'completed': $statusBg = 'bg-green-500'; break;
+                                default: $statusBg = 'bg-red-500'; break; // todo
+                            }
+
+                            // project name
+                            $projectName = $task->project ? $task->project->name : '-';
+
+                            // timeline data attr keep the same format too
+                        @endphp
+
+                        <div class="flex items-center h-14 px-6 cursor-pointer task-row"
+                             data-task-id="{{ $task->id }}"
+                             data-task-name="{{ e($task->name) }}"
+                             data-project="{{ e($projectName) }}"
+                             data-assignee="{{ e($assigneeName) }}"
+                             data-level="{{ e($levelLabel) }}"
+                             data-status="{{ e(ucfirst($status)) }}"
+                             data-created="{{ e($start ? $start->translatedFormat('d F Y - H:i') : '-') }}"
+                             data-timeline="{{ e($timelineStr) }}"
+                             data-estimated-hours="{{ $task->estimated_hours ?? 0 }}"
+                             data-assignee-initial="{{ e($assigneeInitial) }}"
+                             >
+                            <div class="flex-none w-16 text-center font-semibold text-[#111111] text-base">
+                                {{ $loop->iteration }}
+                            </div>
+
+                            <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">
+                                {{ $task->name }}
+                            </div>
+
+                            <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">
+                                {{ $projectName }}
+                            </div>
+
+                            <div class="flex-none w-36 text-center font-semibold text-[#111111] text-base ml-4">
+                                {{ $assigneeName }}
+                            </div>
+
+                            <div class="flex-none w-24 flex justify-center ml-4">
+                                <span class="{{ $levelColor }} text-white text-sm font-semibold px-2 py-1 rounded-[10px]">
+                                    {{ $levelLabel }}
+                                </span>
+                            </div>
+
+                            <div class="flex-none w-28 flex justify-center ml-4">
+                                <span class="px-2 py-1 {{ $statusBg }} text-white text-sm font-semibold rounded-[10px]">
+                                    {{ ucfirst($status) }}
+                                </span>
+                            </div>
+
+                            <div class="flex-none w-24 text-center font-semibold text-[#111111] text-base ml-4">
+                                {{ $createdShort }}
+                            </div>
                         </div>
-                        <div class="flex-1 min-w-0 font-semibold text-[#111111] text-base ml-4 truncate">CafeLink Menu
-                            Website</div>
-                        <div class="flex-none w-36 text-center font-semibold text-[#111111] text-base ml-4">Erika</div>
-                        <div class="flex-none w-24 flex justify-center ml-4">
-                            <span
-                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
-                        </div>
-                        <div class="flex-none w-28 flex justify-center ml-4">
-                            <span
-                                class="px-2 py-1 bg-neutral-100 text-[#7d7d7d] text-sm font-medium rounded-[10px]">Review</span>
-                        </div>
-                        <div class="flex-none w-24 text-center font-semibold text-[#111111] text-base ml-4">Dec 18</div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Task Detail Modal -->
-    <div id="taskDetailModal" class="modal-overlay hidden">
+    <div id="taskDetailModal" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
         <div class="modal-content bg-white rounded-[20px] shadow-lg p-0 overflow-hidden w-[667px]">
             <article
                 class="bg-[url('https://c.animaapp.com/mf0kcxh3ChSQMm/img/rectangle-152.svg')] bg-cover w-full h-[458px] relative"
@@ -218,6 +172,7 @@
                         class="absolute w-[510px] top-0 left-0 font-semibold text-[#111111] text-[30px] tracking-[0] leading-[normal]">
                         Wordpress plugin update
                     </h2>
+
                     <div class="absolute top-[88px] left-[18px] flex items-center">
                         <div class="inline-flex items-center gap-4">
                             <svg class="w-[19px] h-[21px] text-gray-500" viewBox="0 0 24 24" fill="currentColor">
@@ -230,11 +185,10 @@
                         </div>
                         <div id="task-status"
                             class="flex w-[78px] h-6 items-center justify-center gap-2.5 px-[19px] py-1 ml-[190px] bg-[#e94949] rounded-[20px]">
-                            <span class="font-medium text-white text-sm">
-                                To do
-                            </span>
+                            <span class="font-medium text-white text-sm">To do</span>
                         </div>
                     </div>
+
                     <div class="absolute top-[133px] left-[18px] flex items-center">
                         <div class="inline-flex items-center gap-4">
                             <svg class="w-[18px] h-[18px] text-gray-500" viewBox="0 0 24 24" fill="currentColor">
@@ -250,6 +204,7 @@
                             Website Management Company
                         </div>
                     </div>
+
                     <div class="absolute top-[177px] left-[18px] flex items-center">
                         <div class="flex w-[104px] items-center gap-4">
                             <svg class="w-[18px] h-[18px] text-gray-500" viewBox="0 0 24 24" fill="currentColor">
@@ -262,10 +217,11 @@
                         </div>
                         <time id="task-timeline"
                             class="absolute w-[333px] h-[19px] top-0 left-[172px] font-semibold text-[#111111] text-base"
-                            datetime="2024-11-25/2024-11-30">
+                            datetime="">
                             25 November 2024 - 30 November 2024
                         </time>
                     </div>
+
                     <div class="absolute top-[221px] left-[18px] flex items-center">
                         <div class="flex w-[104px] items-center gap-4">
                             <svg class="w-[18px] h-[14.86px] text-gray-500" viewBox="0 0 24 24" fill="currentColor">
@@ -283,6 +239,7 @@
                             <span id="task-assignee" class="font-semibold text-[#111111] text-base">Athena Cyntia</span>
                         </div>
                     </div>
+
                     <div class="absolute top-[265px] left-[18px]">
                         <div class="inline-flex items-center justify-center gap-4">
                             <svg class="w-[18px] h-[19.5px] text-gray-500" viewBox="0 0 24 24" fill="currentColor">
@@ -293,8 +250,7 @@
                                 Label
                             </span>
                         </div>
-                        <div class="inline-flex items-center justify-center gap-2.5 absolute top-[-2px] left-[172px]"
-                            role="group" aria-labelledby="label-section">
+                        <div class="inline-flex items-center justify-center gap-2.5 absolute top-[-2px] left-[172px]" role="group" aria-labelledby="label-section">
                             <span id="task-level"
                                 class="flex w-[78px] h-6 items-center justify-center gap-2.5 px-[19px] py-1 relative bg-[#ffb32d] rounded-[20px]"
                                 role="tag" aria-label="Priority: Medium">
@@ -317,7 +273,7 @@
     </div>
 
     <!-- Edit Task Modal -->
-    <div id="editTaskModal" class="modal-overlay hidden">
+    <div id="editTaskModal" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
         <div class="modal-content bg-white rounded-[20px] shadow-lg p-0 overflow-hidden w-[667px]">
             <article
                 class="bg-[url('https://c.animaapp.com/mf0kcxh3ChSQMm/img/rectangle-152.svg')] bg-cover w-full h-[458px] relative"
@@ -411,4 +367,171 @@
             </article>
         </div>
     </div>
+
+    <style>
+        /* small style for modal overlay (already added 'hidden' to hide) */
+        .modal-overlay { }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // helpers
+            function showModal(modalEl) {
+                modalEl.classList.remove('hidden');
+            }
+            function hideModal(modalEl) {
+                modalEl.classList.add('hidden');
+            }
+
+            // Map status color classes for modal top badge
+            function statusBgClass(status) {
+                switch ((status || '').toLowerCase()) {
+                    case 'in_progress': return 'bg-amber-400';
+                    case 'review': return 'bg-blue-400';
+                    case 'completed': return 'bg-green-500';
+                    default: return 'bg-red-500'; // todo
+                }
+            }
+
+            // Map level color for small label (returns tailwind-like inline color classes used in markup)
+            function levelBgInline(level) {
+                if (!level) return 'bg-[#6fadc8]'; // default
+                level = level.toLowerCase();
+                if (level === 'high') return 'bg-[#e94949]';
+                if (level === 'medium') return 'bg-[#ffb32d]';
+                return 'bg-[#6fadc8]';
+            }
+
+            const taskRows = document.querySelectorAll('.task-row');
+            const taskDetailModal = document.getElementById('taskDetailModal');
+            const editTaskModal = document.getElementById('editTaskModal');
+
+            // modal elements for viewing
+            const elTitle = document.getElementById('task-title');
+            const elDetailsHeading = document.getElementById('task-details-heading');
+            const elStatus = document.getElementById('task-status');
+            const elProject = document.getElementById('task-project');
+            const elTimeline = document.getElementById('task-timeline');
+            const elAssignee = document.getElementById('task-assignee');
+            const elAssigneeInitial = document.getElementById('assignee-initial');
+            const elLevelTag = document.getElementById('task-level');
+
+            // edit modal elements
+            const editNameInput = document.getElementById('edit-task-name');
+            const levelRadios = document.getElementsByName('task-level');
+
+            // Close buttons
+            const closeTaskModalBtn = document.getElementById('closeTaskModal');
+            const closeEditTaskModalBtn = document.getElementById('closeEditTaskModal');
+
+            // Edit button inside view modal
+            const editBtnInsideView = document.getElementById('editTaskBtn');
+
+            // Attach click handlers to each task row
+            taskRows.forEach(row => {
+                row.addEventListener('click', function (e) {
+                    // read dataset
+                    const ds = this.dataset;
+                    const taskId = ds.taskId;
+                    const taskName = ds.taskName || '';
+                    const project = ds.project || '-';
+                    const assignee = ds.assignee || '-';
+                    const level = ds.level || '-';
+                    const status = ds.status || '-';
+                    const timeline = ds.timeline || '-';
+                    const assigneeInitial = ds.assigneeInitial || (assignee ? assignee[0] : '-');
+
+                    // Fill modal content
+                    elTitle.textContent = taskName;
+                    elDetailsHeading.textContent = taskName;
+                    // status badge
+                    elStatus.innerHTML = `<span class="font-medium text-white text-sm">${status}</span>`;
+                    // adjust bg color
+                    elStatus.className = 'flex w-[78px] h-6 items-center justify-center gap-2.5 px-[19px] py-1 ml-[190px] rounded-[20px] ' + statusBgClass(status.toLowerCase());
+
+                    elProject.textContent = project;
+                    elTimeline.textContent = timeline;
+                    elAssignee.textContent = assignee;
+                    elAssigneeInitial.textContent = assigneeInitial;
+
+                    // level tag
+                    elLevelTag.innerHTML = `<span class="font-medium text-white text-sm">${level}</span>`;
+                    elLevelTag.className = 'flex w-[78px] h-6 items-center justify-center gap-2.5 px-[19px] py-1 relative rounded-[20px] ' + levelBgInline(level);
+
+                    // store current selection on detail modal for edit usage
+                    taskDetailModal.dataset.currentTaskId = taskId;
+                    taskDetailModal.dataset.currentTaskLevel = level;
+                    taskDetailModal.dataset.currentTaskName = taskName;
+
+                    // show modal
+                    showModal(taskDetailModal);
+                });
+            });
+
+            // Close detail modal
+            if (closeTaskModalBtn) {
+                closeTaskModalBtn.addEventListener('click', function (e) {
+                    hideModal(taskDetailModal);
+                });
+            }
+
+            // Open edit modal from inside view modal
+            if (editBtnInsideView) {
+                editBtnInsideView.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    // read data from detail modal
+                    const taskId = taskDetailModal.dataset.currentTaskId;
+                    const level = taskDetailModal.dataset.currentTaskLevel || '';
+                    const name = taskDetailModal.dataset.currentTaskName || '';
+
+                    // populate edit form
+                    editNameInput.value = name;
+
+                    // set radio according to level (case-insensitive check)
+                    for (const r of levelRadios) {
+                        r.checked = false;
+                        if (r.value.toLowerCase() === level.toLowerCase()) {
+                            r.checked = true;
+                        }
+                    }
+
+                    // hide detail modal and show edit modal
+                    hideModal(taskDetailModal);
+                    showModal(editTaskModal);
+                });
+            }
+
+            // Close edit modal
+            if (closeEditTaskModalBtn) {
+                closeEditTaskModalBtn.addEventListener('click', function (e) {
+                    hideModal(editTaskModal);
+                });
+            }
+
+            // Submit button in Edit modal - for now just closes and logs (no backend call)
+            const submitEditBtn = document.getElementById('submitEditTask');
+            if (submitEditBtn) {
+                submitEditBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const newName = editNameInput.value.trim();
+                    const selectedLevelEl = Array.from(levelRadios).find(r => r.checked);
+                    const newLevel = selectedLevelEl ? selectedLevelEl.value : null;
+
+                    // NOTE: here you can implement fetch() to call your update route.
+                    // For now we'll just console.log and close modal to keep UI-only behavior.
+                    console.log('Edit submit (UI only) - newName:', newName, 'newLevel:', newLevel);
+
+                    hideModal(editTaskModal);
+                });
+            }
+
+            // Close modals when clicking outside modal-content
+            [taskDetailModal, editTaskModal].forEach(modal => {
+                modal.addEventListener('click', function (e) {
+                    if (e.target === modal) hideModal(modal);
+                });
+            });
+
+        });
+    </script>
 @endsection

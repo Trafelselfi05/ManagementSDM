@@ -206,7 +206,7 @@ class AdminController extends Controller
 
     return view(
       "admin.task",
-      compact("projects", "tasksByStatus", "projectUsers" , "tasks")
+      compact("projects", "tasksByStatus", "projectUsers", "tasks")
     );
   }
 
@@ -266,7 +266,9 @@ class AdminController extends Controller
 
   public function taskDetail()
   {
-    return view("admin.task-detail");
+    $tasks = Task::with(["project", "assignedUser"])->get();
+
+    return view("admin.task-detail" , compact("tasks"));
   }
 
   public function activity()

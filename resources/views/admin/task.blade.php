@@ -275,7 +275,7 @@
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Completed</h3>
 
                     <div class="space-y-3">
-                        @foreach ($tasks->where('status', 'review') as $task)
+                        @foreach ($tasks->where('status', 'completed') as $task)
                             <div class="p-3 border border-gray-300 rounded-lg">
                                 <div class="flex justify-between items-start mb-2">
                                     <h4 class="text-sm font-semibold text-gray-900">{{ $task->name }}</h4>
