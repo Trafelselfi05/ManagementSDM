@@ -23,7 +23,7 @@
                                     Name</label>
                                 <input type="text" id="project-name" name="name"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                    placeholder="Enter project name" required name="name">
+                                    placeholder="Enter project name" required>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -110,6 +110,7 @@
                             <div class="relative mb-4">
                                 <select id="division-select"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
+                                    style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');"
                                     onchange="showMembersDropdown(this.value)">
                                     <option value="">Choose Division</option>
                                     @foreach ($karyawans as $division => $members)
@@ -214,21 +215,45 @@
             display: none;
         }
 
-        /* Option styling */
+        /* Option styling - Enhanced */
         select option {
-            padding: 12px;
+            padding: 12px 16px;
             background-color: #ffffff;
             color: #111827;
             font-weight: 500;
+            font-size: 14px;
+            line-height: 1.5;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.15s ease;
+        }
+
+        select option:first-child {
+            color: #9ca3af;
+            font-weight: 400;
         }
 
         select option:hover {
             background-color: #eff6ff;
+            color: #1d4ed8;
         }
 
-        select option:checked {
-            background-color: #3b82f6;
+        select option:checked,
+        select option:focus {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: #ffffff;
+            font-weight: 600;
+        }
+
+        select option:active {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        /* Disabled option */
+        select option:disabled {
+            color: #d1d5db;
+            background-color: #f9fafb;
+            cursor: not-allowed;
         }
 
         /* Disabled state */
@@ -241,6 +266,20 @@
         /* Calendar input styling */
         .date-input:hover {
             border-color: #93c5fd;
+        }
+
+        /* Firefox specific option styling */
+        @-moz-document url-prefix() {
+            select option {
+                padding: 10px 12px;
+            }
+        }
+
+        /* Webkit/Chrome specific option styling */
+        @supports (-webkit-appearance: none) {
+            select option {
+                padding: 10px 16px;
+            }
         }
     </style>
 
@@ -256,6 +295,9 @@
         // State
         let selectedMembers = {}; // { memberId: { id, name, division } }
         let usedDivisions = []; // to track removed division options for reset
+
+        // ==================== DROPDOWN ARROW ANIMATIONS ====================
+        // Removed arrow animations since we're using CSS background-image for arrows
 
         function showMembersDropdown(division) {
             const container = document.getElementById('members-container');
@@ -397,12 +439,7 @@
             });
 
             const memberIds = Object.keys(selectedMembers);
-
             karaywanId.value = memberIds;
-
-            console.log(karaywanId);
-
-
         }
 
         function removeSelectedMember(memberId) {
@@ -456,7 +493,7 @@
             return CSS.escape ? CSS.escape(s) : s.replace(/([ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~])/g, '\\$1');
         }
 
-        // Calendar JS (same as your implementation, kept and slightly simplified)
+        // Calendar JS
         document.addEventListener('DOMContentLoaded', () => {
             const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
                 'Dec'
@@ -646,13 +683,220 @@
             renderCalendar();
 
             // When the form is reset by browser default (pressing reset), also call our custom reset
-            const form = document.getElementById('create-project-form');
+            const form = document.querySelector('form');
             if (form) {
                 form.addEventListener('reset', (e) => {
                     // small timeout to allow HTML reset to complete
                     setTimeout(() => resetAllSelections(), 10);
                 });
             }
+        });
+
+        // ==================== ENHANCED DROPDOWN OPTION STYLING ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get all select elements except year-select in calendar
+            const selectsToStyle = ['project-status', 'project-director', 'division-select'];
+
+            selectsToStyle.forEach(selectId => {
+                const originalSelect = document.getElementById(selectId);
+                if (!originalSelect) return;
+
+                // Create custom dropdown wrapper
+                const wrapper = document.createElement('div');
+                wrapper.className = 'custom-select-wrapper';
+                wrapper.style.position = 'relative';
+                wrapper.style.width = '100%';
+
+                // Create custom display button
+                const customDisplay = document.createElement('div');
+                customDisplay.className = 'custom-select-display';
+                customDisplay.style.cssText = `
+                    width: 100%;
+                    padding: 12px 16px;
+                    border: 1px solid #e5e7eb;
+                    border-radius: 8px;
+                    background: white;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 14px;
+                    color: #111827;
+                    transition: all 0.2s ease;
+                `;
+
+                // Create arrow icon
+                const arrow = document.createElement('div');
+                arrow.innerHTML = `<svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+                arrow.style.transition = 'transform 0.2s ease';
+
+                // Create custom dropdown list
+                const customList = document.createElement('div');
+                customList.className = 'custom-select-list';
+                customList.style.cssText = `
+                    position: absolute;
+                    top: calc(100% + 4px);
+                    left: 0;
+                    right: 0;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                    max-height: 280px;
+                    overflow-y: auto;
+                    z-index: 1000;
+                    display: none;
+                    padding: 8px;
+                `;
+
+                // Populate options
+                const selectedText = document.createElement('span');
+                const options = Array.from(originalSelect.options);
+                
+                // Set initial display text
+                const initialOption = options.find(opt => opt.value === originalSelect.value) || options[0];
+                selectedText.textContent = initialOption.textContent;
+                selectedText.style.color = initialOption.value === '' ? '#9ca3af' : '#111827';
+
+                customDisplay.appendChild(selectedText);
+                customDisplay.appendChild(arrow);
+
+                // Create option items
+                options.forEach((option, index) => {
+                    const optionItem = document.createElement('div');
+                    optionItem.className = 'custom-option';
+                    optionItem.textContent = option.textContent;
+                    optionItem.dataset.value = option.value;
+                    
+                    optionItem.style.cssText = `
+                        padding: 12px 16px;
+                        font-size: 14px;
+                        color: ${index === 0 && option.value === '' ? '#9ca3af' : '#111827'};
+                        cursor: pointer;
+                        border-radius: 8px;
+                        transition: all 0.15s ease;
+                        font-weight: ${option.value === originalSelect.value && option.value !== '' ? '600' : '500'};
+                        background: ${option.value === originalSelect.value && option.value !== '' ? '#eff6ff' : 'transparent'};
+                    `;
+
+                    // Hover effect
+                    optionItem.addEventListener('mouseenter', function() {
+                        if (this.dataset.value !== originalSelect.value) {
+                            this.style.backgroundColor = '#f3f4f6';
+                        }
+                    });
+
+                    optionItem.addEventListener('mouseleave', function() {
+                        if (this.dataset.value !== originalSelect.value) {
+                            this.style.backgroundColor = 'transparent';
+                        }
+                    });
+
+                    // Click handler
+                    optionItem.addEventListener('click', function() {
+                        const value = this.dataset.value;
+                        originalSelect.value = value;
+                        
+                        // Trigger change event on original select
+                        const event = new Event('change', { bubbles: true });
+                        originalSelect.dispatchEvent(event);
+
+                        // Update display
+                        selectedText.textContent = this.textContent;
+                        selectedText.style.color = value === '' ? '#9ca3af' : '#111827';
+
+                        // Update all options styling
+                        customList.querySelectorAll('.custom-option').forEach(opt => {
+                            const isSelected = opt.dataset.value === value && value !== '';
+                            opt.style.fontWeight = isSelected ? '600' : '500';
+                            opt.style.backgroundColor = isSelected ? '#eff6ff' : 'transparent';
+                        });
+
+                        // Close dropdown
+                        customList.style.display = 'none';
+                        arrow.style.transform = 'rotate(0deg)';
+                        customDisplay.style.borderColor = '#e5e7eb';
+                    });
+
+                    customList.appendChild(optionItem);
+                });
+
+                // Toggle dropdown
+                customDisplay.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isOpen = customList.style.display === 'block';
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.custom-select-list').forEach(list => {
+                        list.style.display = 'none';
+                    });
+                    document.querySelectorAll('.custom-select-display').forEach(display => {
+                        display.style.borderColor = '#e5e7eb';
+                        display.querySelector('div').style.transform = 'rotate(0deg)';
+                    });
+
+                    if (!isOpen) {
+                        customList.style.display = 'block';
+                        arrow.style.transform = 'rotate(180deg)';
+                        customDisplay.style.borderColor = '#3b82f6';
+                    } else {
+                        customList.style.display = 'none';
+                        arrow.style.transform = 'rotate(0deg)';
+                        customDisplay.style.borderColor = '#e5e7eb';
+                    }
+                });
+
+                // Hover effect on display
+                customDisplay.addEventListener('mouseenter', function() {
+                    if (customList.style.display !== 'block') {
+                        this.style.backgroundColor = '#f9fafb';
+                        this.style.borderColor = '#d1d5db';
+                    }
+                });
+
+                customDisplay.addEventListener('mouseleave', function() {
+                    if (customList.style.display !== 'block') {
+                        this.style.backgroundColor = 'white';
+                        this.style.borderColor = '#e5e7eb';
+                    }
+                });
+
+                // Close on outside click
+                document.addEventListener('click', function() {
+                    customList.style.display = 'none';
+                    arrow.style.transform = 'rotate(0deg)';
+                    customDisplay.style.borderColor = '#e5e7eb';
+                });
+
+                // Assemble custom dropdown
+                wrapper.appendChild(customDisplay);
+                wrapper.appendChild(customList);
+
+                // Hide original select
+                originalSelect.style.display = 'none';
+
+                // Insert custom dropdown after original
+                originalSelect.parentNode.insertBefore(wrapper, originalSelect.nextSibling);
+            });
+
+            // Custom scrollbar for dropdown lists
+            const style = document.createElement('style');
+            style.textContent = `
+                .custom-select-list::-webkit-scrollbar {
+                    width: 6px;
+                }
+                .custom-select-list::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                    border-radius: 10px;
+                }
+                .custom-select-list::-webkit-scrollbar-thumb {
+                    background: #cbd5e1;
+                    border-radius: 10px;
+                }
+                .custom-select-list::-webkit-scrollbar-thumb:hover {
+                    background: #94a3b8;
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
 @endsection

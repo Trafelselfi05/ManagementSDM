@@ -23,8 +23,11 @@
                                     <p id="userSelectedText" class="font-normal text-[#7d7d7d] text-sm whitespace-nowrap">
                                         -- Pilih User --
                                     </p>
-                                    <img class="w-[16px] h-2"
-                                        src="https://c.animaapp.com/mf0waiheGBQdaR/img/vector-6.svg" />
+                                    <svg class="w-4 h-4 text-gray-500 transition-transform duration-200" id="userArrow"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
                                 </div>
                             </button>
 
@@ -55,8 +58,11 @@
                                         class="font-normal text-[#7d7d7d] text-sm whitespace-nowrap">
                                         -- Pilih Jenis Cuti --
                                     </p>
-                                    <img class="w-[16px] h-2"
-                                        src="https://c.animaapp.com/mf0waiheGBQdaR/img/vector-6.svg" />
+                                    <svg class="w-4 h-4 text-gray-500 transition-transform duration-200" id="categoryArrow"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
                                 </div>
                             </button>
 
@@ -130,7 +136,7 @@
                                     <img id="imagePreview" class="max-h-40 max-w-full rounded-[10px]" src=""
                                         alt="Preview" />
                                     <button type="button" onclick="removeImage()"
-                                        class="absolute top-0 right-0 m-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center text-xs">
+                                        class="absolute top-0 right-0 m-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors">
                                         ×
                                     </button>
                                 </div>
@@ -161,8 +167,10 @@
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer mr-4">
                                     <input type="radio" name="bring_laptop" value="1" class="hidden">
                                     <div
-                                        class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
-                                        <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
+                                        class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center radio-indicator transition-all duration-300">
+                                        <div
+                                            class="w-3 h-3 rounded-full bg-[#FFB800] opacity-0 radio-dot transition-all duration-300">
+                                        </div>
                                     </div>
                                     <div class="font-medium text-[#111111] text-sm">Yes</div>
                                 </label>
@@ -170,8 +178,10 @@
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer">
                                     <input type="radio" name="bring_laptop" value="0" class="hidden" checked>
                                     <div
-                                        class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
-                                        <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
+                                        class="w-6 h-6 rounded-full border-2 border-[#FFB800] flex items-center justify-center radio-indicator transition-all duration-300">
+                                        <div
+                                            class="w-3 h-3 rounded-full bg-[#FFB800] opacity-100 radio-dot transition-all duration-300">
+                                        </div>
                                     </div>
                                     <div class="font-medium text-[#111111] text-sm">No</div>
                                 </label>
@@ -189,8 +199,10 @@
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer mr-4">
                                     <input type="radio" name="can_be_contacted" value="1" class="hidden">
                                     <div
-                                        class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
-                                        <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
+                                        class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center radio-indicator transition-all duration-300">
+                                        <div
+                                            class="w-3 h-3 rounded-full bg-[#FFB800] opacity-0 radio-dot transition-all duration-300">
+                                        </div>
                                     </div>
                                     <div class="font-medium text-[#111111] text-sm">Yes</div>
                                 </label>
@@ -198,8 +210,10 @@
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer">
                                     <input type="radio" name="can_be_contacted" value="0" class="hidden" checked>
                                     <div
-                                        class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
-                                        <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
+                                        class="w-6 h-6 rounded-full border-2 border-[#FFB800] flex items-center justify-center radio-indicator transition-all duration-300">
+                                        <div
+                                            class="w-3 h-3 rounded-full bg-[#FFB800] opacity-100 radio-dot transition-all duration-300">
+                                        </div>
                                     </div>
                                     <div class="font-medium text-[#111111] text-sm">No</div>
                                 </label>
@@ -213,12 +227,42 @@
                             class="flex w-full sm:w-[180px] h-[45px] items-center justify-center rounded-[10px] border border-[#111111] hover:bg-[#f9f9f9] transition-colors">
                             <div class="font-semibold text-[#111111] text-sm">Cancel</div>
                         </button>
-                        <button type="submit" onclick=""
+                        <button type="button" onclick="validateAndSubmit()"
                             class="flex w-full sm:w-[180px] h-[45px] items-center justify-center bg-[#111111] rounded-[10px] text-white hover:bg-[#333333] transition-colors">
                             <div class="font-semibold text-sm">Submit</div>
                         </button>
                     </div>
                 </form>
+
+                <!-- Custom Alert Modal -->
+                <div id="alertModal"
+                    class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300">
+                    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 transform transition-all duration-300 scale-95"
+                        id="alertContent">
+                        <div class="flex flex-col items-center gap-5">
+                            <!-- Icon -->
+                            <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
+                                <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="text-center">
+                                <h3 class="font-semibold text-[#111111] text-lg mb-2">Validation Error</h3>
+                                <p id="alertMessage" class="font-normal text-[#7d7d7d] text-sm leading-relaxed"></p>
+                            </div>
+
+                            <!-- Button -->
+                            <button onclick="closeAlert()"
+                                class="flex w-full h-[45px] items-center justify-center bg-[#111111] rounded-[10px] text-white hover:bg-[#333333] transition-colors focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-offset-2">
+                                <div class="font-semibold text-sm">OK</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Calendar Popup -->
                 <div id="calendarPopup" class="hidden z-[9999] w-[320px] bg-white rounded-2xl shadow-lg p-4">
@@ -260,7 +304,7 @@
     </div>
 
     <script>
-        // ---------- Utility ----------
+        // ==================== UTILITY FUNCTIONS ====================
         function pad(n) {
             return n < 10 ? '0' + n : '' + n;
         }
@@ -274,31 +318,109 @@
             return new Date(d.getFullYear(), d.getMonth(), d.getDate());
         }
 
-        // Elements user
+        // ==================== CUSTOM ALERT MODAL ====================
+        function showAlert(message) {
+            const modal = document.getElementById('alertModal');
+            const content = document.getElementById('alertContent');
+            const messageEl = document.getElementById('alertMessage');
+
+            messageEl.textContent = message;
+            modal.classList.remove('hidden');
+
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeAlert() {
+            const modal = document.getElementById('alertModal');
+            const content = document.getElementById('alertContent');
+
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            modal.classList.remove('opacity-100');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        document.getElementById('alertModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAlert();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('alertModal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    closeAlert();
+                }
+            }
+        });
+
+        // ==================== FORM VALIDATION ====================
+        function validateAndSubmit() {
+            const userId = document.getElementById('user_id').value;
+            const leaveCategory = document.getElementById('leave_category').value;
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+            const description = document.getElementById('description').value.trim();
+
+            if (!userId) {
+                showAlert('Silakan pilih user terlebih dahulu.');
+                return;
+            }
+
+            if (!leaveCategory) {
+                showAlert('Silakan pilih jenis cuti terlebih dahulu.');
+                return;
+            }
+
+            if (!startDate || !endDate) {
+                showAlert('Silakan pilih tanggal mulai dan akhir cuti.');
+                return;
+            }
+
+            if (!description) {
+                showAlert('Silakan isi deskripsi cuti.');
+                return;
+            }
+
+            document.getElementById('leaveForm').submit();
+        }
+
+        // ==================== USER DROPDOWN ====================
         const userBtn = document.getElementById('userBtn');
         const dropdownUser = document.getElementById('dropdownUser');
         const userSelectedText = document.getElementById('userSelectedText');
         const userInput = document.getElementById('user_id');
+        const userArrow = document.getElementById('userArrow');
 
-        // Elements category
-        const categoryBtn = document.getElementById('categoryBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const categorySelectedText = document.getElementById('categorySelectedText');
-        const leaveCategoryInput = document.getElementById('leave_category');
-
-        // Toggle user dropdown (use stopPropagation so document click won't close immediately)
         userBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+            const isHidden = dropdownUser.classList.contains('hidden');
             dropdownUser.classList.toggle('hidden');
-            userBtn.setAttribute('aria-expanded', String(!dropdownUser.classList.contains('hidden')));
-            // close category if open
+            userBtn.setAttribute('aria-expanded', String(!isHidden));
+            
+            // Rotate arrow icon
+            if (isHidden) {
+                userArrow.style.transform = 'rotate(180deg)';
+            } else {
+                userArrow.style.transform = 'rotate(0deg)';
+            }
+
+            // Close category dropdown if open
             if (!dropdownMenu.classList.contains('hidden')) {
                 dropdownMenu.classList.add('hidden');
                 categoryBtn.setAttribute('aria-expanded', 'false');
+                categoryArrow.style.transform = 'rotate(0deg)';
             }
         });
 
-        // Click on a user option (delegation)
         dropdownUser.querySelectorAll('.user-option').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -308,27 +430,42 @@
                 userSelectedText.textContent = name;
                 dropdownUser.classList.add('hidden');
                 userBtn.setAttribute('aria-expanded', 'false');
+                userArrow.style.transform = 'rotate(0deg)';
             });
         });
 
-        // Prevent clicks inside dropdown from bubbling to document
         dropdownUser.addEventListener('click', function(e) {
             e.stopPropagation();
         });
 
-        // Toggle category dropdown
+        // ==================== CATEGORY DROPDOWN ====================
+        const categoryBtn = document.getElementById('categoryBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const categorySelectedText = document.getElementById('categorySelectedText');
+        const leaveCategoryInput = document.getElementById('leave_category');
+        const categoryArrow = document.getElementById('categoryArrow');
+
         categoryBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+            const isHidden = dropdownMenu.classList.contains('hidden');
             dropdownMenu.classList.toggle('hidden');
-            categoryBtn.setAttribute('aria-expanded', String(!dropdownMenu.classList.contains('hidden')));
-            // close user dropdown if open
+            categoryBtn.setAttribute('aria-expanded', String(!isHidden));
+            
+            // Rotate arrow icon
+            if (isHidden) {
+                categoryArrow.style.transform = 'rotate(180deg)';
+            } else {
+                categoryArrow.style.transform = 'rotate(0deg)';
+            }
+
+            // Close user dropdown if open
             if (!dropdownUser.classList.contains('hidden')) {
                 dropdownUser.classList.add('hidden');
                 userBtn.setAttribute('aria-expanded', 'false');
+                userArrow.style.transform = 'rotate(0deg)';
             }
         });
 
-        // Category options
         dropdownMenu.querySelectorAll('.option-item').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -337,41 +474,44 @@
                 categorySelectedText.textContent = val;
                 dropdownMenu.classList.add('hidden');
                 categoryBtn.setAttribute('aria-expanded', 'false');
+                categoryArrow.style.transform = 'rotate(0deg)';
             });
         });
 
-        // Prevent clicks inside category dropdown from bubbling
         dropdownMenu.addEventListener('click', function(e) {
             e.stopPropagation();
         });
 
-        // Close if click outside
+        // ==================== CLOSE DROPDOWNS ON OUTSIDE CLICK ====================
         document.addEventListener('click', function() {
             if (!dropdownUser.classList.contains('hidden')) {
                 dropdownUser.classList.add('hidden');
                 userBtn.setAttribute('aria-expanded', 'false');
+                userArrow.style.transform = 'rotate(0deg)';
             }
             if (!dropdownMenu.classList.contains('hidden')) {
                 dropdownMenu.classList.add('hidden');
                 categoryBtn.setAttribute('aria-expanded', 'false');
+                categoryArrow.style.transform = 'rotate(0deg)';
             }
         });
 
-        // Close with Escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 if (!dropdownUser.classList.contains('hidden')) {
                     dropdownUser.classList.add('hidden');
                     userBtn.setAttribute('aria-expanded', 'false');
+                    userArrow.style.transform = 'rotate(0deg)';
                 }
                 if (!dropdownMenu.classList.contains('hidden')) {
                     dropdownMenu.classList.add('hidden');
                     categoryBtn.setAttribute('aria-expanded', 'false');
+                    categoryArrow.style.transform = 'rotate(0deg)';
                 }
             }
         });
 
-        // ---------- Image Upload & Preview ----------
+        // ==================== IMAGE UPLOAD & PREVIEW ====================
         const fileInput = document.getElementById('fileInput');
         const imagePreview = document.getElementById('imagePreview');
         const imagePreviewContainer = document.getElementById('imagePreviewContainer');
@@ -397,34 +537,34 @@
             imagePreview.src = '';
         }
 
-        // ---------- Radio Button Styling ----------
+        // ==================== RADIO BUTTON STYLING ====================
         document.querySelectorAll('input[type="radio"]').forEach(radio => {
             radio.addEventListener('change', function() {
-                // Update all radio indicators
-                document.querySelectorAll('.radio-indicator').forEach(indicator => {
-                    indicator.querySelector('.radio-dot').classList.add('hidden');
-                    indicator.classList.remove('border-[#111111]', 'border-2');
+                const groupName = this.name;
+
+                document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+                    const indicator = r.parentElement.querySelector('.radio-indicator');
+                    const dot = r.parentElement.querySelector('.radio-dot');
+
+                    indicator.classList.remove('border-[#FFB800]');
+                    indicator.classList.add('border-gray-300');
+                    dot.classList.remove('opacity-100');
+                    dot.classList.add('opacity-0');
                 });
 
-                // Style the selected one
                 if (this.checked) {
                     const indicator = this.parentElement.querySelector('.radio-indicator');
-                    indicator.querySelector('.radio-dot').classList.remove('hidden');
-                    indicator.classList.add('border-[#111111]', 'border-2');
+                    const dot = this.parentElement.querySelector('.radio-dot');
+
+                    indicator.classList.remove('border-gray-300');
+                    indicator.classList.add('border-[#FFB800]');
+                    dot.classList.remove('opacity-0');
+                    dot.classList.add('opacity-100');
                 }
             });
         });
 
-        // Initialize radio buttons
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            if (radio.checked) {
-                const indicator = radio.parentElement.querySelector('.radio-indicator');
-                indicator.querySelector('.radio-dot').classList.remove('hidden');
-                indicator.classList.add('border-[#111111]', 'border-2');
-            }
-        });
-
-        // ---------- Calendar logic + positioning fix ----------
+        // ==================== CALENDAR LOGIC ====================
         document.addEventListener('DOMContentLoaded', () => {
             const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
                 'Dec'
@@ -438,7 +578,6 @@
             const startInput = document.getElementById('start-date');
             const endInput = document.getElementById('end-date');
 
-            // Pindahkan popup ke body supaya tak terclip oleh parent
             if (calendarPopup && calendarPopup.parentElement !== document.body) {
                 document.body.appendChild(calendarPopup);
             }
@@ -446,12 +585,12 @@
             let viewDate = new Date();
             let startDate = null;
             let endDate = null;
-            let activeInput = null; // 'start' or 'end'
+            let activeInput = null;
 
             function initYear() {
                 yearSelect.innerHTML = '';
-                const cur = new Date().getFullYear();
-                for (let y = cur - 50; y <= cur + 50; y++) {
+                const currentYear = new Date().getFullYear();
+                for (let y = currentYear - 50; y <= currentYear + 50; y++) {
                     const opt = document.createElement('option');
                     opt.value = y;
                     opt.textContent = y;
@@ -483,31 +622,33 @@
                     const cell = document.createElement('button');
                     cell.type = 'button';
                     cell.className =
-                        'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100';
+                        'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition-colors';
                     cell.textContent = d;
                     const cellDate = new Date(year, month, d);
-                    // today's subtle highlight
+
                     const today = new Date();
                     if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
                         cell.classList.add('font-semibold');
-                        cell.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.04)';
+                        cell.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.1)';
                     }
 
-                    // selected/range
                     if (startDate && endDate) {
                         const s = stripTime(startDate).getTime();
                         const e = stripTime(endDate).getTime();
                         const t = stripTime(cellDate).getTime();
                         if (t >= s && t <= e) {
-                            // middle range style
                             cell.classList.add('bg-blue-100');
                         }
                     }
+
                     if (startDate && stripTime(startDate).getTime() === stripTime(cellDate).getTime()) {
-                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold');
+                        cell.classList.remove('bg-blue-100');
+                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold', 'hover:bg-blue-600');
                     }
+
                     if (endDate && stripTime(endDate).getTime() === stripTime(cellDate).getTime()) {
-                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold');
+                        cell.classList.remove('bg-blue-100');
+                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold', 'hover:bg-blue-600');
                     }
 
                     cell.addEventListener('click', () => {
@@ -520,9 +661,10 @@
 
             function onDateClick(d) {
                 if (!activeInput) return;
+
                 if (activeInput === 'start') {
                     startDate = stripTime(d);
-                    // swap when necessary
+
                     if (endDate && startDate.getTime() > endDate.getTime()) {
                         const tmp = endDate;
                         endDate = startDate;
@@ -535,6 +677,7 @@
                     activeInput = 'end';
                 } else {
                     endDate = stripTime(d);
+
                     if (startDate && startDate.getTime() > endDate.getTime()) {
                         const tmp = startDate;
                         startDate = endDate;
@@ -545,49 +688,50 @@
                         endInput.value = formatISO(endDate);
                     }
                 }
+
                 render();
-                if (startDate && endDate) hideCalendar();
+
+                if (startDate && endDate) {
+                    hideCalendar();
+                }
             }
 
-            // Show calendar positioned relative to input (and avoid clipping)
             function showCalendarFor(inputEl) {
                 activeInput = (inputEl.id === 'start-date') ? 'start' : 'end';
-                // ensure popup is visible for measurement but hidden visually
-                calendarPopup.classList.remove('hidden');
-                calendarPopup.style.visibility = 'hidden'; // invisible but occupies space to measure
 
-                // measure
+                calendarPopup.classList.remove('hidden');
+                calendarPopup.style.visibility = 'hidden';
+
                 const rect = inputEl.getBoundingClientRect();
                 const popupW = calendarPopup.offsetWidth || 320;
-                const popupH = calendarPopup.offsetHeight || 360;
+                const popupH = calendarPopup.offsetHeight || 380;
 
-                // compute left/top in document coords
                 let left = rect.left + window.scrollX;
-                let top = rect.bottom + window.scrollY + 8; // place below with gap
+                let top = rect.bottom + window.scrollY + 8;
 
-                // if overflow right, shift left
                 if (left + popupW > window.scrollX + window.innerWidth - 12) {
                     left = window.scrollX + window.innerWidth - popupW - 12;
                 }
-                if (left < 12 + window.scrollX) left = 12 + window.scrollX;
-
-                // if overflow bottom, place above input
-                if (top + popupH > window.scrollY + window.innerHeight - 12) {
-                    const altTop = rect.top + window.scrollY - popupH - 8;
-                    if (altTop > 8 + window.scrollY) top = altTop;
-                    else top = Math.max(8 + window.scrollY, window.scrollY + window.innerHeight - popupH - 12);
+                if (left < 12 + window.scrollX) {
+                    left = 12 + window.scrollX;
                 }
 
-                // apply position
+                if (top + popupH > window.scrollY + window.innerHeight - 12) {
+                    const altTop = rect.top + window.scrollY - popupH - 8;
+                    if (altTop > 8 + window.scrollY) {
+                        top = altTop;
+                    } else {
+                        top = Math.max(8 + window.scrollY, window.scrollY + window.innerHeight - popupH - 12);
+                    }
+                }
+
                 calendarPopup.style.position = 'absolute';
                 calendarPopup.style.left = left + 'px';
                 calendarPopup.style.top = top + 'px';
 
-                // show popup
                 calendarPopup.style.visibility = 'visible';
                 calendarPopup.classList.remove('hidden');
 
-                // render contents based on viewDate
                 render();
             }
 
@@ -596,27 +740,26 @@
                 activeInput = null;
             }
 
-            // attach to inputs
             startInput.addEventListener('click', () => showCalendarFor(startInput));
             startInput.addEventListener('focus', () => showCalendarFor(startInput));
             endInput.addEventListener('click', () => showCalendarFor(endInput));
             endInput.addEventListener('focus', () => showCalendarFor(endInput));
 
-            // navigation
             prevBtn.addEventListener('click', () => {
                 viewDate.setMonth(viewDate.getMonth() - 1);
                 render();
             });
+
             nextBtn.addEventListener('click', () => {
                 viewDate.setMonth(viewDate.getMonth() + 1);
                 render();
             });
+
             yearSelect.addEventListener('change', (e) => {
                 viewDate.setFullYear(Number(e.target.value));
                 render();
             });
 
-            // click outside to close (works because popup appended to body)
             document.addEventListener('click', function(e) {
                 if (calendarPopup.classList.contains('hidden')) return;
                 const target = e.target;
@@ -626,13 +769,13 @@
                 }
             });
 
-            // reposition on resize / scroll (if open)
             window.addEventListener('resize', () => {
                 if (!calendarPopup.classList.contains('hidden') && activeInput) {
                     const inp = (activeInput === 'start') ? startInput : endInput;
                     showCalendarFor(inp);
                 }
             });
+
             window.addEventListener('scroll', () => {
                 if (!calendarPopup.classList.contains('hidden') && activeInput) {
                     const inp = (activeInput === 'start') ? startInput : endInput;
@@ -640,45 +783,51 @@
                 }
             }, true);
 
-            // init
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                if (radio.checked) {
+                    const indicator = radio.parentElement.querySelector('.radio-indicator');
+                    const dot = radio.parentElement.querySelector('.radio-dot');
+
+                    indicator.classList.remove('border-gray-300');
+                    indicator.classList.add('border-[#FFB800]');
+                    dot.classList.remove('opacity-0');
+                    dot.classList.add('opacity-100');
+                }
+            });
+
             initYear();
             render();
-        }); // DOMContentLoaded
+        });
 
-        // ---------- Reset & Submit ----------
+        // ==================== RESET FORM ====================
         function resetForm() {
             document.getElementById('leaveForm').reset();
             document.getElementById('start-date').value = '';
             document.getElementById('end-date').value = '';
             document.getElementById('leave_category').value = '';
-            document.getElementById('selectedText').textContent = '-- Pilih Jenis Cuti --';
+            document.getElementById('categorySelectedText').textContent = '-- Pilih Jenis Cuti --';
+            document.getElementById('user_id').value = '';
+            document.getElementById('userSelectedText').textContent = '-- Pilih User --';
             removeImage();
 
-            // Reset radio buttons
             document.querySelectorAll('input[type="radio"]').forEach(radio => {
                 const indicator = radio.parentElement.querySelector('.radio-indicator');
-                indicator.querySelector('.radio-dot').classList.add('hidden');
-                indicator.classList.remove('border-[#111111]', 'border-2');
+                const dot = radio.parentElement.querySelector('.radio-dot');
 
-                if (radio.value === 'no') {
+                if (radio.value === '0') {
                     radio.checked = true;
-                    const indicator = radio.parentElement.querySelector('.radio-indicator');
-                    indicator.querySelector('.radio-dot').classList.remove('hidden');
-                    indicator.classList.add('border-[#111111]', 'border-2');
+                    indicator.classList.remove('border-gray-300');
+                    indicator.classList.add('border-[#FFB800]');
+                    dot.classList.remove('opacity-0');
+                    dot.classList.add('opacity-100');
+                } else {
+                    radio.checked = false;
+                    indicator.classList.remove('border-[#FFB800]');
+                    indicator.classList.add('border-gray-300');
+                    dot.classList.remove('opacity-100');
+                    dot.classList.add('opacity-0');
                 }
             });
-        }
-
-        function submitForm() {
-            if (!document.getElementById('leave_category').value) {
-                alert('Pilih jenis cuti terlebih dahulu.');
-                return;
-            }
-            if (!document.getElementById('start-date').value || !document.getElementById('end-date').value) {
-                alert('Pilih tanggal mulai dan akhir cuti.');
-                return;
-            }
-            document.getElementById('leaveForm').submit();
         }
     </script>
 @endsection

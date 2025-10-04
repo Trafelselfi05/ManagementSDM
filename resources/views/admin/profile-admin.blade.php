@@ -6,10 +6,6 @@
     <div class="flex justify-center items-start py-[35px] min-h-screen bg-[#f9f9f9]">
         <div class="max-w-4xl w-full bg-white p-10 shadow-[0px_0px_4px_#00000040] rounded-[15px] relative">
 
-            @if (session('success'))
-                <div class="p-3 bg-green-100 text-green-700 rounded-lg mb-4">{{ session('success') }}</div>
-            @endif
-
             <h2 class="text-xl font-bold mb-8">Create New Account</h2>
 
             <form action="{{ route('admin.profile-admin.store') }}" method="POST" enctype="multipart/form-data">
@@ -161,17 +157,10 @@
                 </button>
             </form>
         </div>
-
-        @if ($errors->any())
-            <div class="p-3 bg-red-100 text-red-700 rounded-lg mb-4">
-                <ul class="list-disc ml-4">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
     </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[10000] flex flex-col gap-3"></div>
 
     <!-- Single-Date Calendar Popup (shared) -->
     <div id="calendarPopup" class="hidden z-[9999] w-[320px] bg-white rounded-2xl shadow-lg p-4">
@@ -222,12 +211,10 @@
             box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
         }
 
-        /* Remove default arrow in IE */
         select::-ms-expand {
             display: none;
         }
 
-        /* Option styling */
         select option {
             padding: 10px;
             background-color: #ffffff;
@@ -243,12 +230,85 @@
             color: #ffffff;
         }
 
-        /* Disabled state */
         select:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
+
+        /* Toast Animations */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .toast-enter {
+            animation: slideInRight 0.3s ease-out forwards;
+        }
+
+        .toast-exit {
+            animation: slideOutRight 0.3s ease-in forwards;
+        }
     </style>
+
+    {{-- Toast Notification Script --}}
+    <script>
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+            const icon = type === 'success' 
+                ? '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+                : '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+            
+            toast.className = `${bgColor} text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3 min-w-[300px] max-w-[400px] toast-enter`;
+            toast.innerHTML = `
+                ${icon}
+                <span class="flex-1 text-sm font-medium">${message}</span>
+                <button onclick="this.parentElement.remove()" class="ml-2 hover:opacity-80">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-exit');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Show success/error messages from session
+        @if (session('success'))
+            showToast('{{ session('success') }}', 'success');
+        @endif
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                showToast('{{ $error }}', 'error');
+            @endforeach
+        @endif
+    </script>
 
     {{-- Calendar JS (single date, input + icon clickable) --}}
     <script>
@@ -269,13 +329,12 @@
             const birthIcon = document.getElementById('birth-date-icon');
             const joinIcon = document.getElementById('join-date-icon');
 
-            // Pindahkan popup ke body supaya tak ter-clip parent
             if (calendarPopup && calendarPopup.parentElement !== document.body) {
                 document.body.appendChild(calendarPopup);
             }
 
             let viewDate = new Date();
-            let activeInput = null; // ref ke input aktif
+            let activeInput = null;
 
             function stripTime(d) {
                 const nd = new Date(d);
@@ -357,7 +416,6 @@
             function showCalendarFor(inputEl) {
                 activeInput = inputEl;
 
-                // Set viewDate sesuai nilai input (jika ada)
                 if (activeInput.value) {
                     const parsed = new Date(activeInput.value);
                     if (!isNaN(parsed.getTime())) {
@@ -401,7 +459,6 @@
                 activeInput = null;
             }
 
-            // Event: input & icon -> buka kalender
             [birthInput, joinInput].forEach(inp => {
                 inp.addEventListener('click', () => showCalendarFor(inp));
                 inp.addEventListener('focus', () => showCalendarFor(inp));
@@ -409,7 +466,6 @@
             birthIcon.addEventListener('click', () => showCalendarFor(birthInput));
             joinIcon.addEventListener('click', () => showCalendarFor(joinInput));
 
-            // Navigasi calendar
             prevBtn.addEventListener('click', () => {
                 viewDate.setMonth(viewDate.getMonth() - 1);
                 renderCalendar();
@@ -423,7 +479,6 @@
                 renderCalendar();
             });
 
-            // Klik di luar untuk menutup
             document.addEventListener('click', (e) => {
                 if (calendarPopup.classList.contains('hidden')) return;
                 const t = e.target;
@@ -431,14 +486,12 @@
                 if (!calendarPopup.contains(t)) hideCalendar();
             });
 
-            // Re-posisi saat resize/scroll
             const repositionIfOpen = () => {
                 if (!calendarPopup.classList.contains('hidden') && activeInput) showCalendarFor(activeInput);
             };
             window.addEventListener('resize', repositionIfOpen);
             window.addEventListener('scroll', repositionIfOpen, true);
 
-            // Init
             initYear();
             renderCalendar();
         });
