@@ -1050,6 +1050,135 @@
                 selectOption2('website_management', 'Website Management Company');
             }, 100);
         });
+
+            document.addEventListener('DOMContentLoaded', function() {
+        // Select all sidebar links except logout
+        const sidebarLinks = document.querySelectorAll('.sidebar-item');
+        const mainContent = document.querySelector('main');
+        
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                // Skip if it's logout link or has data-no-ajax attribute
+                if (href.includes('logout') || this.hasAttribute('data-no-ajax')) {
+                    return; // Allow normal navigation
+                }
+                
+                e.preventDefault();
+                
+                // Update active state
+                updateActiveState(this);
+                
+                // Fetch and load content
+                loadContent(href);
+            });
+        });
+        
+        // Also handle mobile navigation links
+        const mobileLinks = document.querySelectorAll('nav.fixed a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                if (href.includes('logout') || this.hasAttribute('data-no-ajax')) {
+                    return;
+                }
+                
+                e.preventDefault();
+                updateMobileActiveState(this);
+                loadContent(href);
+            });
+        });
+        
+        function updateActiveState(clickedLink) {
+            // Remove active class from all sidebar items
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('bg-[#6FAEC9]', 'text-white');
+                item.classList.add('text-gray-600');
+            });
+            
+            // Add active class to clicked item
+            clickedLink.classList.remove('text-gray-600');
+            clickedLink.classList.add('bg-[#6FAEC9]', 'text-white');
+        }
+        
+        function updateMobileActiveState(clickedLink) {
+            // Update mobile navigation active state
+            document.querySelectorAll('nav.fixed a').forEach(item => {
+                item.classList.remove('text-[#6FAEC9]');
+                item.classList.add('text-gray-600');
+            });
+            
+            clickedLink.classList.remove('text-gray-600');
+            clickedLink.classList.add('text-[#6FAEC9]');
+        }
+        
+        function loadContent(url) {
+            // Show loading state
+            mainContent.style.opacity = '0.5';
+            mainContent.style.transition = 'opacity 0.2s ease';
+            
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                // Parse the response
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Extract main content
+                const newContent = doc.querySelector('main');
+                if (newContent) {
+                    mainContent.innerHTML = newContent.innerHTML;
+                }
+                
+                // Update page title
+                const newTitle = doc.querySelector('title');
+                if (newTitle) {
+                    document.title = newTitle.textContent;
+                }
+                
+                // Update URL without reload
+                window.history.pushState({path: url}, '', url);
+                
+                // Restore opacity
+                mainContent.style.opacity = '1';
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+                
+                // Re-execute any page-specific scripts if needed
+                executePageScripts();
+            })
+            .catch(error => {
+                console.error('Error loading content:', error);
+                mainContent.style.opacity = '1';
+                // Fallback to normal navigation on error
+                window.location.href = url;
+            });
+        }
+        
+        function executePageScripts() {
+            // Re-initialize modals, forms, etc for the newly loaded content
+            const scripts = mainContent.querySelectorAll('script');
+            scripts.forEach(script => {
+                if (script.innerHTML) {
+                    eval(script.innerHTML);
+                }
+            });
+        }
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(event) {
+            if (event.state) {
+                loadContent(window.location.href);
+            }
+        });
+    });
     </script>
 </body>
 

@@ -3,7 +3,7 @@
 @section('title', 'Tabel User Account')
 
 @section('content')
-    <div class="w-full max-w-[95vw] h-auto min-h-[85vh] mx-auto my-6 rounded-xl shadow-md bg-white p-6">
+    <div class="w-full h-auto min-h-[85vh] mx-auto my-6 rounded-xl shadow-md bg-white p-6">
         <!-- Search and Filter Section -->
         <div class="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
             <div class="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
@@ -41,7 +41,7 @@
         <!-- Table Container -->
         <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
             <!-- Table Header -->
-            <div class="grid grid-cols-9 items-center bg-gray-100 py-3 px-4 text-gray-600 font-semibold text-sm min-w-max">
+            <div class="grid grid-cols-9 items-center bg-gray-100 py-3 px-4 text-gray-600 font-semibold text-sm" style="min-width: 1200px;">
                 <div class="text-center">Image</div>
                 <div class="text-center">NIK</div>
                 <div class="text-center">Username</div>
@@ -57,7 +57,7 @@
             <div class="divide-y divide-gray-200">
                 @foreach ($users as $index => $user)
                     <a href="{{ route('admin.user-detail', $user->id) }}"
-                        class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors min-w-max user-row">
+                        class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors user-row" style="min-width: 1200px;">
 
                         <!-- Image -->
                         <div class="flex justify-center">
@@ -104,8 +104,9 @@
                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button
-                                    class="px-3 py-1 bg-red-500 text-white text-xs font-medium rounded hover:bg-red-600 transition-colors">
+                                <button type="submit"
+                                    class="px-3 py-1 bg-red-500 text-white text-xs font-medium rounded hover:bg-red-600 transition-colors"
+                                    onclick="event.stopPropagation();">
                                     Delete
                                 </button>
                             </form>
@@ -129,8 +130,7 @@
 
                 rows.forEach(row => {
                     const rowText = row.innerText.toLowerCase();
-                    const division = row.querySelector("div:nth-child(4)").innerText
-                .toLowerCase(); // Kolom Divisi
+                    const division = row.querySelector("div:nth-child(4)").innerText.toLowerCase();
 
                     const matchesSearch = rowText.includes(searchText);
                     const matchesDivision = selectedDivision === "" || division === selectedDivision;
