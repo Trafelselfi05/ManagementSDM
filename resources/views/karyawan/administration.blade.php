@@ -8,63 +8,50 @@
                 Leave Submission
             </div>
             <div class="flex flex-col items-center gap-12 relative self-stretch w-full">
-                <form id="leaveForm" method="POST" action=""
-                    class="flex flex-col items-start gap-5 relative self-stretch w-full">
+                <form id="leaveForm" method="POST" action="{{ route('karyawan.administration.store') }}"
+                    enctype="multipart/form-data" class="flex flex-col items-start gap-5 relative self-stretch w-full">
                     @csrf
 
-                    <!-- Leave Category Dropdown -->
+                    <!-- ====== Category dropdown ====== -->
                     <div class="flex flex-col items-start gap-3 relative self-stretch w-full">
-                        <label class="self-stretch font-medium text-[#7d7d7d] text-sm">
-                            Leave Category
-                        </label>
+                        <label class="self-stretch font-medium text-[#7d7d7d] text-sm">Leave Category</label>
 
                         <div class="relative self-stretch w-full">
-                            <button id="categoryBtn" type="button" onclick="toggleDropdown()" aria-haspopup="true"
-                                aria-expanded="false"
-                                class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] relative self-stretch w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#111111] focus:ring-opacity-20 focus:border-transparent">
+                            <button id="categoryBtn" type="button" aria-haspopup="true" aria-expanded="false"
+                                class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow cursor-pointer focus:outline-none">
                                 <div class="flex w-full items-center justify-between">
-                                    <p id="selectedText"
-                                        class="font-normal text-[#7d7d7d] text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+                                    <p id="categorySelectedText"
+                                        class="font-normal text-[#7d7d7d] text-sm whitespace-nowrap">
                                         -- Pilih Jenis Cuti --
                                     </p>
-                                    <img class="w-[16px] h-2"
-                                        src="https://c.animaapp.com/mf0waiheGBQdaR/img/vector-6.svg" />
+                                    <svg class="w-4 h-4 text-gray-500 transition-transform duration-200" id="categoryArrow"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
                                 </div>
                             </button>
 
                             <div id="dropdownMenu"
-                                class="hidden absolute top-[52px] left-0 flex-col w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] z-50">
-                                <div onclick="selectOption('tahunan', 'Cuti Tahunan')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Tahunan</div>
-                                </div>
-                                <div onclick="selectOption('sakit', 'Cuti Sakit')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Sakit</div>
-                                </div>
-                                <div onclick="selectOption('melahirkan', 'Cuti Melahirkan')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Melahirkan</div>
-                                </div>
-                                <div onclick="selectOption('darurat', 'Cuti Darurat')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Darurat</div>
-                                </div>
-                                <div onclick="selectOption('pribadi', 'Cuti Pribadi')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Pribadi</div>
-                                </div>
-                                <div onclick="selectOption('haji_umrah', 'Cuti Haji/Umrah')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Haji/Umrah</div>
-                                </div>
-                                <div onclick="selectOption('pernikahan', 'Cuti Pernikahan')"
-                                    class="flex w-full h-[45px] items-center gap-2.5 px-4 py-[11px] bg-white rounded-[15px] cursor-pointer hover:bg-[#e0e0e0] transition-colors">
-                                    <div class="font-normal text-black text-sm">Cuti Pernikahan</div>
-                                </div>
+                                class="hidden absolute top-[52px] left-0 flex-col w-full bg-white rounded-[12px] shadow-[0_4px_12px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Tahunan">Cuti Tahunan</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Sakit">Cuti Sakit</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Melahirkan">Cuti Melahirkan</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Darurat">Cuti Darurat</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Pribadi">Cuti Pribadi</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Haji">Cuti Haji/Umrah</div>
+                                <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
+                                    data-value="Cuti Pernikahan">Cuti Pernikahan</div>
                             </div>
 
-                            <input type="hidden" id="leave_category" name="leave_category" value="" />
+                            <input type="hidden" id="leave_category" name="leave_category"
+                                value="{{ old('leave_category', '') }}" />
                         </div>
                     </div>
 
@@ -141,7 +128,7 @@
                             <div
                                 class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026]">
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer mr-4">
-                                    <input type="radio" name="bring_laptop" value="yes" class="hidden">
+                                    <input type="radio" name="bring_laptop" value="1" class="hidden">
                                     <div
                                         class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
                                         <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
@@ -149,7 +136,7 @@
                                     <div class="font-medium text-[#111111] text-sm">Yes</div>
                                 </label>
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer">
-                                    <input type="radio" name="bring_laptop" value="no" class="hidden" checked>
+                                    <input type="radio" name="bring_laptop" value="0" class="hidden" checked>
                                     <div
                                         class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
                                         <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
@@ -166,7 +153,7 @@
                             <div
                                 class="flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026]">
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer mr-4">
-                                    <input type="radio" name="can_be_contacted" value="yes" class="hidden">
+                                    <input type="radio" name="can_be_contacted" value="1" class="hidden">
                                     <div
                                         class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
                                         <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
@@ -174,7 +161,7 @@
                                     <div class="font-medium text-[#111111] text-sm">Yes</div>
                                 </label>
                                 <label class="inline-flex items-center gap-2.5 cursor-pointer">
-                                    <input type="radio" name="can_be_contacted" value="no" class="hidden" checked>
+                                    <input type="radio" name="can_be_contacted" value="0" class="hidden" checked>
                                     <div
                                         class="w-4 h-4 rounded-full border border-gray-400 flex items-center justify-center radio-indicator">
                                         <div class="w-2 h-2 rounded-full hidden radio-dot"></div>
@@ -191,7 +178,7 @@
                             class="flex w-full sm:w-[180px] h-[45px] items-center justify-center rounded-[10px] border border-[#111111] hover:bg-[#f9f9f9] transition-colors">
                             <div class="font-semibold text-[#111111] text-sm">Cancel</div>
                         </button>
-                        <button type="button" onclick="submitForm()"
+                        <button type="submit" 
                             class="flex w-full sm:w-[180px] h-[45px] items-center justify-center bg-[#111111] rounded-[10px] text-white hover:bg-[#333333] transition-colors">
                             <div class="font-semibold text-sm">Submit</div>
                         </button>
@@ -252,30 +239,78 @@
             return new Date(d.getFullYear(), d.getMonth(), d.getDate());
         }
 
-        // ---------- Dropdown (category) ----------
-        const dropdownMenu = document.getElementById('dropdownMenu');
+        // ==================== CATEGORY DROPDOWN ====================
         const categoryBtn = document.getElementById('categoryBtn');
-        const selectedText = document.getElementById('selectedText');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const categorySelectedText = document.getElementById('categorySelectedText');
         const leaveCategoryInput = document.getElementById('leave_category');
+        const categoryArrow = document.getElementById('categoryArrow');
 
-        function toggleDropdown() {
+        categoryBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isHidden = dropdownMenu.classList.contains('hidden');
             dropdownMenu.classList.toggle('hidden');
-            categoryBtn.setAttribute('aria-expanded', !dropdownMenu.classList.contains('hidden'));
-        }
+            categoryBtn.setAttribute('aria-expanded', String(!isHidden));
+            
+            // Rotate arrow icon
+            if (isHidden) {
+                categoryArrow.style.transform = 'rotate(180deg)';
+            } else {
+                categoryArrow.style.transform = 'rotate(0deg)';
+            }
 
-        function selectOption(v, label) {
-            leaveCategoryInput.value = v;
-            selectedText.textContent = label;
-            dropdownMenu.classList.add('hidden');
-            categoryBtn.setAttribute('aria-expanded', 'false');
-        }
-        document.addEventListener('click', (e) => {
-            if (!categoryBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                dropdownMenu.classList.add('hidden');
-                categoryBtn.setAttribute('aria-expanded', 'false');
+            // Close user dropdown if open
+            if (!dropdownUser.classList.contains('hidden')) {
+                dropdownUser.classList.add('hidden');
+                userBtn.setAttribute('aria-expanded', 'false');
+                userArrow.style.transform = 'rotate(0deg)';
             }
         });
 
+        dropdownMenu.querySelectorAll('.option-item').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const val = el.getAttribute('data-value');
+                leaveCategoryInput.value = val;
+                categorySelectedText.textContent = val;
+                dropdownMenu.classList.add('hidden');
+                categoryBtn.setAttribute('aria-expanded', 'false');
+                categoryArrow.style.transform = 'rotate(0deg)';
+            });
+        });
+
+        dropdownMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // ==================== CLOSE DROPDOWNS ON OUTSIDE CLICK ====================
+        document.addEventListener('click', function() {
+            if (!dropdownUser.classList.contains('hidden')) {
+                dropdownUser.classList.add('hidden');
+                userBtn.setAttribute('aria-expanded', 'false');
+                userArrow.style.transform = 'rotate(0deg)';
+            }
+            if (!dropdownMenu.classList.contains('hidden')) {
+                dropdownMenu.classList.add('hidden');
+                categoryBtn.setAttribute('aria-expanded', 'false');
+                categoryArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (!dropdownUser.classList.contains('hidden')) {
+                    dropdownUser.classList.add('hidden');
+                    userBtn.setAttribute('aria-expanded', 'false');
+                    userArrow.style.transform = 'rotate(0deg)';
+                }
+                if (!dropdownMenu.classList.contains('hidden')) {
+                    dropdownMenu.classList.add('hidden');
+                    categoryBtn.setAttribute('aria-expanded', 'false');
+                    categoryArrow.style.transform = 'rotate(0deg)';
+                }
+            }
+        });
         // ---------- Image Upload & Preview ----------
         const fileInput = document.getElementById('fileInput');
         const imagePreview = document.getElementById('imagePreview');

@@ -79,7 +79,7 @@
                                 <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
                                     data-value="Cuti Pribadi">Cuti Pribadi</div>
                                 <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
-                                    data-value="Cuti Haji/Umrah">Cuti Haji/Umrah</div>
+                                    data-value="Cuti Haji">Cuti Haji/Umrah</div>
                                 <div class="option-item px-4 h-[45px] flex items-center cursor-pointer hover:bg-[#f3f4f6]"
                                     data-value="Cuti Pernikahan">Cuti Pernikahan</div>
                             </div>

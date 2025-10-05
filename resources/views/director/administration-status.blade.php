@@ -1,4 +1,4 @@
-@extends('director/layout')
+@extends('karyawan/layout')
 @section('title', 'Leave Status')
 @section('content')
     @php
@@ -11,6 +11,19 @@
         }
     @endphp
 
+    @php
+        // set locale kalau belum di-set (boleh dipindah ke Controller agar tidak dipanggil berkali-kali)
+        \Carbon\Carbon::setLocale('id');
+
+        // parse & format tanggal
+        $startDate = \Carbon\Carbon::parse($leave->start_date)->translatedFormat('d F Y');
+        $endDate = \Carbon\Carbon::parse($leave->end_date)->translatedFormat('d F Y');
+
+        // hitung selisih hari (inklusif: termasuk start dan end)
+        $diffInDays =
+            \Carbon\Carbon::parse($leave->start_date)->diffInDays(\Carbon\Carbon::parse($leave->end_date)) + 1;
+    @endphp
+
     <!-- Main Content Section - Dynamic Status -->
     <div
         class="flex flex-col max-w-4xl w-full items-center gap-2.5 px-6 md:px-10 py-8 mx-auto bg-white rounded-2xl shadow-lg">
@@ -18,7 +31,7 @@
             <!-- Header -->
             <div class="flex items-center justify-between w-full">
                 <div class="flex items-center gap-3">
-                    <a href="{{ route('director.administration-list') }}"
+                    <a href="{{ route('karyawan.administration-list') }}"
                         class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
                         <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -117,50 +130,54 @@
                     <!-- Leave Category -->
                     <div class="flex flex-col md:flex-row md:items-center gap-2">
                         <span class="font-medium text-[#7d7d7d] text-sm w-full md:w-40">Leave Category</span>
-                        <span class="font-medium text-[#111111] text-sm">: Cuti Tahunan</span>
+                        <span class="font-medium text-[#111111] text-sm">: {{ $leave->type }}</span>
                     </div>
 
                     <!-- Duration -->
                     <div class="flex flex-col md:flex-row md:items-center gap-2">
                         <span class="font-medium text-[#7d7d7d] text-sm w-full md:w-40">Duration</span>
-                        <span class="font-medium text-[#111111] text-sm">: 2025-10-01 to 2025-10-05 (5 days)</span>
+                        <span class="font-medium text-[#111111] text-sm">:
+                            {{ $startDate }} to
+                            {{ $endDate }} ({{ $diffInDays }} days)</span>
                     </div>
 
                     <!-- Submission Date -->
                     <div class="flex flex-col md:flex-row md:items-center gap-2">
                         <span class="font-medium text-[#7d7d7d] text-sm w-full md:w-40">Submitted On</span>
-                        <span class="font-medium text-[#111111] text-sm">: 2025-09-25 14:30</span>
+                        <span class="font-medium text-[#111111] text-sm">:
+                            {{ \Carbon\Carbon::parse($leave->created_at)->translatedFormat('d F Y - H:i') }}</span>
                     </div>
 
                     <!-- Conditional: Approved/Rejected Date -->
                     @if ($status === 'approved')
                         <div class="flex flex-col md:flex-row md:items-center gap-2">
                             <span class="font-medium text-[#7d7d7d] text-sm w-full md:w-40">Approved On</span>
-                            <span class="font-medium text-green-600 text-sm">: 2025-09-26 09:15</span>
+                            <span class="font-medium text-green-600 text-sm">:
+                                {{ \Carbon\Carbon::parse($leave->update_at)->translatedFormat('d F Y - H:i') }}</span>
                         </div>
-                        <div class="flex flex-col md:flex-row md:items-center gap-2">
+                        {{-- <div class="flex flex-col md:flex-row md:items-center gap-2">
                             <span class="font-medium text-[#7d7d7d] text-sm w-full md:w-40">Approved By</span>
                             <span class="font-medium text-[#111111] text-sm">: Admin Manager</span>
-                        </div>
+                        </div> --}}
                     @endif
 
                     @if ($status === 'rejected')
                         <div class="flex flex-col md:flex-row md:items-center gap-2">
                             <span class="font-medium text-[#7d7d7d] text-sm w-full md:w-40">Rejected On</span>
-                            <span class="font-medium text-red-600 text-sm">: 2025-09-26 10:45</span>
+                            <span class="font-medium text-green-600 text-sm">:
+                                {{ \Carbon\Carbon::parse($leave->update_at)->translatedFormat('d F Y - H:i') }}</span>
                         </div>
-                        <div class="flex flex-col md:flex-row md:items-center gap-2">
+                        {{-- <div class="flex flex-col md:flex-row md:items-center gap-2">
                             <span class="font-medium text-[#7d7d7d] text-sm w-full md:w-40">Rejected By</span>
                             <span class="font-medium text-[#111111] text-sm">: Admin Manager</span>
-                        </div>
+                        </div> --}}
                     @endif
 
                     <!-- Description -->
                     <div class="flex flex-col gap-2">
                         <span class="font-medium text-[#7d7d7d] text-sm">Description</span>
                         <div class="bg-white rounded-lg p-4 text-sm text-[#111111] border border-gray-200">
-                            Liburan keluarga yang sudah direncanakan sejak awal tahun. Akan membawa laptop untuk
-                            berjaga-jaga jika ada hal mendesak.
+                            {{ $leave->description }}
                         </div>
                     </div>
 
@@ -175,8 +192,7 @@
                                             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    <span>Permohonan cuti Anda telah disetujui. Pastikan semua pekerjaan telah diselesaikan
-                                        atau didelegasikan sebelum tanggal cuti. Nikmati liburan Anda!</span>
+                                    <span>{{ $leave->verified_description }}</span>
                                 </div>
                             </div>
                         </div>
@@ -195,11 +211,7 @@
                                     </svg>
                                     <div class="flex flex-col gap-1">
                                         <span class="font-semibold">Project Deadline Conflict</span>
-                                        <span>Maaf, permohonan cuti tidak dapat disetujui karena bertepatan dengan deadline
-                                            project penting (Project Website Redesign). Tim membutuhkan kehadiran Anda untuk
-                                            menyelesaikan beberapa milestone kritis. Silakan ajukan kembali permohonan cuti
-                                            dengan tanggal yang berbeda, minimal 2 minggu setelah deadline project (setelah
-                                            15 Oktober 2025).</span>
+                                        <span>{{ $leave->verified_description }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -355,7 +367,7 @@
         function cancelRequest() {
             if (confirm('Are you sure you want to cancel this leave request?')) {
                 alert('Leave request cancelled');
-                window.location.href = '{{ route('director.administration') }}';
+                window.location.href = '{{ route('karyawan.administration') }}';
             }
         }
     </script>

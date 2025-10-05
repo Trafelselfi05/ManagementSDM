@@ -42,7 +42,93 @@
 
         <!-- Leave Requests List -->
         <div class="flex flex-col gap-4" id="leaveRequestsList">
-            <!-- Sample Leave Request 1 - Pending -->
+            @foreach ($leaves as $index => $leave)
+                @php
+                    // set locale kalau belum di-set (boleh dipindah ke Controller agar tidak dipanggil berkali-kali)
+                    \Carbon\Carbon::setLocale('id');
+
+                    // parse & format tanggal
+                    $startDate = \Carbon\Carbon::parse($leave->start_date)->translatedFormat('d F Y');
+                    $endDate = \Carbon\Carbon::parse($leave->end_date)->translatedFormat('d F Y');
+
+                    // hitung selisih hari (inklusif: termasuk start dan end)
+                    $diffInDays =
+                        \Carbon\Carbon::parse($leave->start_date)->diffInDays(\Carbon\Carbon::parse($leave->end_date)) +
+                        1;
+
+                    // tentukan status & warna berdasarkan kolom verified
+                    $verified = (int) $leave->verified;
+                    if ($verified === 0) {
+                        $statusText = 'Pending';
+                        $statusColor = 'amber';
+                    } elseif ($verified === 1) {
+                        $statusText = 'Rejected';
+                        $statusColor = 'red';
+                    } else {
+                        $statusText = 'Approved';
+                        $statusColor = 'green';
+                    }
+                @endphp
+
+                <div class="leave-card bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer"
+                    data-status="{{ strtolower($statusText) }}"
+                    onclick="window.location.href='{{ route('director.administration-status', $leave->id) }}?status={{ strtolower($statusText) }}'">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                        <div class="flex-1 flex flex-col gap-3">
+                            <div class="flex items-center gap-3">
+                                <h3 class="font-semibold text-[#111111] text-lg">{{ $leave->type }}</h3>
+
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-3 py-1 bg-{{ $statusColor }}-100 text-{{ $statusColor }}-700 rounded-full text-xs font-medium">
+                                    <div class="w-1.5 h-1.5 bg-{{ $statusColor }}-500 rounded-full animate-pulse"></div>
+                                    {{ $statusText }}
+                                </span>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 text-sm text-[#7d7d7d]">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>{{ $startDate }} s/d {{ $endDate }}</span>
+                                </div>
+
+                                <div class="hidden sm:block text-[#d0d0d0]">•</div>
+
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>{{ $diffInDays }} hari</span>
+                                </div>
+
+                                <div class="hidden sm:block text-[#d0d0d0]">•</div>
+
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <span>Diajukan:
+                                        {{ \Carbon\Carbon::parse($leave->created_at)->translatedFormat('d F Y - H:i') }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('director.administration-status', $leave->id) }}?status={{ strtolower($statusText) }}"
+                                onclick="event.stopPropagation()"
+                                class="px-4 py-2 border border-[#111111] text-[#111111] rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+            {{-- <!-- Sample Leave Request 1 - Pending -->
             <div class="leave-card bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer"
                 data-status="pending"
                 onclick="window.location.href='{{ route('director.administration-status', ['status' => 'pending']) }}'">
@@ -90,157 +176,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
-
-            <!-- Sample Leave Request 2 - Approved -->
-            <div class="leave-card bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer"
-                data-status="approved"
-                onclick="window.location.href='{{ route('director.administration-status', ['status' => 'approved']) }}'">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                    <div class="flex-1 flex flex-col gap-3">
-                        <div class="flex items-center gap-3">
-                            <h3 class="font-semibold text-[#111111] text-lg">Cuti Sakit</h3>
-                            <span
-                                class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
-                                <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                                Approved
-                            </span>
-                        </div>
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 text-sm text-[#7d7d7d]">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <span>2025-09-20 to 2025-09-22</span>
-                            </div>
-                            <div class="hidden sm:block text-[#d0d0d0]">•</div>
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>3 days</span>
-                            </div>
-                            <div class="hidden sm:block text-[#d0d0d0]">•</div>
-                            <div class="flex items-center gap-2 text-green-600">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Approved: 2025-09-19</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <a href="{{ route('director.administration-status', ['status' => 'approved']) }}"
-                            onclick="event.stopPropagation()"
-                            class="px-4 py-2 border border-[#111111] text-[#111111] rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-                            View Details
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sample Leave Request 3 - Rejected -->
-            <div class="leave-card bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer"
-                data-status="rejected"
-                onclick="window.location.href='{{ route('director.administration-status', ['status' => 'rejected']) }}'">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                    <div class="flex-1 flex flex-col gap-3">
-                        <div class="flex items-center gap-3">
-                            <h3 class="font-semibold text-[#111111] text-lg">Cuti Pribadi</h3>
-                            <span
-                                class="inline-flex items-center gap-1.5 px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
-                                <div class="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
-                                Rejected
-                            </span>
-                        </div>
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 text-sm text-[#7d7d7d]">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <span>2025-09-10 to 2025-09-12</span>
-                            </div>
-                            <div class="hidden sm:block text-[#d0d0d0]">•</div>
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>3 days</span>
-                            </div>
-                            <div class="hidden sm:block text-[#d0d0d0]">•</div>
-                            <div class="flex items-center gap-2 text-red-600">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                <span>Rejected: 2025-09-08</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <a href="{{ route('director.administration-status', ['status' => 'rejected']) }}"
-                            onclick="event.stopPropagation()"
-                            class="px-4 py-2 border border-[#111111] text-[#111111] rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-                            View Details
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sample Leave Request 4 - Approved -->
-            <div class="leave-card bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer"
-                data-status="approved"
-                onclick="window.location.href='{{ route('director.administration-status', ['status' => 'approved']) }}'">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                    <div class="flex-1 flex flex-col gap-3">
-                        <div class="flex items-center gap-3">
-                            <h3 class="font-semibold text-[#111111] text-lg">Cuti Pernikahan</h3>
-                            <span
-                                class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
-                                <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                                Approved
-                            </span>
-                        </div>
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 text-sm text-[#7d7d7d]">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <span>2025-08-15 to 2025-08-18</span>
-                            </div>
-                            <div class="hidden sm:block text-[#d0d0d0]">•</div>
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>4 days</span>
-                            </div>
-                            <div class="hidden sm:block text-[#d0d0d0]">•</div>
-                            <div class="flex items-center gap-2 text-green-600">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Approved: 2025-08-10</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <a href="{{ route('director.administration-status', ['status' => 'approved']) }}"
-                            onclick="event.stopPropagation()"
-                            class="px-4 py-2 border border-[#111111] text-[#111111] rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-                            View Details
-                        </a>
-                    </div>
-                </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Empty State -->

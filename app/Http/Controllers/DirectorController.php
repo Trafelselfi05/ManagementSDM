@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Leave;
 use Illuminate\Http\Request;
 
 class DirectorController extends Controller
@@ -89,13 +90,63 @@ class DirectorController extends Controller
   {
     return view("director.administration");
   }
-  public function administrationStatus()
+
+  public function storeLeave(Request $request)
   {
-    return view("director.administration-status");
+    // \Log::info("Request Data:", $request->all());
+    // dd($request->all());
+
+    // Validasi
+    $validated = $request->validate([
+      "leave_category" => "required|string",
+      "start_date" => "required|date",
+      "end_date" => "required|date|after_or_equal:start_date",
+      "description" => "nullable|string",
+      "bring_laptop" => "required|boolean",
+      "can_be_contacted" => "required|boolean",
+      "supporting_document" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
+    ]);
+
+    // Handle upload file jika ada
+    $proofPath = null;
+    if ($request->hasFile("supporting_document")) {
+      $proofPath = $request
+        ->file("supporting_document")
+        ->store("proofs", "public");
+    }
+
+    // Simpan ke database
+    $leave = Leave::create([
+      "user_id" => auth()->user()->id,
+      "type" => $validated["leave_category"], // enum di DB
+      "start_date" => $validated["start_date"],
+      "end_date" => $validated["end_date"],
+      "description" => $validated["description"] ?? null,
+      "bring_laptop" => (int) $validated["bring_laptop"], // pastikan int
+      "contactable" => (int) $validated["can_be_contacted"],
+      "proof_photo" => "/storage/" . $proofPath,
+      "verified" => 0, // default
+    ]);
+
+    return redirect()
+      ->route("director.administration-list")
+      ->with("success", "Leave request submitted successfully.");
   }
+
+public function administrationStatus($id)
+{
+    $leave = Leave::with('user')->findOrFail($id);
+
+    return view('director.administration-status', compact('leave'));
+}
+
+
   public function administrationList()
   {
-    return view("director.administration-list");
+    $leaves = Leave::with("user")
+      ->where("user_id", auth()->user()->id)
+      ->get();
+    return view("director.administration-list", compact("leaves"));
   }
 
   public function profileAdmin()
