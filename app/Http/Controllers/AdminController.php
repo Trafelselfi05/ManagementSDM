@@ -258,6 +258,7 @@ class AdminController extends Controller
       "project_id" => $request->project_id,
       "assigned_to" => $request->assigned_to,
       "level" => $request->taskLevel,
+      "status" => "in_progress",
       "updated_at" => now(),
     ]);
 
@@ -268,7 +269,42 @@ class AdminController extends Controller
   {
     $tasks = Task::with(["project", "assignedUser"])->get();
 
-    return view("admin.task-detail" , compact("tasks"));
+    return view("admin.task-detail", compact("tasks"));
+  }
+
+  public function updateTask(Request $request)
+  {
+    // Validasi
+    $data = $request->validate([
+      "task_id" => "required|exists:tasks,id",
+      "name" => "nullable|string|max:200",
+      "taskLevel" => "required|in:low,medium,high",
+      "status" => "required|in:todo,in_progress,review,completed",
+    ]);
+
+    $task = Task::findOrFail($data["task_id"]);
+
+    $task->name = $data["name"] ?? $task->name;
+    $task->level = $data["taskLevel"];
+    $task->status = $data["status"];
+    $task->updated_at = now();
+    $task->save();
+
+    // Jika request AJAX/JSON -> kembalikan JSON
+    if (
+      $request->wantsJson() ||
+      $request->ajax() ||
+      $request->header("Accept") === "application/json"
+    ) {
+      return response()->json([
+        "success" => true,
+        "message" => "Task updated",
+        "task" => $task,
+      ]);
+    }
+
+    // fallback redirect
+    return redirect()->back()->with("success", "Task updated successfully.");
   }
 
   public function activity()
