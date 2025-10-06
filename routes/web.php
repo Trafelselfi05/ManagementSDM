@@ -129,8 +129,12 @@ Route::controller(KaryawanController::class)
     Route::get("dashboard", "dashboard")->name("dashboard");
     Route::get("project", "project")->name("project");
     Route::get("create-project", "createProject")->name("project.create");
+
     Route::get("task", "task")->name("task");
+    Route::post("task", "storeTask")->name("task.store");
     Route::get("task-detail", "taskDetail")->name("task-detail");
+    Route::post("task-detail", "updateTask")->name("task.update");
+
     Route::get("activity", "activity")->name("activity");
     Route::get("administration", "administration")->name("administration");
     Route::post("administration", "storeLeave")->name("administration.store");

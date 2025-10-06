@@ -68,6 +68,7 @@ class DirectorController extends Controller
       ->get();
     return view("director.project", compact("projects"));
   }
+
   public function createProject()
   {
     $karyawans = User::where("email", "!=", "admin@gmail.com")
@@ -269,7 +270,7 @@ class DirectorController extends Controller
 
   public function taskDetail()
   {
-    $tasks = Task::with(["project", "assignedUser"])->get();
+    $tasks = Task::with(["project", "assignedUser"])->where("director_id", auth()->user()->id)->get();
 
     return view("director.task-detail", compact("tasks"));
   }

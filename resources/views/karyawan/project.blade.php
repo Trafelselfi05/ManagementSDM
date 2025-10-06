@@ -1,20 +1,21 @@
 @extends('karyawan/layout')
+
 @section('title', 'Projects')
 
 @section('content')
-    <section class="w-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-8">
+    <section class="w-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-4 md:p-8">
         <!-- Filter and Create Project Buttons -->
-        <div class="flex justify-between items-center mb-8">
+        <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mb-6 md:mb-8">
             <!-- Filter Button -->
-            <div class="flex items-center gap-2 bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] px-4 py-2">
-                <img class="w-6 h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />
+            <div class="flex items-center justify-center gap-2 bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] px-4 py-2">
+                <img class="w-5 h-5 md:w-6 md:h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />
                 <span class="text-gray-500 text-sm font-medium">Filter</span>
             </div>
 
         </div>
 
-        <!-- Projects Table -->
-        <div class="w-full overflow-x-auto">
+        <!-- Desktop Table View -->
+        <div class="hidden lg:block w-full overflow-x-auto">
             <table class="w-full min-w-[1200px]">
                 <!-- Table Header -->
                 <thead>
@@ -23,8 +24,7 @@
                         <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[250px]">Project Name</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Start Date</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Deadline</th>
-                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[180px]">Project
-                            Director</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[180px]">Project Director</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-24">Level</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-28">Status</th>
                     </tr>
@@ -32,148 +32,42 @@
 
                 <!-- Table Body -->
                 <tbody class="divide-y divide-gray-200">
-                    <!-- Project Row 1 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">1</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#0000FF] text-white text-sm font-semibold rounded-[10px]">
-                                Running
-                            </span>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 2 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">2</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#6fadc8] text-white text-sm font-semibold rounded-[10px]">Low</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#FFA500] text-white text-sm font-semibold rounded-[10px]">
-                                Maintenance
-                            </span>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 3 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">3</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#0000FF] text-white text-sm font-semibold rounded-[10px]">
-                                Running
-                            </span>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 4 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">4</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#ffb32d] text-white text-sm font-semibold rounded-[10px]">Medium</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#FFA500] text-white text-sm font-semibold rounded-[10px]">
-                                Maintenance
-                            </span>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 5 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">5</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Nov 4, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#6fadc8] text-white text-sm font-semibold rounded-[10px]">Low</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#50C878] text-white text-sm font-semibold rounded-[10px]">
-                                To do
-                            </span>
-                        </td>
-                    </tr>
-
-                    <!-- Project Row 6 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="py-4 px-4 text-gray-800 font-medium text-center">6</td>
-                        <td class="py-4 px-4">
-                            <div class="font-semibold text-gray-800">Wordpress Plugin Update</div>
-                        </td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center text-gray-600">Dec 25, 2024</td>
-                        <td class="py-4 px-4 text-center">
-                            <div class="font-medium text-gray-800">Athena Cyntia</div>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span
-                                class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">High</span>
-                        </td>
-                        <td class="py-4 px-4 text-center">
-                            <span class="px-2.5 py-1 bg-[#50C878] text-white text-sm font-semibold rounded-[10px]">
-                                To do
-                            </span>
-                        </td>
-                    </tr>
+                    @forelse ($projects as $index => $project)
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-4 text-gray-800 font-medium text-center">{{$index + 1}}</td>
+                            <td class="py-4 px-4">
+                                <div class="font-semibold text-gray-800">{{$project->name}}</div>
+                            </td>
+                            <td class="py-4 px-4 text-center text-gray-600">{{ \Carbon\Carbon::parse($project->start_date)->format('M d, Y') }}</td>
+                            <td class="py-4 px-4 text-center text-gray-600">{{ \Carbon\Carbon::parse($project->deadline)->format('M d, Y') }}</td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="font-medium text-gray-800">{{$project->director->name}}</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span class="px-2.5 py-1 bg-[#e94949] text-white text-sm font-semibold rounded-[10px]">{{$project->level}}</span>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span onclick="" 
+                                      class="px-2.5 py-1 bg-[#0000FF] text-white text-sm font-semibold rounded-[10px] cursor-pointer hover:opacity-80 transition-opacity">
+                                    {{$project->status}}
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="py-8 text-center text-gray-500">Tidak Ada Project</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
 
         <!-- Pagination -->
-        <div class="flex items-center justify-between mt-6 pt-4 border-t border-gray-200">
-            <div class="text-sm text-gray-700">
-                Showing <span class="font-medium">1</span> to <span class="font-medium">6</span> of <span
-                    class="font-medium">6</span> results
+        <div class="flex flex-col sm:flex-row items-center justify-between mt-6 pt-4 border-t border-gray-200 gap-4">
+            <div class="text-sm text-gray-700 order-2 sm:order-1">
+                Showing <span class="font-medium">1</span> to <span class="font-medium">6</span> of <span class="font-medium">6</span> results
             </div>
-            <div class="flex gap-2">
+            <div class="flex gap-2 order-1 sm:order-2">
                 <button
                     class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled>
@@ -192,22 +86,132 @@
         </div>
     </section>
 
+    <!-- Status Edit Modal -->
+    <div id="statusModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content bg-white rounded-[20px] shadow-lg p-4 sm:p-6 w-[95%] sm:w-[450px] max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 sm:mb-6">
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-800">Edit Project Status</h3>
+                <button onclick="closeStatusModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="statusForm" method="POST">
+                @csrf
+                @method('PUT')
+                
+                <input type="hidden" id="projectId" name="project_id">
+                
+                <div class="mb-4 sm:mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Select Status</label>
+                    <div class="space-y-2 sm:space-y-3">
+                        <!-- Ready -->
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors status-option">
+                            <input type="radio" name="status" value="Ready" class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500">
+                            <span class="ml-3 text-sm font-medium text-gray-700">Ready</span>
+                        </label>
+
+                        <!-- Running -->
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors status-option">
+                            <input type="radio" name="status" value="Running" class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500">
+                            <span class="ml-3 text-sm font-medium text-gray-700">Running</span>
+                        </label>
+
+                        <!-- Testing -->
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors status-option">
+                            <input type="radio" name="status" value="Testing" class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500">
+                            <span class="ml-3 text-sm font-medium text-gray-700">Testing</span>
+                        </label>
+
+                        <!-- Maintenance -->
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors status-option">
+                            <input type="radio" name="status" value="Maintenance" class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500">
+                            <span class="ml-3 text-sm font-medium text-gray-700">Maintenance</span>
+                        </label>
+
+                        <!-- Complete -->
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors status-option">
+                            <input type="radio" name="status" value="Complete" class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500">
+                            <span class="ml-3 text-sm font-medium text-gray-700">Complete</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeStatusModal()" 
+                            class="flex-1 px-4 py-2.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium text-sm">
+                        Cancel
+                    </button>
+                    <button type="submit" 
+                            class="flex-1 px-4 py-2.5 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm">
+                        Update Status
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+        }
+
+        .modal-content {
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        /* Status option checked state */
+        .status-option:has(input:checked) {
+            background-color: #EFF6FF;
+            border-color: #3B82F6;
+        }
+
+        /* Smooth scrolling for modal */
+        @media (max-height: 700px) {
+            .modal-content {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        }
+    </style>
+
     <script>
         function confirmDelete(id) {
             if (confirm('Are you sure you want to delete this project?')) {
-                // Create a form and submit it for deletion
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = `{{ url('admin/delete-project') }}/${id}`;
 
-                // Add CSRF token
                 const csrfToken = document.createElement('input');
                 csrfToken.type = 'hidden';
                 csrfToken.name = '_token';
                 csrfToken.value = '{{ csrf_token() }}';
                 form.appendChild(csrfToken);
 
-                // Add method override for DELETE
                 const methodField = document.createElement('input');
                 methodField.type = 'hidden';
                 methodField.name = '_method';
@@ -218,5 +222,51 @@
                 form.submit();
             }
         }
+
+        function openStatusModal(projectId, currentStatus) {
+            const modal = document.getElementById('statusModal');
+            const projectIdInput = document.getElementById('projectId');
+            const form = document.getElementById('statusForm');
+            
+            projectIdInput.value = projectId;
+            form.action = `{{ url('admin/update-project-status') }}/${projectId}`;
+            
+            const radioButtons = document.querySelectorAll('input[name="status"]');
+            radioButtons.forEach(radio => {
+                if (radio.value === currentStatus) {
+                    radio.checked = true;
+                }
+            });
+            
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeStatusModal() {
+            const modal = document.getElementById('statusModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        document.getElementById('statusModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeStatusModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('statusModal');
+                if (modal.classList.contains('active')) {
+                    closeStatusModal();
+                }
+            }
+        });
     </script>
 @endsection

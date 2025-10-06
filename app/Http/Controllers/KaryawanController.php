@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Leave;
+use App\Models\Project;
+use App\Models\ProjectUser;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class KaryawanController extends Controller
@@ -59,26 +62,114 @@ class KaryawanController extends Controller
 
   public function project()
   {
-    return view("karyawan.project");
-  }
-
-  public function createProject()
-  {
-    return view("karyawan.create-project");
-  }
-  public function editProject()
-  {
-    return view("karyawan.edit-project");
+    $projects = Project::with("members")
+      ->whereRelation("members", "user_id", auth()->user()->id)
+      ->get();
+    return view("karyawan.project", compact("projects"));
   }
 
   public function task()
   {
-    return view("karyawan.task");
+    $projects = Project::with("members")
+      ->whereRelation("members", "user_id", auth()->user()->id)
+      ->get();
+
+    $tasks = Task::with(["project", "assignedUser"])
+      ->where("assigned_to", auth()->user()->id)
+      ->orWhere("created_by_user_id", auth()->user()->id) // ← tambahkan di sini
+      ->get();
+
+    $tasksByStatus = [
+      "todo" => $tasks->where("status", "todo"),
+      "in_progress" => $tasks->where("status", "in_progress"),
+      "review" => $tasks->where("status", "review"),
+      "completed" => $tasks->where("status", "completed"),
+    ];
+
+    $projectUsers = ProjectUser::with(["project", "user"])
+      ->where("user_id", auth()->user()->id)
+      ->get();
+
+    return view(
+      "karyawan.task",
+      compact("projects", "tasksByStatus", "projectUsers", "tasks")
+    );
+  }
+
+  public function storeTask(Request $request)
+  {
+    // \Log::info("Request Data:", $request->all());
+    // dd($request->all());
+
+    $request->validate([
+      "taskName" => "required|string|max:200",
+      "project" => "required|exists:projects,id",
+      "taskLevel" => "required|in:low,medium,high",
+    ]);
+
+    // Tentukan estimasi jam otomatis jika ingin:
+    $estimated = match ($request->taskLevel) {
+      "low" => 2,
+      "medium" => 6,
+      "high" => 8,
+      default => 0,
+    };
+
+    Task::create([
+      "project_id" => $request->project,
+      "name" => $request->taskName,
+      "level" => $request->taskLevel,
+      "estimated_hours" => $estimated,
+      "status" => "todo",
+      "created_by_user_id" => auth()->user()->id, // atau admin_id jika pakai admin guard
+    ]);
+
+    return back()->with("success", "Task created successfully!");
   }
 
   public function taskDetail()
   {
-    return view("karyawan.task-detail");
+    $tasks = Task::with(["project", "assignedUser"])
+      ->where("assigned_to", auth()->user()->id)
+      ->orWhere("created_by_user_id", auth()->user()->id) // ← tambahkan di sini
+      ->get();
+      
+    return view("karyawan.task-detail", compact("tasks"));
+  }
+
+  public function updateTask(Request $request)
+  {
+    // Validasi
+    $data = $request->validate([
+      "task_id" => "required|exists:tasks,id",
+      "name" => "nullable|string|max:200",
+      "taskLevel" => "required|in:low,medium,high",
+      "status" => "required|in:todo,in_progress,review,completed",
+    ]);
+
+    $task = Task::findOrFail($data["task_id"]);
+
+    $task->name = $data["name"] ?? $task->name;
+    $task->level = $data["taskLevel"];
+    $task->status = $data["status"];
+    $task->updated_at = now();
+    $task->save();
+
+    // Jika request AJAX/JSON -> kembalikan JSON
+    if (
+      $request->wantsJson() ||
+      $request->ajax() ||
+      $request->header("Accept") === "application/json"
+    ) {
+      return response()->json([
+        "success" => true,
+        "message" => "Task updated",
+        "task" => $task,
+      ]);
+    }
+
+    // fallback redirect
+    return redirect()->back()->with("success", "Task updated successfully.");
   }
 
   public function activity()
@@ -142,13 +233,12 @@ class KaryawanController extends Controller
     return view("karyawan.administration-list", compact("leaves"));
   }
 
-public function administrationStatus($id)
-{
-    $leave = Leave::with('user')->findOrFail($id);
+  public function administrationStatus($id)
+  {
+    $leave = Leave::with("user")->findOrFail($id);
 
-    return view('director.administration-status', compact('leave'));
-}
-
+    return view("director.administration-status", compact("leave"));
+  }
 
   public function profileAdmin()
   {
