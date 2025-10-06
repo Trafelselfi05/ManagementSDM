@@ -4,18 +4,18 @@
 
 @section('content')
     <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- New Project Section -->
-            <div>
-                <!-- New Project Form -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <!-- New Project Header INSIDE the form -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">New Project</h2>
-                    </div>
-
-                    <form action="#" method="POST">
-                        @csrf
+        <!-- Single form to submit project + SDM -->
+        <form action="{{ route('director.project.store') }}" method="POST">
+            @csrf
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- New Project Section -->
+                <div>
+                    <!-- New Project Form -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <!-- New Project Header -->
+                        <div class="mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">New Project</h2>
+                        </div>
 
                         <div class="space-y-4 mb-6">
                             <div>
@@ -43,7 +43,7 @@
                                     <label for="project-end" class="block text-sm font-medium text-gray-700 mb-2">End
                                         Date</label>
                                     <div class="relative">
-                                        <input readonly id="project-end" name="end_date" type="text"
+                                        <input readonly id="project-end" name="deadline" type="text"
                                             placeholder="YYYY-MM-DD"
                                             class="date-input w-full px-4 py-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 cursor-pointer" />
                                         <img id="project-end-icon"
@@ -56,12 +56,12 @@
                             <div>
                                 <label for="project-status" class="block text-sm font-medium text-gray-700 mb-2">Level
                                     Project</label>
-                                <select id="project-status" name="status"
+                                <select id="project-status" name="level"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
-                                    <option value="planning">Low</option>
-                                    <option value="in_progress">Medium</option>
-                                    <option value="on_hold">High</option>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
                                 </select>
                             </div>
 
@@ -73,23 +73,21 @@
                                     placeholder="Describe the project..."></textarea>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <!-- SDM Section -->
-            <div>
-                <!-- SDM Form -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <!-- SDM Header -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-900">SDM</h2>
                     </div>
+                </div>
 
-                    <form action="#" method="POST">
-                        @csrf
+                <!-- SDM Section -->
+                <div>
+                    <!-- SDM Form -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <!-- SDM Header -->
+                        <div class="mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900">SDM</h2>
+                        </div>
 
                         <!-- Project Director Dropdown -->
                         <div class="mb-6">
+
                             <label for="project-director" class="block text-sm font-medium text-gray-700 mb-2">
                                 Project Director
                             </label>
@@ -97,10 +95,7 @@
                                 <select id="project-director" name="project_director"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
-                                    <option value="">Select Project Director</option>
-                                    <option value="m_reza_adi_w">M. Reza Adi W</option>
-                                    <option value="ts">Ts</option>
-                                    <option value="kv">Kv</option>
+                                    <option value="{{ auth()->user()->id }}">{{ auth()->user()->name }}</option>
                                 </select>
                             </div>
                         </div>
@@ -111,19 +106,14 @@
                                 Select Division
                             </label>
                             <div class="relative mb-4">
-                                <select id="division-select" name="division"
+                                <select id="division-select"
                                     class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]"
                                     style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23666666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');"
                                     onchange="showMembersDropdown(this.value)">
                                     <option value="">Choose Division</option>
-                                    <option value="engineer_web">Engineer Web</option>
-                                    <option value="analis">Analis</option>
-                                    <option value="engineer_android">Engineer Android</option>
-                                    <option value="content_creator">Content Creator</option>
-                                    <option value="engineer_ios">Engineer IOS</option>
-                                    <option value="copywriter">Copywriter</option>
-                                    <option value="uiux">UI/UX</option>
-                                    <option value="tester">Tester</option>
+                                    @foreach ($karyawans as $division => $members)
+                                        <option value="{{ $division ?? 'Unknown' }}">{{ $division ?? 'Unknown' }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -147,6 +137,8 @@
                                     <!-- Selected member chips will appear here -->
                                 </div>
                             </div>
+
+                            <input type="text" name="karyawan_id" id="karyawan-id" class="hidden">
                         </div>
 
                         <!-- Action Buttons -->
@@ -160,10 +152,10 @@
                                 Create Project
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Calendar Popup -->
@@ -221,21 +213,45 @@
             display: none;
         }
 
-        /* Option styling */
+        /* Option styling - Enhanced */
         select option {
-            padding: 12px;
+            padding: 12px 16px;
             background-color: #ffffff;
             color: #111827;
             font-weight: 500;
+            font-size: 14px;
+            line-height: 1.5;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.15s ease;
+        }
+
+        select option:first-child {
+            color: #9ca3af;
+            font-weight: 400;
         }
 
         select option:hover {
             background-color: #eff6ff;
+            color: #1d4ed8;
         }
 
-        select option:checked {
-            background-color: #3b82f6;
+        select option:checked,
+        select option:focus {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: #ffffff;
+            font-weight: 600;
+        }
+
+        select option:active {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        /* Disabled option */
+        select option:disabled {
+            color: #d1d5db;
+            background-color: #f9fafb;
+            cursor: not-allowed;
         }
 
         /* Disabled state */
@@ -249,532 +265,641 @@
         .date-input:hover {
             border-color: #93c5fd;
         }
+
+        /* Firefox specific option styling */
+        @-moz-document url-prefix() {
+            select option {
+                padding: 10px 12px;
+            }
+        }
+
+        /* Webkit/Chrome specific option styling */
+        @supports (-webkit-appearance: none) {
+            select option {
+                padding: 10px 16px;
+            }
+        }
     </style>
 
     <script>
-        const membersData = {
-            engineer_web: [{
-                    value: 'engineer_web_john',
-                    text: 'John Doe'
-                },
-                {
-                    value: 'engineer_web_sarah',
-                    text: 'Sarah Williams'
-                },
-                {
-                    value: 'engineer_web_michael',
-                    text: 'Michael Chen'
-                },
-                {
-                    value: 'engineer_web_emma',
-                    text: 'Emma Rodriguez'
-                }
-            ],
-            analis: [{
-                    value: 'analis_robert',
-                    text: 'Robert Davis'
-                },
-                {
-                    value: 'analis_maria',
-                    text: 'Maria Garcia'
-                },
-                {
-                    value: 'analis_kevin',
-                    text: 'Kevin Brown'
-                },
-                {
-                    value: 'analis_jessica',
-                    text: 'Jessica Wilson'
-                }
-            ],
-            engineer_android: [{
-                    value: 'engineer_android_alex',
-                    text: 'Alex Johnson'
-                },
-                {
-                    value: 'engineer_android_priya',
-                    text: 'Priya Patel'
-                },
-                {
-                    value: 'engineer_android_james',
-                    text: 'James Anderson'
-                },
-                {
-                    value: 'engineer_android_lisa',
-                    text: 'Lisa Zhang'
-                }
-            ],
-            content_creator: [{
-                    value: 'content_creator_olivia',
-                    text: 'Olivia Brown'
-                },
-                {
-                    value: 'content_creator_ethan',
-                    text: 'Ethan Taylor'
-                },
-                {
-                    value: 'content_creator_sophia',
-                    text: 'Sophia Martinez'
-                },
-                {
-                    value: 'content_creator_noah',
-                    text: 'Noah Anderson'
-                }
-            ],
-            engineer_ios: [{
-                    value: 'engineer_ios_liam',
-                    text: 'Liam Wilson'
-                },
-                {
-                    value: 'engineer_ios_ava',
-                    text: 'Ava Thompson'
-                },
-                {
-                    value: 'engineer_ios_mason',
-                    text: 'Mason Garcia'
-                },
-                {
-                    value: 'engineer_ios_isabella',
-                    text: 'Isabella Rodriguez'
-                }
-            ],
-            copywriter: [{
-                    value: 'copywriter_william',
-                    text: 'William Lee'
-                },
-                {
-                    value: 'copywriter_mia',
-                    text: 'Mia Harris'
-                },
-                {
-                    value: 'copywriter_benjamin',
-                    text: 'Benjamin Clark'
-                },
-                {
-                    value: 'copywriter_charlotte',
-                    text: 'Charlotte Lewis'
-                }
-            ],
-            uiux: [{
-                    value: 'uiux_lucas',
-                    text: 'Lucas Walker'
-                },
-                {
-                    value: 'uiux_amelia',
-                    text: 'Amelia Hall'
-                },
-                {
-                    value: 'uiux_henry',
-                    text: 'Henry Allen'
-                },
-                {
-                    value: 'uiux_evelyn',
-                    text: 'Evelyn Young'
-                }
-            ],
-            tester: [{
-                    value: 'tester_alexander',
-                    text: 'Alexander King'
-                },
-                {
-                    value: 'tester_harper',
-                    text: 'Harper Wright'
-                },
-                {
-                    value: 'tester_daniel',
-                    text: 'Daniel Scott'
-                },
-                {
-                    value: 'tester_ella',
-                    text: 'Ella Green'
-                }
-            ]
-        };
+        // membersData: object where keys are division names, values are arrays of {id, name, division}
+        const membersData = @json(
+            $karyawans->map(function ($group) {
+                return $group->map(function ($u) {
+                        return ['id' => $u->id, 'name' => $u->name, 'division' => $u->division];
+                    })->values();
+            }));
 
-        let selectedMembers = {};
-        let usedDivisions = [];
+        // State
+        let selectedMembers = {}; // { memberId: { id, name, division } }
+        let usedDivisions = []; // to track removed division options for reset
+
+        // ==================== DROPDOWN ARROW ANIMATIONS ====================
+        // Removed arrow animations since we're using CSS background-image for arrows
 
         function showMembersDropdown(division) {
             const container = document.getElementById('members-container');
             const membersList = document.getElementById('members-list');
             const divisionSelect = document.getElementById('division-select');
 
-            if (division === '') {
+            if (!division || division === '') {
                 container.classList.add('hidden');
+                membersList.innerHTML = '';
                 return;
             }
 
-            // Clear previous checkboxes
+            // Find members for division (safe fallback to empty array)
+            const members = membersData[division] || [];
+
+            // Clear previous
             membersList.innerHTML = '';
 
-            // Tampilkan container
+            if (members.length === 0) {
+                membersList.innerHTML = '<div class="text-sm text-gray-500">No members in this division.</div>';
+            } else {
+                // Build checkboxes
+                members.forEach(member => {
+                    const id = member.id;
+                    const name = member.name;
+                    const div = member.division || division;
+
+                    // Check if this member already selected (preserve selection)
+                    const isChecked = !!selectedMembers[id];
+
+                    const label = document.createElement('label');
+                    label.className = 'flex items-center cursor-pointer';
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.name = 'team_members[]';
+                    input.value = id;
+                    input.dataset.name = name;
+                    input.dataset.division = div;
+                    input.className = 'rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4';
+                    if (isChecked) input.checked = true;
+                    input.addEventListener('change', updateSelectedMembers);
+
+                    const span = document.createElement('span');
+                    span.className = 'ml-3 text-sm text-gray-700';
+                    span.textContent = name;
+
+                    label.appendChild(input);
+                    label.appendChild(span);
+
+                    membersList.appendChild(label);
+                });
+            }
+
+            // Show container
             container.classList.remove('hidden');
 
-            // Tambahkan checkboxes berdasarkan divisi yang dipilih
-            const members = membersData[division];
-            members.forEach(member => {
-                const checkboxContainer = document.createElement('label');
-                checkboxContainer.className = 'flex items-center cursor-pointer';
-
-                // Cek apakah member ini sudah ada di selectedMembers
-                const isChecked = selectedMembers[member.value] !== undefined;
-
-                checkboxContainer.innerHTML = `
-                    <input type="checkbox" name="team_members[]" value="${member.value}" 
-                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4"
-                           onchange="updateSelectedMembers()" ${isChecked ? 'checked' : ''}>
-                    <span class="ml-3 text-sm text-gray-700">${member.text}</span>
-                `;
-
-                membersList.appendChild(checkboxContainer);
-            });
-
-            // Hapus opsi divisi dari dropdown
-            const optionToRemove = divisionSelect.querySelector(`option[value="${division}"]`);
+            // Remove chosen division from select (so user can't re-add same division)
+            const optionToRemove = divisionSelect.querySelector(`option[value="${escapeSelector(division)}"]`);
             if (optionToRemove) {
+                // store removed option text/value so we can restore later if reset
+                usedDivisions.push({
+                    value: optionToRemove.value,
+                    text: optionToRemove.textContent
+                });
                 optionToRemove.remove();
             }
 
-            // Tandai divisi sebagai sudah digunakan
-            if (!usedDivisions.includes(division)) {
-                usedDivisions.push(division);
-            }
-
-            // Reset dropdown ke default
+            // Reset select to default
             divisionSelect.value = '';
         }
 
         function updateSelectedMembers() {
-            const checkboxes = document.querySelectorAll('input[name="team_members[]"]:checked');
             const selectedDisplay = document.getElementById('selected-display');
             const selectedChips = document.getElementById('selected-chips');
+            const karaywanId = document.getElementById('karyawan-id');
 
-            // Update selectedMembers object dengan checkbox yang saat ini tercentang
-            checkboxes.forEach(checkbox => {
-                const memberName = checkbox.nextElementSibling.textContent;
-                const memberValue = checkbox.value;
-                
-                // Extract division dari member value
-                let divisionName = '';
-                if (memberValue.startsWith('engineer_web_')) {
-                    divisionName = 'Engineer Web';
-                } else if (memberValue.startsWith('analis_')) {
-                    divisionName = 'Analis';
-                } else if (memberValue.startsWith('engineer_android_')) {
-                    divisionName = 'Engineer Android';
-                } else if (memberValue.startsWith('content_creator_')) {
-                    divisionName = 'Content Creator';
-                } else if (memberValue.startsWith('engineer_ios_')) {
-                    divisionName = 'Engineer IOS';
-                } else if (memberValue.startsWith('copywriter_')) {
-                    divisionName = 'Copywriter';
-                } else if (memberValue.startsWith('uiux_')) {
-                    divisionName = 'UI/UX';
-                } else if (memberValue.startsWith('tester_')) {
-                    divisionName = 'Tester';
-                }
+            // gather all checked checkboxes
+            const checkboxes = document.querySelectorAll('input[name="team_members[]"]');
 
-                // Simpan ke selectedMembers object
-                selectedMembers[memberValue] = {
-                    name: memberName,
-                    division: divisionName
-                };
-            });
+            // update selectedMembers from checkboxes currently checked
+            checkboxes.forEach(cb => {
+                const id = cb.value;
+                const name = cb.dataset.name || (cb.nextElementSibling ? cb.nextElementSibling.textContent : '');
+                const division = cb.dataset.division || '';
 
-            // Cek jika ada yang tidak tercentang, hapus dari selectedMembers
-            const allCheckboxes = document.querySelectorAll('input[name="team_members[]"]');
-            allCheckboxes.forEach(checkbox => {
-                if (!checkbox.checked && selectedMembers[checkbox.value]) {
-                    delete selectedMembers[checkbox.value];
+                if (cb.checked) {
+                    selectedMembers[id] = {
+                        id,
+                        name,
+                        division
+                    };
+                } else {
+                    // only remove if that member is present and not checked
+                    if (selectedMembers[id]) {
+                        delete selectedMembers[id];
+                    }
                 }
             });
 
             // Clear previous chips
             selectedChips.innerHTML = '';
 
-            // Jika tidak ada member yang dipilih, sembunyikan display
+            // if no selected members -> hide display
             if (Object.keys(selectedMembers).length === 0) {
                 selectedDisplay.classList.add('hidden');
                 return;
             }
 
-            // Show selected display
             selectedDisplay.classList.remove('hidden');
 
-            // Create chips untuk semua selected members (dari object, bukan hanya yang tercentang saat ini)
-            Object.entries(selectedMembers).forEach(([memberValue, memberData]) => {
+            // Render chips
+            Object.values(selectedMembers).forEach(member => {
                 const chip = document.createElement('div');
                 chip.className =
                     'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
-                chip.innerHTML = `
-                    <span class="font-medium">[${memberData.division}]</span>
-                    <span class="ml-1">${memberData.name}</span>
-                    <button type="button" class="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none" 
-                        onclick="removeSelectedMember('${memberValue}')">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                `;
+
+                const boldDiv = document.createElement('span');
+                boldDiv.className = 'font-medium';
+                boldDiv.textContent = `[${member.division}]`;
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'ml-1';
+                nameSpan.textContent = member.name;
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'ml-2 text-blue-600 hover:text-blue-800 focus:outline-none';
+                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                 </svg>`;
+                btn.addEventListener('click', () => removeSelectedMember(member.id));
+
+                chip.appendChild(boldDiv);
+                chip.appendChild(nameSpan);
+                chip.appendChild(btn);
+
                 selectedChips.appendChild(chip);
             });
+
+            const memberIds = Object.keys(selectedMembers);
+            karaywanId.value = memberIds;
         }
 
-        function removeSelectedMember(memberValue) {
-            // Hapus dari selectedMembers object
-            delete selectedMembers[memberValue];
-            
-            // Jika checkbox untuk member ini ada di DOM, uncheck
-            const checkbox = document.querySelector(`input[value="${memberValue}"]`);
-            if (checkbox) {
-                checkbox.checked = false;
-            }
-            
-            // Update tampilan
+        function removeSelectedMember(memberId) {
+            // remove from state
+            delete selectedMembers[memberId];
+
+            // uncheck checkbox if present
+            const checkbox = document.querySelector(`input[name="team_members[]"][value="${memberId}"]`);
+            if (checkbox) checkbox.checked = false;
+
+            // update UI
             updateSelectedMembers();
         }
 
-        // Reset function for the reset button
         function resetAllSelections() {
             const divisionSelect = document.getElementById('division-select');
             const membersList = document.getElementById('members-list');
 
-            // Simpan opsi divisi yang hilang
-            const divisionsToRestore = [...usedDivisions];
+            // restore removed division options
+            if (usedDivisions && usedDivisions.length > 0) {
+                usedDivisions.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.text;
+                    divisionSelect.appendChild(option);
+                });
+            }
 
-            // Reset division dropdown
-            divisionSelect.value = '';
-
-            // Re-add all division options
-            const divisionLabels = {
-                'engineer_web': 'Engineer Web',
-                'analis': 'Analis',
-                'engineer_android': 'Engineer Android',
-                'content_creator': 'Content Creator',
-                'engineer_ios': 'Engineer IOS',
-                'copywriter': 'Copywriter',
-                'uiux': 'UI/UX',
-                'tester': 'Tester'
-            };
-
-            divisionsToRestore.forEach(division => {
-                const option = document.createElement('option');
-                option.value = division;
-                option.textContent = divisionLabels[division];
-                divisionSelect.appendChild(option);
-            });
-
-            // Clear used divisions array
+            // clear trackers
             usedDivisions = [];
+            selectedMembers = {};
 
-            // Clear members list
+            // clear UI
             membersList.innerHTML = '';
-
-            // Hide containers
             document.getElementById('members-container').classList.add('hidden');
             document.getElementById('selected-display').classList.add('hidden');
 
-            // Clear selected members object
-            selectedMembers = {};
+            // reset project director and other inputs if needed (HTML reset already handles most)
+            const director = document.getElementById('project-director');
+            if (director) director.value = '';
 
-            // Reset project director
-            document.getElementById('project-director').value = '';
-
-            // Reset date inputs
-            document.getElementById('project-start').value = '';
-            document.getElementById('project-end').value = '';
+            // Clear date inputs
+            const start = document.getElementById('project-start');
+            const end = document.getElementById('project-end');
+            if (start) start.value = '';
+            if (end) end.value = '';
         }
 
-        // Calendar JS
-        document.addEventListener('DOMContentLoaded', () => {
-            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                'Dec'
-            ];
+        // Helper to escape selector when division name has special chars
+        function escapeSelector(s) {
+            return CSS.escape ? CSS.escape(s) : s.replace(/([ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~])/g, '\\$1');
+    }
 
-            const calendarPopup = document.getElementById('calendarPopup');
-            const monthShortEl = document.getElementById('month-short');
-            const yearSelect = document.getElementById('year-select');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const datesGrid = document.getElementById('dates-grid');
+    // Calendar JS
+    document.addEventListener('DOMContentLoaded', () => {
+        const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+            'Dec'
+        ];
+        const calendarPopup = document.getElementById('calendarPopup');
+        const monthShortEl = document.getElementById('month-short');
+        const yearSelect = document.getElementById('year-select');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const datesGrid = document.getElementById('dates-grid');
 
-            const startInput = document.getElementById('project-start');
-            const endInput = document.getElementById('project-end');
-            const startIcon = document.getElementById('project-start-icon');
-            const endIcon = document.getElementById('project-end-icon');
+        const startInput = document.getElementById('project-start');
+        const endInput = document.getElementById('project-end');
+        const startIcon = document.getElementById('project-start-icon');
+        const endIcon = document.getElementById('project-end-icon');
 
-            // Move popup to body
-            if (calendarPopup && calendarPopup.parentElement !== document.body) {
-                document.body.appendChild(calendarPopup);
+        // Move popup to body
+        if (calendarPopup && calendarPopup.parentElement !== document.body) {
+            document.body.appendChild(calendarPopup);
+        }
+
+        let viewDate = new Date();
+        let activeInput = null;
+
+        function stripTime(d) {
+            const nd = new Date(d);
+            nd.setHours(0, 0, 0, 0);
+            return nd;
+        }
+
+        function pad(n) {
+            return n < 10 ? '0' + n : String(n);
+        }
+
+        function formatISO(d) {
+            return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+        }
+
+        function initYear() {
+            yearSelect.innerHTML = '';
+            const cur = new Date().getFullYear();
+            for (let y = cur - 50; y <= cur + 50; y++) {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y;
+                yearSelect.appendChild(opt);
+            }
+        }
+
+        function updateHeader() {
+            yearSelect.value = viewDate.getFullYear();
+            monthShortEl.textContent = monthShortNames[viewDate.getMonth()];
+        }
+
+        function renderCalendar() {
+            const year = viewDate.getFullYear();
+            const month = viewDate.getMonth();
+            updateHeader();
+            datesGrid.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'w-10 h-10 rounded-full text-center text-sm text-gray-300';
+                datesGrid.appendChild(cell);
             }
 
-            let viewDate = new Date();
-            let activeInput = null;
+            const today = stripTime(new Date()).getTime();
+            const currentVal = activeInput && activeInput.value ? new Date(activeInput.value) : null;
+            const selectedTime = currentVal ? stripTime(currentVal).getTime() : null;
 
-            function stripTime(d) {
-                const nd = new Date(d);
-                nd.setHours(0, 0, 0, 0);
-                return nd;
+            for (let d = 1; d <= daysInMonth; d++) {
+                const cell = document.createElement('button');
+                cell.type = 'button';
+                cell.className =
+                    'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition';
+                cell.textContent = d;
+
+                const cellDate = new Date(year, month, d);
+                const cellTime = stripTime(cellDate).getTime();
+
+                if (cellTime === today) {
+                    cell.classList.add('font-semibold');
+                    cell.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.05)';
+                }
+                if (selectedTime && cellTime === selectedTime) {
+                    cell.classList.add('bg-blue-500', 'text-white', 'font-semibold');
+                }
+
+                cell.addEventListener('click', () => {
+                    if (!activeInput) return;
+                    activeInput.value = formatISO(cellDate);
+                    hideCalendar();
+                });
+
+                datesGrid.appendChild(cell);
             }
+        }
 
-            function pad(n) {
-                return n < 10 ? '0' + n : String(n);
-            }
+        function showCalendarFor(inputEl) {
+            activeInput = inputEl;
 
-            function formatISO(d) {
-                return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
-            }
-
-            function initYear() {
-                yearSelect.innerHTML = '';
-                const cur = new Date().getFullYear();
-                for (let y = cur - 50; y <= cur + 50; y++) {
-                    const opt = document.createElement('option');
-                    opt.value = y;
-                    opt.textContent = y;
-                    yearSelect.appendChild(opt);
+            if (activeInput.value) {
+                const parsed = new Date(activeInput.value);
+                if (!isNaN(parsed.getTime())) {
+                    viewDate = new Date(parsed);
                 }
             }
 
-            function updateHeader() {
-                yearSelect.value = viewDate.getFullYear();
-                monthShortEl.textContent = monthShortNames[viewDate.getMonth()];
+            calendarPopup.classList.remove('hidden');
+            calendarPopup.style.visibility = 'hidden';
+
+            const rect = inputEl.getBoundingClientRect();
+            const popupW = calendarPopup.offsetWidth || 320;
+            const popupH = calendarPopup.offsetHeight || 360;
+
+            let left = rect.left + window.scrollX;
+            let top = rect.bottom + window.scrollY + 8;
+
+            if (left + popupW > window.scrollX + window.innerWidth - 12) {
+                left = window.scrollX + window.innerWidth - popupW - 12;
+            }
+            if (left < 12 + window.scrollX) left = 12 + window.scrollX;
+
+            if (top + popupH > window.scrollY + window.innerHeight - 12) {
+                const altTop = rect.top + window.scrollY - popupH - 8;
+                top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY +
+                    window.innerHeight - popupH - 12);
             }
 
-            function renderCalendar() {
-                const year = viewDate.getFullYear();
-                const month = viewDate.getMonth();
-                updateHeader();
-                datesGrid.innerHTML = '';
+            calendarPopup.style.position = 'absolute';
+            calendarPopup.style.left = left + 'px';
+            calendarPopup.style.top = top + 'px';
+            calendarPopup.style.visibility = 'visible';
+            calendarPopup.classList.remove('hidden');
 
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
+            renderCalendar();
+        }
 
-                for (let i = 0; i < firstDay; i++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'w-10 h-10 rounded-full text-center text-sm text-gray-300';
-                    datesGrid.appendChild(cell);
-                }
+        function hideCalendar() {
+            calendarPopup.classList.add('hidden');
+            activeInput = null;
+        }
 
-                const today = stripTime(new Date()).getTime();
-                const currentVal = activeInput && activeInput.value ? new Date(activeInput.value) : null;
-                const selectedTime = currentVal ? stripTime(currentVal).getTime() : null;
+        // Event binding for date inputs
+        [startInput, endInput].forEach(inp => {
+            if (!inp) return;
+            inp.addEventListener('click', () => showCalendarFor(inp));
+            inp.addEventListener('focus', () => showCalendarFor(inp));
+        });
+        if (startIcon) startIcon.addEventListener('click', () => showCalendarFor(startInput));
+        if (endIcon) endIcon.addEventListener('click', () => showCalendarFor(endInput));
 
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const cell = document.createElement('button');
-                    cell.type = 'button';
-                    cell.className =
-                        'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition';
-                    cell.textContent = d;
-
-                    const cellDate = new Date(year, month, d);
-                    const cellTime = stripTime(cellDate).getTime();
-
-                    if (cellTime === today) {
-                        cell.classList.add('font-semibold');
-                        cell.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.05)';
-                    }
-                    if (selectedTime && cellTime === selectedTime) {
-                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold');
-                    }
-
-                    cell.addEventListener('click', () => {
-                        if (!activeInput) return;
-                        activeInput.value = formatISO(cellDate);
-                        hideCalendar();
-                    });
-
-                    datesGrid.appendChild(cell);
-                }
-            }
-
-            function showCalendarFor(inputEl) {
-                activeInput = inputEl;
-
-                if (activeInput.value) {
-                    const parsed = new Date(activeInput.value);
-                    if (!isNaN(parsed.getTime())) {
-                        viewDate = new Date(parsed);
-                    }
-                }
-
-                calendarPopup.classList.remove('hidden');
-                calendarPopup.style.visibility = 'hidden';
-
-                const rect = inputEl.getBoundingClientRect();
-                const popupW = calendarPopup.offsetWidth || 320;
-                const popupH = calendarPopup.offsetHeight || 360;
-
-                let left = rect.left + window.scrollX;
-                let top = rect.bottom + window.scrollY + 8;
-
-                if (left + popupW > window.scrollX + window.innerWidth - 12) {
-                    left = window.scrollX + window.innerWidth - popupW - 12;
-                }
-                if (left < 12 + window.scrollX) left = 12 + window.scrollX;
-
-                if (top + popupH > window.scrollY + window.innerHeight - 12) {
-                    const altTop = rect.top + window.scrollY - popupH - 8;
-                    top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY +
-                        window.innerHeight - popupH - 12);
-                }
-
-                calendarPopup.style.position = 'absolute';
-                calendarPopup.style.left = left + 'px';
-                calendarPopup.style.top = top + 'px';
-
-                calendarPopup.style.visibility = 'visible';
-                calendarPopup.classList.remove('hidden');
-
-                renderCalendar();
-            }
-
-            function hideCalendar() {
-                calendarPopup.classList.add('hidden');
-                activeInput = null;
-            }
-
-            // Event: input & icon -> open calendar
-            [startInput, endInput].forEach(inp => {
-                inp.addEventListener('click', () => showCalendarFor(inp));
-                inp.addEventListener('focus', () => showCalendarFor(inp));
-            });
-            startIcon.addEventListener('click', () => showCalendarFor(startInput));
-            endIcon.addEventListener('click', () => showCalendarFor(endInput));
-
-            // Calendar navigation
-            prevBtn.addEventListener('click', () => {
-                viewDate.setMonth(viewDate.getMonth() - 1);
-                renderCalendar();
-            });
-            nextBtn.addEventListener('click', () => {
-                viewDate.setMonth(viewDate.getMonth() + 1);
-                renderCalendar();
-            });
-            yearSelect.addEventListener('change', (e) => {
-                viewDate.setFullYear(Number(e.target.value));
-                renderCalendar();
-            });
-
-            // Click outside to close
-            document.addEventListener('click', (e) => {
-                if (calendarPopup.classList.contains('hidden')) return;
-                const t = e.target;
-                if (t === startInput || t === endInput || t === startIcon || t === endIcon) return;
-                if (!calendarPopup.contains(t)) hideCalendar();
-            });
-
-            // Reposition on resize/scroll
-            const repositionIfOpen = () => {
-                if (!calendarPopup.classList.contains('hidden') && activeInput) showCalendarFor(activeInput);
-            };
-            window.addEventListener('resize', repositionIfOpen);
-            window.addEventListener('scroll', repositionIfOpen, true);
-
-            // Init
-            initYear();
+        // Calendar navigation
+        prevBtn.addEventListener('click', () => {
+            viewDate.setMonth(viewDate.getMonth() - 1);
             renderCalendar();
         });
-    </script>
+        nextBtn.addEventListener('click', () => {
+            viewDate.setMonth(viewDate.getMonth() + 1);
+            renderCalendar();
+        });
+        yearSelect.addEventListener('change', (e) => {
+            viewDate.setFullYear(Number(e.target.value));
+            renderCalendar();
+        });
 
+        // Click outside to close
+        document.addEventListener('click', (e) => {
+            if (calendarPopup.classList.contains('hidden')) return;
+            const t = e.target;
+            if (t === startInput || t === endInput || t === startIcon || t === endIcon) return;
+            if (!calendarPopup.contains(t)) hideCalendar();
+        });
+
+        // Reposition on resize/scroll
+        const repositionIfOpen = () => {
+            if (!calendarPopup.classList.contains('hidden') && activeInput) showCalendarFor(activeInput);
+        };
+        window.addEventListener('resize', repositionIfOpen);
+        window.addEventListener('scroll', repositionIfOpen, true);
+
+        // Init
+        initYear();
+        renderCalendar();
+
+        // When the form is reset by browser default (pressing reset), also call our custom reset
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('reset', (e) => {
+                // small timeout to allow HTML reset to complete
+                setTimeout(() => resetAllSelections(), 10);
+            });
+        }
+    });
+
+    // ==================== ENHANCED DROPDOWN OPTION STYLING ====================
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get all select elements except year-select in calendar
+        const selectsToStyle = ['project-status', 'project-director', 'division-select'];
+
+        selectsToStyle.forEach(selectId => {
+            const originalSelect = document.getElementById(selectId);
+            if (!originalSelect) return;
+
+            // Create custom dropdown wrapper
+            const wrapper = document.createElement('div');
+            wrapper.className = 'custom-select-wrapper';
+            wrapper.style.position = 'relative';
+            wrapper.style.width = '100%';
+
+            // Create custom display button
+            const customDisplay = document.createElement('div');
+            customDisplay.className = 'custom-select-display';
+            customDisplay.style.cssText = `
+                        width: 100%;
+                        padding: 12px 16px;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 8px;
+                        background: white;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 14px;
+                        color: #111827;
+                        transition: all 0.2s ease;
+                    `;
+
+            // Create arrow icon
+            const arrow = document.createElement('div');
+            arrow.innerHTML =
+                `<svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+            arrow.style.transition = 'transform 0.2s ease';
+
+            // Create custom dropdown list
+            const customList = document.createElement('div');
+            customList.className = 'custom-select-list';
+            customList.style.cssText = `
+                        position: absolute;
+                        top: calc(100% + 4px);
+                        left: 0;
+                        right: 0;
+                        background: white;
+                        border-radius: 12px;
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                        max-height: 280px;
+                        overflow-y: auto;
+                        z-index: 1000;
+                        display: none;
+                        padding: 8px;
+                    `;
+
+            // Populate options
+            const selectedText = document.createElement('span');
+            const options = Array.from(originalSelect.options);
+
+            // Set initial display text
+            const initialOption = options.find(opt => opt.value === originalSelect.value) || options[0];
+            selectedText.textContent = initialOption.textContent;
+            selectedText.style.color = initialOption.value === '' ? '#9ca3af' : '#111827';
+
+            customDisplay.appendChild(selectedText);
+            customDisplay.appendChild(arrow);
+
+            // Create option items
+            options.forEach((option, index) => {
+                const optionItem = document.createElement('div');
+                optionItem.className = 'custom-option';
+                optionItem.textContent = option.textContent;
+                optionItem.dataset.value = option.value;
+
+                optionItem.style.cssText = `
+                            padding: 12px 16px;
+                            font-size: 14px;
+                            color: ${index === 0 && option.value === '' ? '#9ca3af' : '#111827'};
+                            cursor: pointer;
+                            border-radius: 8px;
+                            transition: all 0.15s ease;
+                            font-weight: ${option.value === originalSelect.value && option.value !== '' ? '600' : '500'};
+                            background: ${option.value === originalSelect.value && option.value !== '' ? '#eff6ff' : 'transparent'};
+                        `;
+
+                // Hover effect
+                optionItem.addEventListener('mouseenter', function() {
+                    if (this.dataset.value !== originalSelect.value) {
+                        this.style.backgroundColor = '#f3f4f6';
+                    }
+                });
+
+                optionItem.addEventListener('mouseleave', function() {
+                    if (this.dataset.value !== originalSelect.value) {
+                        this.style.backgroundColor = 'transparent';
+                    }
+                });
+
+                // Click handler
+                optionItem.addEventListener('click', function() {
+                    const value = this.dataset.value;
+                    originalSelect.value = value;
+
+                    // Trigger change event on original select
+                    const event = new Event('change', {
+                        bubbles: true
+                    });
+                    originalSelect.dispatchEvent(event);
+
+                    // Update display
+                    selectedText.textContent = this.textContent;
+                    selectedText.style.color = value === '' ? '#9ca3af' : '#111827';
+
+                    // Update all options styling
+                    customList.querySelectorAll('.custom-option').forEach(opt => {
+                        const isSelected = opt.dataset.value === value &&
+                            value !== '';
+                        opt.style.fontWeight = isSelected ? '600' : '500';
+                        opt.style.backgroundColor = isSelected ? '#eff6ff' :
+                            'transparent';
+                    });
+
+                    // Close dropdown
+                    customList.style.display = 'none';
+                    arrow.style.transform = 'rotate(0deg)';
+                    customDisplay.style.borderColor = '#e5e7eb';
+                });
+
+                customList.appendChild(optionItem);
+            });
+
+            // Toggle dropdown
+            customDisplay.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isOpen = customList.style.display === 'block';
+
+                // Close all other dropdowns
+                document.querySelectorAll('.custom-select-list').forEach(list => {
+                    list.style.display = 'none';
+                });
+                document.querySelectorAll('.custom-select-display').forEach(display => {
+                    display.style.borderColor = '#e5e7eb';
+                    display.querySelector('div').style.transform = 'rotate(0deg)';
+                });
+
+                if (!isOpen) {
+                    customList.style.display = 'block';
+                    arrow.style.transform = 'rotate(180deg)';
+                    customDisplay.style.borderColor = '#3b82f6';
+                } else {
+                    customList.style.display = 'none';
+                    arrow.style.transform = 'rotate(0deg)';
+                    customDisplay.style.borderColor = '#e5e7eb';
+                }
+            });
+
+            // Hover effect on display
+            customDisplay.addEventListener('mouseenter', function() {
+                if (customList.style.display !== 'block') {
+                    this.style.backgroundColor = '#f9fafb';
+                    this.style.borderColor = '#d1d5db';
+                }
+            });
+
+            customDisplay.addEventListener('mouseleave', function() {
+                if (customList.style.display !== 'block') {
+                    this.style.backgroundColor = 'white';
+                    this.style.borderColor = '#e5e7eb';
+                }
+            });
+
+            // Close on outside click
+            document.addEventListener('click', function() {
+                customList.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+                customDisplay.style.borderColor = '#e5e7eb';
+            });
+
+            // Assemble custom dropdown
+            wrapper.appendChild(customDisplay);
+            wrapper.appendChild(customList);
+
+            // Hide original select
+            originalSelect.style.display = 'none';
+
+            // Insert custom dropdown after original
+            originalSelect.parentNode.insertBefore(wrapper, originalSelect.nextSibling);
+        });
+
+        // Custom scrollbar for dropdown lists
+        const style = document.createElement('style');
+        style.textContent = `
+                    .custom-select-list::-webkit-scrollbar {
+                        width: 6px;
+                    }
+                    .custom-select-list::-webkit-scrollbar-track {
+                        background: #f1f1f1;
+                        border-radius: 10px;
+                    }
+                    .custom-select-list::-webkit-scrollbar-thumb {
+                        background: #cbd5e1;
+                        border-radius: 10px;
+                    }
+                    .custom-select-list::-webkit-scrollbar-thumb:hover {
+                        background: #94a3b8;
+                    }
+                `;
+            document.head.appendChild(style);
+        });
+    </script>
 @endsection

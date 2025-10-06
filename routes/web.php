@@ -91,8 +91,18 @@ Route::controller(DirectorController::class)
     Route::get("dashboard", "dashboard")->name("dashboard");
     Route::get("project", "project")->name("project");
     Route::get("create-project", "createProject")->name("project.create");
+    Route::post("create-project", "storeProject")->name("project.store");
+    Route::get("edit-project/{id}", "editProject")->name("edit-project");
+    Route::post("edit-project/{id}", "updateProject")->name(
+      "edit-project.update"
+    );
+
     Route::get("task", "task")->name("task");
+    Route::post("task", "storeTask")->name("task.store");
+    Route::post("task/transfer", "transferTask")->name("task.transfer");
     Route::get("task-detail", "taskDetail")->name("task-detail");
+    Route::post("task-detail", "updateTask")->name("task.update");
+
     Route::get("activity", "activity")->name("activity");
     Route::get("administration-status/{id}", "administrationStatus")->name(
       "administration-status"
