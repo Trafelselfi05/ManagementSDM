@@ -13,11 +13,7 @@ class Activity extends Model
 
     protected $fillable = [
         'user_id',
-        'total_projects',
-        'total_tasks',
-        'total_completed_tasks',
-        'total_leaves',
-        'total_work_hours',
+        'work_hours',
     ];
 
     // Relasi

@@ -463,4 +463,39 @@
             </div>
         </div>
     </div>
+
+    {{-- <form action="{{ route('admin.task.update') }}" method="POST">
+        @csrf
+
+        <div style="margin-bottom: 1rem;">
+            <label for="task_id">Task ID:</label><br>
+            <input type="number" name="task_id" id="task_id" required>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <label for="name">Task Name (opsional):</label><br>
+            <input type="text" name="name" id="name" maxlength="200">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <label for="taskLevel">Task Level:</label><br>
+            <select name="taskLevel" id="taskLevel" required>
+                <option value="">-- Pilih Level --</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <label for="status">Status:</label><br>
+            <input type="hidden" name="status" value="completed">
+            <input type="text" value="completed" readonly
+                style="background:#eee; border:1px solid #ccc; padding:5px;">
+            <small>Status hanya dapat diset ke <strong>completed</strong></small>
+        </div>
+
+        <button type="submit">Update Task</button>
+    </form> --}}
+
 @endsection

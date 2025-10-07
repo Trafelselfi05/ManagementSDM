@@ -21,7 +21,7 @@
 
                     <div class="text-center sm:text-left">
                         <div class="mb-6">
-                            <h1 class="text-3xl font-bold text-gray-900 mb-2">Freyaa</h1>
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{auth()->user()->name}}</h1>
                             <p class="text-lg font-medium text-gray-500">Admin</p>
                         </div>
                         <button
@@ -69,14 +69,6 @@
             <!-- Right Column - Form Fields -->
             <div class="flex-1">
 
-                <!-- Edit Button -->
-                <div class="flex justify-end mb-8">
-                    <button
-                        class="bg-dark text-white px-6 py-3 rounded-xl font-semibold text-base hover:bg-dark/90 transition-colors shadow-md">
-                        Edit Profile
-                    </button>
-                </div>
-
                 <!-- Profile Form -->
                 <div>
                     <!-- Form Fields Grid -->
@@ -89,7 +81,7 @@
                             <div>
                                 <label class="block text-base font-medium text-gray-700 mb-3">Email</label>
                                 <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-4">
-                                    <input type="email" value="Freyacarol@email.com"
+                                    <input type="email" value="{{auth()->user()->email}}"
                                         class="w-full text-base font-medium text-gray-900 bg-transparent border-none outline-none"
                                         readonly>
                                 </div>
@@ -99,7 +91,7 @@
                             <div>
                                 <label class="block text-base font-medium text-gray-700 mb-3">Phone Number</label>
                                 <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-4">
-                                    <input type="tel" value="0867744666778"
+                                    <input type="tel" value="{{auth()->user()->phone}}"
                                         class="w-full text-base font-medium text-gray-900 bg-transparent border-none outline-none"
                                         readonly>
                                 </div>
@@ -109,7 +101,7 @@
                             <div>
                                 <label class="block text-base font-medium text-gray-700 mb-3">Address</label>
                                 <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-4">
-                                    <input type="text" value="Semarang, Central Java"
+                                    <input type="text" value="{{auth()->user()->address}}"
                                         class="w-full text-base font-medium text-gray-900 bg-transparent border-none outline-none"
                                         readonly>
                                 </div>
@@ -133,7 +125,7 @@
                             <div>
                                 <label class="block text-base font-medium text-gray-700 mb-3">Link Telegram</label>
                                 <div class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-4">
-                                    <input type="text" value="FreyaaC"
+                                    <input type="text" value="{{auth()->user()->telegram_link}}"
                                         class="w-full text-base font-medium text-gray-900 bg-transparent border-none outline-none"
                                         readonly>
                                 </div>
@@ -144,7 +136,7 @@
                                 <label class="block text-base font-medium text-gray-700 mb-3">Birth Date</label>
                                 <div
                                     class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-4 flex items-center justify-between">
-                                    <input type="date" value="2006-02-13"
+                                    <input type="date" value="{{ \Carbon\Carbon::parse(auth()->user()->birth_date)->format('M d, Y') }}"
                                         class="text-base font-medium text-gray-900 bg-transparent border-none outline-none"
                                         readonly>
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"

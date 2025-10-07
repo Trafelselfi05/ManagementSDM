@@ -273,8 +273,6 @@
             <div class="w-full mb-8">
                 <label for="edit-task-status" class="block mb-2 text-sm text-[#7d7d7d]">Status</label>
                 <select id="edit-task-status" class="w-full h-10 px-3 rounded-md border border-gray-200 bg-white">
-                    <option value="todo">To do</option>
-                    <option value="in_progress">In progress</option>
                     <option value="review">Review</option>
                 </select>
             </div>

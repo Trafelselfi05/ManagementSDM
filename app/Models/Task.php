@@ -19,9 +19,9 @@ class Task extends Model
         'estimated_hours',
         'status',
         'assigned_to',
-        'created_by_admin_id',
         'created_by_user_id',
         'completed_at',
+        'transfer_at',
     ];
 
     // Relasi

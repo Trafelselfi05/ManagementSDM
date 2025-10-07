@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Leave;
 use App\Models\Project;
 use App\Models\ProjectUser;
@@ -9,6 +10,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -259,7 +261,7 @@ class AdminController extends Controller
       "assigned_to" => $request->assigned_to,
       "level" => $request->taskLevel,
       "status" => "in_progress",
-      "updated_at" => now(),
+      "transfer_at" => now(),
     ]);
 
     return back()->with("success", "Task successfully updated!");
@@ -272,14 +274,14 @@ class AdminController extends Controller
     return view("admin.task-detail", compact("tasks"));
   }
 
-  public function updateTask(Request $request)
-  {
+public function updateTask(Request $request)
+{
     // Validasi
     $data = $request->validate([
-      "task_id" => "required|exists:tasks,id",
-      "name" => "nullable|string|max:200",
-      "taskLevel" => "required|in:low,medium,high",
-      "status" => "required|in:todo,in_progress,review,completed",
+        "task_id" => "required|exists:tasks,id",
+        "name" => "nullable|string|max:200",
+        "taskLevel" => "required|in:low,medium,high",
+        "status" => "required|in:todo,in_progress,review,completed",
     ]);
 
     $task = Task::findOrFail($data["task_id"]);
@@ -288,24 +290,56 @@ class AdminController extends Controller
     $task->level = $data["taskLevel"];
     $task->status = $data["status"];
     $task->updated_at = now();
-    $task->save();
 
-    // Jika request AJAX/JSON -> kembalikan JSON
-    if (
-      $request->wantsJson() ||
-      $request->ajax() ||
-      $request->header("Accept") === "application/json"
-    ) {
-      return response()->json([
-        "success" => true,
-        "message" => "Task updated",
-        "task" => $task,
-      ]);
+    // Jika status completed, isi waktu selesai & hitung jam kerja
+    if ($data["status"] === "completed") {
+        $task->completed_at = now();
+
+        // Pastikan transfer_at sudah ada
+        if ($task->transfer_at) {
+            $transferAt = Carbon::parse($task->transfer_at);
+            $completedAt = Carbon::parse($task->completed_at);
+
+            // Hitung selisih dalam jam (misal: 3.5 jam)
+            $workHours = round($transferAt->diffInMinutes($completedAt) / 60, 2);
+
+
+            // dd($workHours);
+
+            // Simpan ke tabel activities
+            Activity::updateOrCreate(
+                [
+                    "user_id" => $task->assigned_to,
+                    // agar 1 user 1 record per hari
+                    "created_at" => Carbon::today(),
+                ],
+                [
+                    // tambahkan jam kerja jika sudah ada
+                    "work_hours" => $workHours,
+                    "updated_at" => now(),
+                ]
+            );
+        }
     }
 
-    // fallback redirect
+    $task->save();
+
+    // Jika request JSON
+    if (
+        $request->wantsJson() ||
+        $request->ajax() ||
+        $request->header("Accept") === "application/json"
+    ) {
+        return response()->json([
+            "success" => true,
+            "message" => "Task updated",
+            "task" => $task,
+        ]);
+    }
+
+    // Redirect biasa
     return redirect()->back()->with("success", "Task updated successfully.");
-  }
+}
 
   public function activity()
   {

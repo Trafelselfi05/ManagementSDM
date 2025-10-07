@@ -201,8 +201,6 @@
                             <span id="task-level" class="flex w-[78px] h-6 items-center justify-center gap-2.5 px-[19px] py-1 relative bg-[#ffb32d] rounded-[20px]" role="tag" aria-label="Priority: Medium">
                                 <span class="font-medium text-white text-sm">Medium</span>
                             </span>
-                            <span class="flex w-[78px] h-6 items-center justify-center gap-2.5 px-[19px] py-1 relative bg-[#6fadc8] rounded-[20px]" role="tag" aria-label="Department: Engineer">
-                                <span class="font-medium text-white text-sm">Engineer</span>
                             </span>
                         </div>
                     </div>
@@ -273,9 +271,6 @@
             <div class="w-full mb-8">
                 <label for="edit-task-status" class="block mb-2 text-sm text-[#7d7d7d]">Status</label>
                 <select id="edit-task-status" class="w-full h-10 px-3 rounded-md border border-gray-200 bg-white">
-                    <option value="todo">To do</option>
-                    <option value="in_progress">In progress</option>
-                    <option value="review">Review</option>
                     <option value="completed">Completed</option>
                 </select>
             </div>

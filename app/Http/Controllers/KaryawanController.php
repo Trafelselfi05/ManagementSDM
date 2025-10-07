@@ -152,7 +152,7 @@ class KaryawanController extends Controller
     $task->name = $data["name"] ?? $task->name;
     $task->level = $data["taskLevel"];
     $task->status = $data["status"];
-    $task->updated_at = now();
+    $task->completed_at = now();
     $task->save();
 
     // Jika request AJAX/JSON -> kembalikan JSON
