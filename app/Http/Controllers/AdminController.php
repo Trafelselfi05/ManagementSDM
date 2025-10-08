@@ -192,6 +192,25 @@ class AdminController extends Controller
       ->with("success", "Project updated successfully.");
   }
 
+  public function updateProjectStatus(Request $request)
+  {
+    // Validasi input
+    $validated = $request->validate([
+      "project_id" => "required|exists:projects,id",
+      "status" => "required|in:Ready,Running,Testing,Maintenance,Complete",
+    ]);
+
+    // Ambil project berdasarkan ID
+    $project = Project::find($validated["project_id"]);
+
+    // Update status
+    $project->status = $validated["status"];
+    $project->save();
+
+    // Kirim respon (bisa redirect atau JSON tergantung kebutuhan)
+    return back()->with("success", "Project status updated successfully.");
+  }
+
   public function task()
   {
     $projects = Project::all();
@@ -274,14 +293,14 @@ class AdminController extends Controller
     return view("admin.task-detail", compact("tasks"));
   }
 
-public function updateTask(Request $request)
-{
+  public function updateTask(Request $request)
+  {
     // Validasi
     $data = $request->validate([
-        "task_id" => "required|exists:tasks,id",
-        "name" => "nullable|string|max:200",
-        "taskLevel" => "required|in:low,medium,high",
-        "status" => "required|in:todo,in_progress,review,completed",
+      "task_id" => "required|exists:tasks,id",
+      "name" => "nullable|string|max:200",
+      "taskLevel" => "required|in:low,medium,high",
+      "status" => "required|in:todo,in_progress,review,completed",
     ]);
 
     $task = Task::findOrFail($data["task_id"]);
@@ -293,57 +312,102 @@ public function updateTask(Request $request)
 
     // Jika status completed, isi waktu selesai & hitung jam kerja
     if ($data["status"] === "completed") {
-        $task->completed_at = now();
+      $task->completed_at = now();
 
-        // Pastikan transfer_at sudah ada
-        if ($task->transfer_at) {
-            $transferAt = Carbon::parse($task->transfer_at);
-            $completedAt = Carbon::parse($task->completed_at);
+      // Pastikan transfer_at sudah ada
+      if ($task->transfer_at) {
+        $transferAt = Carbon::parse($task->transfer_at);
+        $completedAt = Carbon::parse($task->completed_at);
 
-            // Hitung selisih dalam jam (misal: 3.5 jam)
-            $workHours = round($transferAt->diffInMinutes($completedAt) / 60, 2);
+        // Hitung selisih dalam jam (misal: 3.5 jam)
+        $workHours = round($transferAt->diffInMinutes($completedAt) / 60, 2);
 
+        // dd($workHours);
 
-            // dd($workHours);
-
-            // Simpan ke tabel activities
-            Activity::updateOrCreate(
-                [
-                    "user_id" => $task->assigned_to,
-                    // agar 1 user 1 record per hari
-                    "created_at" => Carbon::today(),
-                ],
-                [
-                    // tambahkan jam kerja jika sudah ada
-                    "work_hours" => $workHours,
-                    "updated_at" => now(),
-                ]
-            );
-        }
+        // Simpan ke tabel activities
+        Activity::updateOrCreate(
+          [
+            "user_id" => $task->assigned_to,
+            // agar 1 user 1 record per hari
+            "created_at" => Carbon::today(),
+          ],
+          [
+            // tambahkan jam kerja jika sudah ada
+            "work_hours" => $workHours,
+            "updated_at" => now(),
+          ]
+        );
+      }
     }
 
     $task->save();
 
     // Jika request JSON
     if (
-        $request->wantsJson() ||
-        $request->ajax() ||
-        $request->header("Accept") === "application/json"
+      $request->wantsJson() ||
+      $request->ajax() ||
+      $request->header("Accept") === "application/json"
     ) {
-        return response()->json([
-            "success" => true,
-            "message" => "Task updated",
-            "task" => $task,
-        ]);
+      return response()->json([
+        "success" => true,
+        "message" => "Task updated",
+        "task" => $task,
+      ]);
     }
 
     // Redirect biasa
     return redirect()->back()->with("success", "Task updated successfully.");
-}
+  }
 
   public function activity()
   {
-    return view("admin.activity");
+       $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        // Ambil semua user
+        $users = User::all();
+
+        $data = $users->map(function ($user) use ($currentMonth, $currentYear) {
+            // 1️⃣ Total project yang berkaitan dengan user di bulan ini
+            $projectCount = ProjectUser::where('user_id', $user->id)
+                ->whereMonth('assigned_at', $currentMonth)
+                ->whereYear('assigned_at', $currentYear)
+                ->count();
+
+            // 2️⃣ Total task dengan status "completed" di bulan ini
+            $taskDone = Task::where('assigned_to', $user->id)
+                ->where('status', 'completed')
+                ->whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->count();
+
+            // 3️⃣ Total leave di bulan ini
+            $leaveCount = Leave::where('user_id', $user->id)
+                ->whereMonth('start_date', $currentMonth)
+                ->whereYear('start_date', $currentYear)
+                ->count();
+
+            // 4️⃣ Total jam kerja hari ini → persentase max 180 jam
+            $totalWorkHours = Activity::where('user_id', $user->id)
+                ->whereDate('created_at', Carbon::today())
+                ->sum('work_hours');
+
+            $percentage = min(100, ($totalWorkHours / 180) * 100);
+
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'role' => $user->role ?? 'Employee', // default jika tidak ada kolom role
+                'image' => $user->img ?? 'https://c.animaapp.com/mf0pte7ijudQ6p/img/mask-group.png',
+                'projectCount' => $projectCount,
+                'taskDone' => $taskDone,
+                'leaveCount' => $leaveCount,
+                'workHours' => $totalWorkHours,
+                'percentage' => round($percentage, 2),
+            ];
+        });
+
+        return view('admin.activity', compact('data'));
   }
 
   public function administration()

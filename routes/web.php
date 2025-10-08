@@ -43,6 +43,8 @@ Route::controller(AdminController::class)
     Route::post("edit-project/{id}", "updateProject")->name(
       "edit-project.update"
     );
+    Route::post("update-project-status", "updateProjectStatus")->name("project.updateStatus");
+
 
     Route::get("task", "task")->name("task");
     Route::post("task", "storeTask")->name("task.store");
