@@ -131,7 +131,6 @@
                                 <option value="">-- Select Role --</option>
                                 <option value="director">Director</option>
                                 <option value="karyawan">Karyawan</option>
-                                <option value="admin">Admin</option>
                             </select>
                         </div>
                     </div>

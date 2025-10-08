@@ -59,9 +59,107 @@ class AdminController extends Controller
     return view("admin.admin-info");
   }
 
+  // public function dashboard()
+  // {
+  //   return view("admin.dashboard");
+  // }
+
   public function dashboard()
   {
-    return view("admin.dashboard");
+    $today = Carbon::today()->toDateString();
+
+    // Ambil user yang karyawan (atau semua jika ingin semua role)
+    $users = User::where("role", "karyawan")->get();
+
+    $usersData = $users->map(function ($user) use ($today) {
+      // apakah ada activity hari ini?
+      $hasActivityToday = Activity::where("user_id", $user->id)
+        ->whereDate("created_at", $today)
+        ->exists();
+
+      // apakah ada task hari ini (interaksi hari ini)?
+      $taskQueryBase = Task::where("assigned_to", $user->id)->where(function (
+        $q
+      ) use ($today) {
+        $q->whereDate("created_at", $today)
+          ->orWhereDate("updated_at", $today)
+          ->orWhereDate("transfer_at", $today)
+          ->orWhereDate("completed_at", $today);
+      });
+
+      $hasInProgress = (clone $taskQueryBase)
+        ->where("status", "in_progress")
+        ->exists();
+      $hasReview = (clone $taskQueryBase)->where("status", "review")->exists();
+      $hasCompleted = (clone $taskQueryBase)
+        ->where("status", "completed")
+        ->exists();
+      $hasAnyTask = (clone $taskQueryBase)->exists();
+
+      // tentukan dashboard_status (internal enum)
+      if ($hasActivityToday) {
+        $dashboard_status = "absent";
+      } elseif ($hasInProgress) {
+        $dashboard_status = "not_ready";
+      } elseif ($hasReview) {
+        $dashboard_status = "ready";
+      } elseif ($hasCompleted) {
+        $dashboard_status = "complete";
+      } elseif (!$hasAnyTask) {
+        $dashboard_status = "stand_by";
+      } else {
+        // fallback
+        $dashboard_status = $user->dashboard_status ?? "stand_by";
+      }
+
+      // ambil task paling relevan untuk ditampilkan di card (jika ada)
+      $latestTask = Task::where("assigned_to", $user->id)
+        ->where(function ($q) use ($today) {
+          $q->whereDate("created_at", $today)
+            ->orWhereDate("updated_at", $today)
+            ->orWhereDate("transfer_at", $today)
+            ->orWhereDate("completed_at", $today);
+        })
+        ->orderByDesc("updated_at")
+        ->with("project")
+        ->first();
+
+      // mapping untuk frontend data-status (karena di HTML kamu memakai standby / notready)
+      $frontendStatus = $this->mapToFrontendStatus($dashboard_status);
+
+      return [
+        "id" => $user->id,
+        "name" => $user->name,
+        "division" => $user->division,
+        "image" =>
+          $user->image ??
+          "https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png",
+        "dashboard_status" => $dashboard_status, // internal enum
+        "frontend_status" => $frontendStatus, // untuk atribut data-status pada card
+        "task" => $latestTask
+          ? [
+            "id" => $latestTask->id,
+            "name" => $latestTask->name,
+            "level" => $latestTask->level,
+            "status" => $latestTask->status,
+            "project_name" => $latestTask->project->name ?? null,
+          ]
+          : null,
+      ];
+    });
+
+    return view("admin.dashboard", [
+      "users" => $usersData,
+    ]);
+  }
+
+  private function mapToFrontendStatus(string $internal): string
+  {
+    return match ($internal) {
+      "stand_by" => "standby",
+      "not_ready" => "notready",
+      default => $internal, // ready, complete, absent remain same
+    };
   }
 
   public function project()
@@ -264,8 +362,6 @@ class AdminController extends Controller
 
   public function transferTask(Request $request)
   {
-    // \Log::info("Request Data:", $request->all());
-    // dd($request->all());
     $request->validate([
       "project_id" => "required|exists:projects,id",
       "task_id" => "required|exists:tasks,id",
@@ -273,8 +369,10 @@ class AdminController extends Controller
       "taskLevel" => "required|in:low,medium,high",
     ]);
 
+    // Ambil task berdasarkan ID
     $task = Task::findOrFail($request->task_id);
 
+    // Update data task
     $task->update([
       "project_id" => $request->project_id,
       "assigned_to" => $request->assigned_to,
@@ -283,7 +381,17 @@ class AdminController extends Controller
       "transfer_at" => now(),
     ]);
 
-    return back()->with("success", "Task successfully updated!");
+    // Ambil user yang menerima task (assigned_to)
+    $user = User::find($request->assigned_to);
+
+    if ($user) {
+      $user->update(["dashboard_status" => "ready"]);
+    }
+
+    return back()->with(
+      "success",
+      "Task successfully transferred and dashboard status updated!"
+    );
   }
 
   public function taskDetail()
@@ -361,53 +469,55 @@ class AdminController extends Controller
 
   public function activity()
   {
-       $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
+    $currentMonth = Carbon::now()->month;
+    $currentYear = Carbon::now()->year;
 
-        // Ambil semua user
-        $users = User::all();
+    // Ambil semua user
+    $users = User::all();
 
-        $data = $users->map(function ($user) use ($currentMonth, $currentYear) {
-            // 1️⃣ Total project yang berkaitan dengan user di bulan ini
-            $projectCount = ProjectUser::where('user_id', $user->id)
-                ->whereMonth('assigned_at', $currentMonth)
-                ->whereYear('assigned_at', $currentYear)
-                ->count();
+    $data = $users->map(function ($user) use ($currentMonth, $currentYear) {
+      // 1️⃣ Total project yang berkaitan dengan user di bulan ini
+      $projectCount = ProjectUser::where("user_id", $user->id)
+        ->whereMonth("assigned_at", $currentMonth)
+        ->whereYear("assigned_at", $currentYear)
+        ->count();
 
-            // 2️⃣ Total task dengan status "completed" di bulan ini
-            $taskDone = Task::where('assigned_to', $user->id)
-                ->where('status', 'completed')
-                ->whereMonth('created_at', $currentMonth)
-                ->whereYear('created_at', $currentYear)
-                ->count();
+      // 2️⃣ Total task dengan status "completed" di bulan ini
+      $taskDone = Task::where("assigned_to", $user->id)
+        ->where("status", "completed")
+        ->whereMonth("created_at", $currentMonth)
+        ->whereYear("created_at", $currentYear)
+        ->count();
 
-            // 3️⃣ Total leave di bulan ini
-            $leaveCount = Leave::where('user_id', $user->id)
-                ->whereMonth('start_date', $currentMonth)
-                ->whereYear('start_date', $currentYear)
-                ->count();
+      // 3️⃣ Total leave di bulan ini
+      $leaveCount = Leave::where("user_id", $user->id)
+        ->whereMonth("start_date", $currentMonth)
+        ->whereYear("start_date", $currentYear)
+        ->count();
 
-            // 4️⃣ Total jam kerja hari ini → persentase max 180 jam
-            $totalWorkHours = Activity::where('user_id', $user->id)
-                ->whereDate('created_at', Carbon::today())
-                ->sum('work_hours');
+      // 4️⃣ Total jam kerja hari ini → persentase max 180 jam
+      $totalWorkHours = Activity::where("user_id", $user->id)
+        ->whereDate("created_at", Carbon::today())
+        ->sum("work_hours");
 
-            $percentage = min(100, ($totalWorkHours / 180) * 100);
+      $percentage = min(100, ($totalWorkHours / 180) * 100);
 
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'role' => $user->role ?? 'Employee', // default jika tidak ada kolom role
-                'image' => $user->img ?? 'https://c.animaapp.com/mf0pte7ijudQ6p/img/mask-group.png',
-                'projectCount' => $projectCount,
-                'taskDone' => $taskDone,
-                'leaveCount' => $leaveCount,
-                'workHours' => $totalWorkHours,
-                'percentage' => round($percentage, 2),
-            ];
-        });
+      return [
+        "id" => $user->id,
+        "name" => $user->name,
+        "role" => $user->role ?? "Employee", // default jika tidak ada kolom role
+        "image" =>
+          $user->image ??
+          "https://c.animaapp.com/mf0pte7ijudQ6p/img/mask-group.png",
+        "projectCount" => $projectCount,
+        "taskDone" => $taskDone,
+        "leaveCount" => $leaveCount,
+        "workHours" => $totalWorkHours,
+        "percentage" => round($percentage, 2),
+      ];
+    });
 
-        return view('admin.activity', compact('data'));
+    return view("admin.activity", compact("data"));
   }
 
   public function administration()
