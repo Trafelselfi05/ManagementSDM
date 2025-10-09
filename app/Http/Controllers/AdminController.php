@@ -77,6 +77,15 @@ class AdminController extends Controller
         ->whereDate("created_at", $today)
         ->exists();
 
+      if ($hasActivityToday) {
+        $task_status = "ready";
+      }
+
+      $isOnLeaveToday = Leave::where("user_id", $user->id)
+        ->whereDate("start_date", "<=", $today)
+        ->whereDate("end_date", ">=", $today)
+        ->exists();
+
       // apakah ada task hari ini (interaksi hari ini)?
       $taskQueryBase = Task::where("assigned_to", $user->id)->where(function (
         $q
@@ -97,7 +106,7 @@ class AdminController extends Controller
       $hasAnyTask = (clone $taskQueryBase)->exists();
 
       // tentukan dashboard_status (internal enum)
-      if ($hasActivityToday) {
+      if ($isOnLeaveToday) {
         $dashboard_status = "absent";
       } elseif ($hasInProgress) {
         $dashboard_status = "not_ready";
@@ -135,6 +144,7 @@ class AdminController extends Controller
           $user->image ??
           "https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png",
         "dashboard_status" => $dashboard_status, // internal enum
+        "task_status" => $task_status ?? null, // internal enum
         "frontend_status" => $frontendStatus, // untuk atribut data-status pada card
         "task" => $latestTask
           ? [
@@ -147,6 +157,8 @@ class AdminController extends Controller
           : null,
       ];
     });
+
+    // dd($usersData);
 
     return view("admin.dashboard", [
       "users" => $usersData,
