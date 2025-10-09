@@ -490,63 +490,63 @@
     </div>
     <script>
         @stack('scripts')
-        document.addEventListener('DOMContentLoaded', function() {
-            const statusButtons = document.querySelectorAll('.status-btn');
-            const employeeCards = document.querySelectorAll('.employee-card');
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const statusButtons = document.querySelectorAll('.status-btn');
+        //     const employeeCards = document.querySelectorAll('.employee-card');
 
-            // Set initial state - show only complete employees
-            filterEmployees('ready');
+        //     // Set initial state - show only complete employees
+        //     filterEmployees('ready');
 
-            statusButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const status = this.getAttribute('data-status');
+        //     statusButtons.forEach(button => {
+        //         button.addEventListener('click', function() {
+        //             const status = this.getAttribute('data-status');
 
-                    // Update button styles
-                    statusButtons.forEach(btn => {
-                        btn.classList.remove('bg-gray-900', 'text-white');
-                        btn.classList.add('bg-gray-100', 'text-gray-700',
-                            'hover:bg-gray-200');
-                    });
+        //             // Update button styles
+        //             statusButtons.forEach(btn => {
+        //                 btn.classList.remove('bg-gray-900', 'text-white');
+        //                 btn.classList.add('bg-gray-100', 'text-gray-700',
+        //                     'hover:bg-gray-200');
+        //             });
 
-                    this.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
-                    this.classList.add('bg-gray-900', 'text-white');
+        //             this.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+        //             this.classList.add('bg-gray-900', 'text-white');
 
-                    // Filter employees
-                    filterEmployees(status);
-                });
-            });
+        //             // Filter employees
+        //             filterEmployees(status);
+        //         });
+        //     });
 
-            function filterEmployees(status) {
-                employeeCards.forEach(card => {
-                    if (card.getAttribute('data-status') === status) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
+        //     function filterEmployees(status) {
+        //         employeeCards.forEach(card => {
+        //             if (card.getAttribute('data-status') === status) {
+        //                 card.classList.remove('hidden');
+        //             } else {
+        //                 card.classList.add('hidden');
+        //             }
+        //         });
 
-                // If no cards visible for this status, show message
-                const visibleCards = document.querySelectorAll(
-                    `.employee-card[data-status="${status}"]:not(.hidden)`);
-                if (visibleCards.length === 0) {
-                    // Create a message element if it doesn't exist
-                    let messageElement = document.getElementById('noEmployeesMessage');
-                    if (!messageElement) {
-                        messageElement = document.createElement('div');
-                        messageElement.id = 'noEmployeesMessage';
-                        messageElement.className = 'col-span-full text-center py-8 text-gray-500';
-                        document.getElementById('employeeCards').appendChild(messageElement);
-                    }
-                    messageElement.textContent = `No employees with status: ${status}`;
-                } else {
-                    // Remove message if it exists
-                    const messageElement = document.getElementById('noEmployeesMessage');
-                    if (messageElement) {
-                        messageElement.remove();
-                    }
-                }
-            }
-        });
+        //         // If no cards visible for this status, show message
+        //         const visibleCards = document.querySelectorAll(
+        //             `.employee-card[data-status="${status}"]:not(.hidden)`);
+        //         if (visibleCards.length === 0) {
+        //             // Create a message element if it doesn't exist
+        //             let messageElement = document.getElementById('noEmployeesMessage');
+        //             if (!messageElement) {
+        //                 messageElement = document.createElement('div');
+        //                 messageElement.id = 'noEmployeesMessage';
+        //                 messageElement.className = 'col-span-full text-center py-8 text-gray-500';
+        //                 document.getElementById('employeeCards').appendChild(messageElement);
+        //             }
+        //             messageElement.textContent = `No employees with status: ${status}`;
+        //         } else {
+        //             // Remove message if it exists
+        //             const messageElement = document.getElementById('noEmployeesMessage');
+        //             if (messageElement) {
+        //                 messageElement.remove();
+        //             }
+        //         }
+        //     }
+        // });
 
 
         // Modal functionality
@@ -1038,145 +1038,6 @@
                 dropdown1.classList.add('hidden');
             }
         });
-
-        // Initialize dropdown styling on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set initial selected option for demo (second dropdown)
-            setTimeout(() => {
-                selectOption2('website_management', 'Website Management Company');
-            }, 100);
-        });
-
-    // Prevent sidebar reload with AJAX navigation
-    document.addEventListener('DOMContentLoaded', function() {
-        // Select all sidebar links except logout
-        const sidebarLinks = document.querySelectorAll('.sidebar-item');
-        const mainContent = document.querySelector('main');
-        
-        sidebarLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                
-                // Skip if it's logout link or has data-no-ajax attribute
-                if (href.includes('logout') || this.hasAttribute('data-no-ajax')) {
-                    return; // Allow normal navigation
-                }
-                
-                e.preventDefault();
-                
-                // Update active state
-                updateActiveState(this);
-                
-                // Fetch and load content
-                loadContent(href);
-            });
-        });
-        
-        // Also handle mobile navigation links
-        const mobileLinks = document.querySelectorAll('nav.fixed a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                
-                if (href.includes('logout') || this.hasAttribute('data-no-ajax')) {
-                    return;
-                }
-                
-                e.preventDefault();
-                updateMobileActiveState(this);
-                loadContent(href);
-            });
-        });
-        
-        function updateActiveState(clickedLink) {
-            // Remove active class from all sidebar items
-            document.querySelectorAll('.sidebar-item').forEach(item => {
-                item.classList.remove('bg-[#6FAEC9]', 'text-white');
-                item.classList.add('text-gray-600');
-            });
-            
-            // Add active class to clicked item
-            clickedLink.classList.remove('text-gray-600');
-            clickedLink.classList.add('bg-[#6FAEC9]', 'text-white');
-        }
-        
-        function updateMobileActiveState(clickedLink) {
-            // Update mobile navigation active state
-            document.querySelectorAll('nav.fixed a').forEach(item => {
-                item.classList.remove('text-[#6FAEC9]');
-                item.classList.add('text-gray-600');
-            });
-            
-            clickedLink.classList.remove('text-gray-600');
-            clickedLink.classList.add('text-[#6FAEC9]');
-        }
-        
-        function loadContent(url) {
-            // Show loading state
-            mainContent.style.opacity = '0.5';
-            mainContent.style.transition = 'opacity 0.2s ease';
-            
-            fetch(url, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.text())
-            .then(html => {
-                // Parse the response
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                
-                // Extract main content
-                const newContent = doc.querySelector('main');
-                if (newContent) {
-                    mainContent.innerHTML = newContent.innerHTML;
-                }
-                
-                // Update page title
-                const newTitle = doc.querySelector('title');
-                if (newTitle) {
-                    document.title = newTitle.textContent;
-                }
-                
-                // Update URL without reload
-                window.history.pushState({path: url}, '', url);
-                
-                // Restore opacity
-                mainContent.style.opacity = '1';
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-                
-                // Re-execute any page-specific scripts if needed
-                executePageScripts();
-            })
-            .catch(error => {
-                console.error('Error loading content:', error);
-                mainContent.style.opacity = '1';
-                // Fallback to normal navigation on error
-                window.location.href = url;
-            });
-        }
-        
-        function executePageScripts() {
-            // Re-initialize modals, forms, etc for the newly loaded content
-            const scripts = mainContent.querySelectorAll('script');
-            scripts.forEach(script => {
-                if (script.innerHTML) {
-                    eval(script.innerHTML);
-                }
-            });
-        }
-        
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', function(event) {
-            if (event.state) {
-                loadContent(window.location.href);
-            }
-        });
-    });
-
     </script>
 </body>
 

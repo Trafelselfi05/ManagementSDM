@@ -60,7 +60,119 @@ class DirectorController extends Controller
 
   public function dashboard()
   {
-    return view("director.dashboard");
+    $today = Carbon::today()->toDateString();
+
+    // Ambil user yang karyawan (atau semua jika ingin semua role)
+    $directorId = auth()->user()->id;
+
+    $users = User::whereHas("projects", function ($query) use ($directorId) {
+      $query->where("director_id", $directorId);
+    })
+      ->where("role", "karyawan")
+      ->distinct()
+      ->get();
+
+    $usersData = $users->map(function ($user) use ($today) {
+      // apakah ada activity hari ini?
+      $hasActivityToday = Activity::where("user_id", $user->id)
+        ->whereDate("created_at", $today)
+        ->exists();
+
+      if ($hasActivityToday) {
+        $task_status = "ready";
+      }
+
+      $isOnLeaveToday = Leave::where("user_id", $user->id)
+        ->whereDate("start_date", "<=", $today)
+        ->whereDate("end_date", ">=", $today)
+        ->exists();
+
+      // apakah ada task hari ini (interaksi hari ini)?
+      $taskQueryBase = Task::where("assigned_to", $user->id)->where(function (
+        $q
+      ) use ($today) {
+        $q->whereDate("created_at", $today)
+          ->orWhereDate("updated_at", $today)
+          ->orWhereDate("transfer_at", $today)
+          ->orWhereDate("completed_at", $today);
+      });
+
+      $hasInProgress = (clone $taskQueryBase)
+        ->where("status", "in_progress")
+        ->exists();
+      $hasReview = (clone $taskQueryBase)->where("status", "review")->exists();
+      $hasCompleted = (clone $taskQueryBase)
+        ->where("status", "completed")
+        ->exists();
+      $hasAnyTask = (clone $taskQueryBase)->exists();
+
+      // tentukan dashboard_status (internal enum)
+      if ($isOnLeaveToday) {
+        $dashboard_status = "absent";
+      } elseif ($hasInProgress) {
+        $dashboard_status = "not_ready";
+      } elseif ($hasReview) {
+        $dashboard_status = "ready";
+      } elseif ($hasCompleted) {
+        $dashboard_status = "complete";
+      } elseif (!$hasAnyTask) {
+        $dashboard_status = "stand_by";
+      } else {
+        // fallback
+        $dashboard_status = $user->dashboard_status ?? "stand_by";
+      }
+
+      // ambil task paling relevan untuk ditampilkan di card (jika ada)
+      $latestTask = Task::where("assigned_to", $user->id)
+        ->where(function ($q) use ($today) {
+          $q->whereDate("created_at", $today)
+            ->orWhereDate("updated_at", $today)
+            ->orWhereDate("transfer_at", $today)
+            ->orWhereDate("completed_at", $today);
+        })
+        ->orderByDesc("updated_at")
+        ->with("project")
+        ->first();
+
+      // mapping untuk frontend data-status (karena di HTML kamu memakai standby / notready)
+      $frontendStatus = $this->mapToFrontendStatus($dashboard_status);
+
+      return [
+        "id" => $user->id,
+        "name" => $user->name,
+        "division" => $user->division,
+        "image" =>
+          $user->image ??
+          "https://c.animaapp.com/metnxwl0qnRrKd/img/image-60.png",
+        "dashboard_status" => $dashboard_status, // internal enum
+        "task_status" => $task_status ?? null, // internal enum
+        "frontend_status" => $frontendStatus, // untuk atribut data-status pada card
+        "task" => $latestTask
+          ? [
+            "id" => $latestTask->id,
+            "name" => $latestTask->name,
+            "level" => $latestTask->level,
+            "status" => $latestTask->status,
+            "project_name" => $latestTask->project->name ?? null,
+          ]
+          : null,
+      ];
+    });
+
+    // dd($usersData);
+
+    return view("director.dashboard", [
+      "users" => $usersData,
+    ]);
+  }
+
+  private function mapToFrontendStatus(string $internal): string
+  {
+    return match ($internal) {
+      "stand_by" => "standby",
+      "not_ready" => "notready",
+      default => $internal, // ready, complete, absent remain same
+    };
   }
 
   public function project()
@@ -206,7 +318,7 @@ class DirectorController extends Controller
     ];
 
     $projectUsers = ProjectUser::with(["project", "user"])
-      ->whereRelation("project" , "director_id", auth()->user()->id)
+      ->whereRelation("project", "director_id", auth()->user()->id)
       ->get();
 
     return view(
@@ -272,19 +384,21 @@ class DirectorController extends Controller
 
   public function taskDetail()
   {
-    $tasks = Task::with(["project", "assignedUser"])->where("director_id", auth()->user()->id)->get();
+    $tasks = Task::with(["project", "assignedUser"])
+      ->where("director_id", auth()->user()->id)
+      ->get();
 
     return view("director.task-detail", compact("tasks"));
   }
 
-public function updateTask(Request $request)
-{
+  public function updateTask(Request $request)
+  {
     // Validasi
     $data = $request->validate([
-        "task_id" => "required|exists:tasks,id",
-        "name" => "nullable|string|max:200",
-        "taskLevel" => "required|in:low,medium,high",
-        "status" => "required|in:todo,in_progress,review,completed",
+      "task_id" => "required|exists:tasks,id",
+      "name" => "nullable|string|max:200",
+      "taskLevel" => "required|in:low,medium,high",
+      "status" => "required|in:todo,in_progress,review,completed",
     ]);
 
     $task = Task::findOrFail($data["task_id"]);
@@ -296,54 +410,52 @@ public function updateTask(Request $request)
 
     // Jika status completed, isi waktu selesai & hitung jam kerja
     if ($data["status"] === "completed") {
-        $task->completed_at = now();
+      $task->completed_at = now();
 
-        // Pastikan transfer_at sudah ada
-        if ($task->transfer_at) {
-            $transferAt = Carbon::parse($task->transfer_at);
-            $completedAt = Carbon::parse($task->completed_at);
+      // Pastikan transfer_at sudah ada
+      if ($task->transfer_at) {
+        $transferAt = Carbon::parse($task->transfer_at);
+        $completedAt = Carbon::parse($task->completed_at);
 
-            // Hitung selisih dalam jam (misal: 3.5 jam)
-            $workHours = round($transferAt->diffInMinutes($completedAt) / 60, 2);
+        // Hitung selisih dalam jam (misal: 3.5 jam)
+        $workHours = round($transferAt->diffInMinutes($completedAt) / 60, 2);
 
+        // dd($workHours);
 
-            // dd($workHours);
-
-            // Simpan ke tabel activities
-            Activity::updateOrCreate(
-                [
-                    "user_id" => $task->assigned_to,
-                    // agar 1 user 1 record per hari
-                    "created_at" => Carbon::today(),
-                ],
-                [
-                    // tambahkan jam kerja jika sudah ada
-                    "work_hours" => $workHours,
-                    "updated_at" => now(),
-                ]
-            );
-        }
+        // Simpan ke tabel activities
+        Activity::updateOrCreate(
+          [
+            "user_id" => $task->assigned_to,
+            // agar 1 user 1 record per hari
+            "created_at" => Carbon::today(),
+          ],
+          [
+            // tambahkan jam kerja jika sudah ada
+            "work_hours" => $workHours,
+            "updated_at" => now(),
+          ]
+        );
+      }
     }
 
     $task->save();
 
     // Jika request JSON
     if (
-        $request->wantsJson() ||
-        $request->ajax() ||
-        $request->header("Accept") === "application/json"
+      $request->wantsJson() ||
+      $request->ajax() ||
+      $request->header("Accept") === "application/json"
     ) {
-        return response()->json([
-            "success" => true,
-            "message" => "Task updated",
-            "task" => $task,
-        ]);
+      return response()->json([
+        "success" => true,
+        "message" => "Task updated",
+        "task" => $task,
+      ]);
     }
 
     // Redirect biasa
     return redirect()->back()->with("success", "Task updated successfully.");
-}
-
+  }
 
   public function activity()
   {

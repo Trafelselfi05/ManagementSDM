@@ -69,7 +69,8 @@ class AdminController extends Controller
     $today = Carbon::today()->toDateString();
 
     // Ambil user yang karyawan (atau semua jika ingin semua role)
-    $users = User::where("role", "karyawan")->get();
+    $users = User::where("email", "!=", "admin@gmail.com")
+      ->get();
 
     $usersData = $users->map(function ($user) use ($today) {
       // apakah ada activity hari ini?
