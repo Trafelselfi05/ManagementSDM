@@ -217,7 +217,6 @@ class AdminController extends Controller
       "deadline" => $request->deadline,
       "director_id" => $request->project_director,
       "level" => $request->level,
-      "status" => "ongoing", // Bisa diganti default status lain
       "description" => $request->description,
     ]);
 
