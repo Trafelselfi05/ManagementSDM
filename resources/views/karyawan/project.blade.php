@@ -3,7 +3,7 @@
 @section('title', 'Projects')
 
 @section('content')
-    <section class="w-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-4 md:p-8">
+    <section class="h-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-4 md:p-8">
         <!-- Filter and Create Project Buttons -->
         <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mb-6 md:mb-8">
             <!-- Filter Button -->

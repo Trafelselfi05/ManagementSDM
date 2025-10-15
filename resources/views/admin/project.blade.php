@@ -54,7 +54,9 @@
                             <td class="py-4 px-4 text-center text-gray-600">
                                 {{ \Carbon\Carbon::parse($project->deadline)->format('M d, Y') }}</td>
                             <td class="py-4 px-4 text-center">
-                                <div class="font-medium text-gray-800">{{ $project->director->name }}</div>
+                                <div class="font-medium text-gray-800">
+                                    {{ $project->director ? $project->director->name : 'No Director' }}
+                                </div>
                             </td>
                             <td class="py-4 px-4 text-center">
                                 <span
@@ -118,7 +120,7 @@
                     <div class="space-y-2 mb-3">
                         <div class="flex items-center justify-between text-sm">
                             <span class="text-gray-500">Director:</span>
-                            <span class="font-medium text-gray-800">{{ $project->director->name }}</span>
+                            <span class="font-medium text-gray-800">{{ $project->director ? $project->director->name : 'No Director' }}</span>
                         </div>
                         <div class="flex items-center justify-between text-sm">
                             <span class="text-gray-500">Start Date:</span>

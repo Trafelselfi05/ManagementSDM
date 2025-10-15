@@ -3,12 +3,12 @@
 @section('title', 'Projects')
 
 @section('content')
-    <section class="w-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-4 md:p-8">
+    <section class="h-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-4 md:p-8">
         <!-- Filter and Create Project Buttons -->
         <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mb-6 md:mb-8">
             <!-- Filter Button -->
             <div class="flex items-center justify-center gap-2 bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] px-4 py-2">
-                <img class="w-5 h-5 md:w-6 md:h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />
+                <img class="w-full h-full md:w-6 md:h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />
                 <span class="text-gray-500 text-sm font-medium">Filter</span>
             </div>
 

@@ -3,9 +3,9 @@
 @section('title', 'Leave Submissions')
 
 @section('content')
-    <section class="w-full bg-white rounded-[20px] shadow-lg p-6 md:p-8">
+    <section class="h-full bg-white rounded-[20px] shadow-lg p-6 md:p-8">
         <!-- Header Section -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 w-full">
             <div>
                 <h1 class="text-xl md:text-2xl font-bold text-[#111111] mb-1">Leave Submissions</h1>
                 <p class="text-sm text-gray-600">Review and manage employee leave requests</p>

@@ -5,7 +5,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 rounded-[20px]">
         <!-- Main Dashboard Content -->
         <div class="lg:col-span-2 order-2 lg:order-1">
-            <div class="bg-white rounded-2xl shadow-sm py-4 lg:p-6">
+            <div class="h-full bg-white rounded-2xl shadow-sm py-4 lg:p-6">
                 <!-- Status Filter Tabs -->
                 <div class="flex flex-wrap gap-2 lg:gap-4 mb-4 lg:mb-6" id="statusFilter">
                     <button data-status="ready"
