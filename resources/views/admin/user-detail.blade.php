@@ -3,163 +3,165 @@
 @section('title', 'Detail User')
 
 @section('content')
-    <div class="flex justify-center items-center min-h-screen py-8">
-        <form method="POST" action="{{ route('admin.user-detail.update', $user->id) }}" enctype="multipart/form-data"
-            class="bg-white rounded-[20px] shadow-[0px_0px_4px_#00000040] p-8 w-full max-w-4xl mx-4">
+    <div class="flex justify-center items-start bg-[#f9f9f9]">
+        <div
+            class="max-w-4xl w-full bg-white p-10 shadow-[0px_0px_4px_#00000040] rounded-[15px] relative max-h-[calc(100vh-13em)] overflow-y-auto overflow-x-hidden">
+            <form method="POST" action="{{ route('admin.user-detail.update', $user->id) }}" enctype="multipart/form-data"
+                class="bg-white p-8 w-full mx-4">
 
-            @csrf
+                @csrf
 
-            <div class="flex flex-col items-center gap-8 w-full">
-                <!-- Profile Header -->
-                <div class="flex flex-col gap-6 w-full">
-                    <div class="flex flex-col gap-4">
-                        <img class="w-32 h-32 object-cover rounded-full"
-                            src="{{ $user->image ? asset($user->image) : 'https://c.animaapp.com/mf3roef4LjlRUB/img/ellipse-59.svg' }}"
-                            alt="Profile Picture" />
-                        <div class="flex flex-col items-center gap-2 text-center">
-                            <input type="text"
-                                class="font-bold text-2xl text-[#111111] bg-transparent border-none outline-none w-full"
-                                value="{{ $user->name }}" id="profile-name" name="name">
-                            <select name="division"
-                                class="appearance-none font-medium text-lg text-[#7d7d7d] bg-transparent border-none outline-none w-full pr-8 cursor-pointer"
-                                name="division">
-                                <option value="{{ $user->division }}">{{ $user->division }}</option>
-                                <option value="Engineer Web">Engineer Web</option>
-                                <option value="Analis">Analis</option>
-                                <option value="Engineer Mobile">Engineer Mobile</option>
-                                <option value="Content Creator">Content Creator</option>
-                                <option value="Engineer IOS">Engineer IOS</option>
-                                <option value="Copywriter">Copywriter</option>
-                                <option value="UI / UX Designer">UI / UX Designer</option>
-                                <option value="Tester">Tester</option>
-                            </select>
+                <div class="flex flex-col items-center gap-8 w-full">
+                    <!-- Profile Header -->
+                    <div class="flex flex-col gap-6 w-full">
+                        <div class="flex flex-col gap-4">
+                            <img class="w-32 h-32 object-cover rounded-full"
+                                src="{{ $user->image ? asset($user->image) : 'https://c.animaapp.com/mf3roef4LjlRUB/img/ellipse-59.svg' }}"
+                                alt="Profile Picture" />
+                            <div class="flex flex-col items-center gap-2 text-center">
+                                <input type="text"
+                                    class="font-bold text-2xl text-[#111111] bg-transparent border-none outline-none w-full"
+                                    value="{{ $user->name }}" id="profile-name" name="name">
+                                <select name="division"
+                                    class="appearance-none font-medium text-lg text-[#7d7d7d] bg-transparent border-none outline-none w-full pr-8 cursor-pointer"
+                                    name="division">
+                                    <option value="{{ $user->division }}">{{ $user->division }}</option>
+                                    <option value="Engineer Web">Engineer Web</option>
+                                    <option value="Analis">Analis</option>
+                                    <option value="Engineer Mobile">Engineer Mobile</option>
+                                    <option value="Content Creator">Content Creator</option>
+                                    <option value="Engineer IOS">Engineer IOS</option>
+                                    <option value="Copywriter">Copywriter</option>
+                                    <option value="UI / UX Designer">UI / UX Designer</option>
+                                    <option value="Tester">Tester</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <input type="file"
-                            class="w-40 h-10 bg-[#6fadc8] text-white font-semibold text-base rounded-[10px] text-center cursor-pointer border-none outline-none placeholder-white"
-                            value="" id="profile-name" name="image" onclick="uploadPicture()"
-                            placeholder="Upload Picture">
-
-                        </button>
-                        <button class="w-40 h-10 bg-neutral-100 text-[#7d7d7d] font-semibold text-base rounded-[10px]"
-                            onclick="deletePicture()">
-                            Delete Picture
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Form Fields -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                    <!-- Left Column -->
-                    <div class="flex flex-col gap-5">
-                        <!-- Email Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">Email</div>
-                            <input type="email"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="{{ $user->email }}" id="email" name="email">
-                        </div>
-
-                        <!-- NIK Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">NIK</div>
-                            <input type="text"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="{{ $user->nik }}" id="nik" name="nik">
-                        </div>
-
-                        <!-- Status SDM Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">Status SDM</div>
-                            <select
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none appearance-none"
-                                id="status-sdm" name="employment_status">
-                                <option value="{{ $user->employment_status }}">{{ $user->employment_status }}</option>
-                                <option value="active">active</option>
-                                <option value="inactive">inactive</option>
-                                <option value="contract">contract</option>
-                                <option value="probation">probation</option>
-                            </select>
-                        </div>
-
-                        <!-- Phone Number Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">No. HP</div>
-                            <input type="tel"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="{{ $user->phone }}" id="phone" name="phone">
-                        </div>
-
-                        <!-- Join Date Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">Tanggal masuk</div>
-                            <input type="date"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="{{ $user->join_date }}" id="join-date" name="join_date">
+                        <div class="flex items-center gap-4">
+                            <button type="button"
+                                class="w-40 h-10 bg-[#6fadc8] text-white font-semibold text-white rounded-[10px] text-center cursor-pointer border-none outline-none "
+                                value="" id="profile-name" name="image" onclick="uploadPicture()"
+                                placeholder="Upload Picture">Upload Picture
+                            </button>
+                            <button class="w-40 h-10 bg-neutral-100 text-[#7d7d7d] font-semibold text-base rounded-[10px]"
+                                onclick="deletePicture()">
+                                Delete Picture
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Right Column -->
-                    <div class="flex flex-col gap-5">
-                        <!-- Password Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">Password</div>
-                            <input type="text"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="" id="password" name="password">
+                    <!-- Form Fields -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                        <!-- Left Column -->
+                        <div class="flex flex-col gap-5">
+                            <!-- Email Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">Email</div>
+                                <input type="email"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="{{ $user->email }}" id="email" name="email">
+                            </div>
+
+                            <!-- NIK Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">NIK</div>
+                                <input type="text"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="{{ $user->nik }}" id="nik" name="nik">
+                            </div>
+
+                            <!-- Status SDM Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">Status SDM</div>
+                                <select
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none appearance-none"
+                                    id="status-sdm" name="employment_status">
+                                    <option value="{{ $user->employment_status }}">{{ $user->employment_status }}</option>
+                                    <option value="active">active</option>
+                                    <option value="inactive">inactive</option>
+                                    <option value="contract">contract</option>
+                                    <option value="probation">probation</option>
+                                </select>
+                            </div>
+
+                            <!-- Phone Number Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">No. HP</div>
+                                <input type="tel"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="{{ $user->phone }}" id="phone" name="phone">
+                            </div>
+
+                            <!-- Join Date Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">Tanggal masuk</div>
+                                <input type="date"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="{{ $user->join_date }}" id="join-date" name="join_date">
+                            </div>
                         </div>
 
-                        <!-- Telegram Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">Link Telegram</div>
-                            <input type="text"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="{{ $user->telegram_link }}" id="telegram" name="telegram_link">
-                        </div>
+                        <!-- Right Column -->
+                        <div class="flex flex-col gap-5">
+                            <!-- Password Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">Password</div>
+                                <input type="text"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="" id="password" name="password">
+                            </div>
 
-                        <!-- Address Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">Alamat</div>
-                            <input type="text"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="{{ $user->address }}" id="address" name="address">
-                        </div>
+                            <!-- Telegram Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">Link Telegram</div>
+                                <input type="text"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="{{ $user->telegram_link }}" id="telegram" name="telegram_link">
+                            </div>
 
-                        <!-- Birth Date Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">Tanggal Lahir</div>
-                            <input type="date"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="{{ $user->birth_date }}" id="birth-date" name="birth_date">
-                        </div>
+                            <!-- Address Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">Alamat</div>
+                                <input type="text"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="{{ $user->address }}" id="address" name="address">
+                            </div>
 
-                        <!-- Education Field -->
-                        <div class="flex flex-col gap-3">
-                            <div class="font-medium text-base text-[#7d7d7d]">Pendidikan Terakhir</div>
-                            <input type="text"
-                                class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
-                                value="{{ $user->last_education }}" id="last_education" name="last_education">
+                            <!-- Birth Date Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">Tanggal Lahir</div>
+                                <input type="date"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="{{ $user->birth_date }}" id="birth-date" name="birth_date">
+                            </div>
+
+                            <!-- Education Field -->
+                            <div class="flex flex-col gap-3">
+                                <div class="font-medium text-base text-[#7d7d7d]">Pendidikan Terakhir</div>
+                                <input type="text"
+                                    class="h-12 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 font-medium text-base text-[#111111] border-none outline-none"
+                                    value="{{ $user->last_education }}" id="last_education" name="last_education">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {{-- <!-- Address -->
+                    {{-- <!-- Address -->
                 <div class="w-full">
                     <label class="font-medium text-base text-[#7d7d7d] ">Address</label>
                     <textarea name="address"
                         class="h-24 w-full bg-white rounded-[15px] shadow-[0px_0px_4px_#00000026] px-4 py-2 mt-3 font-medium text-base text-[#111111] border-none outline-none">{{ $user->address }}</textarea>
                 </div> --}}
 
-                <!-- Save Button -->
-                <div class="flex justify-center w-full mt-4">
-                    <button type="submit"
-                        class="h-12 w-64 bg-[#111111] text-white font-bold text-xl rounded-[15px] shadow-[0px_0px_4px_#00000026]">
-                        Simpan
-                    </button>
+                    <!-- Save Button -->
+                    <div class="flex justify-center w-full mt-4">
+                        <button type="submit"
+                            class="h-12 w-64 bg-[#111111] text-white font-bold text-xl rounded-[15px] shadow-[0px_0px_4px_#00000026]">
+                            Simpan
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Single-Date Calendar Popup (shared) -->
@@ -198,6 +200,35 @@
 
 
     <script>
+        // function uploadPicture() {
+        //     const fileInput = document.createElement('input');
+        //     fileInput.type = 'file';
+        //     fileInput.accept = 'image/*';
+        //     fileInput.onchange = (e) => {
+        //         const file = e.target.files[0];
+        //         if (file) {
+        //             const reader = new FileReader();
+        //             reader.onload = (event) => {
+        //                 // Tampilkan di <img>
+        //                 const img = document.querySelector('img[alt="Profile Picture"]');
+        //                 if (img) img.src = event.target.result;
+
+        //                 // Simpan base64 ke input hidden untuk dikirim ke server
+        //                 let hiddenInput = document.querySelector('input[name="image"]');
+        //                 if (!hiddenInput) {
+        //                     hiddenInput = document.createElement('input');
+        //                     hiddenInput.type = 'hidden';
+        //                     hiddenInput.name = 'image';
+        //                     document.querySelector('form').appendChild(hiddenInput);
+        //                 }
+        //                 hiddenInput.value = event.target.result; // Base64 image
+        //             };
+        //             reader.readAsDataURL(file);
+        //         }
+        //     };
+        //     fileInput.click();
+        // }
+
         function uploadPicture() {
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
@@ -207,25 +238,27 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (event) => {
-                        // Tampilkan di <img>
+                        // Preview ke <img>
                         const img = document.querySelector('img[alt="Profile Picture"]');
                         if (img) img.src = event.target.result;
-
-                        // Simpan base64 ke input hidden untuk dikirim ke server
-                        let hiddenInput = document.querySelector('input[name="profile_picture"]');
-                        if (!hiddenInput) {
-                            hiddenInput = document.createElement('input');
-                            hiddenInput.type = 'hidden';
-                            hiddenInput.name = 'profile_picture';
-                            document.querySelector('form').appendChild(hiddenInput);
-                        }
-                        hiddenInput.value = event.target.result; // Base64 image
                     };
                     reader.readAsDataURL(file);
+
+                    // Tambahkan file ke form
+                    let hiddenInput = document.querySelector('input[name="image"]');
+                    if (!hiddenInput) {
+                        hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'file';
+                        hiddenInput.name = 'image';
+                        hiddenInput.className = 'hidden';
+                        hiddenInput.files = e.target.files; // simpan file asli
+                        document.querySelector('form').appendChild(hiddenInput);
+                    }
                 }
             };
             fileInput.click();
         }
+
 
 
         function deletePicture() {

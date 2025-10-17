@@ -37,6 +37,7 @@ Route::controller(AdminController::class)
     Route::get("dashboard", "dashboard")->name("dashboard");
 
     Route::get("project", "project")->name("project");
+    Route::post("delete-project/{id}", "deleteProject")->name("deleteProject");
     Route::get("create-project", "createProject")->name("project.create");
     Route::post("create-project", "storeProject")->name("project.store");
     Route::get("edit-project/{id}", "editProject")->name("edit-project");

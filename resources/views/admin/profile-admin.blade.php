@@ -3,8 +3,8 @@
 @section('title', 'Add User')
 
 @section('content')
-    <div class="flex justify-center items-start py-[35px] min-h-screen bg-[#f9f9f9]">
-        <div class="max-w-4xl w-full bg-white p-10 shadow-[0px_0px_4px_#00000040] rounded-[15px] relative">
+    <div class="flex justify-center items-start bg-[#f9f9f9]">
+        <div class="max-w-4xl w-full bg-white p-10 shadow-[0px_0px_4px_#00000040] rounded-[15px] relative max-h-[calc(100vh-13em)] overflow-y-auto">
 
             <h2 class="text-xl font-bold mb-8">Create New Account</h2>
 

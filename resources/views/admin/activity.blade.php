@@ -3,7 +3,7 @@
 @section('title', 'Activity')
 
 @section('content')
-<section class="h-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-8">
+<section class="h-full bg-white rounded-[20px] shadow-[0_0_4px_rgba(0,0,0,0.25)] p-8 overflow-auto">
     <div class="flex justify-between items-center mb-6">
         <div class="flex items-center gap-2 bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] px-4 py-2">
             <img class="w-6 h-6" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg" />

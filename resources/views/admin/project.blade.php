@@ -318,28 +318,27 @@
     </style>
 
     <script>
-        function confirmDelete(id) {
-            if (confirm('Are you sure you want to delete this project?')) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = `{{ url('admin/delete-project') }}/${id}`;
+function confirmDelete(id) {
+    if (confirm('Are you sure you want to delete this project?')) {
 
-                const csrfToken = document.createElement('input');
-                csrfToken.type = 'hidden';
-                csrfToken.name = '_token';
-                csrfToken.value = '{{ csrf_token() }}';
-                form.appendChild(csrfToken);
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `{{ route('admin.deleteProject', '') }}/${id}`;
 
-                const methodField = document.createElement('input');
-                methodField.type = 'hidden';
-                methodField.name = '_method';
-                methodField.value = 'DELETE';
-                form.appendChild(methodField);
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                document.body.appendChild(form);
-                form.submit();
-            }
-        }
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '_token';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
 
         function openStatusModal(projectId, currentStatus) {
             const modal = document.getElementById('statusModal');

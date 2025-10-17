@@ -69,8 +69,7 @@ class AdminController extends Controller
     $today = Carbon::today()->toDateString();
 
     // Ambil user yang karyawan (atau semua jika ingin semua role)
-    $users = User::where("email", "!=", "admin@gmail.com")
-      ->get();
+    $users = User::where("email", "!=", "admin@gmail.com")->get();
 
     $usersData = $users->map(function ($user) use ($today) {
       // apakah ada activity hari ini?
@@ -179,6 +178,31 @@ class AdminController extends Controller
   {
     $projects = Project::with("director")->get();
     return view("admin.project", compact("projects"));
+  }
+
+  public function deleteProject($id)
+  {
+    try {
+      // Cari project
+      $project = Project::findOrFail($id);
+
+      // Hapus relasi Many-to-Many dengan users di pivot table project_user
+      $project->members()->detach();
+
+      // Hapus semua task milik project ini
+      $project->tasks()->delete();
+
+      // Hapus project-nya
+      $project->delete();
+
+      return redirect()
+        ->back()
+        ->with("success", "Project and all related data have been deleted.");
+    } catch (\Exception $e) {
+      return redirect()
+        ->back()
+        ->with("error", "Failed to delete project: " . $e->getMessage());
+    }
   }
 
   public function createProject()
@@ -485,7 +509,7 @@ class AdminController extends Controller
     $currentYear = Carbon::now()->year;
 
     // Ambil semua user
-    $users = User::all();
+    $users = User::where("email", "!=", "admin@gmail.com")->get();
 
     $data = $users->map(function ($user) use ($currentMonth, $currentYear) {
       // 1️⃣ Total project yang berkaitan dengan user di bulan ini
@@ -626,10 +650,9 @@ class AdminController extends Controller
     return view("admin.profile-admin");
   }
 
-  public function profileAdminStore(Request $request)
-  {
-    try {
-      $request->validate([
+public function profileAdminStore(Request $request)
+{
+    $validated = $request->validate([
         "name" => "required|string|max:255",
         "email" => "required|email|unique:users,email",
         "password" => "required|string|min:6",
@@ -644,41 +667,21 @@ class AdminController extends Controller
         "role" => "nullable|string",
         "address" => "nullable|string",
         "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
-      ]);
-    } catch (\Illuminate\Validation\ValidationException $e) {
-      return back()->withErrors($e->errors())->withInput();
-    }
-
-    // Upload image
-    $imagePath = null;
-    if ($request->hasFile("image")) {
-      $imagePath = $request->file("image")->store("users", "public");
-      $imagePath = "storage/" . $imagePath;
-    }
-
-    // Buat user
-    User::create([
-      "name" => $request->name,
-      "email" => $request->email,
-      "password" => Hash::make($request->password),
-      "division" => $request->division,
-      "nik" => $request->nik,
-      "phone" => $request->phone,
-      "telegram_link" => $request->telegram_link,
-      "employment_status" => $request->employment_status,
-      "birth_date" => $request->birth_date,
-      "join_date" => $request->join_date,
-      "last_education" => $request->last_education,
-      "role" => $request->role,
-      "address" => $request->address,
-      "image" => $imagePath,
-      "dashboard_status" => "ready",
     ]);
 
-    return redirect()
-      ->route("admin.user-account")
-      ->with("success", "User berhasil dibuat!");
-  }
+    $imagePath = $request->hasFile("image")
+        ? "storage/" . $request->file("image")->store("users", "public")
+        : null;
+
+    User::create([
+        ...$validated,
+        "password" => Hash::make($request->password),
+        "image" => $imagePath,
+        "dashboard_status" => "ready",
+    ]);
+
+    return redirect()->route("admin.user-account")->with("success", "User berhasil dibuat!");
+}
 
   public function userAccount()
   {

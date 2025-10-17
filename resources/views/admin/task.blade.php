@@ -67,9 +67,9 @@
         <!-- Task Boards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 overflow-x-auto custom-scrollbar">
             <!-- To Do Column -->
-            <div class="bg-white rounded-lg shadow-sm min-w-[260px]">
+            <div class="bg-white rounded-lg shadow-sm min-w-[260px] max-h-[calc(100vh-13em)] flex flex-col">
                 <div class="h-2 bg-red-500 rounded-t-lg"></div>
-                <div class="p-3">
+                <div class="p-3 flex-1 overflow-y-auto">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">To do</h3>
 
                     <div class="space-y-3">
@@ -131,9 +131,9 @@
             </div>
 
             <!-- In Progress Column -->
-            <div class="bg-white rounded-lg shadow-sm min-w-[260px]">
+            <div class="bg-white rounded-lg shadow-sm min-w-[260px] max-h-[calc(100vh-13em)] flex flex-col">
                 <div class="h-2 bg-amber-400 rounded-t-lg"></div>
-                <div class="p-3">
+                <div class="p-3 flex-1 overflow-y-auto">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">In progress</h3>
 
                     <div class="space-y-3">
@@ -200,9 +200,9 @@
             </div>
 
             <!-- Review Column -->
-            <div class="bg-white rounded-lg shadow-sm min-w-[260px]">
+            <div class="bg-white rounded-lg shadow-sm min-w-[260px] max-h-[calc(100vh-13em)] flex flex-col">
                 <div class="h-2 bg-blue-400 rounded-t-lg"></div>
-                <div class="p-3">
+                <div class="p-3 flex-1 overflow-y-auto">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Review</h3>
 
                     <div class="space-y-3">
@@ -269,9 +269,9 @@
             </div>
 
             <!-- Completed Column -->
-            <div class="bg-white rounded-lg shadow-sm min-w-[260px]">
+            <div class="bg-white rounded-lg shadow-sm min-w-[260px] max-h-[calc(100vh-13em)] flex flex-col">
                 <div class="h-2 bg-green-500 rounded-t-lg"></div>
-                <div class="p-3">
+                <div class="p-3 flex-1 overflow-y-auto">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Completed</h3>
 
                     <div class="space-y-3">
