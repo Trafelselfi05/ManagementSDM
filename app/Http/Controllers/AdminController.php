@@ -650,38 +650,40 @@ class AdminController extends Controller
     return view("admin.profile-admin");
   }
 
-public function profileAdminStore(Request $request)
-{
+  public function profileAdminStore(Request $request)
+  {
     $validated = $request->validate([
-        "name" => "required|string|max:255",
-        "email" => "required|email|unique:users,email",
-        "password" => "required|string|min:6",
-        "division" => "nullable|string",
-        "nik" => "nullable|string",
-        "phone" => "nullable|string",
-        "telegram_link" => "nullable|string",
-        "employment_status" => "nullable|string",
-        "birth_date" => "nullable|date",
-        "join_date" => "nullable|date",
-        "last_education" => "nullable|string",
-        "role" => "nullable|string",
-        "address" => "nullable|string",
-        "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
+      "name" => "required|string|max:255",
+      "email" => "required|email|unique:users,email",
+      "password" => "required|string|min:6",
+      "division" => "nullable|string",
+      "nik" => "nullable|string",
+      "phone" => "nullable|string",
+      "telegram_link" => "nullable|string",
+      "employment_status" => "nullable|string",
+      "birth_date" => "nullable|date",
+      "join_date" => "nullable|date",
+      "last_education" => "nullable|string",
+      "role" => "nullable|string",
+      "address" => "nullable|string",
+      "image" => "nullable|image|mimes:jpg,jpeg,png|max:2048",
     ]);
 
     $imagePath = $request->hasFile("image")
-        ? "storage/" . $request->file("image")->store("users", "public")
-        : null;
+      ? "storage/" . $request->file("image")->store("users", "public")
+      : null;
 
     User::create([
-        ...$validated,
-        "password" => Hash::make($request->password),
-        "image" => $imagePath,
-        "dashboard_status" => "ready",
+      ...$validated,
+      "password" => Hash::make($request->password),
+      "image" => $imagePath,
+      "dashboard_status" => "ready",
     ]);
 
-    return redirect()->route("admin.user-account")->with("success", "User berhasil dibuat!");
-}
+    return redirect()
+      ->route("admin.user-account")
+      ->with("success", "User berhasil dibuat!");
+  }
 
   public function userAccount()
   {
@@ -754,24 +756,30 @@ public function profileAdminStore(Request $request)
 
   public function deleteUser($id)
   {
-    $user = User::find($id);
+    $user = User::findOrFail($id);
 
-    if (!$user) {
-      return redirect()
-        ->route("user-account")
-        ->with("error", "User tidak ditemukan!");
+    // Hapus relasi belongsToMany (pivot table)
+    $user->projects()->detach(); // project_user
+
+    // Hapus relasi hasMany
+    $user->tasks()->delete(); // tasks.assigned_to
+    $user->leaves()->delete();
+    $user->workHours()->delete();
+
+    // Hapus relasi hasOne
+    $user->activities()->delete();
+
+    // Hapus file image jika ada
+    if ($user->image && file_exists(public_path("storage/" . $user->image))) {
+      unlink(public_path("storage/" . $user->image));
     }
 
-    // Jika ingin sekalian hapus gambar dari storage:
-    if ($user->image && file_exists(public_path($user->image))) {
-      unlink(public_path($user->image));
-    }
-
+    // Hapus user terakhir
     $user->delete();
 
     return redirect()
-      ->route("admin.user-account")
-      ->with("success", "User berhasil dihapus!");
+      ->back()
+      ->with("success", "User dan semua relasinya berhasil dihapus.");
   }
 
   public function submissionTable()

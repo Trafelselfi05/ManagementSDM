@@ -41,7 +41,8 @@
         <!-- Table Container -->
         <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
             <!-- Table Header -->
-            <div class="grid grid-cols-9 items-center bg-gray-100 py-3 px-4 text-gray-600 font-semibold text-sm" style="min-width: 1200px;">
+            <div class="grid grid-cols-9 items-center bg-gray-100 py-3 px-4 text-gray-600 font-semibold text-sm"
+                style="min-width: 1200px;">
                 <div class="text-center">Image</div>
                 <div class="text-center">NIK</div>
                 <div class="text-center">Username</div>
@@ -57,7 +58,8 @@
             <div class="divide-y divide-gray-200">
                 @foreach ($users as $index => $user)
                     <a href="{{ route('admin.user-detail', $user->id) }}"
-                        class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors user-row" style="min-width: 1200px;">
+                        class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors user-row"
+                        style="min-width: 1200px;">
 
                         <!-- Image -->
                         <div class="flex justify-center">
