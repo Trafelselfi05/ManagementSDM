@@ -283,620 +283,644 @@
         }
     </style>
 
-    <script>
-        // membersData: object where keys are division names, values are arrays of {id, name, division}
-        const membersData = @json(
-            $karyawans->map(function ($group) {
-                return $group->map(function ($u) {
-                        return ['id' => $u->id, 'name' => $u->name, 'division' => $u->division];
-                    })->values();
-            }));
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // membersData: object where keys are division names, values are arrays of {id, name, division}
+    const membersData = @json(
+        $karyawans->map(function ($group) {
+            return $group->map(function ($u) {
+                    return ['id' => $u->id, 'name' => $u->name, 'division' => $u->division];
+                })->values();
+        }));
 
-        // State
-        let selectedMembers = {}; // { memberId: { id, name, division } }
-        let usedDivisions = []; // to track removed division options for reset
+    // State
+    let selectedMembers = {}; // { memberId: { id, name, division } }
+    let usedDivisions = []; // to track removed division options for reset
 
-        // ==================== DROPDOWN ARROW ANIMATIONS ====================
-        // Removed arrow animations since we're using CSS background-image for arrows
+    // ==================== DROPDOWN ARROW ANIMATIONS ====================
+    // Removed arrow animations since we're using CSS background-image for arrows
 
-        function showMembersDropdown(division) {
-            const container = document.getElementById('members-container');
-            const membersList = document.getElementById('members-list');
-            const divisionSelect = document.getElementById('division-select');
+    function showMembersDropdown(division) {
+        const $container = $('#members-container');
+        const $membersList = $('#members-list');
+        const $divisionSelect = $('#division-select');
 
-            if (!division || division === '') {
-                container.classList.add('hidden');
-                membersList.innerHTML = '';
-                return;
-            }
+        if (!division || division === '') {
+            $container.addClass('hidden');
+            $membersList.empty();
+            return;
+        }
 
-            // Find members for division (safe fallback to empty array)
-            const members = membersData[division] || [];
+        // Find members for division (safe fallback to empty array)
+        const members = membersData[division] || [];
 
-            // Clear previous
-            membersList.innerHTML = '';
+        // Clear previous
+        $membersList.empty();
 
-            if (members.length === 0) {
-                membersList.innerHTML = '<div class="text-sm text-gray-500">No members in this division.</div>';
+        if (members.length === 0) {
+            $membersList.html('<div class="text-sm text-gray-500">No members in this division.</div>');
+        } else {
+            // Build checkboxes
+            members.forEach(member => {
+                const id = member.id;
+                const name = member.name;
+                const div = member.division || division;
+
+                // Check if this member already selected (preserve selection)
+                const isChecked = !!selectedMembers[id];
+
+                const $label = $('<label>', {
+                    class: 'flex items-center cursor-pointer'
+                });
+
+                const $input = $('<input>', {
+                    type: 'checkbox',
+                    name: 'team_members[]',
+                    value: id,
+                    'data-name': name,
+                    'data-division': div,
+                    class: 'rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4'
+                });
+
+                if (isChecked) $input.prop('checked', true);
+                $input.on('change', updateSelectedMembers);
+
+                const $span = $('<span>', {
+                    class: 'ml-3 text-sm text-gray-700',
+                    text: name
+                });
+
+                $label.append($input);
+                $label.append($span);
+
+                $membersList.append($label);
+            });
+        }
+
+        // Show container
+        $container.removeClass('hidden');
+
+        // Remove chosen division from select (so user can't re-add same division)
+        const $optionToRemove = $divisionSelect.find(`option[value="${escapeSelector(division)}"]`);
+        if ($optionToRemove.length) {
+            // store removed option text/value so we can restore later if reset
+            usedDivisions.push({
+                value: $optionToRemove.val(),
+                text: $optionToRemove.text()
+            });
+            $optionToRemove.remove();
+        }
+
+        // Reset select to default
+        $divisionSelect.val('');
+    }
+
+    function updateSelectedMembers() {
+        const $selectedDisplay = $('#selected-display');
+        const $selectedChips = $('#selected-chips');
+        const $karaywanId = $('#karyawan-id');
+
+        // gather all checked checkboxes
+        const $checkboxes = $('input[name="team_members[]"]');
+
+        // update selectedMembers from checkboxes currently checked
+        $checkboxes.each(function() {
+            const $cb = $(this);
+            const id = $cb.val();
+            const name = $cb.data('name') || ($cb.next().length ? $cb.next().text() : '');
+            const division = $cb.data('division') || '';
+
+            if ($cb.is(':checked')) {
+                selectedMembers[id] = {
+                    id,
+                    name,
+                    division
+                };
             } else {
-                // Build checkboxes
-                members.forEach(member => {
-                    const id = member.id;
-                    const name = member.name;
-                    const div = member.division || division;
+                // only remove if that member is present and not checked
+                if (selectedMembers[id]) {
+                    delete selectedMembers[id];
+                }
+            }
+        });
 
-                    // Check if this member already selected (preserve selection)
-                    const isChecked = !!selectedMembers[id];
+        // Clear previous chips
+        $selectedChips.empty();
 
-                    const label = document.createElement('label');
-                    label.className = 'flex items-center cursor-pointer';
+        // if no selected members -> hide display
+        if (Object.keys(selectedMembers).length === 0) {
+            $selectedDisplay.addClass('hidden');
+            return;
+        }
 
-                    const input = document.createElement('input');
-                    input.type = 'checkbox';
-                    input.name = 'team_members[]';
-                    input.value = id;
-                    input.dataset.name = name;
-                    input.dataset.division = div;
-                    input.className = 'rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4';
-                    if (isChecked) input.checked = true;
-                    input.addEventListener('change', updateSelectedMembers);
+        $selectedDisplay.removeClass('hidden');
 
-                    const span = document.createElement('span');
-                    span.className = 'ml-3 text-sm text-gray-700';
-                    span.textContent = name;
+        // Render chips
+        Object.values(selectedMembers).forEach(member => {
+            const $chip = $('<div>', {
+                class: 'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800'
+            });
 
-                    label.appendChild(input);
-                    label.appendChild(span);
+            const $boldDiv = $('<span>', {
+                class: 'font-medium',
+                text: `[${member.division}]`
+            });
 
-                    membersList.appendChild(label);
+            const $nameSpan = $('<span>', {
+                class: 'ml-1',
+                text: member.name
+            });
+
+            const $btn = $('<button>', {
+                type: 'button',
+                class: 'ml-2 text-blue-600 hover:text-blue-800 focus:outline-none',
+                html: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                       </svg>`
+            });
+
+            $btn.on('click', () => removeSelectedMember(member.id));
+
+            $chip.append($boldDiv);
+            $chip.append($nameSpan);
+            $chip.append($btn);
+
+            $selectedChips.append($chip);
+        });
+
+        const memberIds = Object.keys(selectedMembers);
+        $karaywanId.val(memberIds);
+    }
+
+    function removeSelectedMember(memberId) {
+        // remove from state
+        delete selectedMembers[memberId];
+
+        // uncheck checkbox if present
+        const $checkbox = $(`input[name="team_members[]"][value="${memberId}"]`);
+        if ($checkbox.length) $checkbox.prop('checked', false);
+
+        // update UI
+        updateSelectedMembers();
+    }
+
+    function resetAllSelections() {
+        const $divisionSelect = $('#division-select');
+        const $membersList = $('#members-list');
+
+        // restore removed division options
+        if (usedDivisions && usedDivisions.length > 0) {
+            usedDivisions.forEach(opt => {
+                const $option = $('<option>', {
+                    value: opt.value,
+                    text: opt.text
                 });
-            }
+                $divisionSelect.append($option);
+            });
+        }
 
-            // Show container
-            container.classList.remove('hidden');
+        // clear trackers
+        usedDivisions = [];
+        selectedMembers = {};
 
-            // Remove chosen division from select (so user can't re-add same division)
-            const optionToRemove = divisionSelect.querySelector(`option[value="${escapeSelector(division)}"]`);
-            if (optionToRemove) {
-                // store removed option text/value so we can restore later if reset
-                usedDivisions.push({
-                    value: optionToRemove.value,
-                    text: optionToRemove.textContent
+        // clear UI
+        $membersList.empty();
+        $('#members-container').addClass('hidden');
+        $('#selected-display').addClass('hidden');
+
+        // reset project director and other inputs if needed (HTML reset already handles most)
+        const $director = $('#project-director');
+        if ($director.length) $director.val('');
+
+        // Clear date inputs
+        const $start = $('#project-start');
+        const $end = $('#project-end');
+        if ($start.length) $start.val('');
+        if ($end.length) $end.val('');
+    }
+
+    // Helper to escape selector when division name has special chars
+    function escapeSelector(s) {
+        return CSS.escape ? CSS.escape(s) : s.replace(/([ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~])/g, '\\$1');
+    }
+
+    // Calendar JS
+    $(document).ready(function() {
+        const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+            'Dec'
+        ];
+        const $calendarPopup = $('#calendarPopup');
+        const $monthShortEl = $('#month-short');
+        const $yearSelect = $('#year-select');
+        const $prevBtn = $('#prev-btn');
+        const $nextBtn = $('#next-btn');
+        const $datesGrid = $('#dates-grid');
+
+        const $startInput = $('#project-start');
+        const $endInput = $('#project-end');
+        const $startIcon = $('#project-start-icon');
+        const $endIcon = $('#project-end-icon');
+
+        // Move popup to body
+        if ($calendarPopup.length && $calendarPopup.parent()[0] !== document.body) {
+            $calendarPopup.appendTo('body');
+        }
+
+        let viewDate = new Date();
+        let activeInput = null;
+
+        function stripTime(d) {
+            const nd = new Date(d);
+            nd.setHours(0, 0, 0, 0);
+            return nd;
+        }
+
+        function pad(n) {
+            return n < 10 ? '0' + n : String(n);
+        }
+
+        function formatISO(d) {
+            return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+        }
+
+        function initYear() {
+            $yearSelect.empty();
+            const cur = new Date().getFullYear();
+            for (let y = cur - 50; y <= cur + 50; y++) {
+                const $opt = $('<option>', {
+                    value: y,
+                    text: y
                 });
-                optionToRemove.remove();
+                $yearSelect.append($opt);
             }
-
-            // Reset select to default
-            divisionSelect.value = '';
         }
 
-        function updateSelectedMembers() {
-            const selectedDisplay = document.getElementById('selected-display');
-            const selectedChips = document.getElementById('selected-chips');
-            const karaywanId = document.getElementById('karyawan-id');
-
-            // gather all checked checkboxes
-            const checkboxes = document.querySelectorAll('input[name="team_members[]"]');
-
-            // update selectedMembers from checkboxes currently checked
-            checkboxes.forEach(cb => {
-                const id = cb.value;
-                const name = cb.dataset.name || (cb.nextElementSibling ? cb.nextElementSibling.textContent : '');
-                const division = cb.dataset.division || '';
-
-                if (cb.checked) {
-                    selectedMembers[id] = {
-                        id,
-                        name,
-                        division
-                    };
-                } else {
-                    // only remove if that member is present and not checked
-                    if (selectedMembers[id]) {
-                        delete selectedMembers[id];
-                    }
-                }
-            });
-
-            // Clear previous chips
-            selectedChips.innerHTML = '';
-
-            // if no selected members -> hide display
-            if (Object.keys(selectedMembers).length === 0) {
-                selectedDisplay.classList.add('hidden');
-                return;
-            }
-
-            selectedDisplay.classList.remove('hidden');
-
-            // Render chips
-            Object.values(selectedMembers).forEach(member => {
-                const chip = document.createElement('div');
-                chip.className =
-                    'inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800';
-
-                const boldDiv = document.createElement('span');
-                boldDiv.className = 'font-medium';
-                boldDiv.textContent = `[${member.division}]`;
-
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'ml-1';
-                nameSpan.textContent = member.name;
-
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'ml-2 text-blue-600 hover:text-blue-800 focus:outline-none';
-                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                 </svg>`;
-                btn.addEventListener('click', () => removeSelectedMember(member.id));
-
-                chip.appendChild(boldDiv);
-                chip.appendChild(nameSpan);
-                chip.appendChild(btn);
-
-                selectedChips.appendChild(chip);
-            });
-
-            const memberIds = Object.keys(selectedMembers);
-            karaywanId.value = memberIds;
+        function updateHeader() {
+            $yearSelect.val(viewDate.getFullYear());
+            $monthShortEl.text(monthShortNames[viewDate.getMonth()]);
         }
 
-        function removeSelectedMember(memberId) {
-            // remove from state
-            delete selectedMembers[memberId];
+        function renderCalendar() {
+            const year = viewDate.getFullYear();
+            const month = viewDate.getMonth();
+            updateHeader();
+            $datesGrid.empty();
 
-            // uncheck checkbox if present
-            const checkbox = document.querySelector(`input[name="team_members[]"][value="${memberId}"]`);
-            if (checkbox) checkbox.checked = false;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-            // update UI
-            updateSelectedMembers();
-        }
-
-        function resetAllSelections() {
-            const divisionSelect = document.getElementById('division-select');
-            const membersList = document.getElementById('members-list');
-
-            // restore removed division options
-            if (usedDivisions && usedDivisions.length > 0) {
-                usedDivisions.forEach(opt => {
-                    const option = document.createElement('option');
-                    option.value = opt.value;
-                    option.textContent = opt.text;
-                    divisionSelect.appendChild(option);
+            for (let i = 0; i < firstDay; i++) {
+                const $cell = $('<div>', {
+                    class: 'w-10 h-10 rounded-full text-center text-sm text-gray-300'
                 });
+                $datesGrid.append($cell);
             }
 
-            // clear trackers
-            usedDivisions = [];
-            selectedMembers = {};
+            const today = stripTime(new Date()).getTime();
+            const currentVal = activeInput && activeInput.value ? new Date(activeInput.value) : null;
+            const selectedTime = currentVal ? stripTime(currentVal).getTime() : null;
 
-            // clear UI
-            membersList.innerHTML = '';
-            document.getElementById('members-container').classList.add('hidden');
-            document.getElementById('selected-display').classList.add('hidden');
+            for (let d = 1; d <= daysInMonth; d++) {
+                const $cell = $('<button>', {
+                    type: 'button',
+                    class: 'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition',
+                    text: d
+                });
 
-            // reset project director and other inputs if needed (HTML reset already handles most)
-            const director = document.getElementById('project-director');
-            if (director) director.value = '';
+                const cellDate = new Date(year, month, d);
+                const cellTime = stripTime(cellDate).getTime();
 
-            // Clear date inputs
-            const start = document.getElementById('project-start');
-            const end = document.getElementById('project-end');
-            if (start) start.value = '';
-            if (end) end.value = '';
+                if (cellTime === today) {
+                    $cell.addClass('font-semibold');
+                    $cell.css('box-shadow', 'inset 0 0 0 1px rgba(0,0,0,0.05)');
+                }
+                if (selectedTime && cellTime === selectedTime) {
+                    $cell.addClass('bg-blue-500 text-white font-semibold');
+                }
+
+                $cell.on('click', function() {
+                    if (!activeInput) return;
+                    activeInput.value = formatISO(cellDate);
+                    hideCalendar();
+                });
+
+                $datesGrid.append($cell);
+            }
         }
 
-        // Helper to escape selector when division name has special chars
-        function escapeSelector(s) {
-            return CSS.escape ? CSS.escape(s) : s.replace(/([ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~])/g, '\\$1');
-        }
+        function showCalendarFor(inputEl) {
+            activeInput = inputEl;
 
-        // Calendar JS
-        document.addEventListener('DOMContentLoaded', () => {
-            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                'Dec'
-            ];
-            const calendarPopup = document.getElementById('calendarPopup');
-            const monthShortEl = document.getElementById('month-short');
-            const yearSelect = document.getElementById('year-select');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const datesGrid = document.getElementById('dates-grid');
-
-            const startInput = document.getElementById('project-start');
-            const endInput = document.getElementById('project-end');
-            const startIcon = document.getElementById('project-start-icon');
-            const endIcon = document.getElementById('project-end-icon');
-
-            // Move popup to body
-            if (calendarPopup && calendarPopup.parentElement !== document.body) {
-                document.body.appendChild(calendarPopup);
-            }
-
-            let viewDate = new Date();
-            let activeInput = null;
-
-            function stripTime(d) {
-                const nd = new Date(d);
-                nd.setHours(0, 0, 0, 0);
-                return nd;
-            }
-
-            function pad(n) {
-                return n < 10 ? '0' + n : String(n);
-            }
-
-            function formatISO(d) {
-                return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
-            }
-
-            function initYear() {
-                yearSelect.innerHTML = '';
-                const cur = new Date().getFullYear();
-                for (let y = cur - 50; y <= cur + 50; y++) {
-                    const opt = document.createElement('option');
-                    opt.value = y;
-                    opt.textContent = y;
-                    yearSelect.appendChild(opt);
+            if (activeInput.value) {
+                const parsed = new Date(activeInput.value);
+                if (!isNaN(parsed.getTime())) {
+                    viewDate = new Date(parsed);
                 }
             }
 
-            function updateHeader() {
-                yearSelect.value = viewDate.getFullYear();
-                monthShortEl.textContent = monthShortNames[viewDate.getMonth()];
+            $calendarPopup.removeClass('hidden');
+            $calendarPopup.css('visibility', 'hidden');
+
+            const rect = inputEl.getBoundingClientRect();
+            const popupW = $calendarPopup.outerWidth() || 320;
+            const popupH = $calendarPopup.outerHeight() || 360;
+
+            let left = rect.left + window.scrollX;
+            let top = rect.bottom + window.scrollY + 8;
+
+            if (left + popupW > window.scrollX + window.innerWidth - 12) {
+                left = window.scrollX + window.innerWidth - popupW - 12;
+            }
+            if (left < 12 + window.scrollX) left = 12 + window.scrollX;
+
+            if (top + popupH > window.scrollY + window.innerHeight - 12) {
+                const altTop = rect.top + window.scrollY - popupH - 8;
+                top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY +
+                    window.innerHeight - popupH - 12);
             }
 
-            function renderCalendar() {
-                const year = viewDate.getFullYear();
-                const month = viewDate.getMonth();
-                updateHeader();
-                datesGrid.innerHTML = '';
-
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                for (let i = 0; i < firstDay; i++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'w-10 h-10 rounded-full text-center text-sm text-gray-300';
-                    datesGrid.appendChild(cell);
-                }
-
-                const today = stripTime(new Date()).getTime();
-                const currentVal = activeInput && activeInput.value ? new Date(activeInput.value) : null;
-                const selectedTime = currentVal ? stripTime(currentVal).getTime() : null;
-
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const cell = document.createElement('button');
-                    cell.type = 'button';
-                    cell.className =
-                        'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition';
-                    cell.textContent = d;
-
-                    const cellDate = new Date(year, month, d);
-                    const cellTime = stripTime(cellDate).getTime();
-
-                    if (cellTime === today) {
-                        cell.classList.add('font-semibold');
-                        cell.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.05)';
-                    }
-                    if (selectedTime && cellTime === selectedTime) {
-                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold');
-                    }
-
-                    cell.addEventListener('click', () => {
-                        if (!activeInput) return;
-                        activeInput.value = formatISO(cellDate);
-                        hideCalendar();
-                    });
-
-                    datesGrid.appendChild(cell);
-                }
-            }
-
-            function showCalendarFor(inputEl) {
-                activeInput = inputEl;
-
-                if (activeInput.value) {
-                    const parsed = new Date(activeInput.value);
-                    if (!isNaN(parsed.getTime())) {
-                        viewDate = new Date(parsed);
-                    }
-                }
-
-                calendarPopup.classList.remove('hidden');
-                calendarPopup.style.visibility = 'hidden';
-
-                const rect = inputEl.getBoundingClientRect();
-                const popupW = calendarPopup.offsetWidth || 320;
-                const popupH = calendarPopup.offsetHeight || 360;
-
-                let left = rect.left + window.scrollX;
-                let top = rect.bottom + window.scrollY + 8;
-
-                if (left + popupW > window.scrollX + window.innerWidth - 12) {
-                    left = window.scrollX + window.innerWidth - popupW - 12;
-                }
-                if (left < 12 + window.scrollX) left = 12 + window.scrollX;
-
-                if (top + popupH > window.scrollY + window.innerHeight - 12) {
-                    const altTop = rect.top + window.scrollY - popupH - 8;
-                    top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY +
-                        window.innerHeight - popupH - 12);
-                }
-
-                calendarPopup.style.position = 'absolute';
-                calendarPopup.style.left = left + 'px';
-                calendarPopup.style.top = top + 'px';
-                calendarPopup.style.visibility = 'visible';
-                calendarPopup.classList.remove('hidden');
-
-                renderCalendar();
-            }
-
-            function hideCalendar() {
-                calendarPopup.classList.add('hidden');
-                activeInput = null;
-            }
-
-            // Event binding for date inputs
-            [startInput, endInput].forEach(inp => {
-                if (!inp) return;
-                inp.addEventListener('click', () => showCalendarFor(inp));
-                inp.addEventListener('focus', () => showCalendarFor(inp));
+            $calendarPopup.css({
+                position: 'absolute',
+                left: left + 'px',
+                top: top + 'px',
+                visibility: 'visible'
             });
-            if (startIcon) startIcon.addEventListener('click', () => showCalendarFor(startInput));
-            if (endIcon) endIcon.addEventListener('click', () => showCalendarFor(endInput));
+            $calendarPopup.removeClass('hidden');
 
-            // Calendar navigation
-            prevBtn.addEventListener('click', () => {
-                viewDate.setMonth(viewDate.getMonth() - 1);
-                renderCalendar();
-            });
-            nextBtn.addEventListener('click', () => {
-                viewDate.setMonth(viewDate.getMonth() + 1);
-                renderCalendar();
-            });
-            yearSelect.addEventListener('change', (e) => {
-                viewDate.setFullYear(Number(e.target.value));
-                renderCalendar();
-            });
-
-            // Click outside to close
-            document.addEventListener('click', (e) => {
-                if (calendarPopup.classList.contains('hidden')) return;
-                const t = e.target;
-                if (t === startInput || t === endInput || t === startIcon || t === endIcon) return;
-                if (!calendarPopup.contains(t)) hideCalendar();
-            });
-
-            // Reposition on resize/scroll
-            const repositionIfOpen = () => {
-                if (!calendarPopup.classList.contains('hidden') && activeInput) showCalendarFor(activeInput);
-            };
-            window.addEventListener('resize', repositionIfOpen);
-            window.addEventListener('scroll', repositionIfOpen, true);
-
-            // Init
-            initYear();
             renderCalendar();
+        }
 
-            // When the form is reset by browser default (pressing reset), also call our custom reset
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('reset', (e) => {
-                    // small timeout to allow HTML reset to complete
-                    setTimeout(() => resetAllSelections(), 10);
-                });
+        function hideCalendar() {
+            $calendarPopup.addClass('hidden');
+            activeInput = null;
+        }
+
+        // Event binding for date inputs
+        [$startInput, $endInput].forEach($inp => {
+            if (!$inp.length) return;
+            $inp.on('click', () => showCalendarFor($inp[0]));
+            $inp.on('focus', () => showCalendarFor($inp[0]));
+        });
+        
+        if ($startIcon.length) $startIcon.on('click', () => showCalendarFor($startInput[0]));
+        if ($endIcon.length) $endIcon.on('click', () => showCalendarFor($endInput[0]));
+
+        // Calendar navigation
+        $prevBtn.on('click', function() {
+            viewDate.setMonth(viewDate.getMonth() - 1);
+            renderCalendar();
+        });
+        
+        $nextBtn.on('click', function() {
+            viewDate.setMonth(viewDate.getMonth() + 1);
+            renderCalendar();
+        });
+        
+        $yearSelect.on('change', function(e) {
+            viewDate.setFullYear(Number($(this).val()));
+            renderCalendar();
+        });
+
+        // Click outside to close
+        $(document).on('click', function(e) {
+            if ($calendarPopup.hasClass('hidden')) return;
+            const t = e.target;
+            if (t === $startInput[0] || t === $endInput[0] || t === $startIcon[0] || t === $endIcon[0]) return;
+            if (!$calendarPopup.is(e.target) && $calendarPopup.has(e.target).length === 0) {
+                hideCalendar();
             }
         });
 
-        // ==================== ENHANCED DROPDOWN OPTION STYLING ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get all select elements except year-select in calendar
-            const selectsToStyle = ['project-status', 'project-director', 'division-select'];
+        // Reposition on resize/scroll
+        const repositionIfOpen = () => {
+            if (!$calendarPopup.hasClass('hidden') && activeInput) showCalendarFor(activeInput);
+        };
+        $(window).on('resize', repositionIfOpen);
+        $(window).on('scroll', repositionIfOpen, true);
 
-            selectsToStyle.forEach(selectId => {
-                const originalSelect = document.getElementById(selectId);
-                if (!originalSelect) return;
+        // Init
+        initYear();
+        renderCalendar();
 
-                // Create custom dropdown wrapper
-                const wrapper = document.createElement('div');
-                wrapper.className = 'custom-select-wrapper';
-                wrapper.style.position = 'relative';
-                wrapper.style.width = '100%';
+        // When the form is reset by browser default (pressing reset), also call our custom reset
+        const $form = $('form');
+        if ($form.length) {
+            $form.on('reset', function(e) {
+                // small timeout to allow HTML reset to complete
+                setTimeout(() => resetAllSelections(), 10);
+            });
+        }
+    });
 
-                // Create custom display button
-                const customDisplay = document.createElement('div');
-                customDisplay.className = 'custom-select-display';
-                customDisplay.style.cssText = `
-                    width: 100%;
-                    padding: 12px 16px;
-                    border: 1px solid #e5e7eb;
-                    border-radius: 8px;
-                    background: white;
-                    cursor: pointer;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    font-size: 14px;
-                    color: #111827;
-                    transition: all 0.2s ease;
-                `;
+    // ==================== ENHANCED DROPDOWN OPTION STYLING ====================
+    $(document).ready(function() {
+        // Get all select elements except year-select in calendar
+        const selectsToStyle = ['project-status', 'project-director', 'division-select'];
 
-                // Create arrow icon
-                const arrow = document.createElement('div');
-                arrow.innerHTML = `<svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-                arrow.style.transition = 'transform 0.2s ease';
+        selectsToStyle.forEach(selectId => {
+            const $originalSelect = $('#' + selectId);
+            if (!$originalSelect.length) return;
 
-                // Create custom dropdown list
-                const customList = document.createElement('div');
-                customList.className = 'custom-select-list';
-                customList.style.cssText = `
-                    position: absolute;
-                    top: calc(100% + 4px);
-                    left: 0;
-                    right: 0;
-                    background: white;
-                    border-radius: 12px;
-                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-                    max-height: 280px;
-                    overflow-y: auto;
-                    z-index: 1000;
-                    display: none;
-                    padding: 8px;
-                `;
-
-                // Populate options
-                const selectedText = document.createElement('span');
-                const options = Array.from(originalSelect.options);
-                
-                // Set initial display text
-                const initialOption = options.find(opt => opt.value === originalSelect.value) || options[0];
-                selectedText.textContent = initialOption.textContent;
-                selectedText.style.color = initialOption.value === '' ? '#9ca3af' : '#111827';
-
-                customDisplay.appendChild(selectedText);
-                customDisplay.appendChild(arrow);
-
-                // Create option items
-                options.forEach((option, index) => {
-                    const optionItem = document.createElement('div');
-                    optionItem.className = 'custom-option';
-                    optionItem.textContent = option.textContent;
-                    optionItem.dataset.value = option.value;
-                    
-                    optionItem.style.cssText = `
-                        padding: 12px 16px;
-                        font-size: 14px;
-                        color: ${index === 0 && option.value === '' ? '#9ca3af' : '#111827'};
-                        cursor: pointer;
-                        border-radius: 8px;
-                        transition: all 0.15s ease;
-                        font-weight: ${option.value === originalSelect.value && option.value !== '' ? '600' : '500'};
-                        background: ${option.value === originalSelect.value && option.value !== '' ? '#eff6ff' : 'transparent'};
-                    `;
-
-                    // Hover effect
-                    optionItem.addEventListener('mouseenter', function() {
-                        if (this.dataset.value !== originalSelect.value) {
-                            this.style.backgroundColor = '#f3f4f6';
-                        }
-                    });
-
-                    optionItem.addEventListener('mouseleave', function() {
-                        if (this.dataset.value !== originalSelect.value) {
-                            this.style.backgroundColor = 'transparent';
-                        }
-                    });
-
-                    // Click handler
-                    optionItem.addEventListener('click', function() {
-                        const value = this.dataset.value;
-                        originalSelect.value = value;
-                        
-                        // Trigger change event on original select
-                        const event = new Event('change', { bubbles: true });
-                        originalSelect.dispatchEvent(event);
-
-                        // Update display
-                        selectedText.textContent = this.textContent;
-                        selectedText.style.color = value === '' ? '#9ca3af' : '#111827';
-
-                        // Update all options styling
-                        customList.querySelectorAll('.custom-option').forEach(opt => {
-                            const isSelected = opt.dataset.value === value && value !== '';
-                            opt.style.fontWeight = isSelected ? '600' : '500';
-                            opt.style.backgroundColor = isSelected ? '#eff6ff' : 'transparent';
-                        });
-
-                        // Close dropdown
-                        customList.style.display = 'none';
-                        arrow.style.transform = 'rotate(0deg)';
-                        customDisplay.style.borderColor = '#e5e7eb';
-                    });
-
-                    customList.appendChild(optionItem);
-                });
-
-                // Toggle dropdown
-                customDisplay.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const isOpen = customList.style.display === 'block';
-                    
-                    // Close all other dropdowns
-                    document.querySelectorAll('.custom-select-list').forEach(list => {
-                        list.style.display = 'none';
-                    });
-                    document.querySelectorAll('.custom-select-display').forEach(display => {
-                        display.style.borderColor = '#e5e7eb';
-                        display.querySelector('div').style.transform = 'rotate(0deg)';
-                    });
-
-                    if (!isOpen) {
-                        customList.style.display = 'block';
-                        arrow.style.transform = 'rotate(180deg)';
-                        customDisplay.style.borderColor = '#3b82f6';
-                    } else {
-                        customList.style.display = 'none';
-                        arrow.style.transform = 'rotate(0deg)';
-                        customDisplay.style.borderColor = '#e5e7eb';
-                    }
-                });
-
-                // Hover effect on display
-                customDisplay.addEventListener('mouseenter', function() {
-                    if (customList.style.display !== 'block') {
-                        this.style.backgroundColor = '#f9fafb';
-                        this.style.borderColor = '#d1d5db';
-                    }
-                });
-
-                customDisplay.addEventListener('mouseleave', function() {
-                    if (customList.style.display !== 'block') {
-                        this.style.backgroundColor = 'white';
-                        this.style.borderColor = '#e5e7eb';
-                    }
-                });
-
-                // Close on outside click
-                document.addEventListener('click', function() {
-                    customList.style.display = 'none';
-                    arrow.style.transform = 'rotate(0deg)';
-                    customDisplay.style.borderColor = '#e5e7eb';
-                });
-
-                // Assemble custom dropdown
-                wrapper.appendChild(customDisplay);
-                wrapper.appendChild(customList);
-
-                // Hide original select
-                originalSelect.style.display = 'none';
-
-                // Insert custom dropdown after original
-                originalSelect.parentNode.insertBefore(wrapper, originalSelect.nextSibling);
+            // Create custom dropdown wrapper
+            const $wrapper = $('<div>', {
+                class: 'custom-select-wrapper'
+            }).css({
+                position: 'relative',
+                width: '100%'
             });
 
-            // Custom scrollbar for dropdown lists
-            const style = document.createElement('style');
-            style.textContent = `
-                .custom-select-list::-webkit-scrollbar {
-                    width: 6px;
+            // Create custom display button
+            const $customDisplay = $('<div>', {
+                class: 'custom-select-display'
+            }).css({
+                width: '100%',
+                padding: '12px 16px',
+                border: '1px solid #e5e7eb',
+                borderRadius: '8px',
+                background: 'white',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontSize: '14px',
+                color: '#111827',
+                transition: 'all 0.2s ease'
+            });
+
+            // Create arrow icon
+            const $arrow = $('<div>').html(`<svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`);
+            $arrow.css('transition', 'transform 0.2s ease');
+
+            // Create custom dropdown list
+            const $customList = $('<div>', {
+                class: 'custom-select-list'
+            }).css({
+                position: 'absolute',
+                top: 'calc(100% + 4px)',
+                left: 0,
+                right: 0,
+                background: 'white',
+                borderRadius: '12px',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
+                maxHeight: '280px',
+                overflowY: 'auto',
+                zIndex: 1000,
+                display: 'none',
+                padding: '8px'
+            });
+
+            // Populate options
+            const $selectedText = $('<span>');
+            const options = $originalSelect.find('option').toArray();
+            
+            // Set initial display text
+            const initialOption = options.find(opt => opt.value === $originalSelect.val()) || options[0];
+            $selectedText.text(initialOption.textContent);
+            $selectedText.css('color', initialOption.value === '' ? '#9ca3af' : '#111827');
+
+            $customDisplay.append($selectedText);
+            $customDisplay.append($arrow);
+
+            // Create option items
+            options.forEach((option, index) => {
+                const $optionItem = $('<div>', {
+                    class: 'custom-option',
+                    text: option.textContent
+                }).data('value', option.value);
+                
+                $optionItem.css({
+                    padding: '12px 16px',
+                    fontSize: '14px',
+                    color: (index === 0 && option.value === '') ? '#9ca3af' : '#111827',
+                    cursor: 'pointer',
+                    borderRadius: '8px',
+                    transition: 'all 0.15s ease',
+                    fontWeight: (option.value === $originalSelect.val() && option.value !== '') ? '600' : '500',
+                    background: (option.value === $originalSelect.val() && option.value !== '') ? '#eff6ff' : 'transparent'
+                });
+
+                // Hover effect
+                $optionItem.on('mouseenter', function() {
+                    if ($(this).data('value') !== $originalSelect.val()) {
+                        $(this).css('backgroundColor', '#f3f4f6');
+                    }
+                });
+
+                $optionItem.on('mouseleave', function() {
+                    if ($(this).data('value') !== $originalSelect.val()) {
+                        $(this).css('backgroundColor', 'transparent');
+                    }
+                });
+
+                // Click handler
+                $optionItem.on('click', function() {
+                    const value = $(this).data('value');
+                    $originalSelect.val(value);
+                    
+                    // Trigger change event on original select
+                    $originalSelect.trigger('change');
+
+                    // Update display
+                    $selectedText.text($(this).text());
+                    $selectedText.css('color', value === '' ? '#9ca3af' : '#111827');
+
+                    // Update all options styling
+                    $customList.find('.custom-option').each(function() {
+                        const $opt = $(this);
+                        const isSelected = $opt.data('value') === value && value !== '';
+                        $opt.css({
+                            fontWeight: isSelected ? '600' : '500',
+                            backgroundColor: isSelected ? '#eff6ff' : 'transparent'
+                        });
+                    });
+
+                    // Close dropdown
+                    $customList.hide();
+                    $arrow.css('transform', 'rotate(0deg)');
+                    $customDisplay.css('borderColor', '#e5e7eb');
+                });
+
+                $customList.append($optionItem);
+            });
+
+            // Toggle dropdown
+            $customDisplay.on('click', function(e) {
+                e.stopPropagation();
+                const isOpen = $customList.is(':visible');
+                
+                // Close all other dropdowns
+                $('.custom-select-list').hide();
+                $('.custom-select-display').each(function() {
+                    $(this).css('borderColor', '#e5e7eb');
+                    $(this).find('div').last().css('transform', 'rotate(0deg)');
+                });
+
+                if (!isOpen) {
+                    $customList.show();
+                    $arrow.css('transform', 'rotate(180deg)');
+                    $customDisplay.css('borderColor', '#3b82f6');
+                } else {
+                    $customList.hide();
+                    $arrow.css('transform', 'rotate(0deg)');
+                    $customDisplay.css('borderColor', '#e5e7eb');
                 }
-                .custom-select-list::-webkit-scrollbar-track {
-                    background: #f1f1f1;
-                    border-radius: 10px;
+            });
+
+            // Hover effect on display
+            $customDisplay.on('mouseenter', function() {
+                if (!$customList.is(':visible')) {
+                    $(this).css({
+                        backgroundColor: '#f9fafb',
+                        borderColor: '#d1d5db'
+                    });
                 }
-                .custom-select-list::-webkit-scrollbar-thumb {
-                    background: #cbd5e1;
-                    border-radius: 10px;
+            });
+
+            $customDisplay.on('mouseleave', function() {
+                if (!$customList.is(':visible')) {
+                    $(this).css({
+                        backgroundColor: 'white',
+                        borderColor: '#e5e7eb'
+                    });
                 }
-                .custom-select-list::-webkit-scrollbar-thumb:hover {
-                    background: #94a3b8;
-                }
-            `;
-            document.head.appendChild(style);
+            });
+
+            // Close on outside click
+            $(document).on('click', function() {
+                $customList.hide();
+                $arrow.css('transform', 'rotate(0deg)');
+                $customDisplay.css('borderColor', '#e5e7eb');
+            });
+
+            // Assemble custom dropdown
+            $wrapper.append($customDisplay);
+            $wrapper.append($customList);
+
+            // Hide original select
+            $originalSelect.hide();
+
+            // Insert custom dropdown after original
+            $originalSelect.after($wrapper);
         });
-    </script>
+
+        // Custom scrollbar for dropdown lists
+        const $style = $('<style>').text(`
+            .custom-select-list::-webkit-scrollbar {
+                width: 6px;
+            }
+            .custom-select-list::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+            .custom-select-list::-webkit-scrollbar-thumb {
+                background: #cbd5e1;
+                border-radius: 10px;
+            }
+            .custom-select-list::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+            }
+        `);
+        $('head').append($style);
+    });
+</script>
 @endsection

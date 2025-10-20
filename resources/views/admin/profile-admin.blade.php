@@ -266,233 +266,210 @@
         }
     </style>
 
-    {{-- Toast Notification Script --}}
-    <script>
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            
-            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
-            const icon = type === 'success' 
-                ? '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
-                : '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
-            
-            toast.className = `${bgColor} text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3 min-w-[300px] max-w-[400px] toast-enter`;
-            toast.innerHTML = `
-                ${icon}
-                <span class="flex-1 text-sm font-medium">${message}</span>
-                <button onclick="this.parentElement.remove()" class="ml-2 hover:opacity-80">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            `;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.remove('toast-enter');
-                toast.classList.add('toast-exit');
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        const $calendarPopup = $('#calendarPopup');
+        const $monthShortEl = $('#month-short');
+        const $yearSelect = $('#year-select');
+        const $prevBtn = $('#prev-btn');
+        const $nextBtn = $('#next-btn');
+        const $datesGrid = $('#dates-grid');
+
+        const $birthInput = $('#birth-date');
+        const $joinInput = $('#join-date');
+        const $birthIcon = $('#birth-date-icon');
+        const $joinIcon = $('#join-date-icon');
+
+        if ($calendarPopup.length && $calendarPopup.parent()[0] !== document.body) {
+            $calendarPopup.appendTo('body');
         }
 
-        // Show success/error messages from session
-        @if (session('success'))
-            showToast('{{ session('success') }}', 'success');
-        @endif
+        let viewDate = new Date();
+        let activeInput = null;
 
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                showToast('{{ $error }}', 'error');
-            @endforeach
-        @endif
-    </script>
+        function stripTime(d) {
+            const nd = new Date(d);
+            nd.setHours(0, 0, 0, 0);
+            return nd;
+        }
 
-    {{-- Calendar JS (single date, input + icon clickable) --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                'Dec'
-            ];
+        function pad(n) {
+            return n < 10 ? '0' + n : String(n);
+        }
 
-            const calendarPopup = document.getElementById('calendarPopup');
-            const monthShortEl = document.getElementById('month-short');
-            const yearSelect = document.getElementById('year-select');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const datesGrid = document.getElementById('dates-grid');
+        function formatISO(d) {
+            return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+        }
 
-            const birthInput = document.getElementById('birth-date');
-            const joinInput = document.getElementById('join-date');
-            const birthIcon = document.getElementById('birth-date-icon');
-            const joinIcon = document.getElementById('join-date-icon');
+        function initYear() {
+            $yearSelect.empty();
+            const cur = new Date().getFullYear();
+            for (let y = cur - 50; y <= cur + 50; y++) {
+                const $opt = $('<option>', {
+                    value: y,
+                    text: y
+                });
+                $yearSelect.append($opt);
+            }
+        }
 
-            if (calendarPopup && calendarPopup.parentElement !== document.body) {
-                document.body.appendChild(calendarPopup);
+        function updateHeader() {
+            $yearSelect.val(viewDate.getFullYear());
+            $monthShortEl.text(monthShortNames[viewDate.getMonth()]);
+        }
+
+        function renderCalendar() {
+            const year = viewDate.getFullYear();
+            const month = viewDate.getMonth();
+            updateHeader();
+            $datesGrid.empty();
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                const $cell = $('<div>', {
+                    class: 'w-10 h-10 rounded-full text-center text-sm text-gray-300'
+                });
+                $datesGrid.append($cell);
             }
 
-            let viewDate = new Date();
-            let activeInput = null;
+            const today = stripTime(new Date()).getTime();
+            const currentVal = activeInput && activeInput.value ? new Date(activeInput.value) : null;
+            const selectedTime = currentVal ? stripTime(currentVal).getTime() : null;
 
-            function stripTime(d) {
-                const nd = new Date(d);
-                nd.setHours(0, 0, 0, 0);
-                return nd;
+            for (let d = 1; d <= daysInMonth; d++) {
+                const $cell = $('<button>', {
+                    type: 'button',
+                    class: 'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition',
+                    text: d
+                });
+
+                const cellDate = new Date(year, month, d);
+                const cellTime = stripTime(cellDate).getTime();
+
+                if (cellTime === today) {
+                    $cell.addClass('font-semibold');
+                    $cell.css('box-shadow', 'inset 0 0 0 1px rgba(0,0,0,0.05)');
+                }
+                if (selectedTime && cellTime === selectedTime) {
+                    $cell.addClass('bg-blue-500 text-white font-semibold');
+                }
+
+                $cell.on('click', function() {
+                    if (!activeInput) return;
+                    activeInput.value = formatISO(cellDate);
+                    hideCalendar();
+                });
+
+                $datesGrid.append($cell);
             }
+        }
 
-            function pad(n) {
-                return n < 10 ? '0' + n : String(n);
-            }
+        function showCalendarFor(inputEl) {
+            activeInput = inputEl;
 
-            function formatISO(d) {
-                return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
-            }
-
-            function initYear() {
-                yearSelect.innerHTML = '';
-                const cur = new Date().getFullYear();
-                for (let y = cur - 50; y <= cur + 50; y++) {
-                    const opt = document.createElement('option');
-                    opt.value = y;
-                    opt.textContent = y;
-                    yearSelect.appendChild(opt);
+            if (activeInput.value) {
+                const parsed = new Date(activeInput.value);
+                if (!isNaN(parsed.getTime())) {
+                    viewDate = new Date(parsed);
                 }
             }
 
-            function updateHeader() {
-                yearSelect.value = viewDate.getFullYear();
-                monthShortEl.textContent = monthShortNames[viewDate.getMonth()];
+            $calendarPopup.removeClass('hidden');
+            $calendarPopup.css('visibility', 'hidden');
+
+            const rect = inputEl.getBoundingClientRect();
+            const popupW = $calendarPopup.outerWidth() || 320;
+            const popupH = $calendarPopup.outerHeight() || 360;
+
+            let left = rect.left + window.scrollX;
+            let top = rect.bottom + window.scrollY + 8;
+
+            if (left + popupW > window.scrollX + window.innerWidth - 12) {
+                left = window.scrollX + window.innerWidth - popupW - 12;
+            }
+            if (left < 12 + window.scrollX) left = 12 + window.scrollX;
+
+            if (top + popupH > window.scrollY + window.innerHeight - 12) {
+                const altTop = rect.top + window.scrollY - popupH - 8;
+                top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY +
+                    window.innerHeight - popupH - 12);
             }
 
-            function renderCalendar() {
-                const year = viewDate.getFullYear();
-                const month = viewDate.getMonth();
-                updateHeader();
-                datesGrid.innerHTML = '';
-
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                for (let i = 0; i < firstDay; i++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'w-10 h-10 rounded-full text-center text-sm text-gray-300';
-                    datesGrid.appendChild(cell);
-                }
-
-                const today = stripTime(new Date()).getTime();
-                const currentVal = activeInput && activeInput.value ? new Date(activeInput.value) : null;
-                const selectedTime = currentVal ? stripTime(currentVal).getTime() : null;
-
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const cell = document.createElement('button');
-                    cell.type = 'button';
-                    cell.className =
-                        'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition';
-                    cell.textContent = d;
-
-                    const cellDate = new Date(year, month, d);
-                    const cellTime = stripTime(cellDate).getTime();
-
-                    if (cellTime === today) {
-                        cell.classList.add('font-semibold');
-                        cell.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.05)';
-                    }
-                    if (selectedTime && cellTime === selectedTime) {
-                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold');
-                    }
-
-                    cell.addEventListener('click', () => {
-                        if (!activeInput) return;
-                        activeInput.value = formatISO(cellDate);
-                        hideCalendar();
-                    });
-
-                    datesGrid.appendChild(cell);
-                }
-            }
-
-            function showCalendarFor(inputEl) {
-                activeInput = inputEl;
-
-                if (activeInput.value) {
-                    const parsed = new Date(activeInput.value);
-                    if (!isNaN(parsed.getTime())) {
-                        viewDate = new Date(parsed);
-                    }
-                }
-
-                calendarPopup.classList.remove('hidden');
-                calendarPopup.style.visibility = 'hidden';
-
-                const rect = inputEl.getBoundingClientRect();
-                const popupW = calendarPopup.offsetWidth || 320;
-                const popupH = calendarPopup.offsetHeight || 360;
-
-                let left = rect.left + window.scrollX;
-                let top = rect.bottom + window.scrollY + 8;
-
-                if (left + popupW > window.scrollX + window.innerWidth - 12) {
-                    left = window.scrollX + window.innerWidth - popupW - 12;
-                }
-                if (left < 12 + window.scrollX) left = 12 + window.scrollX;
-
-                if (top + popupH > window.scrollY + window.innerHeight - 12) {
-                    const altTop = rect.top + window.scrollY - popupH - 8;
-                    top = (altTop > 8 + window.scrollY) ? altTop : Math.max(8 + window.scrollY, window.scrollY +
-                        window.innerHeight - popupH - 12);
-                }
-
-                calendarPopup.style.position = 'absolute';
-                calendarPopup.style.left = left + 'px';
-                calendarPopup.style.top = top + 'px';
-
-                calendarPopup.style.visibility = 'visible';
-                calendarPopup.classList.remove('hidden');
-
-                renderCalendar();
-            }
-
-            function hideCalendar() {
-                calendarPopup.classList.add('hidden');
-                activeInput = null;
-            }
-
-            [birthInput, joinInput].forEach(inp => {
-                inp.addEventListener('click', () => showCalendarFor(inp));
-                inp.addEventListener('focus', () => showCalendarFor(inp));
+            $calendarPopup.css({
+                position: 'absolute',
+                left: left + 'px',
+                top: top + 'px',
+                visibility: 'visible'
             });
-            birthIcon.addEventListener('click', () => showCalendarFor(birthInput));
-            joinIcon.addEventListener('click', () => showCalendarFor(joinInput));
+            $calendarPopup.removeClass('hidden');
 
-            prevBtn.addEventListener('click', () => {
-                viewDate.setMonth(viewDate.getMonth() - 1);
-                renderCalendar();
-            });
-            nextBtn.addEventListener('click', () => {
-                viewDate.setMonth(viewDate.getMonth() + 1);
-                renderCalendar();
-            });
-            yearSelect.addEventListener('change', (e) => {
-                viewDate.setFullYear(Number(e.target.value));
-                renderCalendar();
-            });
+            renderCalendar();
+        }
 
-            document.addEventListener('click', (e) => {
-                if (calendarPopup.classList.contains('hidden')) return;
-                const t = e.target;
-                if (t === birthInput || t === joinInput || t === birthIcon || t === joinIcon) return;
-                if (!calendarPopup.contains(t)) hideCalendar();
+        function hideCalendar() {
+            $calendarPopup.addClass('hidden');
+            activeInput = null;
+        }
+
+        // Event binding for date inputs
+        [$birthInput, $joinInput].forEach(function($inp) {
+            $inp.on('click', function() {
+                showCalendarFor(this);
             });
+            $inp.on('focus', function() {
+                showCalendarFor(this);
+            });
+        });
 
-            const repositionIfOpen = () => {
-                if (!calendarPopup.classList.contains('hidden') && activeInput) showCalendarFor(activeInput);
-            };
-            window.addEventListener('resize', repositionIfOpen);
-            window.addEventListener('scroll', repositionIfOpen, true);
+        $birthIcon.on('click', function() {
+            showCalendarFor($birthInput[0]);
+        });
 
-            initYear();
+        $joinIcon.on('click', function() {
+            showCalendarFor($joinInput[0]);
+        });
+
+        // Calendar navigation
+        $prevBtn.on('click', function() {
+            viewDate.setMonth(viewDate.getMonth() - 1);
             renderCalendar();
         });
-    </script>
+
+        $nextBtn.on('click', function() {
+            viewDate.setMonth(viewDate.getMonth() + 1);
+            renderCalendar();
+        });
+
+        $yearSelect.on('change', function(e) {
+            viewDate.setFullYear(Number($(this).val()));
+            renderCalendar();
+        });
+
+        // Click outside to close
+        $(document).on('click', function(e) {
+            if ($calendarPopup.hasClass('hidden')) return;
+            const t = e.target;
+            if (t === $birthInput[0] || t === $joinInput[0] || t === $birthIcon[0] || t === $joinIcon[0]) return;
+            if (!$calendarPopup.is(e.target) && $calendarPopup.has(e.target).length === 0) {
+                hideCalendar();
+            }
+        });
+
+        // Reposition on resize/scroll
+        const repositionIfOpen = function() {
+            if (!$calendarPopup.hasClass('hidden') && activeInput) showCalendarFor(activeInput);
+        };
+        $(window).on('resize', repositionIfOpen);
+        $(window).on('scroll', repositionIfOpen);
+
+        // Init
+        initYear();
+        renderCalendar();
+    });
+</script>
 @endsection
