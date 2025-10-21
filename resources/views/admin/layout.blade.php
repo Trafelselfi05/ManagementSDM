@@ -539,557 +539,318 @@
         </nav>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         @stack('scripts')
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const statusButtons = document.querySelectorAll('.status-btn');
-        //     const employeeCards = document.querySelectorAll('.employee-card');
-
-        //     // Set initial state - show only complete employees
-        //     filterEmployees('ready');
-
-        //     statusButtons.forEach(button => {
-        //         button.addEventListener('click', function() {
-        //             const status = this.getAttribute('data-status');
-
-        //             // Update button styles
-        //             statusButtons.forEach(btn => {
-        //                 btn.classList.remove('bg-gray-900', 'text-white');
-        //                 btn.classList.add('bg-gray-100', 'text-gray-700',
-        //                     'hover:bg-gray-200');
-        //             });
-
-        //             this.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
-        //             this.classList.add('bg-gray-900', 'text-white');
-
-        //             // Filter employees
-        //             filterEmployees(status);
-        //         });
-        //     });
-
-        //     function filterEmployees(status) {
-        //         employeeCards.forEach(card => {
-        //             if (card.getAttribute('data-status') === status) {
-        //                 card.classList.remove('hidden');
-        //             } else {
-        //                 card.classList.add('hidden');
-        //             }
-        //         });
-
-        //         // If no cards visible for this status, show message
-        //         const visibleCards = document.querySelectorAll(
-        //             `.employee-card[data-status="${status}"]:not(.hidden)`);
-        //         if (visibleCards.length === 0) {
-        //             // Create a message element if it doesn't exist
-        //             let messageElement = document.getElementById('noEmployeesMessage');
-        //             if (!messageElement) {
-        //                 messageElement = document.createElement('div');
-        //                 messageElement.id = 'noEmployeesMessage';
-        //                 messageElement.className = 'col-span-full text-center py-8 text-gray-500';
-        //                 document.getElementById('employeeCards').appendChild(messageElement);
-        //             }
-        //             messageElement.textContent = `No employees with status: ${status}`;
-        //         } else {
-        //             // Remove message if it exists
-        //             const messageElement = document.getElementById('noEmployeesMessage');
-        //             if (messageElement) {
-        //                 messageElement.remove();
-        //             }
-        //         }
-        //     }
-        // });
-
-
-        // Modal functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        $(document).ready(function() {
             // Elements
-            const createTaskBtn = document.getElementById('createTaskBtn');
-            const closeCreateTaskModal = document.getElementById('closeCreateTaskModal');
-            const createTaskModal = document.getElementById('createTaskModal');
-            const transferTaskBtn = document.getElementById('transferTaskBtn');
-            const closeModal = document.getElementById('closeModal');
-            const transferTaskModal = document.getElementById('transferTaskModal');
-            const alertOverlay = document.getElementById('alertOverlay');
-            const alertButton = document.getElementById('alertButton');
-            const createTaskForm = createTaskModal.querySelector('form');
-            const transferTaskForm = transferTaskModal.querySelector('form');
+            const createTaskModal = $("#createTaskModal");
+            const transferTaskModal = $("#transferTaskModal");
+            const alertOverlay = $("#alertOverlay");
+            const createTaskForm = createTaskModal.find("form");
+            const transferTaskForm = transferTaskModal.find("form");
+            let currentTaskData = {};
 
             // Open Create Task Modal
-            createTaskBtn.addEventListener('click', () => {
-                createTaskModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            $("#createTaskBtn").on("click", function() {
+                createTaskModal.addClass("active");
+                $("body").css("overflow", "hidden");
             });
 
             // Close Create Task Modal
-            closeCreateTaskModal.addEventListener('click', () => {
-                createTaskModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+            $("#closeCreateTaskModal").on("click", function() {
+                createTaskModal.removeClass("active");
+                $("body").css("overflow", "auto");
             });
 
             // Open Transfer Task Modal
-            transferTaskBtn.addEventListener('click', () => {
-                transferTaskModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            $("#transferTaskBtn").on("click", function() {
+                transferTaskModal.addClass("active");
+                $("body").css("overflow", "hidden");
             });
 
             // Close Transfer Task Modal
-            closeModal.addEventListener('click', () => {
-                transferTaskModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+            $("#closeModal").on("click", function() {
+                transferTaskModal.removeClass("active");
+                $("body").css("overflow", "auto");
             });
 
             // Close modals when clicking outside
             [createTaskModal, transferTaskModal].forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                        document.body.style.overflow = 'auto';
+                modal.on("click", function(e) {
+                    if (e.target === modal[0]) {
+                        modal.removeClass("active");
+                        $("body").css("overflow", "auto");
                     }
                 });
             });
 
             // Close alert modal
-            alertButton.addEventListener('click', () => {
-                alertOverlay.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+            $("#alertButton").on("click", function() {
+                alertOverlay.addClass("hidden");
+                $("body").css("overflow", "auto");
             });
-
-            // Form validation and submission
-
-            // Form validation function
-            // function validateForm(form) {
-            //     let isValid = true;
-            //     const inputs = form.querySelectorAll('[required]');
-
-            //     inputs.forEach(input => {
-            //         const errorElement = document.getElementById(`${input.id}-error`);
-            //         if (!input.value) {
-            //             if (errorElement) {
-            //                 errorElement.textContent = 'This field is required';
-            //                 errorElement.classList.remove('hidden');
-            //             }
-            //             isValid = false;
-            //         } else {
-            //             if (errorElement) {
-            //                 errorElement.classList.add('hidden');
-            //             }
-            //         }
-            //     });
-
-            //     // Check if at least one radio button is selected
-            //     const radioGroups = form.querySelectorAll('input[type="radio"]');
-            //     const radioNames = [...new Set(Array.from(radioGroups).map(radio => radio.name))];
-
-            //     radioNames.forEach(name => {
-            //         const radios = form.querySelectorAll(`input[name="${name}"]`);
-            //         const checked = Array.from(radios).some(radio => radio.checked);
-            //         if (!checked) {
-            //             isValid = false;
-            //             // You could add error display for radio groups here
-            //         }
-            //     });
-
-            //     return isValid;
-            // }
 
             // Show alert function
             function showAlert(title, message, type) {
-                const alertIcon = document.getElementById('alertIcon');
-                const alertIconSvg = document.getElementById('alertIconSvg');
-                const alertTitle = document.getElementById('alertTitle');
-                const alertMessage = document.getElementById('alertMessage');
+                const alertIcon = $("#alertIcon");
+                const alertIconSvg = $("#alertIconSvg");
+                const alertTitle = $("#alertTitle");
+                const alertMessage = $("#alertMessage");
 
-                // Set alert content
-                alertTitle.textContent = title;
-                alertMessage.textContent = message;
+                alertTitle.text(title);
+                alertMessage.text(message);
 
-                // Set alert style based on type
-                if (type === 'success') {
-                    alertIcon.classList.add('bg-green-500');
-                    alertIcon.classList.remove('bg-red-500', 'hidden');
-                    alertIconSvg.innerHTML =
-                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
-                } else if (type === 'error') {
-                    alertIcon.classList.add('bg-red-500');
-                    alertIcon.classList.remove('bg-green-500', 'hidden');
-                    alertIconSvg.innerHTML =
-                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+                if (type === "success") {
+                    alertIcon.addClass("bg-green-500").removeClass("bg-red-500 hidden");
+                    alertIconSvg.html(
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+                    );
+                } else if (type === "error") {
+                    alertIcon.addClass("bg-red-500").removeClass("bg-green-500 hidden");
+                    alertIconSvg.html(
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'
+                    );
                 }
 
-                // Show alert
-                alertOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
+                alertOverlay.removeClass("hidden");
+                $("body").css("overflow", "hidden");
 
-                // Animate in
                 setTimeout(() => {
-                    alertOverlay.querySelector('.transform').classList.remove('opacity-0', 'scale-95');
-                    alertOverlay.querySelector('.transform').classList.add('opacity-100', 'scale-100');
+                    alertOverlay.find(".transform").removeClass("opacity-0 scale-95").addClass(
+                        "opacity-100 scale-100");
                 }, 10);
             }
 
             // Custom radio button behavior
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.addEventListener('change', () => {
-                    // Update the visual state of all radio buttons in the group
-                    const groupName = radio.name;
-                    document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
-                        const label = document.querySelector(`label[for="${r.id}"]`);
-                        if (label) {
-                            const indicator = label.querySelector('span span');
-                            if (r.checked) {
-                                indicator.classList.remove('opacity-0');
-                            } else {
-                                indicator.classList.add('opacity-0');
-                            }
-                        }
-                    });
+            $("input[type='radio']").on("change", function() {
+                const groupName = $(this).attr("name");
+                $(`input[name="${groupName}"]`).each(function() {
+                    const label = $(`label[for="${this.id}"]`);
+                    const indicator = label.find("span span");
+                    if (this.checked) {
+                        indicator.removeClass("opacity-0");
+                    } else {
+                        indicator.addClass("opacity-0");
+                    }
                 });
             });
-        });
-        // Task Detail and Edit Modal functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const taskRows = document.querySelectorAll('.task-row');
-            const taskModal = document.getElementById('taskDetailModal');
-            const closeModalBtn = document.getElementById('closeTaskModal');
-            const editTaskBtn = document.getElementById('editTaskBtn');
-            const editTaskModal = document.getElementById('editTaskModal');
-            const closeEditModalBtn = document.getElementById('closeEditTaskModal');
-            const submitEditTaskBtn = document.getElementById('submitEditTask');
-            const editTaskNameInput = document.getElementById('edit-task-name');
-            const levelIndicators = document.querySelectorAll('.level-indicator');
-            const levelInputs = document.querySelectorAll('input[name="task-level"]');
 
-            // Status color mapping
+            // Task Detail and Edit Modal
+            const taskModal = $("#taskDetailModal");
+            const editTaskModal = $("#editTaskModal");
+
             const statusColors = {
-                'To do': '#e94949',
-                'Progress': '#ffb32d',
-                'Complete': '#7db445',
-                'Review': '#6fadc8'
+                "To do": "#e94949",
+                "Progress": "#ffb32d",
+                "Complete": "#7db445",
+                "Review": "#6fadc8"
             };
 
-            // Level color mapping
             const levelColors = {
-                'High': '#e94949',
-                'Medium': '#ffb32d',
-                'Low': '#6fadc8'
+                "High": "#e94949",
+                "Medium": "#ffb32d",
+                "Low": "#6fadc8"
             };
 
-            let currentTaskData = {};
+            $(".task-row").on("click", function() {
+                currentTaskData = {
+                    taskId: $(this).data("task-id"),
+                    taskName: $(this).data("task-name"),
+                    project: $(this).data("project"),
+                    assignee: $(this).data("assignee"),
+                    level: $(this).data("level"),
+                    status: $(this).data("status"),
+                    created: $(this).data("created"),
+                    timeline: $(this).data("timeline")
+                };
 
-            // Open modal when a task row is clicked
-            taskRows.forEach(row => {
-                row.addEventListener('click', function() {
-                    const taskId = this.getAttribute('data-task-id');
-                    const taskName = this.getAttribute('data-task-name');
-                    const project = this.getAttribute('data-project');
-                    const assignee = this.getAttribute('data-assignee');
-                    const level = this.getAttribute('data-level');
-                    const status = this.getAttribute('data-status');
-                    const created = this.getAttribute('data-created');
-                    const timeline = this.getAttribute('data-timeline');
+                $("#task-details-heading").text(currentTaskData.taskName);
+                $("#task-project").text(currentTaskData.project);
+                $("#task-assignee").text(currentTaskData.assignee);
+                $("#assignee-initial").text(currentTaskData.assignee.charAt(0));
+                $("#task-timeline").text(currentTaskData.timeline).attr("datetime", currentTaskData.timeline
+                    .replace(/\s/g, ""));
 
-                    // Store current task data
-                    currentTaskData = {
-                        taskId,
-                        taskName,
-                        project,
-                        assignee,
-                        level,
-                        status,
-                        created,
-                        timeline
-                    };
+                $("#task-status")
+                    .html(`<span class="font-medium text-white text-sm">${currentTaskData.status}</span>`)
+                    .css("background-color", statusColors[currentTaskData.status] || "#e94949");
 
-                    // Update modal content with task data
-                    document.getElementById('task-details-heading').textContent = taskName;
-                    document.getElementById('task-project').textContent = project;
-                    document.getElementById('task-assignee').textContent = assignee;
-                    document.getElementById('assignee-initial').textContent = assignee.charAt(0);
-                    document.getElementById('task-timeline').textContent = timeline;
-                    document.getElementById('task-timeline').setAttribute('datetime', timeline
-                        .replace(/\s/g, ''));
+                $("#task-level")
+                    .html(`<span class="font-medium text-white text-sm">${currentTaskData.level}</span>`)
+                    .css("background-color", levelColors[currentTaskData.level] || "#ffb32d");
 
-                    // Update status with appropriate color
-                    const statusElement = document.getElementById('task-status');
-                    statusElement.innerHTML =
-                        `<span class="font-medium text-white text-sm">${status}</span>`;
-                    statusElement.style.backgroundColor = statusColors[status] || '#e94949';
-
-                    // Update level with appropriate color
-                    const levelElement = document.getElementById('task-level');
-                    levelElement.innerHTML =
-                        `<span class="font-medium text-white text-sm">${level}</span>`;
-                    levelElement.style.backgroundColor = levelColors[level] || '#ffb32d';
-
-                    // Show the modal
-                    taskModal.classList.remove('hidden');
-                    taskModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                });
+                taskModal.removeClass("hidden").addClass("active");
+                $("body").css("overflow", "hidden");
             });
 
-            // Close modal when close button is clicked
-            closeModalBtn.addEventListener('click', function() {
-                taskModal.classList.remove('active');
-                taskModal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+            $("#closeTaskModal").on("click", function() {
+                taskModal.removeClass("active").addClass("hidden");
+                $("body").css("overflow", "auto");
             });
 
-            // Open edit modal when edit button is clicked
-            editTaskBtn.addEventListener('click', function() {
-                // Populate edit form with current task data
-                editTaskNameInput.value = currentTaskData.taskName;
+            $("#editTaskBtn").on("click", function() {
+                $("#edit-task-name").val(currentTaskData.taskName);
 
-                // Set the correct level radio button
-                document.querySelectorAll('input[name="task-level"]').forEach(input => {
-                    if (input.value === currentTaskData.level) {
-                        input.checked = true;
-                        updateLevelIndicator(input.value);
+                $("input[name='task-level']").each(function() {
+                    if ($(this).val() === currentTaskData.level) {
+                        $(this).prop("checked", true);
+                        updateLevelIndicator($(this).val());
                     }
                 });
 
-                // Close detail modal and open edit modal
-                taskModal.classList.remove('active');
-                taskModal.classList.add('hidden');
-                editTaskModal.classList.remove('hidden');
-                editTaskModal.classList.add('active');
+                taskModal.removeClass("active").addClass("hidden");
+                editTaskModal.removeClass("hidden").addClass("active");
             });
 
-            // Close edit modal when close button is clicked
-            closeEditModalBtn.addEventListener('click', function() {
-                editTaskModal.classList.remove('active');
-                editTaskModal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+            $("#closeEditTaskModal").on("click", function() {
+                editTaskModal.removeClass("active").addClass("hidden");
+                $("body").css("overflow", "auto");
             });
 
-            // Handle level selection
-            levelInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    updateLevelIndicator(this.value);
-                });
-            });
-
-            // Update level indicator style
             function updateLevelIndicator(level) {
-                levelIndicators.forEach(indicator => {
-                    indicator.style.backgroundColor = 'transparent';
-                    if (indicator.getAttribute('data-level') === level) {
-                        indicator.style.backgroundColor = levelColors[level] || '#ffb32d';
-                    }
-                });
+                $(".level-indicator").css("background-color", "transparent");
+                $(`.level-indicator[data-level="${level}"]`).css("background-color", levelColors[level] ||
+                    "#ffb32d");
             }
 
-            // Submit edit form
-            submitEditTaskBtn.addEventListener('click', function() {
-                const newTaskName = editTaskNameInput.value;
-                const newLevel = document.querySelector('input[name="task-level"]:checked').value;
-
-                // Update the task data (in a real app, this would send to server)
-                currentTaskData.taskName = newTaskName;
-                currentTaskData.level = newLevel;
-
-                // Show success message
-                alert('Task updated successfully!');
-
-                // Close edit modal
-                editTaskModal.classList.remove('active');
-                editTaskModal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+            $("input[name='task-level']").on("change", function() {
+                updateLevelIndicator($(this).val());
             });
 
-            // Close modal when clicking outside
+            $("#submitEditTask").on("click", function() {
+                currentTaskData.taskName = $("#edit-task-name").val();
+                currentTaskData.level = $("input[name='task-level']:checked").val();
+                alert("Task updated successfully!");
+                editTaskModal.removeClass("active").addClass("hidden");
+                $("body").css("overflow", "auto");
+            });
+
             [taskModal, editTaskModal].forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                        modal.classList.add('hidden');
-                        document.body.style.overflow = 'auto';
+                modal.on("click", function(e) {
+                    if (e.target === modal[0]) {
+                        modal.removeClass("active").addClass("hidden");
+                        $("body").css("overflow", "auto");
                     }
                 });
             });
 
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    if (taskModal.classList.contains('active')) {
-                        taskModal.classList.remove('active');
-                        taskModal.classList.add('hidden');
-                        document.body.style.overflow = 'auto';
-                    }
-                    if (editTaskModal.classList.contains('active')) {
-                        editTaskModal.classList.remove('active');
-                        editTaskModal.classList.add('hidden');
-                        document.body.style.overflow = 'auto';
-                    }
-                }
-            });
-        });
-
-        // administration page - toggle user status
-        // Radio button functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle radio button visual feedback
-            const radioGroups = ['bring_laptop', 'can_be_contacted'];
-
-            radioGroups.forEach(groupName => {
-                const radios = document.querySelectorAll(`input[name="${groupName}"]`);
-                radios.forEach(radio => {
-                    radio.addEventListener('change', function() {
-                        // Reset all images in this group
-                        const allLabels = document.querySelectorAll(
-                            `input[name="${groupName}"]`);
-                        allLabels.forEach(r => {
-                            const img = r.nextElementSibling;
-                            img.src =
-                                'https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg';
-                        });
-
-                        // Set selected image (you can change this to a selected state image)
-                        if (this.checked) {
-                            const selectedImg = this.nextElementSibling;
-                            // You can replace this with a different image for selected state
-                            selectedImg.src =
-                                'https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg';
-                            selectedImg.style.filter = 'brightness(0.8)'; // Visual feedback
+            $(document).on("keydown", function(e) {
+                if (e.key === "Escape") {
+                    [taskModal, editTaskModal].forEach(modal => {
+                        if (modal.hasClass("active")) {
+                            modal.removeClass("active").addClass("hidden");
+                            $("body").css("overflow", "auto");
                         }
                     });
+                }
+            });
+
+            // Administration page - toggle user status
+            const radioGroups = ["bring_laptop", "can_be_contacted"];
+            radioGroups.forEach(groupName => {
+                $(`input[name="${groupName}"]`).on("change", function() {
+                    $(`input[name="${groupName}"]`).each(function() {
+                        $(this).next("img").attr("src",
+                                "https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg")
+                            .css("filter", "");
+                    });
+
+                    if ($(this).is(":checked")) {
+                        $(this).next("img").attr("src",
+                            "https://c.animaapp.com/mf0waiheGBQdaR/img/ellipse-71.svg").css(
+                            "filter", "brightness(0.8)");
+                    }
                 });
             });
 
             // Date validation
-            const startDate = document.getElementById('start-date');
-            const endDate = document.getElementById('end-date');
-
-            startDate.addEventListener('change', function() {
-                endDate.min = this.value;
-                if (endDate.value && endDate.value < this.value) {
-                    endDate.value = '';
-                    alert('End date must be after start date');
+            $("#start-date").on("change", function() {
+                $("#end-date").attr("min", this.value);
+                if ($("#end-date").val() && $("#end-date").val() < this.value) {
+                    $("#end-date").val("");
+                    alert("End date must be after start date");
                 }
             });
 
-            endDate.addEventListener('change', function() {
-                if (startDate.value && this.value < startDate.value) {
-                    this.value = '';
-                    alert('End date must be after start date');
+            $("#end-date").on("change", function() {
+                if ($("#start-date").val() && this.value < $("#start-date").val()) {
+                    $(this).val("");
+                    alert("End date must be after start date");
                 }
             });
-        });
 
-        // Form submission
-        function submitForm() {
-            const form = document.querySelector('form');
-            const formData = new FormData(form);
+            // Form submission
+            window.submitForm = function() {
+                const form = $("form")[0];
+                const formData = new FormData(form);
 
-            // Basic validation
-            const category = formData.get('leave_category');
-            const startDate = formData.get('start_date');
-            const endDate = formData.get('end_date');
-            const description = formData.get('description');
+                if (!formData.get("leave_category")) {
+                    alert("Please select a leave category");
+                    return;
+                }
 
-            if (!category) {
-                alert('Please select a leave category');
-                return;
+                if (!formData.get("start_date") || !formData.get("end_date")) {
+                    alert("Please select both start and end dates");
+                    return;
+                }
+
+                if (!formData.get("description").trim()) {
+                    alert("Please enter a description");
+                    return;
+                }
+
+                console.log("Form Data:", Object.fromEntries(formData.entries()));
+                alert("Leave request submitted successfully!");
+            };
+
+            window.resetForm = function() {
+                $("form")[0].reset();
+                $("input[type='radio']+img").css("filter", "none");
+            };
+
+            let selectedOptions = {};
+
+            window.toggleDropdown = function() {
+                $("#dropdownMenu").toggleClass("hidden");
+                $("#dropdownMenu2").addClass("hidden");
+            };
+
+            window.toggleDropdown2 = function() {
+                $("#dropdownMenu2").toggleClass("hidden");
+                $("#dropdownMenu").addClass("hidden");
+            };
+
+            window.selectOption2 = function(value, text) {
+                $("#selectedText2").text(text).removeClass("text-[#7d7d7d]").addClass("text-black");
+                selectedOptions["dropdown2"] = value;
+                $("#dropdownMenu2").addClass("hidden");
+                updateDropdownStyling("dropdownMenu2", value);
+            };
+
+            function updateDropdownStyling(dropdownId, selectedValue) {
+                $(`#${dropdownId} div[onclick^="selectOption"]`).each(function() {
+                    const optionValue = $(this).attr("onclick").match(/'([^']+)'/)[1];
+                    if (optionValue === selectedValue) {
+                        $(this).removeClass("bg-white hover:bg-[#e0e0e0]").addClass(
+                            "bg-[#e0e0e0] hover:bg-[#d0d0d0]");
+                    } else {
+                        $(this).removeClass("bg-[#e0e0e0] hover:bg-[#d0d0d0]").addClass(
+                            "bg-white hover:bg-[#e0e0e0]");
+                    }
+                });
             }
 
-            if (!startDate || !endDate) {
-                alert('Please select both start and end dates');
-                return;
-            }
-
-            if (!description.trim()) {
-                alert('Please enter a description');
-                return;
-            }
-
-            // Log form data (replace with actual submission)
-            console.log('Form Data:', {
-                category: category,
-                startDate: startDate,
-                endDate: endDate,
-                description: description,
-                bringLaptop: formData.get('bring_laptop'),
-                canBeContacted: formData.get('can_be_contacted')
-            });
-
-            alert('Leave request submitted successfully!');
-        }
-
-        // Reset form
-        function resetForm() {
-            const form = document.querySelector('form');
-            form.reset();
-
-            // Reset radio button visual states
-            const allRadioImages = document.querySelectorAll('input[type="radio"] + img');
-            allRadioImages.forEach(img => {
-                img.style.filter = 'none';
-            });
-        }
-
-        let selectedOptions = {};
-
-        function toggleDropdown() {
-            const dropdown = document.getElementById('dropdownMenu');
-            dropdown.classList.toggle('hidden');
-
-            // Close other dropdowns
-            document.getElementById('dropdownMenu2').classList.add('hidden');
-        }
-
-        function toggleDropdown2() {
-            const dropdown = document.getElementById('dropdownMenu2');
-            dropdown.classList.toggle('hidden');
-
-            // Close other dropdowns
-            document.getElementById('dropdownMenu').classList.add('hidden');
-        }
-
-        function selectOption2(value, text) {
-            // Update the display text
-            document.getElementById('selectedText2').textContent = text;
-            document.getElementById('selectedText2').classList.remove('text-[#7d7d7d]');
-            document.getElementById('selectedText2').classList.add('text-black');
-
-            // Store selection
-            selectedOptions['dropdown2'] = value;
-
-            // Close the dropdown
-            document.getElementById('dropdownMenu2').classList.add('hidden');
-
-            // Update dropdown options styling
-            updateDropdownStyling('dropdownMenu2', value);
-        }
-
-        function updateDropdownStyling(dropdownId, selectedValue) {
-            const dropdown = document.getElementById(dropdownId);
-            const options = dropdown.querySelectorAll('div[onclick^="selectOption"]');
-
-            options.forEach(option => {
-                const optionValue = option.getAttribute('onclick').match(/'([^']+)'/)[1];
-
-                if (optionValue === selectedValue) {
-                    // Selected option styling
-                    option.classList.remove('bg-white', 'hover:bg-[#e0e0e0]');
-                    option.classList.add('bg-[#e0e0e0]', 'hover:bg-[#d0d0d0]');
-                } else {
-                    // Normal option styling
-                    option.classList.remove('bg-[#e0e0e0]', 'hover:bg-[#d0d0d0]');
-                    option.classList.add('bg-white', 'hover:bg-[#e0e0e0]');
+            $(document).on("click", function(event) {
+                if (!$(event.target).closest('button[onclick="toggleDropdown()"]').length &&
+                    !$("#dropdownMenu").has(event.target).length) {
+                    $("#dropdownMenu").addClass("hidden");
                 }
             });
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdown1 = document.getElementById('dropdownMenu');
-            const button1 = event.target.closest('button[onclick="toggleDropdown()"]');
-
-            if (!button1 && !dropdown1.contains(event.target)) {
-                dropdown1.classList.add('hidden');
-            }
         });
     </script>
+
 </body>
 
 </html>

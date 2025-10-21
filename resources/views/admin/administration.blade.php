@@ -303,6 +303,7 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // ==================== UTILITY FUNCTIONS ====================
         function pad(n) {
@@ -318,268 +319,223 @@
             return new Date(d.getFullYear(), d.getMonth(), d.getDate());
         }
 
-        // ==================== CUSTOM ALERT MODAL ====================
-        function showAlert(message) {
-            const modal = document.getElementById('alertModal');
-            const content = document.getElementById('alertContent');
-            const messageEl = document.getElementById('alertMessage');
+        $(document).ready(function() {
+            // ==================== CUSTOM ALERT MODAL ====================
+            function showAlert(message) {
+                const $modal = $('#alertModal');
+                const $content = $('#alertContent');
+                const $messageEl = $('#alertMessage');
 
-            messageEl.textContent = message;
-            modal.classList.remove('hidden');
+                $messageEl.text(message);
+                $modal.removeClass('hidden');
 
-            setTimeout(() => {
-                modal.classList.add('opacity-100');
-                content.classList.remove('scale-95');
-                content.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeAlert() {
-            const modal = document.getElementById('alertModal');
-            const content = document.getElementById('alertContent');
-
-            content.classList.remove('scale-100');
-            content.classList.add('scale-95');
-            modal.classList.remove('opacity-100');
-
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
-
-        document.getElementById('alertModal')?.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeAlert();
+                setTimeout(() => {
+                    $modal.addClass('opacity-100');
+                    $content.removeClass('scale-95').addClass('scale-100');
+                }, 10);
             }
-        });
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const modal = document.getElementById('alertModal');
-                if (modal && !modal.classList.contains('hidden')) {
+            function closeAlert() {
+                const $modal = $('#alertModal');
+                const $content = $('#alertContent');
+
+                $content.removeClass('scale-100').addClass('scale-95');
+                $modal.removeClass('opacity-100');
+
+                setTimeout(() => {
+                    $modal.addClass('hidden');
+                }, 300);
+            }
+
+            $('#alertModal').on('click', function(e) {
+                if (e.target === this) {
                     closeAlert();
                 }
-            }
-        });
-
-        // ==================== FORM VALIDATION ====================
-        function validateAndSubmit() {
-            const userId = document.getElementById('user_id').value;
-            const leaveCategory = document.getElementById('leave_category').value;
-            const startDate = document.getElementById('start-date').value;
-            const endDate = document.getElementById('end-date').value;
-            const description = document.getElementById('description').value.trim();
-
-            if (!userId) {
-                showAlert('Silakan pilih user terlebih dahulu.');
-                return;
-            }
-
-            if (!leaveCategory) {
-                showAlert('Silakan pilih jenis cuti terlebih dahulu.');
-                return;
-            }
-
-            if (!startDate || !endDate) {
-                showAlert('Silakan pilih tanggal mulai dan akhir cuti.');
-                return;
-            }
-
-            if (!description) {
-                showAlert('Silakan isi deskripsi cuti.');
-                return;
-            }
-
-            document.getElementById('leaveForm').submit();
-        }
-
-        // ==================== USER DROPDOWN ====================
-        const userBtn = document.getElementById('userBtn');
-        const dropdownUser = document.getElementById('dropdownUser');
-        const userSelectedText = document.getElementById('userSelectedText');
-        const userInput = document.getElementById('user_id');
-        const userArrow = document.getElementById('userArrow');
-
-        userBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isHidden = dropdownUser.classList.contains('hidden');
-            dropdownUser.classList.toggle('hidden');
-            userBtn.setAttribute('aria-expanded', String(!isHidden));
-            
-            // Rotate arrow icon
-            if (isHidden) {
-                userArrow.style.transform = 'rotate(180deg)';
-            } else {
-                userArrow.style.transform = 'rotate(0deg)';
-            }
-
-            // Close category dropdown if open
-            if (!dropdownMenu.classList.contains('hidden')) {
-                dropdownMenu.classList.add('hidden');
-                categoryBtn.setAttribute('aria-expanded', 'false');
-                categoryArrow.style.transform = 'rotate(0deg)';
-            }
-        });
-
-        dropdownUser.querySelectorAll('.user-option').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const id = el.getAttribute('data-id');
-                const name = el.getAttribute('data-name');
-                userInput.value = id;
-                userSelectedText.textContent = name;
-                dropdownUser.classList.add('hidden');
-                userBtn.setAttribute('aria-expanded', 'false');
-                userArrow.style.transform = 'rotate(0deg)';
             });
-        });
 
-        dropdownUser.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        // ==================== CATEGORY DROPDOWN ====================
-        const categoryBtn = document.getElementById('categoryBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const categorySelectedText = document.getElementById('categorySelectedText');
-        const leaveCategoryInput = document.getElementById('leave_category');
-        const categoryArrow = document.getElementById('categoryArrow');
-
-        categoryBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isHidden = dropdownMenu.classList.contains('hidden');
-            dropdownMenu.classList.toggle('hidden');
-            categoryBtn.setAttribute('aria-expanded', String(!isHidden));
-            
-            // Rotate arrow icon
-            if (isHidden) {
-                categoryArrow.style.transform = 'rotate(180deg)';
-            } else {
-                categoryArrow.style.transform = 'rotate(0deg)';
-            }
-
-            // Close user dropdown if open
-            if (!dropdownUser.classList.contains('hidden')) {
-                dropdownUser.classList.add('hidden');
-                userBtn.setAttribute('aria-expanded', 'false');
-                userArrow.style.transform = 'rotate(0deg)';
-            }
-        });
-
-        dropdownMenu.querySelectorAll('.option-item').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const val = el.getAttribute('data-value');
-                leaveCategoryInput.value = val;
-                categorySelectedText.textContent = val;
-                dropdownMenu.classList.add('hidden');
-                categoryBtn.setAttribute('aria-expanded', 'false');
-                categoryArrow.style.transform = 'rotate(0deg)';
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape' && !$('#alertModal').hasClass('hidden')) {
+                    closeAlert();
+                }
             });
-        });
 
-        dropdownMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
+            // ==================== FORM VALIDATION ====================
+            window.validateAndSubmit = function() {
+                const userId = $('#user_id').val();
+                const leaveCategory = $('#leave_category').val();
+                const startDate = $('#start-date').val();
+                const endDate = $('#end-date').val();
+                const description = $('#description').val().trim();
 
-        // ==================== CLOSE DROPDOWNS ON OUTSIDE CLICK ====================
-        document.addEventListener('click', function() {
-            if (!dropdownUser.classList.contains('hidden')) {
-                dropdownUser.classList.add('hidden');
-                userBtn.setAttribute('aria-expanded', 'false');
-                userArrow.style.transform = 'rotate(0deg)';
+                if (!userId) return showAlert('Silakan pilih user terlebih dahulu.');
+                if (!leaveCategory) return showAlert('Silakan pilih jenis cuti terlebih dahulu.');
+                if (!startDate || !endDate) return showAlert('Silakan pilih tanggal mulai dan akhir cuti.');
+                if (!description) return showAlert('Silakan isi deskripsi cuti.');
+
+                $('#leaveForm').submit();
             }
-            if (!dropdownMenu.classList.contains('hidden')) {
-                dropdownMenu.classList.add('hidden');
-                categoryBtn.setAttribute('aria-expanded', 'false');
-                categoryArrow.style.transform = 'rotate(0deg)';
-            }
-        });
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                if (!dropdownUser.classList.contains('hidden')) {
-                    dropdownUser.classList.add('hidden');
-                    userBtn.setAttribute('aria-expanded', 'false');
-                    userArrow.style.transform = 'rotate(0deg)';
+            // ==================== USER DROPDOWN ====================
+            const $userBtn = $('#userBtn');
+            const $dropdownUser = $('#dropdownUser');
+            const $userSelectedText = $('#userSelectedText');
+            const $userInput = $('#user_id');
+            const $userArrow = $('#userArrow');
+
+            $userBtn.on('click', function(e) {
+                e.stopPropagation();
+                const isHidden = $dropdownUser.hasClass('hidden');
+                $dropdownUser.toggleClass('hidden');
+                $userBtn.attr('aria-expanded', !isHidden);
+
+                $userArrow.css('transform', isHidden ? 'rotate(180deg)' : 'rotate(0deg)');
+
+                if (!$dropdownMenu.hasClass('hidden')) {
+                    $dropdownMenu.addClass('hidden');
+                    $categoryBtn.attr('aria-expanded', 'false');
+                    $categoryArrow.css('transform', 'rotate(0deg)');
                 }
-                if (!dropdownMenu.classList.contains('hidden')) {
-                    dropdownMenu.classList.add('hidden');
-                    categoryBtn.setAttribute('aria-expanded', 'false');
-                    categoryArrow.style.transform = 'rotate(0deg)';
+            });
+
+            $dropdownUser.find('.user-option').on('click', function(e) {
+                e.stopPropagation();
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+                $userInput.val(id);
+                $userSelectedText.text(name);
+                $dropdownUser.addClass('hidden');
+                $userBtn.attr('aria-expanded', 'false');
+                $userArrow.css('transform', 'rotate(0deg)');
+            });
+
+            $dropdownUser.on('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // ==================== CATEGORY DROPDOWN ====================
+            const $categoryBtn = $('#categoryBtn');
+            const $dropdownMenu = $('#dropdownMenu');
+            const $categorySelectedText = $('#categorySelectedText');
+            const $leaveCategoryInput = $('#leave_category');
+            const $categoryArrow = $('#categoryArrow');
+
+            $categoryBtn.on('click', function(e) {
+                e.stopPropagation();
+                const isHidden = $dropdownMenu.hasClass('hidden');
+                $dropdownMenu.toggleClass('hidden');
+                $categoryBtn.attr('aria-expanded', !isHidden);
+
+                $categoryArrow.css('transform', isHidden ? 'rotate(180deg)' : 'rotate(0deg)');
+
+                if (!$dropdownUser.hasClass('hidden')) {
+                    $dropdownUser.addClass('hidden');
+                    $userBtn.attr('aria-expanded', 'false');
+                    $userArrow.css('transform', 'rotate(0deg)');
                 }
-            }
-        });
+            });
 
-        // ==================== IMAGE UPLOAD & PREVIEW ====================
-        const fileInput = document.getElementById('fileInput');
-        const imagePreview = document.getElementById('imagePreview');
-        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            $dropdownMenu.find('.option-item').on('click', function(e) {
+                e.stopPropagation();
+                const val = $(this).data('value');
+                $leaveCategoryInput.val(val);
+                $categorySelectedText.text(val);
+                $dropdownMenu.addClass('hidden');
+                $categoryBtn.attr('aria-expanded', 'false');
+                $categoryArrow.css('transform', 'rotate(0deg)');
+            });
 
-        function uploadPicture() {
-            fileInput.click();
-        }
+            $dropdownMenu.on('click', function(e) {
+                e.stopPropagation();
+            });
 
-        fileInput.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreviewContainer.classList.remove('hidden');
+            // ==================== CLOSE DROPDOWNS ON OUTSIDE CLICK ====================
+            $(document).on('click', function() {
+                if (!$dropdownUser.hasClass('hidden')) {
+                    $dropdownUser.addClass('hidden');
+                    $userBtn.attr('aria-expanded', 'false');
+                    $userArrow.css('transform', 'rotate(0deg)');
                 }
-                reader.readAsDataURL(this.files[0]);
+                if (!$dropdownMenu.hasClass('hidden')) {
+                    $dropdownMenu.addClass('hidden');
+                    $categoryBtn.attr('aria-expanded', 'false');
+                    $categoryArrow.css('transform', 'rotate(0deg)');
+                }
+            });
+
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (!$dropdownUser.hasClass('hidden')) {
+                        $dropdownUser.addClass('hidden');
+                        $userBtn.attr('aria-expanded', 'false');
+                        $userArrow.css('transform', 'rotate(0deg)');
+                    }
+                    if (!$dropdownMenu.hasClass('hidden')) {
+                        $dropdownMenu.addClass('hidden');
+                        $categoryBtn.attr('aria-expanded', 'false');
+                        $categoryArrow.css('transform', 'rotate(0deg)');
+                    }
+                }
+            });
+
+            // ==================== IMAGE UPLOAD & PREVIEW ====================
+            const $fileInput = $('#fileInput');
+            const $imagePreview = $('#imagePreview');
+            const $imagePreviewContainer = $('#imagePreviewContainer');
+
+            window.uploadPicture = function() {
+                $fileInput.click();
             }
-        });
 
-        function removeImage() {
-            fileInput.value = '';
-            imagePreviewContainer.classList.add('hidden');
-            imagePreview.src = '';
-        }
+            $fileInput.on('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $imagePreview.attr('src', e.target.result);
+                        $imagePreviewContainer.removeClass('hidden');
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
 
-        // ==================== RADIO BUTTON STYLING ====================
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', function() {
+            window.removeImage = function() {
+                $fileInput.val('');
+                $imagePreviewContainer.addClass('hidden');
+                $imagePreview.attr('src', '');
+            }
+
+            // ==================== RADIO BUTTON STYLING ====================
+            $('input[type="radio"]').on('change', function() {
                 const groupName = this.name;
-
-                document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
-                    const indicator = r.parentElement.querySelector('.radio-indicator');
-                    const dot = r.parentElement.querySelector('.radio-dot');
-
-                    indicator.classList.remove('border-[#FFB800]');
-                    indicator.classList.add('border-gray-300');
-                    dot.classList.remove('opacity-100');
-                    dot.classList.add('opacity-0');
+                $(`input[name="${groupName}"]`).each(function() {
+                    const $indicator = $(this).parent().find('.radio-indicator');
+                    const $dot = $(this).parent().find('.radio-dot');
+                    $indicator.removeClass('border-[#FFB800]').addClass('border-gray-300');
+                    $dot.removeClass('opacity-100').addClass('opacity-0');
                 });
 
                 if (this.checked) {
-                    const indicator = this.parentElement.querySelector('.radio-indicator');
-                    const dot = this.parentElement.querySelector('.radio-dot');
-
-                    indicator.classList.remove('border-gray-300');
-                    indicator.classList.add('border-[#FFB800]');
-                    dot.classList.remove('opacity-0');
-                    dot.classList.add('opacity-100');
+                    const $indicator = $(this).parent().find('.radio-indicator');
+                    const $dot = $(this).parent().find('.radio-dot');
+                    $indicator.removeClass('border-gray-300').addClass('border-[#FFB800]');
+                    $dot.removeClass('opacity-0').addClass('opacity-100');
                 }
             });
-        });
 
-        // ==================== CALENDAR LOGIC ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                'Dec'
+            // ==================== CALENDAR LOGIC ====================
+            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
             ];
-            const calendarPopup = document.getElementById('calendarPopup');
-            const monthShortEl = document.getElementById('month-short');
-            const yearSelect = document.getElementById('year-select');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const datesGrid = document.getElementById('dates-grid');
-            const startInput = document.getElementById('start-date');
-            const endInput = document.getElementById('end-date');
+            const $calendarPopup = $('#calendarPopup');
+            const $monthShortEl = $('#month-short');
+            const $yearSelect = $('#year-select');
+            const $prevBtn = $('#prev-btn');
+            const $nextBtn = $('#next-btn');
+            const $datesGrid = $('#dates-grid');
+            const $startInput = $('#start-date');
+            const $endInput = $('#end-date');
 
-            if (calendarPopup && calendarPopup.parentElement !== document.body) {
-                document.body.appendChild(calendarPopup);
+            if ($calendarPopup.length && $calendarPopup.parent()[0] !== document.body) {
+                $('body').append($calendarPopup);
             }
 
             let viewDate = new Date();
@@ -588,74 +544,63 @@
             let activeInput = null;
 
             function initYear() {
-                yearSelect.innerHTML = '';
+                $yearSelect.empty();
                 const currentYear = new Date().getFullYear();
                 for (let y = currentYear - 50; y <= currentYear + 50; y++) {
-                    const opt = document.createElement('option');
-                    opt.value = y;
-                    opt.textContent = y;
-                    yearSelect.appendChild(opt);
+                    $yearSelect.append(`<option value="${y}">${y}</option>`);
                 }
             }
 
             function updateDropdowns() {
-                yearSelect.value = viewDate.getFullYear();
-                monthShortEl.textContent = monthShortNames[viewDate.getMonth()];
+                $yearSelect.val(viewDate.getFullYear());
+                $monthShortEl.text(monthShortNames[viewDate.getMonth()]);
             }
 
             function render() {
                 const year = viewDate.getFullYear();
                 const month = viewDate.getMonth();
                 updateDropdowns();
-                datesGrid.innerHTML = '';
+                $datesGrid.empty();
 
                 const firstDay = new Date(year, month, 1).getDay();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
 
                 for (let i = 0; i < firstDay; i++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'w-10 h-10 rounded-full text-center text-sm text-gray-300';
-                    datesGrid.appendChild(cell);
+                    $datesGrid.append(
+                        '<div class="w-10 h-10 rounded-full text-center text-sm text-gray-300"></div>');
                 }
 
                 for (let d = 1; d <= daysInMonth; d++) {
-                    const cell = document.createElement('button');
-                    cell.type = 'button';
-                    cell.className =
-                        'w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition-colors';
-                    cell.textContent = d;
+                    const $cell = $(
+                        '<button type="button" class="w-10 h-10 rounded-full text-center text-sm flex items-center justify-center focus:outline-none hover:bg-gray-100 transition-colors"></button>'
+                        );
+                    $cell.text(d);
                     const cellDate = new Date(year, month, d);
-
                     const today = new Date();
+
                     if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-                        cell.classList.add('font-semibold');
-                        cell.style.boxShadow = 'inset 0 0 0 1px rgba(0,0,0,0.1)';
+                        $cell.addClass('font-semibold').css('box-shadow', 'inset 0 0 0 1px rgba(0,0,0,0.1)');
                     }
 
                     if (startDate && endDate) {
                         const s = stripTime(startDate).getTime();
                         const e = stripTime(endDate).getTime();
                         const t = stripTime(cellDate).getTime();
-                        if (t >= s && t <= e) {
-                            cell.classList.add('bg-blue-100');
-                        }
+                        if (t >= s && t <= e) $cell.addClass('bg-blue-100');
                     }
 
                     if (startDate && stripTime(startDate).getTime() === stripTime(cellDate).getTime()) {
-                        cell.classList.remove('bg-blue-100');
-                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold', 'hover:bg-blue-600');
+                        $cell.removeClass('bg-blue-100').addClass(
+                            'bg-blue-500 text-white font-semibold hover:bg-blue-600');
                     }
 
                     if (endDate && stripTime(endDate).getTime() === stripTime(cellDate).getTime()) {
-                        cell.classList.remove('bg-blue-100');
-                        cell.classList.add('bg-blue-500', 'text-white', 'font-semibold', 'hover:bg-blue-600');
+                        $cell.removeClass('bg-blue-100').addClass(
+                            'bg-blue-500 text-white font-semibold hover:bg-blue-600');
                     }
 
-                    cell.addEventListener('click', () => {
-                        onDateClick(cellDate);
-                    });
-
-                    datesGrid.appendChild(cell);
+                    $cell.on('click', () => onDateClick(cellDate));
+                    $datesGrid.append($cell);
                 }
             }
 
@@ -666,45 +611,37 @@
                     startDate = stripTime(d);
 
                     if (endDate && startDate.getTime() > endDate.getTime()) {
-                        const tmp = endDate;
-                        endDate = startDate;
-                        startDate = tmp;
-                        startInput.value = formatISO(startDate);
-                        endInput.value = formatISO(endDate);
+                        [startDate, endDate] = [endDate, startDate];
+                        $startInput.val(formatISO(startDate));
+                        $endInput.val(formatISO(endDate));
                     } else {
-                        startInput.value = formatISO(startDate);
+                        $startInput.val(formatISO(startDate));
                     }
                     activeInput = 'end';
                 } else {
                     endDate = stripTime(d);
 
                     if (startDate && startDate.getTime() > endDate.getTime()) {
-                        const tmp = startDate;
-                        startDate = endDate;
-                        endDate = tmp;
-                        startInput.value = formatISO(startDate);
-                        endInput.value = formatISO(endDate);
+                        [startDate, endDate] = [endDate, startDate];
+                        $startInput.val(formatISO(startDate));
+                        $endInput.val(formatISO(endDate));
                     } else {
-                        endInput.value = formatISO(endDate);
+                        $endInput.val(formatISO(endDate));
                     }
                 }
 
                 render();
 
-                if (startDate && endDate) {
-                    hideCalendar();
-                }
+                if (startDate && endDate) hideCalendar();
             }
 
-            function showCalendarFor(inputEl) {
-                activeInput = (inputEl.id === 'start-date') ? 'start' : 'end';
+            function showCalendarFor($inputEl) {
+                activeInput = $inputEl.attr('id') === 'start-date' ? 'start' : 'end';
+                $calendarPopup.removeClass('hidden').css('visibility', 'hidden');
 
-                calendarPopup.classList.remove('hidden');
-                calendarPopup.style.visibility = 'hidden';
-
-                const rect = inputEl.getBoundingClientRect();
-                const popupW = calendarPopup.offsetWidth || 320;
-                const popupH = calendarPopup.offsetHeight || 380;
+                const rect = $inputEl[0].getBoundingClientRect();
+                const popupW = $calendarPopup.outerWidth() || 320;
+                const popupH = $calendarPopup.outerHeight() || 380;
 
                 let left = rect.left + window.scrollX;
                 let top = rect.bottom + window.scrollY + 8;
@@ -712,9 +649,7 @@
                 if (left + popupW > window.scrollX + window.innerWidth - 12) {
                     left = window.scrollX + window.innerWidth - popupW - 12;
                 }
-                if (left < 12 + window.scrollX) {
-                    left = 12 + window.scrollX;
-                }
+                if (left < 12 + window.scrollX) left = 12 + window.scrollX;
 
                 if (top + popupH > window.scrollY + window.innerHeight - 12) {
                     const altTop = rect.top + window.scrollY - popupH - 8;
@@ -725,109 +660,92 @@
                     }
                 }
 
-                calendarPopup.style.position = 'absolute';
-                calendarPopup.style.left = left + 'px';
-                calendarPopup.style.top = top + 'px';
-
-                calendarPopup.style.visibility = 'visible';
-                calendarPopup.classList.remove('hidden');
+                $calendarPopup.css({
+                    position: 'absolute',
+                    left: left + 'px',
+                    top: top + 'px',
+                    visibility: 'visible'
+                }).removeClass('hidden');
 
                 render();
             }
 
             function hideCalendar() {
-                calendarPopup.classList.add('hidden');
+                $calendarPopup.addClass('hidden');
                 activeInput = null;
             }
 
-            startInput.addEventListener('click', () => showCalendarFor(startInput));
-            startInput.addEventListener('focus', () => showCalendarFor(startInput));
-            endInput.addEventListener('click', () => showCalendarFor(endInput));
-            endInput.addEventListener('focus', () => showCalendarFor(endInput));
+            $startInput.on('click focus', () => showCalendarFor($startInput));
+            $endInput.on('click focus', () => showCalendarFor($endInput));
 
-            prevBtn.addEventListener('click', () => {
+            $prevBtn.on('click', () => {
                 viewDate.setMonth(viewDate.getMonth() - 1);
                 render();
             });
-
-            nextBtn.addEventListener('click', () => {
+            $nextBtn.on('click', () => {
                 viewDate.setMonth(viewDate.getMonth() + 1);
                 render();
             });
 
-            yearSelect.addEventListener('change', (e) => {
-                viewDate.setFullYear(Number(e.target.value));
+            $yearSelect.on('change', function() {
+                viewDate.setFullYear(Number($(this).val()));
                 render();
             });
 
-            document.addEventListener('click', function(e) {
-                if (calendarPopup.classList.contains('hidden')) return;
-                const target = e.target;
-                if (target === startInput || target === endInput) return;
-                if (!calendarPopup.contains(target)) {
-                    hideCalendar();
+            $(document).on('click', function(e) {
+                if ($calendarPopup.hasClass('hidden')) return;
+                if ($(e.target).is($startInput) || $(e.target).is($endInput)) return;
+                if (!$calendarPopup.is(e.target) && $calendarPopup.has(e.target).length === 0)
+                hideCalendar();
+            });
+
+            $(window).on('resize scroll', function() {
+                if (!$calendarPopup.hasClass('hidden') && activeInput) {
+                    const $inp = activeInput === 'start' ? $startInput : $endInput;
+                    showCalendarFor($inp);
                 }
             });
 
-            window.addEventListener('resize', () => {
-                if (!calendarPopup.classList.contains('hidden') && activeInput) {
-                    const inp = (activeInput === 'start') ? startInput : endInput;
-                    showCalendarFor(inp);
-                }
-            });
-
-            window.addEventListener('scroll', () => {
-                if (!calendarPopup.classList.contains('hidden') && activeInput) {
-                    const inp = (activeInput === 'start') ? startInput : endInput;
-                    showCalendarFor(inp);
-                }
-            }, true);
-
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                if (radio.checked) {
-                    const indicator = radio.parentElement.querySelector('.radio-indicator');
-                    const dot = radio.parentElement.querySelector('.radio-dot');
-
-                    indicator.classList.remove('border-gray-300');
-                    indicator.classList.add('border-[#FFB800]');
-                    dot.classList.remove('opacity-0');
-                    dot.classList.add('opacity-100');
+            $('input[type="radio"]').each(function() {
+                if (this.checked) {
+                    const $indicator = $(this).parent().find('.radio-indicator');
+                    const $dot = $(this).parent().find('.radio-dot');
+                    $indicator.removeClass('border-gray-300').addClass('border-[#FFB800]');
+                    $dot.removeClass('opacity-0').addClass('opacity-100');
                 }
             });
 
             initYear();
             render();
+
+            // ==================== RESET FORM ====================
+            window.resetForm = function() {
+                $('#leaveForm')[0].reset();
+                $startInput.val('');
+                $endInput.val('');
+                $leaveCategoryInput.val('');
+                $categorySelectedText.text('-- Pilih Jenis Cuti --');
+                $userInput.val('');
+                $userSelectedText.text('-- Pilih User --');
+                removeImage();
+
+                $('input[type="radio"]').each(function() {
+                    const $indicator = $(this).parent().find('.radio-indicator');
+                    const $dot = $(this).parent().find('.radio-dot');
+
+                    if (this.value === '0') {
+                        this.checked = true;
+                        $indicator.removeClass('border-gray-300').addClass('border-[#FFB800]');
+                        $dot.removeClass('opacity-0').addClass('opacity-100');
+                    } else {
+                        this.checked = false;
+                        $indicator.removeClass('border-[#FFB800]').addClass('border-gray-300');
+                        $dot.removeClass('opacity-100').addClass('opacity-0');
+                    }
+                });
+            }
         });
-
-        // ==================== RESET FORM ====================
-        function resetForm() {
-            document.getElementById('leaveForm').reset();
-            document.getElementById('start-date').value = '';
-            document.getElementById('end-date').value = '';
-            document.getElementById('leave_category').value = '';
-            document.getElementById('categorySelectedText').textContent = '-- Pilih Jenis Cuti --';
-            document.getElementById('user_id').value = '';
-            document.getElementById('userSelectedText').textContent = '-- Pilih User --';
-            removeImage();
-
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                const indicator = radio.parentElement.querySelector('.radio-indicator');
-                const dot = radio.parentElement.querySelector('.radio-dot');
-
-                if (radio.value === '0') {
-                    radio.checked = true;
-                    indicator.classList.remove('border-gray-300');
-                    indicator.classList.add('border-[#FFB800]');
-                    dot.classList.remove('opacity-0');
-                    dot.classList.add('opacity-100');
-                } else {
-                    radio.checked = false;
-                    indicator.classList.remove('border-[#FFB800]');
-                    indicator.classList.add('border-gray-300');
-                    dot.classList.remove('opacity-100');
-                    dot.classList.add('opacity-0');
-                }
-            });
-        }
     </script>
+
+
 @endsection

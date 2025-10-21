@@ -120,7 +120,8 @@
                     <div class="space-y-2 mb-3">
                         <div class="flex items-center justify-between text-sm">
                             <span class="text-gray-500">Director:</span>
-                            <span class="font-medium text-gray-800">{{ $project->director ? $project->director->name : 'No Director' }}</span>
+                            <span
+                                class="font-medium text-gray-800">{{ $project->director ? $project->director->name : 'No Director' }}</span>
                         </div>
                         <div class="flex items-center justify-between text-sm">
                             <span class="text-gray-500">Start Date:</span>
@@ -317,71 +318,78 @@
         }
     </style>
 
-    <script>
-function confirmDelete(id) {
-    if (confirm('Are you sure you want to delete this project?')) {
-
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `{{ route('admin.deleteProject', '') }}/${id}`;
-
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-        const csrfInput = document.createElement('input');
-        csrfInput.type = 'hidden';
-        csrfInput.name = '_token';
-        csrfInput.value = csrfToken;
-        form.appendChild(csrfInput);
-
-
-        document.body.appendChild(form);
-        form.submit();
-    }
-}
-
-
-        function openStatusModal(projectId, currentStatus) {
-            const modal = document.getElementById('statusModal');
-            const projectIdInput = document.getElementById('projectId');
-            const form = document.getElementById('statusForm');
-
-            projectIdInput.value = projectId;
-            const radioButtons = document.querySelectorAll('input[name="status"]');
-            radioButtons.forEach(radio => {
-                if (radio.value === currentStatus) {
-                    radio.checked = true;
-                }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function confirmDelete(id) {
+        if (confirm('Are you sure you want to delete this project?')) {
+            const $form = $('<form>', {
+                method: 'POST',
+                action: `{{ route('admin.deleteProject', '') }}/${id}`
             });
 
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.add('active');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-        function closeStatusModal() {
-            const modal = document.getElementById('statusModal');
-            modal.classList.remove('active');
-            setTimeout(() => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, 300);
-        }
+            const $csrfInput = $('<input>', {
+                type: 'hidden',
+                name: '_token',
+                value: csrfToken
+            });
 
-        document.getElementById('statusModal').addEventListener('click', function(e) {
+            $form.append($csrfInput);
+            $('body').append($form);
+            $form.trigger('submit');
+        }
+    }
+
+    function openStatusModal(projectId, currentStatus) {
+        const $modal = $('#statusModal');
+        const $projectIdInput = $('#projectId');
+        const $form = $('#statusForm');
+
+        $projectIdInput.val(projectId);
+        
+        const $radioButtons = $('input[name="status"]');
+        $radioButtons.each(function() {
+            const $radio = $(this);
+            if ($radio.val() === currentStatus) {
+                $radio.prop('checked', true);
+            }
+        });
+
+        $modal.css('display', 'flex');
+        
+        setTimeout(() => {
+            $modal.addClass('active');
+        }, 10);
+        
+        $('body').css('overflow', 'hidden');
+    }
+
+    function closeStatusModal() {
+        const $modal = $('#statusModal');
+        $modal.removeClass('active');
+        
+        setTimeout(() => {
+            $modal.css('display', 'none');
+            $('body').css('overflow', 'auto');
+        }, 300);
+    }
+
+    $(document).ready(function() {
+        $('#statusModal').on('click', function(e) {
             if (e.target === this) {
                 closeStatusModal();
             }
         });
 
-        document.addEventListener('keydown', function(e) {
+        $(document).on('keydown', function(e) {
             if (e.key === 'Escape') {
-                const modal = document.getElementById('statusModal');
-                if (modal.classList.contains('active')) {
+                const $modal = $('#statusModal');
+                if ($modal.hasClass('active')) {
                     closeStatusModal();
                 }
             }
         });
-    </script>
+    });
+</script>
 @endsection
