@@ -290,7 +290,7 @@
 <body class="bg-gray-50 font-inter antialiased min-h-screen w-full mx-auto bg-gray-50">
     <!-- Main Container -->
     <!-- Header -->
-    <header class="bg-white border-b border-gray-200 h-20 flex items-center px-2 lg:px-10">
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-200 h-20 flex items-center px-2 lg:px-10">
         <div class="flex items-center justify-between w-full">
 
             <!-- Logo -->
@@ -366,7 +366,7 @@
         </div>
     </header>
 
-    <div class="flex h-[calc(100vh-5rem)]">
+    <div class="flex md:flex-row flex-col h-[calc(100vh-5rem)]">
         <!-- Minimalist Sidebar -->
         <aside class="w-20 bg-white border-r border-gray-200 md:flex hidden flex-col items-center py-6">
             <nav class="flex flex-col gap-5">
@@ -486,7 +486,7 @@
 
 
         <nav
-            class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around items-center p-4 md:hidden z-50">
+            class="sticky bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around items-center p-4 md:hidden z-50">
             <!-- Dashboard -->
             <a href="{{ route('admin.dashboard') }}"
                 class="flex flex-col items-center {{ request()->routeIs('admin.dashboard') ? 'text-[#6FAEC9]' : 'text-gray-600' }}">

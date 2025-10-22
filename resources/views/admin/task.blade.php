@@ -6,10 +6,10 @@
     <div class="flex flex-col">
         <!-- Filter Section -->
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div class="flex flex-row items-start sm:items-center gap-3 justify-between md:justify-start w-full">
                 <div class="relative">
                     <select
-                        class="w-56 h-10 px-4 bg-white rounded-lg shadow-sm border border-gray-200 text-gray-600 text-sm font-medium appearance-none focus:outline-none focus:ring-2 focus:ring-primary">
+                        class="sm:w-56 h-10 px-4 bg-white rounded-lg shadow-sm border border-gray-200 text-gray-600 text-sm font-medium appearance-none focus:outline-none focus:ring-2 focus:ring-primary">
                         <option>Project</option>
                         <option>Website Redesign</option>
                         <option>Mobile App</option>
@@ -38,9 +38,9 @@
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div class="flex flex-row items-stretch sm:items-center gap-3 justify-between md:justify-start w-full">
                 <button id="createTaskBtn"
-                    class="flex items-center justify-center gap-2 w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    class="flex items-center justify-center gap-2 w-full sm:w-40 sm:h-10 px-3 bg-gray-900 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -49,7 +49,7 @@
                 </button>
 
                 <button id="transferTaskBtn"
-                    class="flex items-center justify-center gap-2 w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    class="flex items-center justify-center gap-2 w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
@@ -58,7 +58,7 @@
                 </button>
 
                 <a href="{{ route('admin.task-detail') }}"
-                    class="w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-gray-800 transition-colors flex items-center justify-center">
+                    class="w-full sm:w-40 h-10 px-3 bg-gray-900 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-sm hover:bg-gray-800 transition-colors flex items-center justify-center">
                     View All Task
                 </a>
             </div>
