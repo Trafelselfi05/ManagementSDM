@@ -16,29 +16,36 @@
                 <div class="relative">
                     <button id="filterBtn" type="button"
                         class="flex items-center justify-center gap-2 bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] px-4 py-2.5 hover:bg-gray-50 transition-colors w-full sm:w-auto">
-                        <img class="w-5 h-5" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg " id="filterArrow"  alt="Filter" />
+                        <img class="w-5 h-5" src="https://c.animaapp.com/mf0pte7ijudQ6p/img/mi-filter.svg " id="filterArrow"
+                            alt="Filter" />
                         <span class="text-gray-700 text-sm font-medium">Filter</span>
                     </button>
 
                     <!-- Filter Dropdown -->
-                    <div id="filterDropdown" class="hidden absolute top-full mt-2 right-0 w-72 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                    <div id="filterDropdown"
+                        class="hidden absolute top-full mt-2 right-0 w-72 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
                         <div class="p-4 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                             <h3 class="font-semibold text-gray-800 text-sm">Filter by Status</h3>
                         </div>
-                        
+
                         <div class="p-4 space-y-2">
                             <!-- All Status -->
-                            <label class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors group">
-                                <input type="radio" name="filterStatus" value="all" class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer" checked>
+                            <label
+                                class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors group">
+                                <input type="radio" name="filterStatus" value="all"
+                                    class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer" checked>
                                 <div class="flex items-center gap-2">
                                     <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">All Status</span>
+                                    <span class="text-sm font-medium text-gray-700 group-hover:text-gray-900">All
+                                        Status</span>
                                 </div>
                             </label>
 
                             <!-- Pending -->
-                            <label class="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 cursor-pointer transition-colors group">
-                                <input type="radio" name="filterStatus" value="pending" class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                            <label
+                                class="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 cursor-pointer transition-colors group">
+                                <input type="radio" name="filterStatus" value="pending"
+                                    class="w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer">
                                 <div class="flex items-center gap-2">
                                     <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                     <span class="text-sm font-medium text-gray-700 group-hover:text-blue-700">Pending</span>
@@ -46,17 +53,22 @@
                             </label>
 
                             <!-- Approved -->
-                            <label class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-50 cursor-pointer transition-colors group">
-                                <input type="radio" name="filterStatus" value="approved" class="w-4 h-4 text-green-600 focus:ring-2 focus:ring-green-500 cursor-pointer">
+                            <label
+                                class="flex items-center gap-3 p-3 rounded-lg hover:bg-green-50 cursor-pointer transition-colors group">
+                                <input type="radio" name="filterStatus" value="approved"
+                                    class="w-4 h-4 text-green-600 focus:ring-2 focus:ring-green-500 cursor-pointer">
                                 <div class="flex items-center gap-2">
                                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                    <span class="text-sm font-medium text-gray-700 group-hover:text-green-700">Approved</span>
+                                    <span
+                                        class="text-sm font-medium text-gray-700 group-hover:text-green-700">Approved</span>
                                 </div>
                             </label>
 
                             <!-- Rejected -->
-                            <label class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 cursor-pointer transition-colors group">
-                                <input type="radio" name="filterStatus" value="rejected" class="w-4 h-4 text-red-600 focus:ring-2 focus:ring-red-500 cursor-pointer">
+                            <label
+                                class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 cursor-pointer transition-colors group">
+                                <input type="radio" name="filterStatus" value="rejected"
+                                    class="w-4 h-4 text-red-600 focus:ring-2 focus:ring-red-500 cursor-pointer">
                                 <div class="flex items-center gap-2">
                                     <div class="w-2 h-2 bg-red-500 rounded-full"></div>
                                     <span class="text-sm font-medium text-gray-700 group-hover:text-red-700">Rejected</span>
@@ -66,10 +78,12 @@
 
                         <!-- Filter Actions -->
                         <div class="p-4 bg-gray-50 border-t border-gray-200 flex gap-2">
-                            <button type="button" onclick="resetFilters()" class="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                            <button type="button" onclick="resetFilters()"
+                                class="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                                 Reset
                             </button>
-                            <button type="button" onclick="applyFilters()" class="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#111111] rounded-lg hover:bg-[#333333] transition-colors">
+                            <button type="button" onclick="applyFilters()"
+                                class="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#111111] rounded-lg hover:bg-[#333333] transition-colors">
                                 Apply Filter
                             </button>
                         </div>
@@ -91,220 +105,185 @@
         <div id="activeFilters" class="hidden flex flex-wrap gap-2 mb-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
             <span class="text-sm font-medium text-gray-700">Active Filters:</span>
             <div id="filterTags" class="flex flex-wrap gap-2"></div>
-            <button onclick="clearAllFilters()" class="ml-auto text-xs font-medium text-blue-600 hover:text-blue-800 underline">
+            <button onclick="clearAllFilters()"
+                class="ml-auto text-xs font-medium text-blue-600 hover:text-blue-800 underline">
                 Clear All
             </button>
         </div>
 
-        <!-- Table Container -->
-        <div class="w-full overflow-x-auto rounded-xl border border-gray-200">
+        <!-- Desktop Table View -->
+        <div class="hidden lg:block w-full overflow-x-auto rounded-xl border border-gray-200">
             <table class="w-full min-w-[1200px]">
-                <!-- Table Header -->
                 <thead>
                     <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                         <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-16">#</th>
-                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[200px]">Employee Name</th>
-                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[180px]">Leave Category</th>
+                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[200px]">Employee Name
+                        </th>
+                        <th class="text-left py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[180px]">Leave Category
+                        </th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Start Date</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">End Date</th>
-                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[160px]">Description</th>
+                        <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold min-w-[160px]">Description
+                        </th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-28">Standby</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-28">Form Cuti</th>
                         <th class="text-center py-4 px-4 text-[#7D7D7D] text-sm font-semibold w-32">Action</th>
                     </tr>
                 </thead>
-
-                <!-- Table Body -->
                 <tbody class="divide-y divide-gray-100">
                     @foreach ($leaves as $index => $leave)
-                        <tr class="hover:bg-blue-50 transition-colors group">
+                        <tr class="hover:bg-blue-50 transition-colors">
+                            <td class="py-4 px-4 text-center font-medium">{{ $index + 1 }}</td>
                             <td class="py-4 px-4">
-                                <span class="text-gray-800 font-medium text-center block">{{ $index + 1 }}</span>
+                                <div class="font-semibold text-gray-900">{{ $leave->user->name }}</div>
+                                <div class="text-xs text-gray-500">{{ $leave->user->division }}</div>
                             </td>
                             <td class="py-4 px-4">
-                                <div class="flex items-center gap-3">
-                                    <div>
-                                        <div class="font-semibold text-gray-900">{{ $leave->user->name }}</div>
-                                        <div class="text-xs text-gray-500">{{ $leave->user->division }}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="py-4 px-4">
-                                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg">
+                                <div
+                                    class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg">
                                     <div class="w-2 h-2 bg-amber-500 rounded-full"></div>
                                     <span class="font-medium text-amber-700 text-sm">{{ $leave->type }}</span>
                                 </div>
                             </td>
-                            <td class="py-4 px-4 text-center">
-                                <div class="text-sm text-gray-700 font-medium">
-                                    {{ \Carbon\Carbon::parse($leave->start_date)->format('M d, Y') }}
-                                </div>
+                            <td class="py-4 px-4 text-center text-sm text-gray-700 font-medium">
+                                {{ \Carbon\Carbon::parse($leave->start_date)->format('M d, Y') }}
+                            </td>
+                            <td class="py-4 px-4 text-center text-sm text-gray-700 font-medium">
+                                {{ \Carbon\Carbon::parse($leave->end_date)->format('M d, Y') }}
+                            </td>
+                            <td class="py-4 px-4 text-center text-sm text-gray-600 line-clamp-2">
+                                {{ $leave->description }}
                             </td>
                             <td class="py-4 px-4 text-center">
-                                <div class="text-sm text-gray-700 font-medium">
-                                    {{ \Carbon\Carbon::parse($leave->end_date)->format('M d, Y') }}
-                                </div>
-                            </td>
-                            <td class="py-4 px-4">
-                                <div class="text-sm text-gray-600 text-center line-clamp-2">{{ $leave->description }}</div>
-                            </td>
-                            <td class="py-4 px-4 text-center">
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $leave->contactable ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $leave->contactable ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
                                     {{ $leave->contactable ? 'Yes' : 'No' }}
                                 </span>
                             </td>
-                            <td class="py-4 px-4">
-                                <div class="flex justify-center">
-                                    <img src="{{ asset($leave->proof_photo) }}" alt="Form Cuti"
-                                        class="w-12 h-12 object-cover rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-all shadow-sm hover:shadow-md"
-                                        onclick="viewFormCuti('{{ asset($leave->proof_photo) }}')">
-                                </div>
+                            <td class="py-4 px-4 text-center">
+                                <img src="{{ asset($leave->proof_photo) }}" alt="Form Cuti"
+                                    class="w-12 h-12 object-cover rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-all shadow-sm hover:shadow-md"
+                                    onclick="viewFormCuti('{{ asset($leave->proof_photo) }}')">
                             </td>
-                            @if (!$leave->verified)
-                                <td class="py-4 px-4">
+                            <td class="py-4 px-4 text-center">
+                                @if (!$leave->verified)
                                     <div class="flex items-center justify-center gap-2">
-                                        <button type="button" onclick="acceptProject({{ $leave->id }})"
-                                            class="inline-flex items-center justify-center w-9 h-9 text-green-600 bg-green-100 rounded-lg hover:bg-green-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-sm"
-                                            title="Accept Leave">
+                                        <button onclick="acceptProject({{ $leave->id }})"
+                                            class="w-9 h-9 flex items-center justify-center text-green-600 bg-green-100 rounded-lg hover:bg-green-600 hover:text-white transition-all">
                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                <path fill-rule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
                                             </svg>
                                         </button>
-                                        <button type="button" onclick="rejectProject({{ $leave->id }})"
-                                            class="inline-flex items-center justify-center w-9 h-9 text-red-600 bg-red-100 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm"
-                                            title="Reject Leave">
+                                        <button onclick="rejectProject({{ $leave->id }})"
+                                            class="w-9 h-9 flex items-center justify-center text-red-600 bg-red-100 rounded-lg hover:bg-red-600 hover:text-white transition-all">
                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                <path fill-rule="evenodd"
+                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
                                             </svg>
                                         </button>
                                     </div>
-                                </td>
-                            @elseif($leave->verified == 1)
-                                <td class="py-4 px-4">
-                                    <div class="flex items-center justify-center">
-                                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-red-600 shadow-md">
-                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="text-xs font-semibold text-white">Rejected</span>
-                                        </div>
-                                    </div>
-                                </td>
-                            @else
-                                <td class="py-4 px-4">
-                                    <div class="flex items-center justify-center">
-                                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-green-500 to-green-600 shadow-md">
-                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="text-xs font-semibold text-white">Approved</span>
-                                        </div>
-                                    </div>
-                                </td>
-                            @endif
+                                @elseif($leave->verified == 1)
+                                    <div
+                                        class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-red-500 text-white text-xs font-semibold">
+                                        Rejected</div>
+                                @else
+                                    <div
+                                        class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-green-500 text-white text-xs font-semibold">
+                                        Approved</div>
+                                @endif
+                            </td>
                         </tr>
-
-                        <!-- Modal for Approve -->
-                        <div id="approveModal id{{ $leave->id }}"
-                            class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden backdrop-blur-sm">
-                            <div class="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl m-4">
-                                <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        <h3 class="text-lg font-bold text-gray-900">Approve Leave Request</h3>
-                                    </div>
-                                    <button onclick="closeApproveModal({{ $leave->user_id }})"
-                                        class="text-gray-400 hover:text-gray-600 hover:bg-white rounded-lg p-2 transition-colors">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <form method="POST" action="{{ route('admin.administration.approve', ['id' => $leave->id]) }}">
-                                    @csrf
-                                    <div class="mb-4 px-6 pt-6">
-                                        <p class="text-sm text-gray-600 mb-4">Add a note for the employee (optional):</p>
-                                        <textarea id="approveNotes" rows="4" name="approveNotes"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none text-sm"
-                                            placeholder="e.g., Permohonan cuti Anda telah disetujui..."></textarea>
-                                    </div>
-                                    <div class="flex gap-3 px-6 pb-6">
-                                        <button type="button" onclick="closeApproveModal({{ $leave->id }})"
-                                            class="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium">
-                                            Cancel
-                                        </button>
-                                        <button type="submit"
-                                            class="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all shadow-md font-medium">
-                                            Approve Request
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <!-- Modal for Reject -->
-                        <div id="rejectModal id{{ $leave->id }}"
-                            class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden backdrop-blur-sm">
-                            <div class="bg-white rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl m-4">
-                                <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-red-50 to-rose-50">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
-                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        <h3 class="text-lg font-bold text-gray-900">Reject Leave Request</h3>
-                                    </div>
-                                    <button onclick="closeRejectModal({{ $leave->id }})"
-                                        class="text-gray-400 hover:text-gray-600 hover:bg-white rounded-lg p-2 transition-colors">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <form method="POST" action="{{ route('admin.administration.reject', ['id' => $leave->id]) }}">
-                                    @csrf
-                                    <div class="mb-4 px-6 pt-6">
-                                        <p class="text-sm text-gray-600 mb-4">Add a note for the employee (optional):</p>
-                                        <textarea id="approveNotes" rows="4" name="approveNotes"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none text-sm"
-                                            placeholder="e.g., Maaf, permohonan cuti tidak dapat disetujui..."></textarea>
-                                    </div>
-                                    <div class="flex gap-3 px-6 pb-6">
-                                        <button type="button" onclick="closeRejectModal({{ $leave->id }})"
-                                            class="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium">
-                                            Cancel
-                                        </button>
-                                        <button type="submit"
-                                            class="flex-1 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all shadow-md font-medium">
-                                            Reject Request
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                     @endforeach
                 </tbody>
             </table>
         </div>
 
+        <!-- Mobile Card View -->
+        <div class="lg:hidden space-y-4">
+            @forelse ($leaves as $index => $leave)
+                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                    <div class="flex justify-between mb-3">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">{{ $leave->user->name }}</h3>
+                            <p class="text-xs text-gray-500">{{ $leave->user->division }}</p>
+                        </div>
+                        <span class="text-xs text-gray-500">#{{ $index + 1 }}</span>
+                    </div>
+
+                    <div class="space-y-1 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Category:</span>
+                            <span class="font-medium text-gray-800">{{ $leave->type }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Start:</span>
+                            <span>{{ \Carbon\Carbon::parse($leave->start_date)->format('M d, Y') }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">End:</span>
+                            <span>{{ \Carbon\Carbon::parse($leave->end_date)->format('M d, Y') }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Standby:</span>
+                            <span class="{{ $leave->contactable ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $leave->contactable ? 'Yes' : 'No' }}
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block mb-1">Description:</span>
+                            <p class="text-gray-700 text-sm">{{ $leave->description }}</p>
+                        </div>
+                        <div class="mt-2">
+                            <img src="{{ asset($leave->proof_photo) }}" alt="Form Cuti"
+                                class="w-20 h-20 object-cover rounded-lg border cursor-pointer hover:opacity-80 transition"
+                                onclick="viewFormCuti('{{ asset($leave->proof_photo) }}')">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 mt-4 border-t pt-3">
+                        @if (!$leave->verified)
+                            <button onclick="acceptProject({{ $leave->id }})"
+                                class="flex-1 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm font-medium">Approve</button>
+                            <button onclick="rejectProject({{ $leave->id }})"
+                                class="flex-1 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm font-medium">Reject</button>
+                        @elseif($leave->verified == 1)
+                            <span
+                                class="flex-1 text-center py-2 bg-red-100 text-red-700 rounded-md text-sm font-semibold">Rejected</span>
+                        @else
+                            <span
+                                class="flex-1 text-center py-2 bg-green-100 text-green-700 rounded-md text-sm font-semibold">Approved</span>
+                        @endif
+                    </div>
+                </div>
+            @empty
+                <div class="py-8 text-center text-gray-500">Tidak ada data cuti</div>
+            @endforelse
+        </div>
+
+
         <!-- Pagination -->
         <div class="flex flex-col sm:flex-row items-center justify-between mt-6 pt-6 border-t border-gray-200 gap-4">
             <div class="text-sm text-gray-600">
-                Showing <span class="font-semibold text-gray-900">1</span> to <span class="font-semibold text-gray-900">3</span> of <span class="font-semibold text-gray-900">3</span> results
+                Showing <span class="font-semibold text-gray-900">1</span> to <span
+                    class="font-semibold text-gray-900">3</span> of <span class="font-semibold text-gray-900">3</span>
+                results
             </div>
             <div class="flex gap-2">
-                <button class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                <button
+                    class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    disabled>
                     Previous
                 </button>
-                <button class="px-4 py-2 text-sm font-medium text-white bg-[#111111] border border-transparent rounded-lg hover:bg-[#333333] transition-colors shadow-sm">
+                <button
+                    class="px-4 py-2 text-sm font-medium text-white bg-[#111111] border border-transparent rounded-lg hover:bg-[#333333] transition-colors shadow-sm">
                     1
                 </button>
-                <button class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                <button
+                    class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    disabled>
                     Next
                 </button>
             </div>
@@ -312,14 +291,17 @@
     </section>
 
     <!-- Modal for viewing Form Cuti -->
-    <div id="formCutiModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden backdrop-blur-sm">
+    <div id="formCutiModal"
+        class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center hidden backdrop-blur-sm">
         <div class="bg-white rounded-2xl max-w-3xl max-h-[85vh] overflow-hidden shadow-2xl m-4">
-            <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
+            <div
+                class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
                 <h3 class="text-lg font-bold text-gray-900">Form Cuti Preview</h3>
                 <button onclick="closeFormCutiModal()"
                     class="text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-lg p-2 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
                     </svg>
                 </button>
             </div>
@@ -364,14 +346,14 @@
         // Apply Filters Function
         function applyFilters() {
             const selectedStatus = document.querySelector('input[name="filterStatus"]:checked').value;
-            
+
             // Create filter tag
             filterTagsContainer.innerHTML = '';
-            
+
             if (selectedStatus !== 'all') {
                 let statusText = '';
                 let statusColor = '';
-                
+
                 if (selectedStatus === 'pending') {
                     statusText = 'Pending';
                     statusColor = 'bg-blue-100 border-blue-200 text-blue-700';
@@ -382,9 +364,10 @@
                     statusText = 'Rejected';
                     statusColor = 'bg-red-100 border-red-200 text-red-700';
                 }
-                
+
                 const tag = document.createElement('span');
-                tag.className = `inline-flex items-center gap-1.5 px-3 py-1 border rounded-lg text-xs font-medium ${statusColor}`;
+                tag.className =
+                    `inline-flex items-center gap-1.5 px-3 py-1 border rounded-lg text-xs font-medium ${statusColor}`;
                 tag.innerHTML = `
                     Status: ${statusText}
                     <button onclick="clearAllFilters()" class="hover:opacity-70">
@@ -394,7 +377,7 @@
                     </button>
                 `;
                 filterTagsContainer.appendChild(tag);
-                
+
                 // Show active filters section
                 activeFiltersSection.classList.remove('hidden');
             } else {
@@ -408,7 +391,7 @@
 
             // Here you would typically send AJAX request or filter table rows
             filterTableRows(selectedStatus);
-            
+
             showNotification('Filter applied successfully!', 'success');
         }
 
@@ -416,16 +399,16 @@
         function filterTableRows(status) {
             const tableRows = document.querySelectorAll('tbody tr');
             let visibleCount = 0;
-            
+
             tableRows.forEach(row => {
                 // Skip if row is a modal (not an actual data row)
                 if (row.querySelector('.fixed')) return;
-                
+
                 const actionCell = row.querySelector('td:last-child');
                 if (!actionCell) return;
-                
+
                 let rowStatus = 'pending';
-                
+
                 // Check if row has approve/reject buttons (pending)
                 if (actionCell.querySelector('button[onclick*="acceptProject"]')) {
                     rowStatus = 'pending';
@@ -438,7 +421,7 @@
                 else if (actionCell.textContent.includes('Rejected')) {
                     rowStatus = 'rejected';
                 }
-                
+
                 // Show/hide row based on filter
                 if (status === 'all' || status === rowStatus) {
                     row.style.display = '';
@@ -447,7 +430,7 @@
                     row.style.display = 'none';
                 }
             });
-            
+
             // Update result count
             console.log(`Showing ${visibleCount} results for status: ${status}`);
         }
@@ -456,14 +439,14 @@
         function resetFilters() {
             // Reset radio to "All"
             document.querySelector('input[name="filterStatus"][value="all"]').checked = true;
-            
+
             // Hide active filters
             activeFiltersSection.classList.add('hidden');
             filterTagsContainer.innerHTML = '';
-            
+
             // Show all rows
             filterTableRows('all');
-            
+
             showNotification('Filter reset', 'info');
         }
 

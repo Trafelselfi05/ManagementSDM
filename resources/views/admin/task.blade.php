@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-row items-stretch sm:items-center gap-3 justify-between md:justify-start w-full">
+            <div class="flex flex-row items-stretch sm:items-center gap-3 justify-between md:justify-e w-full">
                 <button id="createTaskBtn"
                     class="flex items-center justify-center gap-2 w-full sm:w-40 sm:h-10 px-3 bg-gray-900 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

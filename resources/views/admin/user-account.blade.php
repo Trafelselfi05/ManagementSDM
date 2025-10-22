@@ -38,86 +38,164 @@
             </a>
         </div>
 
-        <!-- Table Container -->
-        <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
-            <!-- Table Header -->
-            <div class="grid grid-cols-9 items-center bg-gray-100 py-3 px-4 text-gray-600 font-semibold text-sm"
+<!-- Desktop Table View -->
+<div class="hidden lg:block w-full overflow-x-auto rounded-lg border border-gray-200">
+    <!-- Table Header -->
+    <div class="grid grid-cols-9 items-center bg-gray-100 py-3 px-4 text-gray-600 font-semibold text-sm"
+        style="min-width: 1200px;">
+        <div class="text-center">Image</div>
+        <div class="text-center">NIK</div>
+        <div class="text-center">Username</div>
+        <div class="text-center">Divisi</div>
+        <div class="text-center">Status SDM</div>
+        <div class="text-center">Telp</div>
+        <div class="text-center">Email</div>
+        <div class="text-center">Role</div>
+        <div class="text-center">Action</div>
+    </div>
+
+    <!-- Table Rows -->
+    <div class="divide-y divide-gray-200">
+        @foreach ($users as $user)
+            <a href="{{ route('admin.user-detail', $user->id) }}"
+                class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors user-row"
                 style="min-width: 1200px;">
-                <div class="text-center">Image</div>
-                <div class="text-center">NIK</div>
-                <div class="text-center">Username</div>
-                <div class="text-center">Divisi</div>
-                <div class="text-center">Status SDM</div>
-                <div class="text-center">Telp</div>
-                <div class="text-center">Email</div>
-                <div class="text-center">Role</div>
-                <div class="text-center">Action</div>
+                
+                <!-- Image -->
+                <div class="flex justify-center">
+                    <img src="{{ asset($user->image ?? '/default-avatar.png') }}" alt="User Image"
+                        class="w-12 h-12 object-cover rounded border" />
+                </div>
+
+                <!-- NIK -->
+                <div class="text-center">{{ $user->nik }}</div>
+
+                <!-- Username -->
+                <div class="text-center font-medium">{{ $user->name }}</div>
+
+                <!-- Divisi -->
+                <div class="text-center">{{ $user->division }}</div>
+
+                <!-- Status SDM -->
+                <div class="text-center">
+                    <span
+                        class="px-2 py-1 rounded text-xs font-medium 
+                        {{ $user->employment_status === 'Aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                        {{ $user->employment_status }}
+                    </span>
+                </div>
+
+                <!-- Telp -->
+                <div class="text-center">{{ $user->phone }}</div>
+
+                <!-- Email -->
+                <div class="text-center truncate max-w-[200px]">{{ $user->email }}</div>
+
+                <!-- Role -->
+                <div class="text-center">
+                    <span
+                        class="px-2 py-1 rounded text-xs font-medium 
+                        {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700' }}">
+                        {{ ucfirst($user->role) }}
+                    </span>
+                </div>
+
+                <!-- Action -->
+                <div class="flex justify-center">
+                    <form action="{{ route('admin.user-account.delete', $user->id) }}" method="POST"
+                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="px-3 py-1 bg-red-500 text-white text-xs font-medium rounded hover:bg-red-600 transition-colors"
+                            onclick="event.stopPropagation();">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </a>
+        @endforeach
+    </div>
+</div>
+
+<!-- Mobile Card View -->
+<div class="lg:hidden space-y-4">
+    @forelse ($users as $user)
+        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- Header -->
+            <div class="flex items-center gap-3 mb-3">
+                <img src="{{ asset($user->image ?? '/default-avatar.png') }}" alt="User Image"
+                    class="w-14 h-14 object-cover rounded border" />
+                <div>
+                    <h3 class="font-semibold text-gray-800 text-base">{{ $user->name }}</h3>
+                    <p class="text-sm text-gray-500">{{ $user->division }}</p>
+                </div>
             </div>
 
-            <!-- Table Rows -->
-            <div class="divide-y divide-gray-200">
-                @foreach ($users as $index => $user)
-                    <a href="{{ route('admin.user-detail', $user->id) }}"
-                        class="grid grid-cols-9 items-center py-3 px-4 text-gray-900 text-sm hover:bg-gray-50 transition-colors user-row"
-                        style="min-width: 1200px;">
+            <!-- Detail Info -->
+            <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex justify-between">
+                    <span class="text-gray-500">NIK:</span>
+                    <span>{{ $user->nik }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Status SDM:</span>
+                    <span
+                        class="px-2 py-1 rounded text-xs font-medium
+                        {{ $user->employment_status === 'Aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                        {{ $user->employment_status }}
+                    </span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Telepon:</span>
+                    <span>{{ $user->phone }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Email:</span>
+                    <span class="truncate max-w-[150px]">{{ $user->email }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Role:</span>
+                    <span
+                        class="px-2 py-1 rounded text-xs font-medium
+                        {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700' }}">
+                        {{ ucfirst($user->role) }}
+                    </span>
+                </div>
+            </div>
 
-                        <!-- Image -->
-                        <div class="flex justify-center">
-                            <img src="{{ asset($user->image) ?? '/default-avatar.png' }}" alt="User Image"
-                                class="w-12 h-12 object-cover rounded border" />
-                        </div>
-
-                        <!-- NIK -->
-                        <div class="text-center">{{ $user->nik }}</div>
-
-                        <!-- Username -->
-                        <div class="text-center font-medium">{{ $user->name }}</div>
-
-                        <!-- Divisi -->
-                        <div class="text-center">{{ $user->division }}</div>
-
-                        <!-- Status SDM -->
-                        <div class="text-center">
-                            <span
-                                class="px-2 py-1 rounded text-xs font-medium 
-                                {{ $user->employment_status === 'Aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                                {{ $user->employment_status }}
-                            </span>
-                        </div>
-
-                        <!-- Telp -->
-                        <div class="text-center">{{ $user->phone }}</div>
-
-                        <!-- Email -->
-                        <div class="text-center truncate max-w-[200px]">{{ $user->email }}</div>
-
-                        <!-- Role -->
-                        <div class="text-center">
-                            <span
-                                class="px-2 py-1 rounded text-xs font-medium 
-                                {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700' }}">
-                                {{ ucfirst($user->role) }}
-                            </span>
-                        </div>
-
-                        <!-- Action -->
-                        <div class="flex justify-center">
-                            <form action="{{ route('admin.user-account.delete', $user->id) }}" method="POST"
-                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="px-3 py-1 bg-red-500 text-white text-xs font-medium rounded hover:bg-red-600 transition-colors"
-                                    onclick="event.stopPropagation();">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-
-                    </a>
-                @endforeach
+            <!-- Actions -->
+            <div class="flex gap-2 pt-3 mt-3 border-t border-gray-200">
+                <a href="{{ route('admin.user-detail', $user->id) }}"
+                    class="flex-1 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-sm font-medium">Detail</span>
+                </a>
+                <form action="{{ route('admin.user-account.delete', $user->id) }}" method="POST"
+                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')"
+                    class="flex-1">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="w-full flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white rounded-md py-2 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                            </path>
+                        </svg>
+                        <span class="text-sm font-medium">Delete</span>
+                    </button>
+                </form>
             </div>
         </div>
+    @empty
+        <div class="py-12 text-center text-gray-500">Tidak Ada User</div>
+    @endforelse
+</div>
+
     </div>
 
     <script>
