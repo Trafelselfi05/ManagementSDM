@@ -3,160 +3,160 @@
 @section('title', 'Add User')
 
 @section('content')
-    <div class="flex justify-center items-start bg-[#f9f9f9]">
-        <div class="max-w-4xl w-full bg-white p-10 shadow-[0px_0px_4px_#00000040] rounded-[15px] relative max-h-[calc(100vh-13em)] overflow-y-auto">
+<div class="flex justify-center items-start bg-[#f9f9f9] max-h-screen px-4 md:py-8">
+  <div
+    class="w-full max-w-4xl bg-white p-6 md:p-10 shadow-[0px_0px_4px_#00000040] rounded-[15px] relative max-h-[calc(100vh-8em)] md:max-h-[calc(100vh-13em)] overflow-y-auto"
+  >
+    <h2 class="text-xl font-bold mb-8 text-center md:text-left">Create New Account</h2>
 
-            <h2 class="text-xl font-bold mb-8">Create New Account</h2>
+    <form action="{{ route('admin.profile-admin.store') }}" method="POST" enctype="multipart/form-data">
+      @csrf
 
-            <form action="{{ route('admin.profile-admin.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+      @php
+          $inputClass = "flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full 
+                        bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] 
+                        text-base font-medium text-[#111111] border-0 outline-none";
+          $labelClass = 'block text-sm font-medium text-gray-700 mb-2';
+          $selectClass = $inputClass . ' appearance-none cursor-pointer bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]';
+      @endphp
 
-                @php
-                    $inputClass = "flex h-[45px] items-center gap-2.5 px-4 py-[11px] w-full 
-                                  bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] 
-                                  text-base font-medium text-[#111111] border-0 outline-none";
-                    $labelClass = 'block text-sm font-medium text-gray-700 mb-2';
-                    $selectClass =
-                        $inputClass .
-                        ' appearance-none cursor-pointer bg-no-repeat bg-[position:right_1rem_center] bg-[length:12px_8px]';
-                @endphp
-
-                <div class="grid grid-cols-2 gap-8">
-                    <!-- Name -->
-                    <div>
-                        <label class="{{ $labelClass }}">Name</label>
-                        <input type="text" name="name" class="{{ $inputClass }}" required>
-                    </div>
-
-                    <!-- Email -->
-                    <div>
-                        <label class="{{ $labelClass }}">Email</label>
-                        <input type="email" name="email" class="{{ $inputClass }}" required>
-                    </div>
-
-                    <!-- Password -->
-                    <div>
-                        <label class="{{ $labelClass }}">Password</label>
-                        <input type="password" name="password" class="{{ $inputClass }}" required>
-                    </div>
-
-                    <!-- Division (dropdown) -->
-                    <div>
-                        <label class="{{ $labelClass }}">Division</label>
-                        <div class="relative">
-                            <select name="division" class="{{ $selectClass }}"
-                                style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
-                                <option value="">-- Select Division --</option>
-                                <option value="Engineer Web">Engineer Web</option>
-                                <option value="Analis">Analis</option>
-                                <option value="Engineer Mobile">Engineer Mobile</option>
-                                <option value="Content Creator">Content Creator</option>
-                                <option value="Engineer IOS">Engineer IOS</option>
-                                <option value="Copywriter">Copywriter</option>
-                                <option value="UI / UX Designer">UI / UX Designer</option>
-                                <option value="Tester">Tester</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Phone -->
-                    <div>
-                        <label class="{{ $labelClass }}">Phone</label>
-                        <input type="text" name="phone" class="{{ $inputClass }}">
-                    </div>
-
-                    <!-- NIK -->
-                    <div>
-                        <label class="{{ $labelClass }}">NIK</label>
-                        <input type="text" name="nik" class="{{ $inputClass }}">
-                    </div>
-
-                    <!-- Telegram Link -->
-                    <div>
-                        <label class="{{ $labelClass }}">Telegram Link</label>
-                        <input type="text" name="telegram_link" class="{{ $inputClass }}">
-                    </div>
-
-                    <!-- Employment Status (dropdown) -->
-                    <div>
-                        <label class="{{ $labelClass }}">Employment Status</label>
-                        <div class="relative">
-                            <select name="employment_status" class="{{ $selectClass }}"
-                                style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
-                                <option value="">-- Select Employment Status --</option>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                                <option value="contract">Contract</option>
-                                <option value="probation">Probation</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Birth Date (single date + clickable icon) -->
-                    <div>
-                        <label class="{{ $labelClass }}">Birth Date</label>
-                        <div class="relative">
-                            <input readonly id="birth-date" name="birth_date" type="text" placeholder="YYYY-MM-DD"
-                                class="date-input {{ $inputClass }} pr-12 cursor-pointer" />
-                            <img id="birth-date-icon"
-                                class="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[20px] cursor-pointer select-none"
-                                src="https://c.animaapp.com/mf0waiheGBQdaR/img/group-125.png" />
-                        </div>
-                    </div>
-
-                    <!-- Join Date (single date + clickable icon) -->
-                    <div>
-                        <label class="{{ $labelClass }}">Join Date</label>
-                        <div class="relative">
-                            <input readonly id="join-date" name="join_date" type="text" placeholder="YYYY-MM-DD"
-                                class="date-input {{ $inputClass }} pr-12 cursor-pointer" />
-                            <img id="join-date-icon"
-                                class="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[20px] cursor-pointer select-none"
-                                src="https://c.animaapp.com/mf0waiheGBQdaR/img/group-125.png" />
-                        </div>
-                    </div>
-
-                    <!-- Last Education -->
-                    <div>
-                        <label class="{{ $labelClass }}">Last Education</label>
-                        <input type="text" name="last_education" class="{{ $inputClass }}">
-                    </div>
-
-                    <!-- Role -->
-                    <div>
-                        <label class="{{ $labelClass }}">Role</label>
-                        <div class="relative">
-                            <select name="role" class="{{ $selectClass }}"
-                                style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
-                                <option value="">-- Select Role --</option>
-                                <option value="director">Director</option>
-                                <option value="karyawan">Karyawan</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Address -->
-                    <div class="col-span-2">
-                        <label class="{{ $labelClass }}">Address</label>
-                        <textarea name="address" rows="4"
-                            class="w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] border-0 outline-none px-4 py-3 text-base font-medium text-[#111111] resize-none"></textarea>
-                    </div>
-
-                    <!-- Profile Image -->
-                    <div class="col-span-2">
-                        <label class="{{ $labelClass }}">Profile Image</label>
-                        <input type="file" name="image" accept="image/*"
-                            class="w-full h-[45px] bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base font-medium text-[#111111] border-0 outline-none px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#111111] file:text-white hover:file:bg-[#333333] file:cursor-pointer cursor-pointer">
-                    </div>
-                </div>
-
-                <button type="submit"
-                    class="mt-8 w-full bg-[#111111] text-white py-3 rounded-[15px] shadow-[0px_0px_4px_#00000026] font-bold text-lg hover:bg-[#333333] transition-colors duration-200">
-                    Save
-                </button>
-            </form>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <!-- Name -->
+        <div>
+          <label class="{{ $labelClass }}">Name</label>
+          <input type="text" name="name" class="{{ $inputClass }}" required>
         </div>
-    </div>
+
+        <!-- Email -->
+        <div>
+          <label class="{{ $labelClass }}">Email</label>
+          <input type="email" name="email" class="{{ $inputClass }}" required>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="{{ $labelClass }}">Password</label>
+          <input type="password" name="password" class="{{ $inputClass }}" required>
+        </div>
+
+        <!-- Division -->
+        <div>
+          <label class="{{ $labelClass }}">Division</label>
+          <div class="relative">
+            <select name="division" class="{{ $selectClass }}"
+              style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
+              <option value="">-- Select Division --</option>
+              <option value="Engineer Web">Engineer Web</option>
+              <option value="Analis">Analis</option>
+              <option value="Engineer Mobile">Engineer Mobile</option>
+              <option value="Content Creator">Content Creator</option>
+              <option value="Engineer IOS">Engineer IOS</option>
+              <option value="Copywriter">Copywriter</option>
+              <option value="UI / UX Designer">UI / UX Designer</option>
+              <option value="Tester">Tester</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label class="{{ $labelClass }}">Phone</label>
+          <input type="text" name="phone" class="{{ $inputClass }}">
+        </div>
+
+        <!-- NIK -->
+        <div>
+          <label class="{{ $labelClass }}">NIK</label>
+          <input type="text" name="nik" class="{{ $inputClass }}">
+        </div>
+
+        <!-- Telegram -->
+        <div>
+          <label class="{{ $labelClass }}">Telegram Link</label>
+          <input type="text" name="telegram_link" class="{{ $inputClass }}">
+        </div>
+
+        <!-- Employment Status -->
+        <div>
+          <label class="{{ $labelClass }}">Employment Status</label>
+          <div class="relative">
+            <select name="employment_status" class="{{ $selectClass }}"
+              style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
+              <option value="">-- Select Employment Status --</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="contract">Contract</option>
+              <option value="probation">Probation</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Birth Date -->
+        <div>
+          <label class="{{ $labelClass }}">Birth Date</label>
+          <div class="relative">
+            <input readonly id="birth-date" name="birth_date" type="text" placeholder="YYYY-MM-DD"
+              class="date-input {{ $inputClass }} pr-12 cursor-pointer" />
+            <img id="birth-date-icon"
+              class="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[20px] cursor-pointer select-none"
+              src="https://c.animaapp.com/mf0waiheGBQdaR/img/group-125.png" />
+          </div>
+        </div>
+
+        <!-- Join Date -->
+        <div>
+          <label class="{{ $labelClass }}">Join Date</label>
+          <div class="relative">
+            <input readonly id="join-date" name="join_date" type="text" placeholder="YYYY-MM-DD"
+              class="date-input {{ $inputClass }} pr-12 cursor-pointer" />
+            <img id="join-date-icon"
+              class="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[20px] cursor-pointer select-none"
+              src="https://c.animaapp.com/mf0waiheGBQdaR/img/group-125.png" />
+          </div>
+        </div>
+
+        <!-- Last Education -->
+        <div>
+          <label class="{{ $labelClass }}">Last Education</label>
+          <input type="text" name="last_education" class="{{ $inputClass }}">
+        </div>
+
+        <!-- Role -->
+        <div>
+          <label class="{{ $labelClass }}">Role</label>
+          <div class="relative">
+            <select name="role" class="{{ $selectClass }}"
+              style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg width=\'12\' height=\'8\' viewBox=\'0 0 12 8\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3e%3cpath d=\'M1 1L6 6L11 1\' stroke=\'%23111111\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3e%3c/svg%3e');">
+              <option value="">-- Select Role --</option>
+              <option value="director">Director</option>
+              <option value="karyawan">Karyawan</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="col-span-1 md:col-span-2">
+          <label class="{{ $labelClass }}">Address</label>
+          <textarea name="address" rows="4"
+            class="w-full bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] border-0 outline-none px-4 py-3 text-base font-medium text-[#111111] resize-none"></textarea>
+        </div>
+
+        <!-- Profile Image -->
+        <div class="col-span-1 md:col-span-2">
+          <label class="{{ $labelClass }}">Profile Image</label>
+          <input type="file" name="image" accept="image/*"
+            class="w-full h-[45px] bg-[#f9f9f9] rounded-[15px] shadow-[0px_0px_4px_#00000026] text-base font-medium text-[#111111] border-0 outline-none px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#111111] file:text-white hover:file:bg-[#333333] file:cursor-pointer cursor-pointer">
+        </div>
+      </div>
+
+      <button type="submit"
+        class="mt-8 w-full bg-[#111111] text-white py-3 rounded-[15px] shadow-[0px_0px_4px_#00000026] font-bold text-lg hover:bg-[#333333] transition-colors duration-200">
+        Save
+      </button>
+    </form>
+  </div>
+</div>
+
 
     <!-- Toast Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-[10000] flex flex-col gap-3"></div>

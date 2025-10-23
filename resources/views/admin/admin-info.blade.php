@@ -67,7 +67,7 @@
             </div>
 
             <!-- Right Column - Form Fields -->
-            <div class="flex-1">
+            <div class="">
 
                 <!-- Profile Form -->
                 <div>

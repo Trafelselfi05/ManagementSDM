@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         @foreach($data as $user)
             <div class="bg-white rounded-[10px] shadow-[0px_0px_4px_#00000040] p-5">
                 <div class="flex items-center gap-3 mb-5">
