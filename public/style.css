@@ -1,0 +1,259 @@
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Focus styles for accessibility */
+        button:focus-visible,
+        input:focus-visible {
+            outline: 2px solid #4a90e2 !important;
+            outline-offset: 2px;
+        }
+
+        /* Active state for sidebar items */
+        .sidebar-item.active {
+            background-color: rgba(111, 173, 200, 0.1);
+        }
+
+        .sidebar-item.active svg {
+            color: #6b7275;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(111, 173, 200, 0.1);
+        }
+
+        .sidebar-item:hover svg {
+            color: #6fadc8;
+        }
+
+        .sidebar-item.active:hover {
+            background-color: #6FAEC9 !important;
+        }
+
+        .sidebar-item.active:hover svg {
+            color: white !important;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            width: 667px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        /* Custom Radio Buttons */
+        input[type="radio"]:checked+label span span {
+            opacity: 1;
+        }
+
+        /* Scrollbar Styling */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 90%;
+                max-width: 400px;
+            }
+        }
+
+        /* Alert Styles */
+        .alert-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .alert-box {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.2s ease-out;
+        }
+
+        .alert-box.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .alert-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .alert-icon.success {
+            background-color: #10b981;
+        }
+
+        .alert-icon.error {
+            background-color: #ef4444;
+        }
+
+        .alert-icon.warning {
+            background-color: #f59e0b;
+        }
+
+        .alert-title {
+            font-family: 'Inter', Helvetica;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #111111;
+        }
+
+        .alert-message {
+            font-family: 'Inter', Helvetica;
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .alert-button {
+            background-color: #111111;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-family: 'Inter', Helvetica;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            min-width: 80px;
+        }
+
+        .alert-button:hover {
+            background-color: #333333;
+        }
+
+        /* User icon specific styles */
+        .user-icon {
+            transition: all 0.3s ease;
+        }
+
+        .user-icon.active {
+            background-color: rgba(111, 173, 200, 0.1);
+        }
+
+        .user-icon.active span {
+            color: #6b7275;
+        }
+
+        .user-icon:hover {
+            background-color: #6FAEC9;
+        }
+
+        .user-icon:hover span {
+            color: white;
+        }
+
+        .user-icon.active:hover {
+            background-color: #6FAEC9 !important;
+        }
+
+        .user-icon.active:hover span {
+            color: white !important;
+        }
+
+        /* administration style */
+        /* Hide default date picker styles but keep functionality */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            width: 50px;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        /* Hide dropdown arrow for select */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* Focus styles */
+        select:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        }
